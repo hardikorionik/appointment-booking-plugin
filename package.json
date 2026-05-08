@@ -1,0 +1,69 @@
+{
+  "name": "hardik-react-package",
+  "version": "2.0.0",
+  "description": "A React component library built with Tailwind CSS v4 and TypeScript",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json --noEmit && vite build",
+    "build:css": "pnpm dlx @tailwindcss/cli -i src/styles.css -o dist/styles.css",
+    "build:all": "pnpm run build && pnpm run build:css",
+    "preview": "vite preview",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm run build:all",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "tailwindcss",
+    "typescript",
+    "ui-kit"
+  ],
+  "author": "Hardik Dongre",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.4",
+    "@types/luxon": "3.7.1",
+    "@types/node": "25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10",
+    "vite-plugin-dts": "^5.0.0"
+  },
+  "peerDependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "2.11.2",
+    "@tailwindcss/postcss": "4.2.4",
+    "framer-motion": "12.38.0",
+    "lucide-react": "1.14.0",
+    "luxon": "3.7.2",
+    "postcss": "8.5.14",
+    "react-redux": "9.2.0",
+    "react-toastify": "11.1.0",
+    "redux-persist": "6.0.0"
+  }
+}

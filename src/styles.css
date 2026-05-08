@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+:root {
+    --primary: #000000;
+    --secondary: #ffffff;
+    --border: #e5e7eb;
+}
+
+@layer base {
+    body {
+        font-family: system-ui;
+    }
+}

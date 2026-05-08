@@ -1,0 +1,17 @@
+# Source files — not needed by consumers
+src/
+index.html
+
+# Config files
+vite.config.ts
+tsconfig.json
+tsconfig.build.json
+postcss.config.mjs
+.npmrc
+
+# Dev files
+node_modules/
+.git/
+.gitignore
+
+# Only dist/ gets published
