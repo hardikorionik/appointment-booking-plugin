@@ -19,20 +19,24 @@ export const getOutletDetailsById = async (outletId: string) => {
             "Failed to fetch services"
         );
     }
-    const data = await res.json();
+    const reponse = await res.json();
 
-    return data;
+    return reponse;
 };
 
 //  Get All Services 
-export const fetchAllCategoriesAndStaffService = async (tenantId: string, outletId: string) => {
+export const fetchAllCategoriesAndStaffService = async (bookingCode: string, tenantId?: string, outletId?: string) => {
     const params =
         new URLSearchParams({
             available_online: "true",
             is_available_online_category:
                 "true",
         });
-    const res = await fetch(`${BASE_URL}/service/categories/tenantid/${tenantId}/outlet/${outletId}/online?${params}`, {
+    tenantId && params.append("tenant_id", tenantId);
+    outletId && params.append("outlet_id", outletId);
+    const url = `${BASE_URL}/integration/service/code/${bookingCode}?${params}`;
+
+    const res = await fetch(url, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -44,9 +48,8 @@ export const fetchAllCategoriesAndStaffService = async (tenantId: string, outlet
             "Failed to fetch services"
         );
     }
-    const data = await res.json();
-
-    return data;
+    const reponse = await res.json();
+    return reponse;
 };
 
 //  Get Staff Slots
@@ -66,9 +69,9 @@ export const fetchStaffSlots = async (staffId: string, date: string) => {
             "Failed to fetch services"
         );
     }
-    const data = await res.json();
+    const reponse = await res.json();
 
-    return data;
+    return reponse;
 };
 
 export const createAppointmentApi = async (payload: unknown) => {
@@ -87,9 +90,9 @@ export const createAppointmentApi = async (payload: unknown) => {
             "Failed to fetch services"
         );
     }
-    const data = await res.json();
+    const reponse = await res.json();
 
-    return data;
+    return reponse;
 };
 
 export const createCheckinApi = async (payload: unknown) => {
@@ -108,7 +111,7 @@ export const createCheckinApi = async (payload: unknown) => {
             "Failed to fetch services"
         );
     }
-    const data = await res.json();
+    const reponse = await res.json();
 
-    return data;
+    return reponse;
 };

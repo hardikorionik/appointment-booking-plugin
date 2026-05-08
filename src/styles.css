@@ -1,13 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap');
+
 @import "tailwindcss";
 
+/* Dynamic Variables */
 :root {
-    --primary: #000000;
-    --secondary: #ffffff;
-    --border: #e5e7eb;
+    --red: #d7263d;
+    --ink: #0e0e0e;
+    --ink-off: #1c1c1c;
+    --canvas: #fafaf8;
+    --surface: #f2f0ec;
+    --surface2: #e8e5e0;
+    --border: #dedad4;
+    --copy: #1a1a1a;
+    --muted: #8a8680;
+    --brand-green: #1e7a4a;
+
+    --font-heading: 'Bebas Neue', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+}
+
+/* Tailwind Theme Mapping */
+@theme {
+    --color-red: var(--red);
+    --color-ink: var(--ink);
+    --color-ink-off: var(--ink-off);
+    --color-canvas: var(--canvas);
+    --color-surface: var(--surface);
+    --color-surface2: var(--surface2);
+    --color-border: var(--border);
+    --color-copy: var(--copy);
+    --color-muted: var(--muted);
+    --color-brand-green: var(--brand-green);
+
+    --font-bebas: var(--font-heading);
+    --font-dm: var(--font-body);
+    --font-mono: var(--font-mono);
 }
 
 @layer base {
     body {
-        font-family: system-ui;
+        font-family: var(--font-body);
+        background: var(--canvas);
+        color: var(--copy);
     }
 }

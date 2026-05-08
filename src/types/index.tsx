@@ -1,9 +1,22 @@
 // Types for the booking plugin
 export type BookingPluginProps = {
-    tenantId: string;
-    outletId: string;
+    bookingCode: string;
     isService?: boolean;
 };
+
+// Types for customizable themes
+export interface ThemeSettings {
+    bgColor: string;
+    bgHoverColor: string;
+    hoverColor: string;
+    frontColor: string;
+    linkColor: string;
+
+    buttonBgColor: string;
+    buttonTextColor: string;
+    buttonHoverBgColor: string;
+    buttonHoverTextColor: string;
+}
 
 // Main layout types
 export type MainLayoutProps = {
@@ -14,6 +27,17 @@ export type MainLayoutProps = {
     handleSidebarOpen?: () => void;
     isSidebarOpen?: boolean;
 };
+
+export interface Outlet {
+    id: string;
+    outletName: string;
+    timeZone: string;
+    image: string;
+    tenantId: string;
+    address: string;
+    isOpen: boolean;
+}
+
 
 // Service related types
 export type GetStaffSlotsArgs = {
