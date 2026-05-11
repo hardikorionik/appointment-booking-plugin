@@ -6,7 +6,7 @@ const BASE_URL =
 
 
 //  Get Outlet Details 
-export const getOutletDetailsById = async (outletId: string) => {
+export const getOutletDetailsById = async (outletId: string | number) => {
     const res = await fetch(`${BASE_URL}/outlet/${outletId}`, {
         method: "GET",
         headers: {
@@ -53,7 +53,7 @@ export const fetchAllCategoriesAndStaffService = async (bookingCode: string, ten
 };
 
 //  Get Staff Slots
-export const fetchStaffSlots = async (staffId: string, date: string) => {
+export const fetchStaffSlots = async (staffId: string | number, date: string) => {
     const res = await fetch(`${BASE_URL}/staff/slots/${staffId}?date=${date}`,
         {
             method: "GET",

@@ -267,7 +267,7 @@ export interface Slot {
   id?: string;
   startTime?: string;
   endTime?: string;
-
+  available?: boolean;
   start_time?: string;
   end_time?: string;
 }
@@ -278,6 +278,36 @@ export interface SlotGroups {
   evening: Slot[];
 }
 
+export interface SlotsState {
+  selectedSlotIndexes: number[];
+  selectedSlotIds: (string | number)[];
+  selectedDate: string | null;
+  selectedTime: string | null;
+
+  slots: {
+    morning: Slot[];
+    afternoon: Slot[];
+    evening: Slot[];
+  };
+
+  loading: boolean;
+}
+
+export interface GetStaffSlotsArgs {
+  staffId: string | number;
+  date: string; // e.g. "2026-05-11"
+  outletId?: string | number;
+}
+
+export interface StaffSlotsResponse {
+  morning: Slot[];
+  afternoon: Slot[];
+  evening: Slot[];
+
+  // optional metadata (if backend sends it)
+  staffId?: string | number;
+  date?: string;
+}
 /* ─────────────────────────────────────────────────────────────
  * USER
  * ───────────────────────────────────────────────────────────── */
@@ -637,4 +667,29 @@ export interface CalendarMonth {
   year: number;
   startDow: number;
   days: number;
+}
+
+// Booking types
+export interface InitBookingState {
+  outletData: any | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
+  outletId: string | number | null;
+  outletTimeZoneDate: string | null;
+  outletTimeZoneYear: number | null;
+  outletTimeZone: string | null;
+}
+
+export interface InitBookingPayload {
+  outletData: OutletData;
+  token: string;
+  outletTimeZoneDate: string;
+  outletTimeZoneYear: number;
+  outletTimeZone: string;
+}
+
+export interface InitBookingArgs {
+  outletId: string | number;
+  token?: string;
 }
