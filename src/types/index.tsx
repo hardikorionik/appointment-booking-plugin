@@ -352,7 +352,6 @@ export interface FilteredCategory extends Category {
   services: Service[];
 }
 
-
 // sucess page types
 export interface AppointmentDetails {
   staff?: Staff | null;
@@ -364,4 +363,9 @@ export interface AppointmentDetails {
   tipsCents: number;
   taxCents: number;
   totalCents: number;
+}
+
+export interface ProfessionalSidebarProps {
+  pro: Staff | null;
+  goToStep: (step: Step) => void;
 }
