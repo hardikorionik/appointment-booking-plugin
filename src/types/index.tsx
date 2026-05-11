@@ -165,6 +165,7 @@ export interface StaffServiceAssignment {
   name: string;
   categoryId: string;
   price: number;
+  qty: number;
   duration: number; // duration in minutes
   assigned_at: string; // ISO date string
   assigned_via: string;
@@ -407,6 +408,7 @@ export interface RootState {
 
   booking: {
     outletTimeZone: string;
+    outletTimeZoneYear: number;
   };
 
   slots: {
@@ -420,4 +422,12 @@ export interface RootState {
       evening: SlotItem[];
     };
   };
+}
+
+export interface CalendarMonth {
+  label: string;
+  monthIdx: number;
+  year: number;
+  startDow: number;
+  days: number;
 }

@@ -3,12 +3,12 @@ import { MoveRight } from "lucide-react";
 import { getUserName } from "@/utils";
 
 import { ProfessionalSidebarProps, Staff, Step } from "@/types";
-import { ReactElement } from "react";
+import { JSX } from "react";
 
 const ProfessionalServiceSidebar = ({
   pro,
   goToStep,
-}: ProfessionalSidebarProps): ReactElement => {
+}: ProfessionalSidebarProps): JSX.Element => {
   return (
     <>
       <p className="font-bebas text-xl mb-3">Your Order</p>

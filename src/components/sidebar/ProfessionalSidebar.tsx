@@ -7,7 +7,7 @@ import {
   Step,
   Service,
 } from "@/types";
-import { ReactElement } from "react";
+import { JSX } from "react";
 
 interface SelectedStaffService extends Service {
   qty: number;
@@ -29,7 +29,7 @@ const ProfessionalSidebar = ({
   totalPrice,
   totalDuration,
   goToStep,
-}: ProfessionalSidebarProps): ReactElement => {
+}: ProfessionalSidebarProps): JSX.Element => {
   return (
     <>
       <p className="font-bebas text-xl mb-3">Your Order</p>
