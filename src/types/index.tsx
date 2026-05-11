@@ -369,3 +369,55 @@ export interface ProfessionalSidebarProps {
   pro: Staff | null;
   goToStep: (step: Step) => void;
 }
+
+/* DATE TYPES */
+export interface SelectedDate {
+  day: number;
+  month: number;
+  year: number;
+}
+
+export interface DateItem {
+  day: number;
+  month: number;
+  year: number;
+  fullDate: string | null;
+}
+
+/* SLOT TYPES */
+export interface SlotItem {
+  id: string | number;
+  start_time: string;
+  end_time?: string;
+  isBooked?: boolean;
+  status?: string;
+}
+
+/* ROOT STATE */
+export interface RootState {
+  appointment: {
+    bookingMode: BookingMode;
+  };
+
+  service: {
+    staff: StaffMember[];
+    selectedServices: Service[];
+    selectedProfessional: StaffMember | null;
+  };
+
+  booking: {
+    outletTimeZone: string;
+  };
+
+  slots: {
+    selectedSlotIndexes: number[];
+    selectedDate: SelectedDate | null;
+    selectedTime: string | null;
+    loading: boolean;
+    slots: {
+      morning: SlotItem[];
+      afternoon: SlotItem[];
+      evening: SlotItem[];
+    };
+  };
+}
