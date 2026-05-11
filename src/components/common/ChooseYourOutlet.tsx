@@ -45,12 +45,12 @@ const StatusBadge = ({ status }: { status: boolean }) => (
 const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
   return (
     <div
-      className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between bg-white rounded-sm border transition-all duration-300 
-            ${selected ? "border-black shadow-lg ring-1 ring-black" : !item.isOpen ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-gray-400 hover:shadow-md"}`}
+      className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between  rounded-sm border transition-all duration-300 
+            ${selected ? "border-black shadow-lg ring-1 ring-black" : !item.isOpen ? "border-red-300 bg-red-50/50" : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"}`}
       onClick={() => onSelect(item.id)}
     >
       <div className="p-4">
-        <div className="flex items-start justify-between mb-5">
+        <div className="flex items-start justify-between mb-3">
           <StatusBadge status={item.isOpen} />
         </div>
         <div className="flex-1">
