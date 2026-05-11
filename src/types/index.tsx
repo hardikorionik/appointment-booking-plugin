@@ -365,3 +365,22 @@ export interface AppointmentDetails {
   taxCents: number;
   totalCents: number;
 }
+
+// customer details types
+export interface FormValues {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+}
+
+export interface Customer {
+  first_name?: string;
+  last_name?: string;
+  phone?: string;
+  email?: string;
+}
+
+export interface FetchCustomerResponse {
+  data?: Customer[];
+}

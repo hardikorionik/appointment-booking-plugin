@@ -133,3 +133,29 @@ export const getAppointmentDetail = async (
 
     return response;
 };
+
+// Fetch Customers for Dropdown
+export const fetchCustomer = async ({
+    search,
+}: {
+    search: string;
+}) => {
+    const res = await fetch(
+        `${BASE_URL}/customer/drop-down/list?search=${encodeURIComponent(search || "")}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch customers");
+    }
+
+    const response = await res.json();
+
+    return response;
+};
