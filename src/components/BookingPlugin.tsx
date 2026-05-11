@@ -3,7 +3,7 @@ import { BookingPluginProps } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import { applyTheme } from "@/utils/applyTheme";
-import DeafultAppointment from "@/steps";
+import DefaultAppointment from "./steps";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
     const [loading, setLoading] = useState(false);
@@ -60,10 +60,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
                     onSelectOutlet={setSelectedOutlet}
                 />
             ) : (
-                <DeafultAppointment
-                    bookingCode={bookingCode}
-                    selectedOutlet={selectedOutlet}
-                />
+                <DefaultAppointment />
             )}
         </>
     );
