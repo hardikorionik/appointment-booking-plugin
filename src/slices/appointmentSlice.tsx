@@ -3,7 +3,7 @@ import {
   createAsyncThunk,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { AppointmentState, AppointmentResponse, AppointmentPayload, BookingMode, UserDetails } from "@/types";
+import { AppointmentSliceState, AppointmentResponse, AppointmentPayload, BookingMode, UserDetails } from "@/types";
 import { createAppointmentApi, createCheckinApi } from "@/services";
 
 export const createAppointment = createAsyncThunk<
@@ -44,7 +44,7 @@ export const createCheckin = createAsyncThunk<
 );
 
 
-const initialState: AppointmentState = {
+const initialState: AppointmentSliceState = {
   loading: false,
   success: false,
   error: null,

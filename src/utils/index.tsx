@@ -24,8 +24,8 @@ type TaxRow = {
 };
 
 type Service = {
-  price?: number | string;
-  min_price?: number | string;
+  price?: number | string | null;
+  min_price?: number | string | null;
   qty?: number;
   taxRows?: TaxRow[];
 };

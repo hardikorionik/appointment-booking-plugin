@@ -144,7 +144,12 @@ export interface Service {
   requires_consent?: boolean;
 
   consent_rule?: {
-    enforcementMode?: string;
+    enforcementMode?: string | null;
+
+    frequency?:
+    | "EVERY_X_DAYS"
+    | "ONCE_PER_CUSTOMER"
+    | "EVERY_VISIT";
   } | null;
 
   consent_template?: {
@@ -153,6 +158,8 @@ export interface Service {
   } | null;
 
   consent_form_id?: string | number | null;
+
+  duration?: number;
 }
 
 export interface EnrichedService extends Service {
@@ -349,6 +356,25 @@ export interface ConsentCheckStatus {
   needsSignature: boolean;
 }
 
+
+export interface ConsentFormResponse {
+  data: unknown;
+}
+
+export interface SubmitFinalConsentPayload {
+  tenantId: string;
+  outletId: string;
+  appointmentId: string | number;
+  customerId: string | number;
+  serviceId: string | number;
+  formId: string | number;
+  staffId?: string | number;
+  signatureType: SignatureType;
+  isChecked?: boolean;
+  typedName?: string;
+  imageUrl?: string;
+}
+
 /* ─────────────────────────────────────────────────────────────
  * PAYMENT
  * ───────────────────────────────────────────────────────────── */
@@ -446,6 +472,12 @@ export interface SlotsSliceState {
   loading: boolean;
 }
 
+export interface SelectedDateType {
+  day: number;
+  month: number;
+  year: number;
+}
+
 export interface AppointmentSliceState {
   loading: boolean;
   success: boolean;
@@ -513,3 +545,5 @@ export interface FormValues {
   phone: string;
   email: string;
 }
+
+

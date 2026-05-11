@@ -14,7 +14,7 @@ import {
     getConsentFrequency,
     checkConsentRequirement,
     submitFinalConsent,
-} from "@/api/consentService";
+} from "@/services";
 import { getUserName } from "@/utils";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
@@ -23,7 +23,7 @@ import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState } from "@/store";
-import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload } from "@/types";
+import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, SelectedDateType } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -131,7 +131,7 @@ export default function ConfirmPage(): JSX.Element {
         return `${start} - ${end}`;
     };
 
-    const safeDate: SelectedDate = selectedDate ?? {
+    const safeDate: SelectedDateType = selectedDate ?? {
         day: todayDate.day,
         month: todayDate.month,
         year: todayDate.year,
