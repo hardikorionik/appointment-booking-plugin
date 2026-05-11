@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Search, Minus, Plus, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import { motion, AnimatePresence, Variants } from "framer-motion";
 
 import {
   fetchServiceData,
@@ -12,96 +14,66 @@ import {
 } from "@/slices/serviceSlice";
 
 import Breadcrumb from "@/components/common/Breadcrumb";
-import { isConsentRequiredService } from "@/api/consentService";
 import MainLayout from "@/components/common/MainLayout";
 import ServiceSidebar from "@/components/ui/ServiceSidebar";
-import { nextStep } from "@/slices/breadcrumbSlice";
-import { CurrencyIcon } from "@/utils";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
+
+import { nextStep } from "@/slices/breadcrumbSlice";
+import { isConsentRequiredService } from "@/api/consentService";
+import { CurrencyIcon } from "@/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
-/* =========================
-   TYPES
-========================= */
+import type { RootState, AppDispatch } from "@/store";
 
-interface TaxRow {
-  isActive: boolean;
-}
-
-interface Service {
-  id: string | number;
-  name: string;
-  description?: string;
-  estimated_time?: number;
-  min_time?: number;
-  max_time?: number;
-  price?: number;
-  min_price?: number;
-  max_price?: number;
-  qty?: number;
-  taxRows?: TaxRow[];
-}
-
-interface Category {
-  id: string | number;
-  name: string;
-  services: Service[];
-}
-
-interface Professional {
-  name?: string;
-}
-
-interface BookingState {
-  outletData: unknown;
-}
-
-interface ServiceState {
-  categories: Category[];
-  selectedCategory: Category | null;
-  selectedServices: Service[];
-  selectedProfessional: Professional | null;
-  loading: boolean;
-}
-
-interface RootState {
-  booking: BookingState;
-  service: ServiceState;
-}
+import type { Category, Service, ServiceItem, TaxRow } from "@/types";
 
 /* =========================
    ANIMATION
 ========================= */
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     transform: "translateY(14px)",
   },
+
   visible: (index: number) => ({
     opacity: 1,
     transform: "translateY(0px)",
+
     transition: {
       delay: index * 0.05,
       duration: 0.32,
       ease: [0.22, 1, 0.36, 1],
     },
   }),
+
   exit: {
     opacity: 0,
     transform: "translateY(8px)",
-    transition: { duration: 0.2 },
+
+    transition: {
+      duration: 0.2,
+    },
   },
 };
 
+/* =========================
+   COMPONENT
+========================= */
+
 export default function ServicesPage() {
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { width } = useWindowSize();
 
-  const { outletData } = useSelector((state: RootState) => state.booking);
-
   const hasFetched = useRef<boolean>(false);
+
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const { outletData } = useSelector((state: RootState) => state.booking);
 
   const {
     categories,
@@ -111,17 +83,15 @@ export default function ServicesPage() {
     loading,
   } = useSelector((state: RootState) => state.service);
 
-  const allServices = categories.flatMap((cat) => cat.services);
+  const allServices: Service[] = categories.flatMap(
+    (cat: Category) => cat.services,
+  );
 
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const baseServices = selectedCategory
+  const baseServices: Service[] = selectedCategory
     ? selectedCategory.services
     : allServices;
 
-  const servicesToShow = baseServices.filter((svc) => {
+  const servicesToShow = baseServices.filter((svc: Service) => {
     const term = searchTerm.toLowerCase();
 
     return (
@@ -130,19 +100,30 @@ export default function ServicesPage() {
     );
   });
 
-  const hasActiveTax = (svc: Service) => {
-    return svc.taxRows?.some((tax) => tax.isActive);
+  const hasActiveTax = (svc: Service): boolean => {
+    return svc.taxRows?.some((tax: TaxRow) => tax.isActive) || false;
   };
+
+  const mapServiceToItem = (svc: Service): Omit<ServiceItem, "qty"> => ({
+    ...svc,
+    price: svc.price !== null ? Number(svc.price) : undefined,
+  });
 
   useEffect(() => {
     if (hasFetched.current) return;
 
     const tenantId = localStorage.getItem("tenantId");
+
     const outletId = localStorage.getItem("outletId");
 
     if (!tenantId || !outletId) return;
 
-    dispatch(fetchServiceData({ tenantId, outletId }));
+    dispatch(
+      fetchServiceData({
+        tenantId,
+        outletId,
+      }),
+    );
 
     const hasVisited = sessionStorage.getItem("services_visited");
 
@@ -153,10 +134,10 @@ export default function ServicesPage() {
     hasFetched.current = true;
   }, [dispatch]);
 
-  const totalPrice = selectedServices.reduce((sum, s) => {
-    const price = Number(s.price || s.min_price || 0);
+  const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
+    const price = Number(s.price || 0);
 
-    return sum + price * (s.qty || 0);
+    return sum + price * s.qty;
   }, 0);
 
   return (
@@ -179,7 +160,7 @@ export default function ServicesPage() {
         </button>
       }
     >
-      <Breadcrumb activePage="services" />
+      <Breadcrumb />
 
       <div className="mt-5">
         <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
@@ -187,13 +168,14 @@ export default function ServicesPage() {
         </h1>
 
         <p className="text-sm text-black/60 mb-6">
-          Select from {selectedProfessional?.name}'s available services
+          Select from {selectedProfessional?.name}
+          's available services
         </p>
 
         <div className="w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_200px] gap-4 items-start">
           <div
             ref={scrollRef}
-            onWheel={(e) => {
+            onWheel={(e: React.WheelEvent<HTMLDivElement>) => {
               if (scrollRef.current) {
                 scrollRef.current.scrollLeft += e.deltaY;
               }
@@ -209,10 +191,14 @@ export default function ServicesPage() {
               }`}
             >
               All Services (
-              {categories.reduce((sum, c) => sum + c.services.length, 0)})
+              {categories.reduce(
+                (sum: number, c: Category) => sum + c.services.length,
+                0,
+              )}
+              )
             </button>
 
-            {categories.map((cat) => (
+            {categories.map((cat: Category) => (
               <button
                 key={cat.id}
                 onClick={() => dispatch(setCategory(cat))}
@@ -261,14 +247,14 @@ export default function ServicesPage() {
         <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-270px)] max-md:h-[calc(100dvh-310px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
           <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2.5">
             {loading ? (
-              Array.from({ length: 10 }).map((_, i) => (
-                <ServiceSkeletonCard key={i} />
-              ))
+              Array.from({
+                length: 10,
+              }).map((_, i) => <ServiceSkeletonCard key={i} />)
             ) : (
               <AnimatePresence mode="popLayout">
-                {servicesToShow?.map((svc, index) => {
+                {servicesToShow?.map((svc: Service, index: number) => {
                   const isSelected = selectedServices.some(
-                    (s) => s.id === svc.id,
+                    (s: ServiceItem) => s.id === svc.id,
                   );
 
                   return (
@@ -285,17 +271,18 @@ export default function ServicesPage() {
                       }}
                       onClick={() => {
                         const exists = selectedServices.find(
-                          (s) => s.id === svc.id,
+                          (s: ServiceItem) => s.id === svc.id,
                         );
 
                         if (exists && exists.qty === 1) {
                           dispatch(decrementService(svc.id));
                         } else {
-                          dispatch(toggleService(svc));
+                          dispatch(toggleService(mapServiceToItem(svc)));
                         }
                       }}
                       className={[
                         "service-card relative border-[1.5px] rounded-md p-3 cursor-pointer transition-all",
+
                         isSelected
                           ? "bg-[#fff8f8] border-red"
                           : "bg-white border-border hover:border-red/80",
@@ -345,8 +332,9 @@ export default function ServicesPage() {
 
                       <div className="flex items-center justify-between gap-2 mt-2">
                         <button
-                          onClick={(e) => {
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.stopPropagation();
+
                             dispatch(decrementService(svc.id));
                           }}
                           className="w-10 h-8 p-2 rounded-md cursor-pointer border border-gray-300 flex items-center justify-center hover:bg-stone-100 transition-all duration-200"
@@ -355,20 +343,21 @@ export default function ServicesPage() {
                         </button>
 
                         <span className="text-sm font-semibold min-w-5 text-center">
-                          {selectedServices.find((s) => s.id === svc.id)?.qty ||
-                            0}
+                          {selectedServices.find(
+                            (s: ServiceItem) => s.id === svc.id,
+                          )?.qty || 0}
                         </span>
 
                         <button
-                          onClick={(e) => {
+                          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.stopPropagation();
 
                             const exists = selectedServices.find(
-                              (s) => s.id === svc.id,
+                              (s: ServiceItem) => s.id === svc.id,
                             );
 
                             if (!exists) {
-                              dispatch(toggleService(svc));
+                              dispatch(toggleService(mapServiceToItem(svc)));
                             } else {
                               dispatch(incrementService(svc.id));
                             }
