@@ -634,9 +634,8 @@ function SlotSection({
         </div>
 
         <span
-          className={`transition-transform duration-200 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            }`}
         >
           <ChevronDown />
         </span>

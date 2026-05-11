@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { Step, BreadcrumbState } from "@/types";
+import { Step, BreadcrumbState } from "@/types";
 
 
 const getStepsOrder = (isService: boolean): Step[] => {
