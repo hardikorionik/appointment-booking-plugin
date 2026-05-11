@@ -54,7 +54,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
                 <div className="flex items-start justify-between mb-5"><StatusBadge status={item.isOpen} /></div>
                 <div className="flex-1">
                     <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-1">{item.outletName}</h2>
-                    <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-3 2xl:line-clamp-2 min-h-10 lg:min-h-15 2xl:min-h-10">{item.address}</p>
+                    <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-3 2xl:line-clamp-2 min-h-10 xl:min-h-15 2xl:min-h-10">{item.address}</p>
                 </div>
                 <button
                     className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-btn-bg text-btn-text border-btn-bg" : "bg-white text-btn-bg-hover border-btn-bg-hover group-hover:bg-btn-bg-hover group-hover:text-btn-text"}`}
@@ -88,7 +88,7 @@ export default function ChooseYourOutlet({ outlets, onSelectOutlet }: OutletProp
                 </h1>
                 <div className="w-14 h-0.75 bg-red-600" />
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                 <AnimatePresence mode="popLayout">
                     {outlets?.map((outlet: Outlet, index: number) => (
                         <motion.div
