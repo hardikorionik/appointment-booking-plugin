@@ -40,6 +40,21 @@ export type SignatureType =
   | "DRAW_SIGNATURE"
   | "TYPED_NAME";
 
+export interface StaffMember {
+  id: string;
+  name: string;
+  firstname?: string;
+  lastname?: string;
+  imageUrl?: string;
+  color?: string;
+}
+
+export interface FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+}
 /* ─────────────────────────────────────────────────────────────
  * THEME
  * ───────────────────────────────────────────────────────────── */
