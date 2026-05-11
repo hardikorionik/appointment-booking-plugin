@@ -29,7 +29,6 @@ export type Step =
 export interface BreadcrumbState {
   currentStep: Step;
   completedSteps: string[];
-  isService: boolean;
 }
 
 export type PageMap = Record<StepKey, ComponentType>;
@@ -716,11 +715,6 @@ export interface CalendarMonth {
   year: number;
   startDow: number;
   days: number;
-}
-
-// Booking types
-export interface InitBookingState {
-  outletData: Outlet | null;
 }
 
 export interface InitBookingPayload {

@@ -19,13 +19,13 @@ function AppContent(): JSX.Element {
   const { currentStep } = useSelector(
     (state: RootState) => state.breadcrumbs
   );
-  const outletData = useSelector(
-    (state: RootState) => state.booking.outletData
+  const { isService } = useSelector(
+    (state: RootState) => state.booking
   );
 
   const PAGE_MAP: PageMap = {
-    services: outletData?.isService ? ServicesPage : ServiceProfessionalPage,
-    professionals: outletData?.isService ? Professionals : ProfessionalServicePage,
+    services: isService ? ServicesPage : ServiceProfessionalPage,
+    professionals: isService ? Professionals : ProfessionalServicePage,
     time: TimePage,
     details: DetailsPage,
     confirm: ConfirmPage,

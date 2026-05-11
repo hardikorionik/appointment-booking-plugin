@@ -1,17 +1,15 @@
 import { MoveRight, X } from "lucide-react";
 import { CurrencyIcon } from "@/utils";
-import { ServiceItem, OutletData, Step } from "@/types";
+import { ServiceItem, Step } from "@/types";
 
 interface ServiceSidebarProps {
   selectedServices: ServiceItem[];
-  outletData: OutletData | null;
   totalPrice: number;
   goToStep: (step: Step) => void;
 }
 
 export default function ServiceSidebar({
   selectedServices,
-  outletData,
   totalPrice,
   goToStep,
 }: ServiceSidebarProps) {

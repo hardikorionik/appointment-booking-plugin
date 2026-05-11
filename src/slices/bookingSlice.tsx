@@ -1,23 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { InitBookingState } from "@/types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: InitBookingState = {
-  outletData: null
+const initialState = {
+  id: "",
+  outletName: "",
+  timeZone: "",
+  image: "",
+  tenantId: "",
+  address: "",
+  isOpen: false,
+  outletTimeZoneDate: "",
+  outletTimeZoneYear: "",
+  createdAt: "",
+  isService: true,
 };
 
 const bookingSlice = createSlice({
   name: "booking",
   initialState,
   reducers: {
-    clearBooking: (state) => {
-      state.outletData = null;
+    clearBooking: () => {
+      return initialState;
     },
-    setOutletData: (state, action) => {
-      state.outletData = action.payload;
+    setOutletData: (_state, action: PayloadAction<typeof initialState>) => {
+      return action.payload;
     },
   },
 });
-
 
 export const { clearBooking, setOutletData } = bookingSlice.actions;
 export default bookingSlice.reducer;
