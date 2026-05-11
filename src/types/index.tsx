@@ -1,7 +1,20 @@
+import { ComponentType } from "react";
+
 // Types for the booking plugin
 export type BookingPluginProps = {
   bookingCode: string;
 };
+
+export type StepKey =
+    | "services"
+    | "professionals"
+    | "time"
+    | "details"
+    | "confirm"
+    | "success"
+    | "notfound";
+
+export type PageMap = Record<StepKey, ComponentType>;
 
 // Types for customizable themes
 export interface ThemeSettings {
