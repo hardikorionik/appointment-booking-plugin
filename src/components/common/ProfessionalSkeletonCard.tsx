@@ -1,6 +1,6 @@
-import type { ReactElement } from "react";
+import type { JSX } from "react";
 
-export default function ProfessionalSkeletonCard(): ReactElement {
+export default function ProfessionalSkeletonCard(): JSX.Element {
   return (
     <div className="h-20.5 rounded-sm relative overflow-hidden bg-[#e0e0e0]">
       <div

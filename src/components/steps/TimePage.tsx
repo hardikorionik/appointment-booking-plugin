@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, JSX } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import { toast } from "react-toastify";
@@ -25,7 +25,7 @@ import type { RootState, SlotItem, DateItem } from "@/types";
 import OrderSidebar from "@/components/ui/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
-import CalendarOverlay from "@/components/ui/CalendarOverlay";
+import CalendarOverlay from "@/components/common/CalendarOverlay";
 
 import { useWindowSize } from "@/hooks/useWindowSize";
 
@@ -48,7 +48,7 @@ const MONTH_NAMES = [
 
 const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export default function TimePage() {
+export default function TimePage(): JSX.Element {
   const dispatch = useDispatch();
   const { height } = useWindowSize();
 
@@ -128,6 +128,7 @@ export default function TimePage() {
         price: assignment?.price || svc.price || svc.min_price || 0,
         duration:
           assignment?.duration || svc.estimated_time || svc.min_time || 0,
+        qty: assignment?.qty || 1,
       };
     });
   }, [selectedProfessional, staff, selectedServices]);
@@ -588,7 +589,7 @@ interface DateNavBtnProps {
   children: React.ReactNode;
 }
 
-function DateNavBtn({ onClick, children }: DateNavBtnProps) {
+function DateNavBtn({ onClick, children }: DateNavBtnProps): JSX.Element {
   return (
     <button
       onClick={onClick}
@@ -619,7 +620,7 @@ function SlotSection({
   handleSlotSelect,
   isOpen,
   onToggle,
-}: SlotSectionProps) {
+}: SlotSectionProps): JSX.Element | null {
   if (!slots || slots?.length === 0) return null;
 
   return (

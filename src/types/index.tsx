@@ -198,8 +198,17 @@ export interface Category {
   services: Service[];
 }
 
-export interface FilteredCategory extends Category {
-  services: Service[];
+export interface StaffServiceAssignment {
+  id: string;
+  staffName: string;
+  name: string;
+  categoryId: string;
+  price: number;
+  qty: number;
+  duration: number; // duration in minutes
+  assigned_at: string; // ISO date string
+  assigned_via: string;
+  assigned: boolean;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -581,6 +590,7 @@ export interface RootState {
 
   booking: {
     outletTimeZone: string;
+    outletTimeZoneYear: number;
   };
 
   slots: {
@@ -594,4 +604,12 @@ export interface RootState {
       evening: SlotItem[];
     };
   };
+}
+
+export interface CalendarMonth {
+  label: string;
+  monthIdx: number;
+  year: number;
+  startDow: number;
+  days: number;
 }
