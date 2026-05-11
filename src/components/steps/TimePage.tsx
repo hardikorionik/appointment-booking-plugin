@@ -11,17 +11,15 @@ import {
   Moon,
   Sunrise,
 } from "lucide-react";
-
 import { getStaffSlots } from "@/slices/slotSlice";
 import {
   setSelectedSlots,
   setSelectedDate,
   setSelectedTime,
 } from "@/slices/slotSlice";
-
 import { getUserName } from "@/utils";
 import { nextStep } from "@/slices/breadcrumbSlice";
-import type { RootState, SlotItem, DateItem } from "@/types";
+import { RootState, SlotItem, DateItem, Slot } from "@/types";
 import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
@@ -70,12 +68,8 @@ export default function TimePage(): JSX.Element {
 
   const SLOT_INTERVAL = 15;
 
-  const allSlots = useMemo<SlotItem[]>(() => {
-    return [
-      ...(slots?.morning || []),
-      ...(slots?.afternoon || []),
-      ...(slots?.evening || []),
-    ];
+  const allSlots = useMemo(() => {
+    return [slots.morning, slots.afternoon, slots.evening].flat();
   }, [slots]);
 
   const startDate = useMemo(
@@ -331,7 +325,7 @@ export default function TimePage(): JSX.Element {
   const pmSlots = slots?.afternoon || [];
   const evSlots = slots?.evening || [];
 
-  const hasAvailable = (slotsArr: SlotItem[]): boolean =>
+  const hasAvailable = (slotsArr: Slot[]): boolean =>
     slotsArr.some((s) => !s.isBooked && s.status === "AVAILABLE");
 
   const getDefaultOpenSection = (): string | null => {
@@ -377,7 +371,7 @@ export default function TimePage(): JSX.Element {
   }, [selectedSlotIndexes, allSlots, amSlots, pmSlots, evSlots]);
 
   useEffect(() => {
-    const hasAvailable = (slotsArr: SlotItem[]): boolean =>
+    const hasAvailable = (slotsArr: Slot[]): boolean =>
       slotsArr?.some((s) => !s.isBooked && s.status === "AVAILABLE");
 
     const noSlotsAvailable =
@@ -413,7 +407,6 @@ export default function TimePage(): JSX.Element {
               toast.warning("Please select a time slot");
               return;
             }
-
             dispatch(nextStep("details"));
           }}
           disabled={!selectedTime || !selectedSlotIndexes.length}
@@ -441,13 +434,9 @@ export default function TimePage(): JSX.Element {
 
           {dates.slice(stripStart, stripStart + visibleCount).map((d) => {
             const dt = DateTime.fromISO(d.fullDate || "");
-
             const dow = dt.weekday % 7;
-
             const today = DateTime.now().setZone(outletTimeZone).startOf("day");
-
             const isToday = dt.hasSame(today, "day");
-
             const isSelected =
               selectedDate?.day === d.day &&
               selectedDate?.month === d.month &&
@@ -490,8 +479,7 @@ export default function TimePage(): JSX.Element {
           className="ml-4 p-2 text-sm gap-1.5 font-semibold max-md:text-xs flex flex-col items-center justify-center rounded-sm cursor-pointer transition-all duration-150 min-w-12.5 select-none bg-red text-white!"
         >
           <Calendar1 size={16} />
-
-          {selectedDate
+          {selectedDate?.month != null
             ? `${MONTH_NAMES[selectedDate.month - 1]} ${selectedDate.year}`
             : `${MONTH_NAMES[startDate.month - 1]} ${startDate.year}`}
         </button>
@@ -510,15 +498,15 @@ export default function TimePage(): JSX.Element {
           <div
             className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"
             style={{
-              background: selectedProfessional.color || "#111",
+              background: selectedProfessional?.color || "#111",
             }}
           >
-            {getUserName(selectedProfessional.name)}
+            {getUserName(selectedProfessional?.name)}
           </div>
         )}
 
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-sm">{selectedProfessional.name}</p>
+          <p className="font-semibold text-sm">{selectedProfessional?.name}</p>
 
           <p className="text-xs text-muted truncate">
             {selectedStaffServices.map((s) => s.name).join(", ")} ·{" "}
@@ -632,7 +620,6 @@ function SlotSection({
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[1.2px] text-black/80">
           <span>{icon}</span> {label}
         </div>
-
         <span
           className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
             }`}
@@ -640,17 +627,13 @@ function SlotSection({
           <ChevronDown />
         </span>
       </div>
-
       {isOpen && (
         <div className="p-3 border-t border-border bg-white">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2">
-            {slots.map((slot) => {
-              const globalIndex = allSlots.findIndex((s) => s.id === slot.id);
-
+            {slots.map((slot: SlotItem) => {
+              const globalIndex = allSlots.findIndex((s: SlotItem) => s.id === slot.id);
               const isSelected = selectedSlotIndexes.includes(globalIndex);
-
               const isDisabled = slot.isBooked || slot.status !== "AVAILABLE";
-
               return (
                 <div
                   key={slot.id}
@@ -668,7 +651,6 @@ function SlotSection({
                   ].join(" ")}
                 >
                   <span className="font-mono text-sm">{slot.start_time}</span>
-
                   <span className="text-[10px]">
                     {isDisabled ? "Booked" : "Available"}
                   </span>

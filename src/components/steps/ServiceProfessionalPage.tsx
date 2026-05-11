@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X } from "lucide-react";
-
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
 import {
@@ -29,6 +28,7 @@ import type {
   TaxRow,
   Assignment,
   FilteredCategory,
+  StaffAssignment,
 } from "@/types";
 
 /* ANIMATION */
@@ -79,13 +79,13 @@ export default function ServiceProfessionalPage() {
 
   const assignedServiceIds = new Set(
     selectedProfessional
-      ? selectedProfessional.assignments.map((a: Assignment) => a.id)
+      ? selectedProfessional?.assignments?.map((a: StaffAssignment) => a.id)
       : [],
   );
 
   const assignedCategoryIds = new Set(
     selectedProfessional
-      ? selectedProfessional.assignments.map((a: Assignment) => a.categoryId)
+      ? selectedProfessional?.assignments?.map((a: StaffAssignment) => a.categoryId)
       : [],
   );
 
@@ -175,8 +175,8 @@ export default function ServiceProfessionalPage() {
                 setSelectedCategoryId("ALL");
               }}
               className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${!selectedCategory
-                  ? "bg-red text-white"
-                  : "bg-white border-border hover:border-red/80 hover:text-red transition"
+                ? "bg-red text-white"
+                : "bg-white border-border hover:border-red/80 hover:text-red transition"
                 }`}
             >
               All Services (
@@ -196,8 +196,8 @@ export default function ServiceProfessionalPage() {
                   setSelectedCategoryId(cat.id);
                 }}
                 className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${selectedCategoryId === cat.id
-                    ? "bg-red text-white"
-                    : "bg-white border-border hover:border-red/80 hover:text-red transition"
+                  ? "bg-red text-white"
+                  : "bg-white border-border hover:border-red/80 hover:text-red transition"
                   }`}
               >
                 {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} (
@@ -267,7 +267,7 @@ export default function ServiceProfessionalPage() {
                         );
 
                         if (exists && exists.qty === 1) {
-                          dispatch(decrementService(svc.id));
+                          dispatch(decrementService(String(svc.id)));
                         } else {
                           dispatch(toggleService({ ...svc, price: svc.price ? Number(svc.price) : undefined }));
                         }
@@ -301,7 +301,7 @@ export default function ServiceProfessionalPage() {
                           {svc.description}
                         </p>
 
-                        {svc.description?.length > 25 && (
+                        {svc.description && svc.description?.length > 25 && (
                           <div className="absolute hidden group-hover:block bg-surface text-xs p-2 rounded top-full mt-1 z-10 w-52">
                             {svc.description}
                           </div>
@@ -327,7 +327,7 @@ export default function ServiceProfessionalPage() {
                           onClick={(e) => {
                             e.stopPropagation();
 
-                            dispatch(decrementService(svc.id));
+                            dispatch(decrementService(String(svc.id)));
                           }}
                           className="w-10 h-8 p-2 rounded-md cursor-pointer border border-gray-300 flex items-center justify-center hover:bg-stone-100 transition-all duration-200"
                         >
@@ -356,7 +356,7 @@ export default function ServiceProfessionalPage() {
                                 }),
                               );
                             } else {
-                              dispatch(incrementService(svc.id));
+                              dispatch(incrementService(String(svc.id)));
                             }
                           }}
                           className="w-10 h-8 p-2 rounded-md cursor-pointer bg-red text-white flex items-center justify-center hover:bg-red/90 transition-all duration-200"

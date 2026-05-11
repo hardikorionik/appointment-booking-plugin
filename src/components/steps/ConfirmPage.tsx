@@ -23,7 +23,7 @@ import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState } from "@/store";
-import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, SelectedDateType, ConsentDraftEntry, ConsentDraftMap, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload } from "@/types";
+import { PaymentMeta, PayType, Service, StaffMember, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, SelectedDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -86,7 +86,7 @@ export default function ConfirmPage(): JSX.Element {
     const consentFlowLockRef = useRef<boolean>(false);
     const lastOpenedConsentServiceRef = useRef<string>("");
 
-    const todayDate = DateTime.now().setZone(outletTimeZone);
+    const todayDate = DateTime.now().setZone(outletTimeZone ?? "UTC");
 
     // ─── Enriched services ──────────────────────────────────────────────────────
 
@@ -102,8 +102,8 @@ export default function ConfirmPage(): JSX.Element {
         return {
             ...updatedSvc,
             duration: assignment?.duration ?? svc.estimated_time ?? svc.min_time ?? 0,
-            tax: calculateServiceTax(updatedSvc) as number,
-            unitTax: calculateServiceTax(updatedSvc, { perUnit: true }) as number,
+            tax: calculateServiceTax(updatedSvc),
+            unitTax: calculateServiceTax(updatedSvc, { perUnit: true }),
         };
     });
 
@@ -131,11 +131,14 @@ export default function ConfirmPage(): JSX.Element {
         return `${start} - ${end}`;
     };
 
-    const safeDate: SelectedDateType = selectedDate ?? {
-        day: todayDate.day,
-        month: todayDate.month,
-        year: todayDate.year,
-    };
+    const safeDate: SelectedDateType =
+        typeof selectedDate === "object" && selectedDate !== null
+            ? selectedDate
+            : {
+                day: todayDate.day,
+                month: todayDate.month,
+                year: todayDate.year,
+            };
 
     const selectedStartIndex: number | undefined = selectedSlotIndexes?.[0];
 
@@ -387,7 +390,7 @@ export default function ConfirmPage(): JSX.Element {
                         ? "SIGNATURE_IMAGE"
                         : "CHECKBOX_ONLY");
 
-            const submitPayload: Record<string, unknown> = {
+            const submitPayload: SubmitFinalConsentPayload = {
                 tenantId,
                 outletId,
                 appointmentId,
@@ -457,7 +460,7 @@ export default function ConfirmPage(): JSX.Element {
         }
         try {
             setLoading(true);
-            let result: ReturnType<typeof dispatch> extends Promise<infer R> ? R : never;
+            let result;
             if (bookingMode === "checkin") {
                 result = await dispatch(createCheckin(checkinPayload));
             } else {
@@ -489,7 +492,7 @@ export default function ConfirmPage(): JSX.Element {
                     });
                     setShowPaymentModal(true);
                 } else {
-                    dispatch(setAppointmentId(appointmentId));
+                    dispatch(setAppointmentId(String(appointmentId)));
                     dispatch(nextStep("success"));
                 }
             }
@@ -596,13 +599,17 @@ export default function ConfirmPage(): JSX.Element {
                 toast.warning("Payment pending");
             }
             setShowPaymentModal(false);
-            dispatch(setAppointmentId(appointmentId));
+            dispatch(setAppointmentId(String(paymentMeta?.appointmentId)));
             dispatch(nextStep("success"));
             return true;
         } catch (err) {
-            toast.warning(err ?? "Payment failed, but appointment is booked");
+            toast.warning(
+                err instanceof Error
+                    ? err.message
+                    : "Payment failed, but appointment is booked"
+            );
             setShowPaymentModal(false);
-            dispatch(setAppointmentId(paymentMeta?.appointmentId));
+            dispatch(setAppointmentId(String(paymentMeta?.appointmentId)));
             dispatch(nextStep("success"));
             return true;
         } finally {
@@ -631,7 +638,7 @@ export default function ConfirmPage(): JSX.Element {
                     onButtonClick={handleBooking}
                     showTip={payType === "card"}
                     tipPct={tipPct}
-                    onTipChange={(data: unknown) => dispatch(setTips(data))}
+                    onTipChange={(data: unknown) => dispatch(setTips((data as number) ?? 0))}
                     consentRequired={servicesNeedingConsent?.length > 0}
                     consentCompleted={doneConsentCount}
                     totalConsents={totalConsentCount}

@@ -72,7 +72,7 @@ export default function CalendarOverlay({
 
   if (!isOpen) return null;
 
-  const startDate = DateTime.now().setZone(outletTimeZone);
+  const startDate = DateTime.now().setZone(outletTimeZone ?? "UTC");
 
   const handlePick = (monthIdx: number, day: number): void => {
     dispatch(

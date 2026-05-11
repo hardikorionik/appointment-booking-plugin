@@ -2,33 +2,8 @@ import { useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { RotateCw, Check, X } from "lucide-react";
 import SignatureCanvas from "react-signature-canvas";
+import { ConsentPayload, ConsentModalProps, ConsentFormData } from "@/types";
 
-type EnforcementType =
-  | "CHECKBOX_ONLY"
-  | "TYPED_NAME"
-  | "DRAW_SIGNATURE";
-
-interface ConsentFormData {
-  accepted: boolean;
-  typedName: string;
-  signatureDataUrl: string;
-  emailMe: boolean;
-}
-
-interface ConsentPayload {
-  accepted: boolean;
-  typedName: string;
-  signatureDataUrl: string;
-  emailMe: boolean;
-}
-
-interface ConsentModalProps {
-  onClose: () => void;
-  onConfirm: (payload: ConsentPayload) => void;
-  enforcement: EnforcementType;
-  heading?: string;
-  consent: string;
-}
 
 const ConsentModal = ({
   onClose,

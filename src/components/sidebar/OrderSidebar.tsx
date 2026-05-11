@@ -6,18 +6,12 @@ import {
   ReactNode,
   JSX,
 } from "react";
-
 import { useSelector } from "react-redux";
-
 import { motion, AnimatePresence } from "framer-motion";
-
 import { DateTime } from "luxon";
-
 import { X, MoveRight } from "lucide-react";
-
 import { getUserName, CurrencyIcon } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
-
 import type {
   RootState,
   ServiceItem,
@@ -88,7 +82,7 @@ export default function OrderSidebar({
     (state: RootState) => state.booking,
   );
 
-  const startDate = DateTime.now().setZone(outletTimeZone);
+  const startDate = DateTime.now().setZone(outletTimeZone ?? "UTC");
 
   const [customTip, setCustomTip] = useState<string>("");
 
@@ -201,8 +195,13 @@ export default function OrderSidebar({
       ? formatTimeRange(selectedStartIndex)
       : null;
 
+  // const dateStr = timeRange
+  //   ? `${MONTH_NAMES[safeDate.month]} ${safeDate.day} at ${timeRange}`
+  //   : null;
+  const monthIndex = safeDate.month ?? 0;
+
   const dateStr = timeRange
-    ? `${MONTH_NAMES[safeDate.month]} ${safeDate.day} at ${timeRange}`
+    ? `${MONTH_NAMES[monthIndex]} ${safeDate.day} at ${timeRange}`
     : null;
 
   const taxAmt = selectedStaffServices.reduce(
@@ -397,12 +396,11 @@ export default function OrderSidebar({
             (svc, index) => (
               <li
                 key={svc.id}
-                className={`flex justify-between text-sm py-1.5 ${
-                  index !==
+                className={`flex justify-between text-sm py-1.5 ${index !==
                   selectedStaffServices?.length - 1
-                    ? "border-b border-dotted border-gray-400"
-                    : ""
-                }`}
+                  ? "border-b border-dotted border-gray-400"
+                  : ""
+                  }`}
               >
                 <span className="flex justify-between flex-row items-center gap-1">
                   {svc.name} <X size={12} />{" "}
@@ -451,7 +449,7 @@ export default function OrderSidebar({
                     index ===
                     [...TIP_OPTIONS, "custom"]
                       .length -
-                      1;
+                    1;
 
                   return (
                     <button
@@ -476,11 +474,10 @@ export default function OrderSidebar({
                       className={`
                       px-2 py-1.5 border rounded-sm cursor-pointer text-xs text-center
                       ${isFirst || isLast ? "flex-none w-16" : "flex-1"}
-                      ${
-                        isActive
+                      ${isActive
                           ? "bg-red text-white border-red"
                           : "bg-white border-border"
-                      }
+                        }
                     `}
                     >
                       {isCustom
@@ -529,7 +526,7 @@ export default function OrderSidebar({
                         value === "" ||
                         (Number(value) >= 0 &&
                           Number(value) <=
-                            100)
+                          100)
                       ) {
                         setCustomTip(value);
 
@@ -559,11 +556,10 @@ export default function OrderSidebar({
                 <div
                   className="bg-yellow-600 h-1.5 rounded-full transition-all duration-300"
                   style={{
-                    width: `${
-                      (consentCompleted /
-                        totalConsents) *
+                    width: `${(consentCompleted /
+                      totalConsents) *
                       100
-                    }%`,
+                      }%`,
                   }}
                 />
               </div>
@@ -595,16 +591,16 @@ export default function OrderSidebar({
 
           {(!showTaxesOnlyIfTime ||
             timeRange) && (
-            <PriceRow
-              label="Taxes"
-              value={
-                <span className="flex items-center">
-                  <CurrencyIcon size={14} />
-                  {taxAmt.toFixed(2)}
-                </span>
-              }
-            />
-          )}
+              <PriceRow
+                label="Taxes"
+                value={
+                  <span className="flex items-center">
+                    <CurrencyIcon size={14} />
+                    {taxAmt.toFixed(2)}
+                  </span>
+                }
+              />
+            )}
 
           <div className="flex justify-between text-lg pt-3 border-t mt-2">
             <span className="font-semibold">

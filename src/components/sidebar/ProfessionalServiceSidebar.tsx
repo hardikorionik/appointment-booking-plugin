@@ -1,8 +1,6 @@
 import { MoveRight } from "lucide-react";
-
 import { getUserName } from "@/utils";
-
-import { ProfessionalSidebarProps, Staff, Step } from "@/types";
+import { ProfessionalSidebarProps } from "@/types";
 import { JSX } from "react";
 
 const ProfessionalServiceSidebar = ({

@@ -1,30 +1,19 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-
 import { getUserName } from "@/utils";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { toggleProfessional } from "@/slices/serviceSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { calculateServiceTax } from "@/utils/taxHelper";
-
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
-
 import type { RootState, AppDispatch } from "@/store";
+import type { ServiceItem, Staff, StaffAssignment, StaffServiceAssignment, Step } from "@/types";
 
-import type { ServiceItem, Staff, StaffServiceAssignment, Step } from "@/types";
-
-interface SelectedStaffService extends ServiceItem {
-  tax: number;
-  duration: number;
-  estimated_time?: number | null;
-  min_time?: number | null;
-  min_price?: string | number | null;
-}
 
 const cardVariants: Variants = {
   hidden: {
@@ -59,7 +48,7 @@ export default function Professionals() {
 
   const selectedServiceIds = selectedServices.map((s: ServiceItem) => s.id);
 
-  const selectedStaffServices: SelectedStaffService[] = useMemo(() => {
+  const selectedStaffServices: any[] = useMemo(() => {
     if (!selectedProfessional?.id) return [];
 
     const staffMember = staff.find(
@@ -69,8 +58,8 @@ export default function Professionals() {
     if (!staffMember) return [];
 
     return selectedServices.map((svc: ServiceItem) => {
-      const assignment = staffMember.assignments.find(
-        (a: StaffServiceAssignment) => a.id === svc.id,
+      const assignment = staffMember?.assignments?.find(
+        (a: StaffAssignment) => a.id === svc?.id,
       );
 
       const updatedSvc = {
@@ -87,31 +76,26 @@ export default function Professionals() {
     });
   }, [selectedProfessional, staff, selectedServices]);
 
-  const totalTax = selectedStaffServices.reduce(
-    (sum: number, s: SelectedStaffService) => sum + s.tax,
-    0,
-  );
-
   const totalPrice = selectedStaffServices.reduce(
-    (sum: number, s: SelectedStaffService) => sum + Number(s.price) * s.qty,
+    (sum: number, s: StaffServiceAssignment) => sum + Number(s.price || 0) * s.qty,
     0,
   );
 
   const totalDuration = selectedStaffServices.reduce(
-    (sum: number, s: SelectedStaffService) => sum + s.duration * s.qty,
+    (sum: number, s: StaffServiceAssignment) => sum + (s?.duration || 0) * s.qty,
     0,
   );
 
   const filteredStaff = useMemo(() => {
     if (!selectedServiceIds.length) return [];
 
-    return staff.filter((member: Staff) =>
-      selectedServiceIds.every((serviceId: string) =>
-        member.assignments.some(
-          (a: StaffServiceAssignment) => a.id === serviceId && a.assigned,
-        ),
-      ),
-    );
+    return staff.filter((member: Staff) => {
+      const assignments = member.assignments ?? [];
+
+      return selectedServiceIds?.every((serviceId: string | number) =>
+        assignments.some((a: StaffAssignment) => String(a.id) == String(serviceId) && Boolean(a?.assigned))
+      );
+    });
   }, [staff, selectedServiceIds]);
 
   const isMobile = width < 768;
@@ -134,7 +118,6 @@ export default function Professionals() {
         <ProfessionalSidebar
           pro={selectedProfessional}
           selectedStaffServices={selectedStaffServices}
-          totalTax={totalTax}
           totalPrice={totalPrice}
           totalDuration={totalDuration}
           goToStep={(data: Step) => dispatch(nextStep(data))}
@@ -196,11 +179,10 @@ export default function Professionals() {
                           dispatch(nextStep("time"));
                         }
                       }}
-                      className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${
-                        selectedProfessional?.id === p.id
-                          ? "border-red bg-[#fff8f8]"
-                          : "bg-white hover:border-red"
-                      }`}
+                      className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
+                        ? "border-red bg-[#fff8f8]"
+                        : "bg-white hover:border-red"
+                        }`}
                     >
                       {p.imageUrl ? (
                         <img

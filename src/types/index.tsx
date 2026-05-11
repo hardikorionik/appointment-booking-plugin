@@ -1,9 +1,13 @@
+import { DateObjectUnits } from "luxon";
 import { ComponentType, ReactNode } from "react";
 
 /* ─────────────────────────────────────────────────────────────
  * COMMON TYPES
  * ───────────────────────────────────────────────────────────── */
-
+export interface StepItem {
+  label: ReactNode;
+  page: string;
+}
 export type StepKey =
   | "services"
   | "professionals"
@@ -23,7 +27,7 @@ export type Step =
 
 export interface BreadcrumbState {
   currentStep: Step;
-  completedSteps: Step[];
+  completedSteps: string[];
   isService: boolean;
 }
 
@@ -131,7 +135,13 @@ export interface TaxRow {
  * ───────────────────────────────────────────────────────────── */
 export interface ServiceState {
   categories: Category[];
-  staff: Staff[];
+  staff: Staff[]; // or StaffMember[] but be consistent
+  selectedCategory: Category | null;
+  selectedServices: ServiceItem[];
+  selectedProfessional: Staff | null;
+
+  loading: boolean;
+  error: string | null;
 }
 
 export interface Service {
@@ -198,11 +208,24 @@ export interface EnrichedService extends Service {
 }
 
 export interface ServiceItem {
-  id: string | number
+  id: number | string;
   name: string;
   qty: number;
   duration?: number;
-  price?: number | string | null;
+  price?: number | null;
+  min_price: number | null;
+  tax?: number;
+  unitTax?: number;
+  estimated_time: number | null;
+  min_time: number | null;
+  requires_consent?: boolean;
+  consent_rule?: {
+    enforcementMode?: string | null;
+  };
+  categoryId?: string;
+  assignedts?: string;
+  assigned_at?: string;
+  assigned_via?: string;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -210,7 +233,7 @@ export interface ServiceItem {
  * ───────────────────────────────────────────────────────────── */
 
 export interface Category {
-  id: string;
+  id: string | number;
   name: string;
   description: string;
   tenant_id: string;
@@ -234,8 +257,14 @@ export interface StaffServiceAssignment {
   assigned_at: string; // ISO date string
   assigned_via: string;
   assigned: boolean;
+  tax?: number;
 }
 
+export interface FilteredCategory {
+  id: string;
+  name: string;
+  services: Service[];
+}
 /* ─────────────────────────────────────────────────────────────
  * STAFF
  * ───────────────────────────────────────────────────────────── */
@@ -245,14 +274,19 @@ export interface StaffAssignment {
   categoryId?: string;
   price?: number;
   duration?: number;
+  qty?: number;
+  assigned_at?: string;
+  assigned_via?: string;
+  assigned?: boolean;
+  assignedts?: string;
 }
 
 export interface Staff {
   id: string;
   name: string;
-  firstname?: string;
-  lastname?: string;
-
+  firstName?: string;
+  lastName?: string;
+  staff_type?: string;
   imageUrl?: string;
   color?: string;
 
@@ -262,6 +296,7 @@ export interface Staff {
 /* ─────────────────────────────────────────────────────────────
  * SLOT
  * ───────────────────────────────────────────────────────────── */
+export type SlotStatus = "AVAILABLE" | "BOOKED";
 
 export interface Slot {
   id?: string;
@@ -270,6 +305,8 @@ export interface Slot {
   available?: boolean;
   start_time?: string;
   end_time?: string;
+  status: SlotStatus;
+  isBooked?: boolean;
 }
 
 export interface SlotGroups {
@@ -281,7 +318,7 @@ export interface SlotGroups {
 export interface SlotsState {
   selectedSlotIndexes: number[];
   selectedSlotIds: (string | number)[];
-  selectedDate: string | null;
+  selectedDate: SelectedDateType | string | null;
   selectedTime: string | null;
 
   slots: {
@@ -294,16 +331,17 @@ export interface SlotsState {
 }
 
 export interface GetStaffSlotsArgs {
-  staffId: string | number;
+  staffId?: string | number;
   date: string; // e.g. "2026-05-11"
   outletId?: string | number;
 }
 
 export interface StaffSlotsResponse {
-  morning: Slot[];
-  afternoon: Slot[];
-  evening: Slot[];
-
+  groups: {
+    morning: Slot[];
+    afternoon: Slot[];
+    evening: Slot[];
+  }
   // optional metadata (if backend sends it)
   staffId?: string | number;
   date?: string;
@@ -311,6 +349,7 @@ export interface StaffSlotsResponse {
 /* ─────────────────────────────────────────────────────────────
  * USER
  * ───────────────────────────────────────────────────────────── */
+
 
 export interface UserDetails {
   id?: string | number;
@@ -360,13 +399,20 @@ export interface AppointmentDetails {
   totalCents: number;
 }
 
+export interface CustomerInfo {
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  phone?: string;
+}
+
 export interface AppointmentPayload {
   tenantId: string | null;
   outletId: string | null;
   staffId?: string | number;
 
   date: string;
-  startTime: string;
+  startTime: string | null;
 
   serviceIds: (string | number)[];
   slotIds: (string | number)[];
@@ -374,15 +420,15 @@ export interface AppointmentPayload {
   isWalkIn: boolean;
   requiresConsent: boolean;
 
-  customer: Customer;
+  customer: CustomerInfo;
 }
 
 export interface CheckinPayload {
   tenantId: string | null;
   outletId: string | null;
 
-  date: string;
-  startTime: string;
+  date: string | null;
+  startTime: string | null;
 
   staffId?: string | number;
 
@@ -395,6 +441,32 @@ export interface CheckinPayload {
 /* ─────────────────────────────────────────────────────────────
  * CONSENT
  * ───────────────────────────────────────────────────────────── */
+export type EnforcementType =
+  | "CHECKBOX_ONLY"
+  | "TYPED_NAME"
+  | "DRAW_SIGNATURE";
+
+export interface ConsentFormData {
+  accepted: boolean;
+  typedName: string;
+  signatureDataUrl: string;
+  emailMe: boolean;
+}
+
+export interface ConsentPayload {
+  accepted: boolean;
+  typedName: string;
+  signatureDataUrl: string;
+  emailMe: boolean;
+}
+
+export interface ConsentModalProps {
+  onClose: () => void;
+  onConfirm: (payload: ConsentPayload) => void;
+  enforcement: EnforcementType;
+  heading?: string;
+  consent: string;
+}
 
 export interface ConsentModalPayload {
   typedName?: string;
@@ -431,8 +503,8 @@ export interface ConsentFormResponse {
 }
 
 export interface SubmitFinalConsentPayload {
-  tenantId: string;
-  outletId: string;
+  tenantId: string | null;
+  outletId: string | null;
   appointmentId: string | number;
   customerId: string | number;
   serviceId: string | number;
@@ -513,7 +585,8 @@ export interface BillingContact {
 export interface BookingSliceState {
   outletData: OutletData | null;
   outletTimeZoneDate: string;
-  outletTimeZone: string;
+  outletTimeZoneYear: number;
+  outletTimeZone: string | null;
 }
 
 export interface ServiceSliceState {
@@ -531,7 +604,7 @@ export interface ServiceSliceState {
 
 export interface SlotsSliceState {
   selectedSlotIds: (string | number)[];
-  selectedDate: string | null;
+  selectedDate: DateObjectUnits | null;
   selectedTime: string;
 
   selectedSlotIndexes: number[];

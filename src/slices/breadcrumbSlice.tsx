@@ -43,19 +43,20 @@ const breadcrumbsSlice = createSlice({
         },
         nextStep: (state) => {
             const steps = getStepsOrder(state.isService);
-            const currentIndex = steps.indexOf(state.currentStep);
-            const next = steps[currentIndex + 1];
+            const currentIndex = steps.indexOf(state.currentStep as Step);
+            const next = steps[currentIndex + 1] as Step | undefined;
+
             if (next) {
-                if (!state.completedSteps.includes(state.currentStep)) {
-                    state.completedSteps.push(state.currentStep);
+                if (!state.completedSteps.includes(state.currentStep as Step)) {
+                    state.completedSteps.push(state.currentStep as Step);
                 }
                 state.currentStep = next;
             }
         },
         prevStep: (state) => {
             const steps = getStepsOrder(state.isService);
-            const currentIndex = steps.indexOf(state.currentStep);
-            const prev = steps[currentIndex - 1];
+            const currentIndex = steps.indexOf(state.currentStep as Step);
+            const prev = steps[currentIndex - 1] as Step | undefined;
             if (prev) {
                 state.currentStep = prev;
             }

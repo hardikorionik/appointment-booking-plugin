@@ -18,9 +18,9 @@ type Props = {
 type TaxType = "FIXED" | "PERCENTAGE";
 
 type TaxRow = {
-  isActive: boolean;
-  taxType: TaxType;
-  taxRate: number;
+  isActive?: boolean;
+  taxType?: TaxType;
+  taxRate?: number | undefined;
 };
 
 type Service = {
@@ -79,11 +79,11 @@ export const calculateServiceTax = (
     }
 
     if (tax.taxType === "FIXED") {
-      return total + tax.taxRate * qty;
+      return total + (tax.taxRate || 0) * qty;
     }
 
     if (tax.taxType === "PERCENTAGE") {
-      return total + (basePrice * qty * tax.taxRate) / 100;
+      return total + (basePrice * qty * (tax.taxRate || 0)) / 100;
     }
 
     return total;
