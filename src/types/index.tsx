@@ -123,6 +123,10 @@ export interface TaxRow {
 /* ─────────────────────────────────────────────────────────────
  * SERVICE
  * ───────────────────────────────────────────────────────────── */
+export interface ServiceState {
+  categories: Category[];
+  staff: Staff[];
+}
 
 export interface Service {
   id: string | number;
