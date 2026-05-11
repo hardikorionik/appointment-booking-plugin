@@ -36,8 +36,9 @@ export type CardType =
 
 export type SignatureType =
   | "CHECKBOX_ONLY"
-  | "TYPED_NAME"
-  | "SIGNATURE_IMAGE";
+  | "SIGNATURE_IMAGE"
+  | "DRAW_SIGNATURE"
+  | "TYPED_NAME";
 
 /* ─────────────────────────────────────────────────────────────
  * THEME
@@ -142,7 +143,7 @@ export interface Service {
   available_online?: boolean;
 
   requires_consent?: boolean;
-
+  enforcementMode?: string | null;
   consent_rule?: {
     enforcementMode?: string | null;
 
@@ -156,7 +157,10 @@ export interface Service {
     heading?: string;
     consent?: string;
   } | null;
-
+  consentTemplate?: {
+    heading?: string;
+    consent?: string;
+  } | null;
   consent_form_id?: string | number | null;
 
   duration?: number;
@@ -352,10 +356,11 @@ export interface ConsentDraftMap {
 }
 
 export interface ConsentCheckStatus {
-  checked: boolean;
-  needsSignature: boolean;
+  data: {
+    checked: boolean;
+    needsSignature: boolean;
+  };
 }
-
 
 export interface ConsentFormResponse {
   data: unknown;

@@ -23,7 +23,7 @@ import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState } from "@/store";
-import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, SelectedDateType } from "@/types";
+import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, SelectedDateType, ConsentDraftEntry, ConsentDraftMap, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -209,12 +209,12 @@ export default function ConfirmPage(): JSX.Element {
                 const freq = getConsentFrequency(svc);
                 const mustCheck = freq === "EVERY_X_DAYS" || freq === "ONCE_PER_CUSTOMER";
                 if (!mustCheck) {
-                    nextMap[serviceId] = { checked: true, needsSignature: true };
+                    nextMap[serviceId] = { data: { checked: true, needsSignature: true } };
                     continue;
                 }
                 const res = await checkConsentRequirement(cid, formId, serviceId);
                 const needsSignature = Boolean(res?.data?.needsSignature);
-                nextMap[serviceId] = { checked: true, needsSignature };
+                nextMap[serviceId] = { data: { checked: true, needsSignature } };
                 if (!needsSignature) markConsentDone(serviceId);
             }
             setConsentCheckMap(nextMap);
@@ -230,7 +230,7 @@ export default function ConfirmPage(): JSX.Element {
             const sid = String(svc.id);
             if (consentAcceptedMap[sid]) return false;
             const chk = consentCheckMap[sid];
-            if (chk?.checked && chk?.needsSignature === false) return false;
+            if (chk?.data?.checked && chk?.data?.needsSignature === false) return false;
             return true;
         });
     }, [servicesNeedingConsent, consentAcceptedMap, consentCheckMap]);
@@ -277,7 +277,7 @@ export default function ConfirmPage(): JSX.Element {
                 const needsSignature = Boolean(res?.data?.needsSignature);
                 setConsentCheckMap((prev) => ({
                     ...prev,
-                    [serviceId]: { checked: true, needsSignature },
+                    [serviceId]: { data: { checked: true, needsSignature } },
                 }));
                 if (!needsSignature) {
                     markConsentDone(serviceId);
@@ -288,7 +288,7 @@ export default function ConfirmPage(): JSX.Element {
             } else {
                 setConsentCheckMap((prev) => ({
                     ...prev,
-                    [serviceId]: { checked: true, needsSignature: true },
+                    [serviceId]: { data: { checked: true, needsSignature: true } },
                 }));
             }
             const { heading, consent } = pickTemplateFromService(svc);
@@ -644,7 +644,7 @@ export default function ConfirmPage(): JSX.Element {
             isConfirm={true}
         >
             <>
-                <Breadcrumb activePage="confirm" />
+                <Breadcrumb />
                 <div className="mt-5">
                     <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
                         Confirm Booking
