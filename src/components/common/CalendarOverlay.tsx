@@ -117,11 +117,10 @@ export default function CalendarOverlay({
                     Math.max(prev - 1, 0),
                   )
                 }
-                className={`text-lg disabled:opacity-30 hover:red transition hover:text-red ${
-                  currentMonthIndex === 0
-                    ? "cursor-not-allowed"
-                    : "cursor-pointer"
-                }`}
+                className={`text-lg disabled:opacity-30 hover:red transition hover:text-red ${currentMonthIndex === 0
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+                  }`}
               >
                 <ChevronLeft />
               </button>
@@ -137,11 +136,10 @@ export default function CalendarOverlay({
                     Math.min(prev + 1, months.length - 1),
                   )
                 }
-                className={`text-lg disabled:opacity-30 hover:red transition hover:text-red ${
-                  currentMonthIndex === months.length - 1
-                    ? "cursor-not-allowed"
-                    : "cursor-pointer"
-                }`}
+                className={`text-lg disabled:opacity-30 hover:red transition hover:text-red ${currentMonthIndex === months.length - 1
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+                  }`}
               >
                 <ChevronRight />
               </button>
