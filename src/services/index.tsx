@@ -6,23 +6,23 @@ const BASE_URL =
 
 
 //  Get Outlet Details 
-export const getOutletDetailsById = async (outletId: string | number) => {
-    const res = await fetch(`${BASE_URL}/outlet/${outletId}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    if (!res.ok) {
-        throw new Error(
-            "Failed to fetch services"
-        );
-    }
-    const reponse = await res.json();
+// export const getOutletDetailsById = async (outletId: string | number) => {
+//     const res = await fetch(`${BASE_URL}/outlet/${outletId}`, {
+//         method: "GET",
+//         headers: {
+//             "Content-Type": "application/json",
+//             Authorization: `Bearer ${token}`,
+//         },
+//     });
+//     if (!res.ok) {
+//         throw new Error(
+//             "Failed to fetch services"
+//         );
+//     }
+//     const reponse = await res.json();
 
-    return reponse;
-};
+//     return reponse;
+// };
 
 //  Get All Services 
 export const fetchAllCategoriesAndStaffService = async (bookingCode: string, tenantId?: string, outletId?: string) => {

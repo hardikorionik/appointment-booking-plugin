@@ -47,7 +47,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
     <div
       className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between  rounded-sm border transition-all duration-300 
             ${selected ? "border-black shadow-lg ring-1 ring-black" : !item.isOpen ? "border-red-300 bg-red-50/50" : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"}`}
-      onClick={() => onSelect(item.id)}
+      onClick={() => onSelect(String(item?.id))}
     >
       <div className="p-4">
         <div className="flex items-start justify-between mb-3">
@@ -65,7 +65,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
           className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-btn-bg text-btn-text border-btn-bg" : "bg-white text-btn-bg-hover border-btn-bg-hover group-hover:bg-btn-bg-hover group-hover:text-btn-text"}`}
           onClick={(e) => {
             e.stopPropagation();
-            onSelect(item.id);
+            onSelect(String(item.id));
           }}
         >
           {selected ? "✓ Selected" : "Select Outlet"}
@@ -83,11 +83,14 @@ export default function ChooseYourOutlet({
 
   const handleSelectOutlet = (id: string) => {
     setSelected(id);
-    const selectedOutlet = outlets.find((o) => o.id === id);
+    const selectedOutlet = outlets.find((o) => o.id == id);
     if (selectedOutlet) {
-      onSelectOutlet(selectedOutlet);
+      setTimeout(() => {
+        onSelectOutlet(selectedOutlet);
+      }, 400);
     }
   };
+
   return (
     <div className="min-h-screen bg-[#f3f1ee] px-4 py-10 sm:px-8 lg:px-16">
       <div className="mb-10">
@@ -114,7 +117,7 @@ export default function ChooseYourOutlet({
                   key={index}
                   item={outlet}
                   onSelect={handleSelectOutlet}
-                  selected={selected === outlet.id}
+                  selected={selected == outlet.id}
                 />
               </motion.div>
             ))}

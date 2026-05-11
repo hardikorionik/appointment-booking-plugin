@@ -1,3 +1,4 @@
+import { number } from "framer-motion";
 import { DateObjectUnits } from "luxon";
 import { ComponentType, ReactNode } from "react";
 
@@ -103,13 +104,17 @@ export interface MainLayoutProps {
  * ───────────────────────────────────────────────────────────── */
 
 export interface Outlet {
-  id: string;
+  id: string | number;
   outletName: string;
   timeZone: string;
   image: string;
   tenantId: string;
   address: string;
   isOpen: boolean;
+  outletTimeZoneDate?: string;
+  outletTimeZoneYear?: string;
+  createdAt: string;
+  isService: boolean;
 }
 
 export interface OutletData {
@@ -704,35 +709,6 @@ export interface SlotItem {
   status?: string;
 }
 
-// /* ROOT STATE */
-// export interface RootState {
-//   appointment: {
-//     bookingMode: BookingMode;
-//   };
-
-//   service: {
-//     staff: StaffMember[];
-//     selectedServices: Service[];
-//     selectedProfessional: StaffMember | null;
-//   };
-
-//   booking: {
-//     outletTimeZone: string;
-//     outletTimeZoneYear: number;
-//   };
-
-//   slots: {
-//     selectedSlotIndexes: number[];
-//     selectedDate: SelectedDate | null;
-//     selectedTime: string | null;
-//     loading: boolean;
-//     slots: {
-//       morning: SlotItem[];
-//       afternoon: SlotItem[];
-//       evening: SlotItem[];
-//     };
-//   };
-// }
 
 export interface CalendarMonth {
   label: string;
@@ -744,14 +720,7 @@ export interface CalendarMonth {
 
 // Booking types
 export interface InitBookingState {
-  outletData: any | null;
-  token: string | null;
-  loading: boolean;
-  error: string | null;
-  outletId: string | number | null;
-  outletTimeZoneDate: string | null;
-  outletTimeZoneYear: number | null;
-  outletTimeZone: string | null;
+  outletData: Outlet | null;
 }
 
 export interface InitBookingPayload {

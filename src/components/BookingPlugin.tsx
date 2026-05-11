@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { BookingPluginProps } from "@/types";
+import { useDispatch } from "react-redux";
+import { DateTime } from "luxon";
+import { BookingPluginProps, Outlet } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
+import { setOutletData } from "@/slices/bookingSlice";
+import { goToStep } from "@/slices/breadcrumbSlice";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import { applyTheme } from "@/utils/applyTheme";
-import DefaultAppointment from "./steps";
+import DefaultAppointment from "@/components/steps";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [outlets, setOutlets] = useState<any[]>([]);
     const [selectedOutlet, setSelectedOutlet] = useState<any>(null);
-
-    const handleSelectOutlet = (outlet: string | null) => {
-        setSelectedOutlet(outlet);
-    };
 
     const fetchData = async () => {
         try {
@@ -24,7 +25,19 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
                 const outletList = response?.data?.data?.outlets || [];
                 setOutlets(outletList);
                 if (outletList?.length === 1) {
-                    handleSelectOutlet(outletList[0]);
+                    const outlateObj = outletList[0];
+                    const updatedOutlet = {
+                        ...outlateObj,
+                        outletTimeZoneDate: DateTime.now()
+                            .setZone(outlateObj?.timeZone)
+                            .toFormat("yyyy-MM-dd"),
+                        outletTimeZoneYear: DateTime.fromISO(outlateObj?.createdAt, { zone: "utc" })
+                            .setZone(outlateObj?.timeZone)
+                            .year,
+                    };
+                    setSelectedOutlet(updatedOutlet?.id)
+                    dispatch(setOutletData(updatedOutlet));
+                    dispatch(goToStep(outlateObj?.isService ? "services" : "professionals"));
                 }
                 applyTheme(response?.data?.result);
             } else {
@@ -42,14 +55,27 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
         fetchData();
     }, []);
 
-    if (loading) {
-        return <div className="p-4">Loading...</div>;
-    }
+    if (loading) { return <div className="p-4">Loading...</div> }
 
     if (error) {
-        return (
-            <div className="p-4 text-red-500">{error}</div>
-        );
+        return (<div className="p-4 text-red-500">{error}</div>);
+    }
+
+    const handleSetOutletData = (data: Outlet) => {
+        if (data) {
+            const updatedOutlet = {
+                ...data,
+                outletTimeZoneDate: DateTime.now()
+                    .setZone(data?.timeZone)
+                    .toFormat("yyyy-MM-dd"),
+                outletTimeZoneYear: DateTime.fromISO(data?.createdAt, { zone: "utc" })
+                    .setZone(data?.timeZone)
+                    .year,
+            };
+            setSelectedOutlet(updatedOutlet?.id)
+            dispatch(setOutletData(updatedOutlet));
+            dispatch(goToStep(data?.isService ? "services" : "professionals"));
+        }
     }
 
     return (
@@ -57,10 +83,13 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             {outlets.length > 1 && !selectedOutlet ? (
                 <ChooseYourOutlet
                     outlets={outlets}
-                    onSelectOutlet={setSelectedOutlet}
+                    onSelectOutlet={(data: Outlet) => {
+                        if (!data?.id) return;
+                        handleSetOutletData(data)
+                    }}
                 />
             ) : (
-                <DefaultAppointment outletDetails={outlets[0] || selectedOutlet} />
+                <DefaultAppointment />
             )}
         </>
     );
