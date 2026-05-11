@@ -68,7 +68,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
                     <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-3">{item.address}</p>
                 </div>
                 <button
-                    className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-black text-white border-black" : "bg-white text-gray-900 border-gray-900 group-hover:bg-gray-900 group-hover:text-white"}`}
+                    className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-color-btn-bg text-color-btn-text border-color-btn-bg" : "bg-white text-color-btn-bg-hover border-color-btn-bg-hover group-hover:bg-color-btn-bg-hover group-hover:text-color-btn-text"}`}
                     onClick={(e) => {
                         e.stopPropagation();
                         onSelect(item.id);

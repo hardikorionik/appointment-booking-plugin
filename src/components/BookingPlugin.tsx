@@ -53,14 +53,13 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     }
 
     return (
-        <>{outlets.length > 1 && !selectedOutlet ?
-            <ChooseYourOutlet
-                outlets={outlets}
-                onSelectOutlet={(outlet) => {
-                    console.log("Selected Outlet:", outlet);
-                }}
-            /> :
-            <div className="p-4 border rounded bg-red-400 text-white">
+        <>{outlets.length > 1 && !selectedOutlet ? <ChooseYourOutlet
+            outlets={outlets}
+            onSelectOutlet={(outlet) => {
+                console.log("Selected Outlet:", outlet);
+            }}
+        />
+            : <div className="p-4 border rounded bg-red-400 text-white">
                 <h2 className="text-5xl font-bold">
                     Booking Plugin
                 </h2>
@@ -81,8 +80,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
                         ))
                     )}
                 </div>
-            </div>
-        }
+            </div>}
         </>
     );
 };

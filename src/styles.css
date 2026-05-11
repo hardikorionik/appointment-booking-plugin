@@ -5,19 +5,19 @@
 /* Dynamic Variables */
 :root {
     /* Button */
-    --color-btn-bg: var(--btn-bg);
-    --color-btn-text: var(--btn-text);
-    --color-btn-bg-hover: var(--btn-bg-hover);
-    --color-btn-text-hover: var(--btn-text-hover);
+    --btn-bg: #000000;
+    --btn-text: #ffffff;
+    --btn-bg-hover: #1f2937;
+    --btn-text-hover: #ffffff;
 
-    /* Theme */
-    --color-bg: var(--color-bg);
-    --color-link: var(--color-link);
-    --color-text: var(--color-text);
-    --color-bg-hover: var(--color-bg-hover);
-    --color-text-hover: var(--color-text-hover);
+    /* App Theme */
+    --app-bg: #103332;
+    --app-link: #385b5a;
+    --app-text: #e9ebec;
+    --app-bg-hover: #4c6f6e;
+    --app-text-hover: #ffffff;
 
-
+    /* Fonts */
     --font-heading: 'Bebas Neue', sans-serif;
     --font-body: 'DM Sans', sans-serif;
     --font-mono: 'DM Mono', monospace;
@@ -38,6 +38,7 @@
     --color-bg-hover: var(--app-bg-hover);
     --color-text-hover: var(--app-text-hover);
 
+    /* Fonts */
     --font-bebas: var(--font-heading);
     --font-dm: var(--font-body);
     --font-mono: var(--font-mono);
