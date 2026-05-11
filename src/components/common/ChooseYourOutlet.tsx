@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Outlet } from "@/types";
-// import noOutlet from "@/assets/no-outlet.webp";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 
 interface OutletProps {
@@ -15,7 +14,6 @@ interface OutletCardProps {
     onSelect: (id: string) => void;
     selected: boolean;
 }
-
 
 const cardVariants: Variants = {
     hidden: {
@@ -52,23 +50,14 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
             ${selected ? "border-black shadow-lg ring-1 ring-black" : !item.isOpen ? "border-red-500 bg-red-50" : "border-gray-200 hover:border-gray-400 hover:shadow-md"}`}
             onClick={() => onSelect(item.id)}
         >
-            {/* <div className="mb-4 overflow-hidden h-32 w-full"> min-h-55
-                <img
-                    src={item.image || noOutlet}
-                    alt={item.outletName}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-            </div> */}
             <div className="p-4">
-                <div className="flex items-start justify-between mb-5">
-                    <StatusBadge status={item.isOpen} />
-                </div>
+                <div className="flex items-start justify-between mb-5"><StatusBadge status={item.isOpen} /></div>
                 <div className="flex-1">
                     <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-3">{item.outletName}</h2>
                     <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-3">{item.address}</p>
                 </div>
                 <button
-                    className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-color-btn-bg text-color-btn-text border-color-btn-bg" : "bg-white text-color-btn-bg-hover border-color-btn-bg-hover group-hover:bg-color-btn-bg-hover group-hover:text-color-btn-text"}`}
+                    className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-btn-bg text-btn-text border-btn-bg" : "bg-white text-btn-bg-hover border-btn-bg-hover group-hover:bg-btn-bg-hover group-hover:text-btn-text"}`}
                     onClick={(e) => {
                         e.stopPropagation();
                         onSelect(item.id);
