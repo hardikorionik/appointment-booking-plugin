@@ -109,3 +109,27 @@ export const createCheckinApi = async (payload: unknown) => {
 
     return reponse;
 };
+
+// Get Appointment Details by ID
+export const getAppointmentDetail = async (
+    appointmentId: string,
+) => {
+    const res = await fetch(
+        `${BASE_URL}/appointment/detail/${appointmentId}`,
+        {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        },
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch appointment details");
+    }
+
+    const response = await res.json();
+
+    return response;
+};

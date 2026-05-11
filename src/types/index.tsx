@@ -6,13 +6,13 @@ export type BookingPluginProps = {
 };
 
 export type StepKey =
-    | "services"
-    | "professionals"
-    | "time"
-    | "details"
-    | "confirm"
-    | "success"
-    | "notfound";
+  | "services"
+  | "professionals"
+  | "time"
+  | "details"
+  | "confirm"
+  | "success"
+  | "notfound";
 
 export type PageMap = Record<StepKey, ComponentType>;
 
@@ -192,6 +192,8 @@ export interface Staff {
   assignments: any;
   id: string;
   name: string;
+  firstname: string;
+  lastname: string;
 }
 
 export interface ServiceResponse {
@@ -348,4 +350,18 @@ export interface Assignment {
 /* FILTERED CATEGORY */
 export interface FilteredCategory extends Category {
   services: Service[];
+}
+
+
+// sucess page types
+export interface AppointmentDetails {
+  staff?: Staff | null;
+  outlet?: Outlet | null;
+  services: Service[];
+  startLocal?: string;
+  appointmentDate: string;
+  startTime: string;
+  tipsCents: number;
+  taxCents: number;
+  totalCents: number;
 }
