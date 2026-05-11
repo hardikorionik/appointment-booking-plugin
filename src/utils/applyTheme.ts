@@ -2,7 +2,6 @@ import { ThemeSettings } from "@/types";
 
 export const hexToRgb = (hex: string) => {
     const cleanHex = hex.replace("#", "");
-
     const bigint = parseInt(cleanHex, 16);
 
     const r = (bigint >> 16) & 255;
@@ -12,77 +11,70 @@ export const hexToRgb = (hex: string) => {
     return `${r}, ${g}, ${b}`;
 };
 
-export const applyTheme = (theme: ThemeSettings) => {
+export const defaultTheme: ThemeSettings = {
+    button: {
+        bg: "#ff0a0a",
+        text: "#e9ebec",
+        bgHover: "#00b3ad",
+        textHover: "#ffffff",
+    },
+
+    colors: {
+        bg: "#103332",
+        link: "#385b5a",
+        text: "#e9ebec",
+        bgHover: "#4c6f6e",
+        textHover: "#ffffff",
+    },
+};
+
+export const applyTheme = (theme?: Partial<ThemeSettings>) => {
     const root = document.documentElement;
 
-    // Primary
-    root.style.setProperty("--primary", theme.bgColor);
-
-    root.style.setProperty(
-        "--primary-rgb",
-        hexToRgb(theme.bgColor)
-    );
-
-    root.style.setProperty(
-        "--primary-bg-subtle",
-        `rgba(${hexToRgb(theme.bgColor)}, 0.15)`
-    );
-
-    root.style.setProperty(
-        "--primary-border-subtle",
-        `rgba(${hexToRgb(theme.bgColor)}, 0.30)`
-    );
-
-    root.style.setProperty(
-        "--primary-text-emphasis",
-        theme.bgHoverColor
-    );
-
-    // Button
+    /* Button */
     root.style.setProperty(
         "--btn-bg",
-        theme.buttonBgColor
+        theme?.button?.bg || defaultTheme.button.bg
     );
 
     root.style.setProperty(
-        "--btn-color",
-        theme.buttonTextColor
+        "--btn-text",
+        theme?.button?.text || defaultTheme.button.text
     );
 
     root.style.setProperty(
-        "--btn-hover-bg",
-        theme.buttonHoverBgColor
+        "--btn-bg-hover",
+        theme?.button?.bgHover || defaultTheme.button.bgHover
     );
 
     root.style.setProperty(
-        "--btn-hover-color",
-        theme.buttonHoverTextColor
+        "--btn-text-hover",
+        theme?.button?.textHover || defaultTheme.button.textHover
     );
 
-    // Link
+    /* App Theme */
     root.style.setProperty(
-        "--link-color",
-        theme.linkColor
-    );
-
-    // Custom
-    root.style.setProperty(
-        "--customtheme-bg-color",
-        theme.bgColor
+        "--app-bg",
+        theme?.colors?.bg || defaultTheme.colors.bg
     );
 
     root.style.setProperty(
-        "--customtheme-bg-hover-color",
-        theme.bgHoverColor
+        "--app-link",
+        theme?.colors?.link || defaultTheme.colors.link
     );
 
     root.style.setProperty(
-        "--customtheme-hover-color",
-        theme.hoverColor
+        "--app-text",
+        theme?.colors?.text || defaultTheme.colors.text
     );
 
     root.style.setProperty(
-        "--customtheme-front-color",
-        theme.frontColor
+        "--app-bg-hover",
+        theme?.colors?.bgHover || defaultTheme.colors.bgHover
+    );
+
+    root.style.setProperty(
+        "--app-text-hover",
+        theme?.colors?.textHover || defaultTheme.colors.textHover
     );
 };

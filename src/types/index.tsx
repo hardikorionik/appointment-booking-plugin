@@ -1,21 +1,23 @@
 // Types for the booking plugin
 export type BookingPluginProps = {
     bookingCode: string;
-    isService?: boolean;
 };
 
 // Types for customizable themes
 export interface ThemeSettings {
-    bgColor: string;
-    bgHoverColor: string;
-    hoverColor: string;
-    frontColor: string;
-    linkColor: string;
-
-    buttonBgColor: string;
-    buttonTextColor: string;
-    buttonHoverBgColor: string;
-    buttonHoverTextColor: string;
+    button: {
+        bg: string;
+        text: string;
+        bgHover: string;
+        textHover: string;
+    };
+    colors: {
+        bg: string;
+        link: string;
+        text: string;
+        bgHover: string;
+        textHover: string;
+    };
 }
 
 // Main layout types

@@ -13,7 +13,6 @@ export const getOutletDetailsById = async (outletId: string) => {
             Authorization: `Bearer ${token}`,
         },
     });
-    console.log("--------21res", res);
     if (!res.ok) {
         throw new Error(
             "Failed to fetch services"
@@ -63,7 +62,6 @@ export const fetchStaffSlots = async (staffId: string, date: string) => {
             },
         }
     );
-    console.log("--------41res", res);
     if (!res.ok) {
         throw new Error(
             "Failed to fetch services"
@@ -83,8 +81,6 @@ export const createAppointmentApi = async (payload: unknown) => {
         },
         body: JSON.stringify(payload),
     });
-
-    console.log("--------60res", res);
     if (!res.ok) {
         throw new Error(
             "Failed to fetch services"
@@ -104,8 +100,6 @@ export const createCheckinApi = async (payload: unknown) => {
         },
         body: JSON.stringify(payload),
     });
-
-    console.log("--------79res", res);
     if (!res.ok) {
         throw new Error(
             "Failed to fetch services"

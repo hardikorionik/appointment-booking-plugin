@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BookingPluginProps, Category } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
+import { applyTheme } from "@/utils/applyTheme";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
     const [categories, setCategories] = useState<Category[]>([]);
@@ -25,7 +26,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
                 if (outletList?.length === 1) {
                     handleSelectOutlet(outletList[0]);
                 }
-                // applyTheme(response?.data?.data?.theme_config);
+                applyTheme(response?.data?.result);
             } else {
                 setError(response?.message || "Failed to fetch data");
             }

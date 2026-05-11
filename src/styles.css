@@ -4,16 +4,19 @@
 
 /* Dynamic Variables */
 :root {
-    --red: #d7263d;
-    --ink: #0e0e0e;
-    --ink-off: #1c1c1c;
-    --canvas: #fafaf8;
-    --surface: #f2f0ec;
-    --surface2: #e8e5e0;
-    --border: #dedad4;
-    --copy: #1a1a1a;
-    --muted: #8a8680;
-    --brand-green: #1e7a4a;
+    /* Button */
+    --color-btn-bg: var(--btn-bg);
+    --color-btn-text: var(--btn-text);
+    --color-btn-bg-hover: var(--btn-bg-hover);
+    --color-btn-text-hover: var(--btn-text-hover);
+
+    /* Theme */
+    --color-bg: var(--color-bg);
+    --color-link: var(--color-link);
+    --color-text: var(--color-text);
+    --color-bg-hover: var(--color-bg-hover);
+    --color-text-hover: var(--color-text-hover);
+
 
     --font-heading: 'Bebas Neue', sans-serif;
     --font-body: 'DM Sans', sans-serif;
@@ -22,16 +25,18 @@
 
 /* Tailwind Theme Mapping */
 @theme {
-    --color-red: var(--red);
-    --color-ink: var(--ink);
-    --color-ink-off: var(--ink-off);
-    --color-canvas: var(--canvas);
-    --color-surface: var(--surface);
-    --color-surface2: var(--surface2);
-    --color-border: var(--border);
-    --color-copy: var(--copy);
-    --color-muted: var(--muted);
-    --color-brand-green: var(--brand-green);
+    /* Button */
+    --color-btn-bg: var(--btn-bg);
+    --color-btn-text: var(--btn-text);
+    --color-btn-bg-hover: var(--btn-bg-hover);
+    --color-btn-text-hover: var(--btn-text-hover);
+
+    /* App Theme */
+    --color-bg: var(--app-bg);
+    --color-link: var(--app-link);
+    --color-text: var(--app-text);
+    --color-bg-hover: var(--app-bg-hover);
+    --color-text-hover: var(--app-text-hover);
 
     --font-bebas: var(--font-heading);
     --font-dm: var(--font-body);
