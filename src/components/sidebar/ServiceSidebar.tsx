@@ -1,11 +1,7 @@
 import { MoveRight, X } from "lucide-react";
 import { CurrencyIcon } from "@/utils";
 
-import type {
-  ServiceItem,
-  OutletData,
-  Step,
-} from "@/types";
+import type { ServiceItem, OutletData, Step } from "@/types";
 
 interface ExtendedServiceItem extends ServiceItem {
   min_time?: number | null;
@@ -78,6 +74,7 @@ export default function ServiceSidebar({
         >
           <span className="flex flex-row justify-center items-center gap-2">
             Choose Professional <MoveRight />
+            {/* Choose Time <MoveRight /> */}
           </span>
         </button>
       </div>

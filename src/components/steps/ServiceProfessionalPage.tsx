@@ -13,7 +13,7 @@ import {
 
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import ServiceProfessionalSidebar from "@/components/ui/ServiceProfessionalSidebar";
+import ServiceProfessionalSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 
 import { nextStep } from "@/slices/breadcrumbSlice";

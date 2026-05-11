@@ -15,7 +15,7 @@ import {
 
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import ServiceSidebar from "@/components/ui/ServiceSidebar";
+import ServiceSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 
 import { nextStep } from "@/slices/breadcrumbSlice";
