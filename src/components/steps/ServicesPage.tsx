@@ -19,7 +19,7 @@ import ServiceSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 
 import { nextStep } from "@/slices/breadcrumbSlice";
-import { isConsentRequiredService } from "@/api/consentService";
+import { isConsentRequiredService } from "@/services";
 import { CurrencyIcon } from "@/utils";
 import { useWindowSize } from "@/hooks/useWindowSize";
 
@@ -184,11 +184,10 @@ export default function ServicesPage() {
           >
             <button
               onClick={() => dispatch(setCategory(null))}
-              className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${
-                !selectedCategory
+              className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${!selectedCategory
                   ? "bg-red text-white"
                   : "bg-white border-border hover:border-red/80 hover:text-red transition"
-              }`}
+                }`}
             >
               All Services (
               {categories.reduce(
@@ -202,11 +201,10 @@ export default function ServicesPage() {
               <button
                 key={cat.id}
                 onClick={() => dispatch(setCategory(cat))}
-                className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${
-                  selectedCategory?.id === cat.id
+                className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${selectedCategory?.id === cat.id
                     ? "bg-red text-white"
                     : "bg-white border-border hover:border-red/80 hover:text-red transition"
-                }`}
+                  }`}
               >
                 {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} (
                 {cat.services.length})
