@@ -1,91 +1,128 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Search, Minus, Plus, X, } from "lucide-react";
+import { Search, Minus, Plus, X } from "lucide-react";
+
 import { motion, AnimatePresence, Variants } from "framer-motion";
+
 import {
   setCategory,
   toggleService,
   incrementService,
   decrementService,
 } from "@/slices/serviceSlice";
+
 import Breadcrumb from "@/components/common/Breadcrumb";
-import { isConsentRequiredService } from "@/api/consentService";
 import MainLayout from "@/components/common/MainLayout";
 import ServiceProfessionalSidebar from "@/components/ui/ServiceProfessionalSidebar";
-import { nextStep } from "@/slices/breadcrumbSlice";
-import { CurrencyIcon } from "@/utils";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
+
+import { nextStep } from "@/slices/breadcrumbSlice";
+import { isConsentRequiredService } from "@/api/consentService";
+import { CurrencyIcon } from "@/utils";
+
+import type { RootState, AppDispatch } from "@/store";
+
+import type {
+  Category,
+  Service,
+  ServiceItem,
+  TaxRow,
+  Assignment,
+  FilteredCategory,
+} from "@/types";
+
+/* ANIMATION */
 
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     transform: "translateY(14px)",
   },
-  visible: (index) => ({
+
+  visible: (index: number) => ({
     opacity: 1,
     transform: "translateY(0px)",
+
     transition: {
       delay: index * 0.05,
       duration: 0.32,
       ease: [0.22, 1, 0.36, 1],
     },
   }),
+
   exit: {
     opacity: 0,
     transform: "translateY(8px)",
-    transition: { duration: 0.2 },
+
+    transition: {
+      duration: 0.2,
+    },
   },
 };
 
+/* COMPONENT */
+
 export default function ServiceProfessionalPage() {
-  const dispatch = useDispatch();
-  const { outletData } = useSelector((state) => state.booking);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { outletData } = useSelector((state: RootState) => state.booking);
+
   const {
     categories,
     selectedCategory,
     selectedServices,
     selectedProfessional,
     loading,
-  } = useSelector((state) => state.service);
+  } = useSelector((state: RootState) => state.service);
 
-  const [selectedCategoryId, setSelectedCategoryId] = useState("ALL");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("ALL");
 
   const assignedServiceIds = new Set(
-    selectedProfessional ? selectedProfessional?.assignments.map(a => a.id) : []
+    selectedProfessional
+      ? selectedProfessional.assignments.map((a: Assignment) => a.id)
+      : [],
   );
 
   const assignedCategoryIds = new Set(
-    selectedProfessional ? selectedProfessional?.assignments.map(a => a.categoryId) : []
+    selectedProfessional
+      ? selectedProfessional.assignments.map((a: Assignment) => a.categoryId)
+      : [],
   );
 
-  const filteredCategories = categories
-    .filter(category => assignedCategoryIds.has(category.id))
-    .map(category => ({
+  const filteredCategories: FilteredCategory[] = categories
+    .filter((category: Category) => assignedCategoryIds.has(category.id))
+    .map((category: Category) => ({
       ...category,
-      services: category.services.filter(service =>
-        assignedServiceIds.has(service.id)
-      )
+
+      services: category.services.filter((service: Service) =>
+        assignedServiceIds.has(service.id),
+      ),
     }));
 
-  const scrollRef = useRef(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  const displayedServices =
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const displayedServices: Service[] =
     selectedCategoryId === "ALL"
-      ? categories.flatMap(cat => cat.services)
-      : categories.find(cat => cat.id === selectedCategoryId)?.services || [];
+      ? filteredCategories.flatMap((cat: Category) => cat.services)
+      : filteredCategories.find(
+          (cat: Category) => cat.id === selectedCategoryId,
+        )?.services || [];
 
-  const filteredServices = displayedServices.filter((svc) =>
-    svc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    svc.description?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredServices = displayedServices.filter(
+    (svc: Service) =>
+      svc.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      svc.description?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const hasActiveTax = (svc) => {
-    return svc.taxRows?.some((tax) => tax.isActive);
+  const hasActiveTax = (svc: Service): boolean => {
+    return svc.taxRows?.some((tax: TaxRow) => tax.isActive) || false;
   };
 
-  const totalPrice = selectedServices.reduce((sum, s) => {
-    const price = Number(s.price || s.min_price || 0);
+  const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
+    const price = Number(s.price || 0);
+
     return sum + price * s.qty;
   }, 0);
 
@@ -96,7 +133,7 @@ export default function ServiceProfessionalPage() {
           selectedServices={selectedServices}
           outletData={outletData}
           totalPrice={totalPrice}
-          goToStep={(data) => dispatch(nextStep(data))}
+          goToStep={(data: string) => dispatch(nextStep(data))}
         />
       }
       renderButton={
@@ -110,11 +147,17 @@ export default function ServiceProfessionalPage() {
       }
     >
       <Breadcrumb />
+
       <div className="mt-5">
-        <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">Choose a Service</h1>
+        <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
+          Choose a Service
+        </h1>
+
         <p className="text-sm text-black/60 mb-6">
-          Select from {selectedProfessional?.name}'s available services
+          Select from {selectedProfessional?.name}
+          's available services
         </p>
+
         <div className="w-full grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_200px] gap-4 items-start">
           <div
             ref={scrollRef}
@@ -128,47 +171,61 @@ export default function ServiceProfessionalPage() {
             <button
               onClick={() => {
                 dispatch(setCategory(null));
-                setSelectedCategoryId("ALL")
+
+                setSelectedCategoryId("ALL");
               }}
-              className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${!selectedCategory
-                ? "bg-red text-white"
-                : "bg-white border-border hover:border-red/80 hover:text-red transition"
-                }`}
+              className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${
+                !selectedCategory
+                  ? "bg-red text-white"
+                  : "bg-white border-border hover:border-red/80 hover:text-red transition"
+              }`}
             >
               All Services (
-              {filteredCategories.reduce((sum, c) => sum + c.services.length, 0)})
+              {filteredCategories.reduce(
+                (sum: number, c: FilteredCategory) => sum + c.services.length,
+                0,
+              )}
+              )
             </button>
-            {filteredCategories.map((cat) => (
+
+            {filteredCategories.map((cat: FilteredCategory) => (
               <button
                 key={cat.id}
                 onClick={() => {
                   dispatch(setCategory(cat));
+
                   setSelectedCategoryId(cat.id);
                 }}
-                className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap  ${selectedCategoryId === cat.id
-                  ? "bg-red text-white"
-                  : "bg-white border-border hover:border-red/80 hover:text-red transition"
-                  }`}
+                className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${
+                  selectedCategoryId === cat.id
+                    ? "bg-red text-white"
+                    : "bg-white border-border hover:border-red/80 hover:text-red transition"
+                }`}
               >
                 {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} (
                 {cat.services.length})
               </button>
             ))}
           </div>
+
           <div className="mb-4 flex items-center">
             <div className="relative w-full max-w-full">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
                 <Search size={18} />
               </span>
+
               <input
                 id="search"
                 name="search"
                 type="text"
                 placeholder="Search services..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchTerm(e.target.value)
+                }
                 className="w-full border border-border rounded-md pl-9 pr-10 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-black/20"
               />
+
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm("")}
@@ -180,18 +237,20 @@ export default function ServiceProfessionalPage() {
             </div>
           </div>
         </div>
+
         <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-268px)] max-md:h-[calc(100dvh-310px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
           <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2.5">
             {loading ? (
-              Array.from({ length: 10 }).map((_, i) => (
-                <ServiceSkeletonCard key={i} />
-              ))
+              Array.from({
+                length: 10,
+              }).map((_, i) => <ServiceSkeletonCard key={i} />)
             ) : (
               <AnimatePresence mode="popLayout">
-                {filteredServices?.map((svc, index) => {
+                {filteredServices?.map((svc: Service, index: number) => {
                   const isSelected = selectedServices.some(
-                    (s) => s.id === svc.id,
+                    (s: ServiceItem) => s.id === svc.id,
                   );
+
                   return (
                     <motion.div
                       key={svc.id}
@@ -201,19 +260,23 @@ export default function ServiceProfessionalPage() {
                       exit="exit"
                       custom={index}
                       layout="position"
-                      style={{ willChange: "transform, opacity" }} // ✅ critical
+                      style={{
+                        willChange: "transform, opacity",
+                      }}
                       onClick={() => {
                         const exists = selectedServices.find(
-                          (s) => s.id === svc.id,
+                          (s: ServiceItem) => s.id === svc.id,
                         );
+
                         if (exists && exists.qty === 1) {
                           dispatch(decrementService(svc.id));
                         } else {
-                          dispatch(toggleService(svc));
+                          dispatch(toggleService({ ...svc, price: svc.price ? Number(svc.price) : undefined }));
                         }
                       }}
                       className={[
                         "service-card relative border-[1.5px] rounded-md p-3 cursor-pointer transition-all",
+
                         isSelected
                           ? "bg-[#fff8f8] border-red"
                           : "bg-white border-border hover:border-red/80",
@@ -224,62 +287,81 @@ export default function ServiceProfessionalPage() {
                           TAX
                         </span>
                       )}
+
                       {isConsentRequiredService(svc) && (
                         <span className="absolute top-0 right-0 text-[10px] px-2 py-0.5 bg-red text-white rounded-bl-md rounded-tr-md">
                           CONSENT
                         </span>
                       )}
+
                       <p className="font-bold text-sm mb-1 mt-2 line-clamp-1">
                         {svc.name}
                       </p>
+
                       <div className="relative group">
                         <p className="text-xs text-muted line-clamp-1">
                           {svc.description}
                         </p>
+
                         {svc.description?.length > 25 && (
                           <div className="absolute hidden group-hover:block bg-surface text-xs p-2 rounded top-full mt-1 z-10 w-52">
                             {svc.description}
                           </div>
                         )}
                       </div>
+
                       <p className="text-xs text-black/80 mb-2 flex justify-between mt-1">
                         {svc.estimated_time
                           ? `${svc.estimated_time} min`
                           : `${svc.min_time}-${svc.max_time} min`}
+
                         <span className="font-mono flex flex-row items-center">
                           <CurrencyIcon size={12} />
+
                           {svc.price
                             ? svc.price
                             : `${svc.min_price}-${svc.max_price}`}
                         </span>
                       </p>
+
                       <div className="flex items-center justify-between gap-2 mt-2">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
+
                             dispatch(decrementService(svc.id));
                           }}
-                          className="w-10 h-8 p-2 rounded-md cursor-pointer border border-gray-300 flex items-center justify-center hover:bg-stone-100 transition-all duration-200 "
+                          className="w-10 h-8 p-2 rounded-md cursor-pointer border border-gray-300 flex items-center justify-center hover:bg-stone-100 transition-all duration-200"
                         >
                           <Minus size={14} />
                         </button>
+
                         <span className="text-sm font-semibold min-w-5 text-center">
-                          {selectedServices.find((s) => s.id === svc.id)?.qty ||
-                            0}
+                          {selectedServices.find(
+                            (s: ServiceItem) => s.id === svc.id,
+                          )?.qty || 0}
                         </span>
+
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
+
                             const exists = selectedServices.find(
-                              (s) => s.id === svc.id,
+                              (s: ServiceItem) => s.id === svc.id,
                             );
+
                             if (!exists) {
-                              dispatch(toggleService(svc));
+                              dispatch(
+                                toggleService({
+                                  ...svc,
+                                  price: svc.price ? Number(svc.price) : undefined,
+                                }),
+                              );
                             } else {
                               dispatch(incrementService(svc.id));
                             }
                           }}
-                          className="w-10 h-8 p-2 rounded-md cursor-pointer bg-red text-white flex items-center justify-center hover:bg-red/90 transition-all duration-200 "
+                          className="w-10 h-8 p-2 rounded-md cursor-pointer bg-red text-white flex items-center justify-center hover:bg-red/90 transition-all duration-200"
                         >
                           <Plus size={14} />
                         </button>
