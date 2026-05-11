@@ -31,6 +31,7 @@ export const defaultTheme: ThemeSettings = {
 export const applyTheme = (theme?: Partial<ThemeSettings>) => {
     const root = document.documentElement;
 
+    console.log("Applying theme:", theme);
     /* Button */
     root.style.setProperty(
         "--btn-bg",
