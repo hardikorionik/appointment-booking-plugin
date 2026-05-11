@@ -21,6 +21,12 @@ export type Step =
   | "confirm"
   | "success";
 
+export interface BreadcrumbState {
+  currentStep: Step;
+  completedSteps: Step[];
+  isService: boolean;
+}
+
 export type PageMap = Record<StepKey, ComponentType>;
 
 export type BookingMode = "booking" | "checkin";
@@ -595,35 +601,35 @@ export interface SlotItem {
   status?: string;
 }
 
-/* ROOT STATE */
-export interface RootState {
-  appointment: {
-    bookingMode: BookingMode;
-  };
+// /* ROOT STATE */
+// export interface RootState {
+//   appointment: {
+//     bookingMode: BookingMode;
+//   };
 
-  service: {
-    staff: StaffMember[];
-    selectedServices: Service[];
-    selectedProfessional: StaffMember | null;
-  };
+//   service: {
+//     staff: StaffMember[];
+//     selectedServices: Service[];
+//     selectedProfessional: StaffMember | null;
+//   };
 
-  booking: {
-    outletTimeZone: string;
-    outletTimeZoneYear: number;
-  };
+//   booking: {
+//     outletTimeZone: string;
+//     outletTimeZoneYear: number;
+//   };
 
-  slots: {
-    selectedSlotIndexes: number[];
-    selectedDate: SelectedDate | null;
-    selectedTime: string | null;
-    loading: boolean;
-    slots: {
-      morning: SlotItem[];
-      afternoon: SlotItem[];
-      evening: SlotItem[];
-    };
-  };
-}
+//   slots: {
+//     selectedSlotIndexes: number[];
+//     selectedDate: SelectedDate | null;
+//     selectedTime: string | null;
+//     loading: boolean;
+//     slots: {
+//       morning: SlotItem[];
+//       afternoon: SlotItem[];
+//       evening: SlotItem[];
+//     };
+//   };
+// }
 
 export interface CalendarMonth {
   label: string;

@@ -20,12 +20,6 @@ import { StepKey, PageMap, Outlet } from "@/types";
 interface DefaultAppointmentProps {
   outletDetails: Outlet;
 }
-const REDIRECT_ROUTES: string[] = [
-  "/google",
-  "/outlook",
-  "/ics",
-  "/cancelAppointment",
-];
 
 // ─── AppContent ───────────────────────────────────────────────────────────────
 
@@ -34,10 +28,8 @@ function AppContent({ outletDetails }: { outletDetails: Outlet }): JSX.Element {
     (state: RootState) => state.breadcrumbs
   );
   const dispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
-
   const [loading, setLoading] = useState<boolean>(true);
-  const [isInvalid, setIsInvalid] = useState<boolean>(false);
+  // const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
   const PAGE_MAP: PageMap = {
     services: isService ? ServicesPage : ServiceProfessionalPage,
@@ -49,44 +41,13 @@ function AppContent({ outletDetails }: { outletDetails: Outlet }): JSX.Element {
     notfound: NotFoundPage,
   };
 
-  const pathname: string = location.pathname;
-  const isRedirectRoute: boolean = REDIRECT_ROUTES.includes(pathname);
-
-  useEffect(() => {
-    const init = async (): Promise<void> => {
-      if (isRedirectRoute) {
-        setLoading(false);
-        return;
-      }
-      if (!tenantId || !outletId || !ref) {
-        setIsInvalid(true);
-        setLoading(false);
-        return;
-      }
-      try {
-        await dispatch(initBooking({ tenantId, outletId, ref }));
-        await dispatch(setServiceMode(isService));
-      } catch (err: unknown) {
-        console.error(err);
-        setIsInvalid(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    init();
-  }, [dispatch, isRedirectRoute]);
-
-  if (isRedirectRoute) {
-    return <LoaderPage />;
-  }
-
   if (loading) {
     return <LoaderPage />;
   }
 
-  if (isInvalid) {
-    return <NotFoundPage />;
-  }
+  // if (isInvalid) {
+  //   return <NotFoundPage />;
+  // }
 
   const PageComponent: ComponentType =
     PAGE_MAP[currentStep as StepKey] ?? NotFoundPage;
