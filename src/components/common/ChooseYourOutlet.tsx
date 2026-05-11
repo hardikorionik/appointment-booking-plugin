@@ -47,14 +47,14 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
     return (
         <div
             className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between bg-white rounded-sm border transition-all duration-300 
-            ${selected ? "border-black shadow-lg ring-1 ring-black" : !item.isOpen ? "border-red-500 bg-red-50" : "border-gray-200 hover:border-gray-400 hover:shadow-md"}`}
+            ${selected ? "border-black shadow-lg ring-1 ring-black" : !item.isOpen ? "border-red-300 bg-red-50" : "border-gray-200 hover:border-gray-400 hover:shadow-md"}`}
             onClick={() => onSelect(item.id)}
         >
             <div className="p-4">
                 <div className="flex items-start justify-between mb-5"><StatusBadge status={item.isOpen} /></div>
                 <div className="flex-1">
-                    <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-3">{item.outletName}</h2>
-                    <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-3">{item.address}</p>
+                    <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-1">{item.outletName}</h2>
+                    <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-3 2xl:line-clamp-2 min-h-10 lg:min-h-15 2xl:min-h-10">{item.address}</p>
                 </div>
                 <button
                     className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200 ${selected ? "bg-btn-bg text-btn-text border-btn-bg" : "bg-white text-btn-bg-hover border-btn-bg-hover group-hover:bg-btn-bg-hover group-hover:text-btn-text"}`}
