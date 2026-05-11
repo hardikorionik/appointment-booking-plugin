@@ -13,9 +13,9 @@ export const hexToRgb = (hex: string) => {
 
 export const defaultTheme: ThemeSettings = {
     button: {
-        bg: "#ff0a0a",
-        text: "#e9ebec",
-        bgHover: "#00b3ad",
+        bg: "#000000",
+        text: "#ffffff",
+        bgHover: "#1f2937",
         textHover: "#ffffff",
     },
 
