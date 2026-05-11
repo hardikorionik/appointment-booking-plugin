@@ -22,7 +22,7 @@ import {
 import { getUserName } from "@/utils";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import type { RootState, SlotItem, DateItem } from "@/types";
-import OrderSidebar from "@/components/ui/OrderSidebar";
+import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
