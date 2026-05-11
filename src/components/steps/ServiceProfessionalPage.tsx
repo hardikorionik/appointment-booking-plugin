@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X, } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   setCategory,
   toggleService,
@@ -16,7 +16,7 @@ import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     transform: "translateY(14px)",
@@ -109,7 +109,7 @@ export default function ServiceProfessionalPage() {
         </button>
       }
     >
-      <Breadcrumb activePage="services" />
+      <Breadcrumb />
       <div className="mt-5">
         <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">Choose a Service</h1>
         <p className="text-sm text-black/60 mb-6">
