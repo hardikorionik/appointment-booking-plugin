@@ -253,7 +253,7 @@ export default function ServicesPage() {
                         );
 
                         if (exists && exists.qty === 1) {
-                          dispatch(decrementService(svc.id));
+                          dispatch(decrementService(String(svc.id)));
                         } else {
                           dispatch(toggleService(mapServiceToItem(svc)));
                         }
@@ -313,7 +313,7 @@ export default function ServicesPage() {
                           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                             e.stopPropagation();
 
-                            dispatch(decrementService(svc.id));
+                            dispatch(decrementService(String(svc.id)));
                           }}
                           className="w-10 h-8 p-2 rounded-md cursor-pointer border border-gray-300 flex items-center justify-center hover:bg-stone-100 transition-all duration-200"
                         >
@@ -337,7 +337,7 @@ export default function ServicesPage() {
                             if (!exists) {
                               dispatch(toggleService(mapServiceToItem(svc)));
                             } else {
-                              dispatch(incrementService(svc.id));
+                              dispatch(incrementService(String(svc.id)));
                             }
                           }}
                           className="w-10 h-8 p-2 rounded-md cursor-pointer bg-red text-white flex items-center justify-center hover:bg-red/90 transition-all duration-200"

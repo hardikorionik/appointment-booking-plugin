@@ -1,16 +1,9 @@
 import { MoveRight, X } from "lucide-react";
 import { CurrencyIcon } from "@/utils";
-
-import type { ServiceItem, OutletData, Step } from "@/types";
-
-interface ExtendedServiceItem extends ServiceItem {
-  min_time?: number | null;
-  estimated_time?: number | null;
-  min_price?: string | number | null;
-}
+import { ServiceItem, OutletData, Step } from "@/types";
 
 interface ServiceSidebarProps {
-  selectedServices: ExtendedServiceItem[];
+  selectedServices: ServiceItem[];
   outletData: OutletData | null;
   totalPrice: number;
   goToStep: (step: Step) => void;
@@ -27,7 +20,7 @@ export default function ServiceSidebar({
       <p className="font-bebas text-2xl mb-0">Your Order</p>
 
       <p className="text-base font-bold text-muted mb-1 border-b border-gray-300 pb-2">
-        {/* {outletData?.outletName || "-"} */} Outlet Name
+        {outletData?.outletName || "-"}
       </p>
 
       {selectedServices?.length > 0 && (
@@ -35,11 +28,10 @@ export default function ServiceSidebar({
           {selectedServices?.map((svc, index) => (
             <li
               key={svc.id}
-              className={`flex justify-between flex-row items-center text-sm py-2 ${
-                index !== selectedServices?.length - 1
-                  ? "border-b border-dotted border-gray-400"
-                  : ""
-              }`}
+              className={`flex justify-between flex-row items-center text-sm py-2 ${index !== selectedServices?.length - 1
+                ? "border-b border-dotted border-gray-400"
+                : ""
+                }`}
             >
               <span className="flex justify-between flex-row items-center gap-1">
                 {svc.name} <X size={12} /> {svc.qty} (
@@ -54,7 +46,6 @@ export default function ServiceSidebar({
           ))}
         </ul>
       )}
-
       <div className="h-px bg-border mt-auto my-2.5" />
 
       <div className="flex justify-between text-lg mb-0.5">

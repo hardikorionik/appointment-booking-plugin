@@ -23,7 +23,6 @@ import "react-phone-number-input/style.css";
 import { FormValues, FetchCustomerResponse } from "@/types";
 
 // -------------------- Constants --------------------
-
 const allowedCountries = [
     "IN",
     "US",
@@ -34,11 +33,7 @@ const allowedCountries = [
     "CN",
 ] as const;
 
-// -------------------- Types --------------------
-
-
 // -------------------- Component --------------------
-
 export default function DetailsPage(): JSX.Element {
     const dispatch = useDispatch();
 
@@ -148,68 +143,40 @@ export default function DetailsPage(): JSX.Element {
             type: "phone" | "email";
         }): Promise<void> => {
             if (!value) return;
-
             let searchKey = "";
-
             if (type === "phone") {
                 if (!isValidPhoneNumber(value)) return;
 
                 searchKey = normalizePhone(value);
             }
-
             if (type === "email") {
                 if (!isValidEmail(value)) return;
-
                 searchKey = value.trim();
             }
-
             if (!searchKey) return;
-
             if (
                 lastQueryRef.current === searchKey &&
                 isAutoFilled
             ) {
                 return;
             }
-
             lastQueryRef.current = searchKey;
-
             setLoading(true);
             setLoadingField(type);
-
             try {
-                const res: FetchCustomerResponse =
-                    await fetchCustomer({
-                        search: searchKey,
-                    });
-
+                const res: FetchCustomerResponse = await fetchCustomer({ search: searchKey, });
                 const customer = res?.data?.[0];
-
                 if (customer) {
-                    setValue(
-                        "firstName",
-                        customer.first_name || "",
-                        {
-                            shouldValidate: true,
-                        },
-                    );
-
-                    setValue(
-                        "lastName",
-                        customer.last_name || "",
-                    );
-
-                    if (
-                        customer.phone &&
-                        isValidPhoneNumber(customer.phone)
-                    ) {
+                    setValue("firstName", customer.first_name || "", {
+                        shouldValidate: true,
+                    });
+                    setValue("lastName", customer.last_name || "");
+                    if (customer.phone && isValidPhoneNumber(customer.phone)) {
                         setValue("phone", customer.phone);
                     }
-
                     if (customer.email) {
                         setValue("email", customer.email);
                     }
-
                     dispatch(
                         setUserDetails({
                             email: customer.email,
@@ -218,7 +185,6 @@ export default function DetailsPage(): JSX.Element {
                             phone: customer.phone,
                         }),
                     );
-
                     setIsAutoFilled(true);
                 } else {
                     setIsAutoFilled(false);
@@ -242,11 +208,8 @@ export default function DetailsPage(): JSX.Element {
             email: "",
             phone: "",
         });
-
         setIsAutoFilled(false);
-
         lastQueryRef.current = "";
-
         dispatch(clearUserDetails());
     };
 
@@ -257,7 +220,6 @@ export default function DetailsPage(): JSX.Element {
             fetchCustomerData,
             800,
         );
-
         return () => {
             debouncedFetchRef.current?.cancel?.();
         };
@@ -317,12 +279,7 @@ export default function DetailsPage(): JSX.Element {
                     <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
                         Your Details
                     </h1>
-                    <div
-                        className="overflow-y-auto no-scrollbar pb-20 lg:pb-4"
-                        style={{
-                            height: `${height - 200}px`,
-                        }}
-                    >
+                    <div className="overflow-y-auto no-scrollbar pb-20 lg:pb-4" style={{ height: `${height - 200}px`, }} >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mt-5">
                             {/* Phone */}
                             <div className="flex flex-col">
@@ -344,21 +301,14 @@ export default function DetailsPage(): JSX.Element {
                                         validate: (value) => {
                                             const hasPhone =
                                                 !!normalizePhone(value);
-
                                             const hasEmail =
                                                 !!emailValue?.trim();
-
                                             if (!hasPhone && !hasEmail) {
                                                 return "Enter phone or email";
                                             }
-
-                                            if (
-                                                hasPhone &&
-                                                !isValidPhoneNumber(value)
-                                            ) {
+                                            if (hasPhone && !isValidPhoneNumber(value)) {
                                                 return "Enter valid phone number";
                                             }
-
                                             return true;
                                         },
                                     }}
@@ -396,21 +346,15 @@ export default function DetailsPage(): JSX.Element {
                                         </div>
                                     )}
                                 />
-
                                 {errors.phone && (
                                     <p className="text-red-500 text-sm mt-1">
                                         {errors.phone.message}
                                     </p>
                                 )}
-
                                 {isAutoFilled && (
                                     <div className="mt-1 text-xs flex items-center gap-1 text-gray-600">
                                         Using existing customer
-
-                                        <span
-                                            onClick={handleClearCustomer}
-                                            className="text-red cursor-pointer"
-                                        >
+                                        <span onClick={handleClearCustomer} className="text-red cursor-pointer">
                                             Clear
                                         </span>
                                     </div>

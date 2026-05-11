@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence, Variants } from "framer-motion";
-
 import { getUserName } from "@/utils";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { setSelectedDate } from "@/slices/slotSlice";
@@ -9,14 +8,11 @@ import {
   fetchServiceData,
   toggleProfessional,
 } from "@/slices/serviceSlice";
-
 import { useWindowSize } from "@/hooks/useWindowSize";
-
 import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalServiceSidebar from "@/components/sidebar/ProfessionalServiceSidebar";
-
 import {
   ServiceState,
   Staff,
@@ -34,7 +30,6 @@ interface RootState {
 /* =========================
    ANIMATION
 ========================= */
-
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
@@ -102,16 +97,13 @@ export default function ProfessionalServicePage() {
       }
     >
       <Breadcrumb />
-
       <div className="mt-5">
         <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
           Choose a Professional
         </h1>
-
         <p className="text-sm text-black/60 mb-4">
           Available based on selected services
         </p>
-
         <AnimatePresence mode="wait">
           {showEmpty && (
             <motion.p
@@ -126,7 +118,6 @@ export default function ProfessionalServicePage() {
             </motion.p>
           )}
         </AnimatePresence>
-
         <div className="h-[calc(100dvh-210px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(195px,1fr))] gap-3">
             {loading ? (
@@ -155,11 +146,10 @@ export default function ProfessionalServicePage() {
                           dispatch(nextStep("time"));
                         }
                       }}
-                      className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${
-                        selectedProfessional?.id === p.id
-                          ? "border-red bg-[#fff8f8]"
-                          : "bg-white hover:border-red"
-                      }`}
+                      className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
+                        ? "border-red bg-[#fff8f8]"
+                        : "bg-white hover:border-red"
+                        }`}
                     >
                       {p.imageUrl ? (
                         <img

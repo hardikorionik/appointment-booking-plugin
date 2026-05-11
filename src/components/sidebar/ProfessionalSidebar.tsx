@@ -67,11 +67,10 @@ const ProfessionalSidebar = ({
             (svc: SelectedStaffService, index: number) => (
               <li
                 key={svc.id}
-                className={`flex justify-between text-sm py-2 ${
-                  index !== selectedStaffServices.length - 1
-                    ? "border-b border-dotted border-gray-400"
-                    : ""
-                }`}
+                className={`flex justify-between text-sm py-2 ${index !== selectedStaffServices.length - 1
+                  ? "border-b border-dotted border-gray-400"
+                  : ""
+                  }`}
               >
                 <span className="flex justify-between flex-row items-center gap-1">
                   {svc.name} <X size={12} /> {svc.qty} (

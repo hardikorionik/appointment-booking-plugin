@@ -53,7 +53,7 @@ export const fetchAllCategoriesAndStaffService = async (bookingCode: string, ten
 };
 
 //  Get Staff Slots
-export const fetchStaffSlots = async (staffId: string | number, date: string) => {
+export const fetchStaffSlots = async (staffId?: string | number, date?: string) => {
     const res = await fetch(`${BASE_URL}/staff/slots/${staffId}?date=${date}`,
         {
             method: "GET",
