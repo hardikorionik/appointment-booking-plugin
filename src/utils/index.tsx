@@ -15,6 +15,24 @@ type Props = {
   size?: number;
 };
 
+type TaxType = "FIXED" | "PERCENTAGE";
+
+type TaxRow = {
+  isActive: boolean;
+  taxType: TaxType;
+  taxRate: number;
+};
+
+type Service = {
+  price?: number | string;
+  min_price?: number | string;
+  qty?: number;
+  taxRows?: TaxRow[];
+};
+
+type CalculateServiceTaxOptions = {
+  perUnit?: boolean;
+};
 
 export const CurrencyIcon = ({ size = 20 }: Props) => {
   const currency = useSelector(
@@ -38,4 +56,36 @@ export const getUserName = (name: string = ""): string => {
   const last = parts.length > 1 ? parts[parts.length - 1]?.[0] ?? "" : "";
 
   return (first + last).toUpperCase();
+};
+
+export const getServiceBasePrice = (svc: Service): number => {
+  return Number(svc.price || svc.min_price || 0);
+};
+
+export const calculateServiceTax = (
+  svc: Service,
+  { perUnit = false }: CalculateServiceTaxOptions = {}
+): number => {
+  const basePrice = getServiceBasePrice(svc);
+  const qty = perUnit ? 1 : svc.qty || 1;
+
+  if (!svc.taxRows || !svc.taxRows.length) {
+    return 0;
+  }
+
+  return svc.taxRows.reduce((total: number, tax: TaxRow) => {
+    if (!tax.isActive) {
+      return total;
+    }
+
+    if (tax.taxType === "FIXED") {
+      return total + tax.taxRate * qty;
+    }
+
+    if (tax.taxType === "PERCENTAGE") {
+      return total + (basePrice * qty * tax.taxRate) / 100;
+    }
+
+    return total;
+  }, 0);
 };

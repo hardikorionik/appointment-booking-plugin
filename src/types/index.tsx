@@ -1,9 +1,8 @@
-import { ComponentType } from "react";
+import { ComponentType, ReactNode } from "react";
 
-// Types for the booking plugin
-export type BookingPluginProps = {
-  bookingCode: string;
-};
+/* ─────────────────────────────────────────────────────────────
+ * COMMON TYPES
+ * ───────────────────────────────────────────────────────────── */
 
 export type StepKey =
   | "services"
@@ -14,9 +13,36 @@ export type StepKey =
   | "success"
   | "notfound";
 
+export type Step =
+  | "services"
+  | "professionals"
+  | "time"
+  | "details"
+  | "confirm"
+  | "success";
+
 export type PageMap = Record<StepKey, ComponentType>;
 
-// Types for customizable themes
+export type BookingMode = "booking" | "checkin";
+
+export type PayType = "person" | "card";
+
+export type CardType =
+  | "VISA"
+  | "MASTERCARD"
+  | "AMEX"
+  | "DISCOVER"
+  | "UNKNOWN";
+
+export type SignatureType =
+  | "CHECKBOX_ONLY"
+  | "TYPED_NAME"
+  | "SIGNATURE_IMAGE";
+
+/* ─────────────────────────────────────────────────────────────
+ * THEME
+ * ───────────────────────────────────────────────────────────── */
+
 export interface ThemeSettings {
   button: {
     bg: string;
@@ -33,15 +59,22 @@ export interface ThemeSettings {
   };
 }
 
-// Main layout types
-export type MainLayoutProps = {
-  children: React.ReactNode;
-  sidebar?: React.ReactNode;
-  renderButton?: React.ReactNode;
+/* ─────────────────────────────────────────────────────────────
+ * LAYOUT
+ * ───────────────────────────────────────────────────────────── */
+
+export interface MainLayoutProps {
+  children: ReactNode;
+  sidebar?: ReactNode;
+  renderButton?: ReactNode;
   isConfirm?: boolean;
   handleSidebarOpen?: () => void;
   isSidebarOpen?: boolean;
-};
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * OUTLET
+ * ───────────────────────────────────────────────────────────── */
 
 export interface Outlet {
   id: string;
@@ -53,97 +86,92 @@ export interface Outlet {
   isOpen: boolean;
 }
 
-// Service related types
-export type GetStaffSlotsArgs = {
-  staffId: string;
-  date: string;
-};
+export interface OutletData {
+  id?: string;
+  outletName?: string;
+  address?: string;
+  image?: string;
+  timeZone?: string;
+  createdAt?: string;
+  currency?: string;
+}
 
-export type SlotGroups = {
-  morning: Slot[];
-  afternoon: Slot[];
-  evening: Slot[];
-};
+/* ─────────────────────────────────────────────────────────────
+ * TAX
+ * ───────────────────────────────────────────────────────────── */
 
-export type SlotsState = {
-  selectedSlotIndexes: number[];
-  selectedSlotIds: string[];
-  selectedDate: string | null;
-  selectedTime: string | null;
-  slots: SlotGroups;
-  loading: boolean;
-};
+export interface TaxRow {
+  isActive: boolean;
+}
 
-export type StaffSlotsResponse = {
-  groups: SlotGroups;
-};
+/* ─────────────────────────────────────────────────────────────
+ * SERVICE
+ * ───────────────────────────────────────────────────────────── */
 
 export interface Service {
+  id: string | number;
+  name: string;
+  description?: string;
+
+  price?: number | string | null;
+  min_price?: number | string | null;
+  max_price?: number | string | null;
+
+  online_price?: string | null;
+  online_min_price?: string | null;
+  online_max_price?: string | null;
+
+  price_mode?: "FIXED" | "RANGE";
+  online_price_mode?: "FIXED" | "RANGE" | null;
+
+  estimated_time?: number | null;
+  min_time?: number | null;
+  max_time?: number | null;
+
+  time_mode?: "FIXED" | "RANGE";
+
+  qty?: number;
+
+  taxes?: string[];
+  taxRows?: TaxRow[];
+
+  tenant_id?: string;
+  outlet_id?: string | null;
+  category_id?: string;
+
+  available_online?: boolean;
+
+  requires_consent?: boolean;
+
+  consent_rule?: {
+    enforcementMode?: string;
+  } | null;
+
+  consent_template?: {
+    heading?: string;
+    consent?: string;
+  } | null;
+
+  consent_form_id?: string | number | null;
+}
+
+export interface EnrichedService extends Service {
+  duration: number;
+  tax: number;
+  unitTax: number;
+}
+
+export interface ServiceItem {
   id: string;
   name: string;
-  description: string;
-
-  // Pricing
-  price: string | null;
-  min_price: string | null;
-  max_price: string | null;
-  price_mode: "FIXED" | "RANGE";
-
-  // Online Pricing
-  online_price: string | null;
-  online_min_price: string | null;
-  online_max_price: string | null;
-  online_price_mode: "FIXED" | "RANGE" | null;
-
-  // Time
-  estimated_time: number | null;
-  min_time: number | null;
-  max_time: number | null;
-  time_mode: "FIXED" | "RANGE";
-
-  // Buffer
-  buffer_time: boolean;
-  has_buffer_time: boolean;
-  before_buffer_time: number | null;
-  after_buffer_time: number | null;
-
-  // IDs
-  tenant_id: string;
-  outlet_id: string | null;
-  category_id: string;
-
-  // Dates
-  created_at: string;
-  updated_at: string;
-
-  // Taxes
-  taxes: string[];
-  taxRows: any[];
-
-  // Processing
-  has_processing_time: boolean;
-  processing_time: number | null;
-  finishing_time: number | null;
-
-  // Online
-  available_online: boolean;
-  online_description: string;
-
-  // Other
-  sortOrder: number;
-  auto_assign_to_all_staff: boolean;
-
-  // Consent
-  requires_consent: boolean;
-  enforcement: Record<string, any>;
-
-  consent_rule: any | null;
-  consent_form: any | null;
-  consent_template: any | null;
-
-  consent_form_id: string | null;
-  consent_rule_id: string | null;
+  qty: number;
+  duration?: number;
+  price?: number;
 }
+
+/* ─────────────────────────────────────────────────────────────
+ * CATEGORY
+ * ───────────────────────────────────────────────────────────── */
 
 export interface Category {
   id: string;
@@ -159,140 +187,255 @@ export interface Category {
   services: Service[];
 }
 
-export interface StaffServiceAssignment {
-  id: string;
-  staffName: string;
-  name: string;
-  categoryId: string;
-  price: number;
-  duration: number; // duration in minutes
-  assigned_at: string; // ISO date string
-  assigned_via: string;
-  assigned: boolean;
+export interface FilteredCategory extends Category {
+  services: Service[];
 }
 
-export interface StaffMember {
-  color: string;
-  firstName: string;
-  futureLeaveDates: string[]; // Change type if dates are objects
-  id: string;
-  imageUrl: string;
-  is_service_provider: boolean;
-  lastName: string;
-  name: string;
-  outletId: string;
-  outletName: string;
-  staff_type: string;
-  tenantId: string;
-  userId: string;
-  assignments: StaffServiceAssignment[];
+/* ─────────────────────────────────────────────────────────────
+ * STAFF
+ * ───────────────────────────────────────────────────────────── */
+
+export interface StaffAssignment {
+  id: string | number;
+  categoryId?: string;
+  price?: number;
+  duration?: number;
 }
 
 export interface Staff {
-  assignments: any;
   id: string;
   name: string;
-  firstname: string;
-  lastname: string;
+  firstname?: string;
+  lastname?: string;
+
+  imageUrl?: string;
+  color?: string;
+
+  assignments?: StaffAssignment[];
 }
+
+/* ─────────────────────────────────────────────────────────────
+ * SLOT
+ * ───────────────────────────────────────────────────────────── */
+
+export interface Slot {
+  id?: string;
+  startTime?: string;
+  endTime?: string;
+
+  start_time?: string;
+  end_time?: string;
+}
+
+export interface SlotGroups {
+  morning: Slot[];
+  afternoon: Slot[];
+  evening: Slot[];
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * USER
+ * ───────────────────────────────────────────────────────────── */
+
+export interface UserDetails {
+  id?: string | number;
+  name?: string;
+
+  firstName?: string;
+  lastName?: string;
+
+  email?: string;
+  phone?: string;
+}
+
+export interface Customer {
+  first_name?: string;
+  last_name?: string;
+  phone?: string;
+  email?: string;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * APPOINTMENT
+ * ───────────────────────────────────────────────────────────── */
+
+export interface AppointmentResponse {
+  id?: string;
+  appointmentId?: string;
+  customerId?: string;
+
+  customer?: {
+    id?: string;
+  };
+
+  [key: string]: unknown;
+}
+
+export interface AppointmentDetails {
+  staff?: Staff | null;
+  outlet?: Outlet | null;
+  services: Service[];
+
+  startLocal?: string;
+  appointmentDate: string;
+  startTime: string;
+
+  tipsCents: number;
+  taxCents: number;
+  totalCents: number;
+}
+
+export interface AppointmentPayload {
+  tenantId: string | null;
+  outletId: string | null;
+  staffId?: string | number;
+
+  date: string;
+  startTime: string;
+
+  serviceIds: (string | number)[];
+  slotIds: (string | number)[];
+
+  isWalkIn: boolean;
+  requiresConsent: boolean;
+
+  customer: Customer;
+}
+
+export interface CheckinPayload {
+  tenantId: string | null;
+  outletId: string | null;
+
+  date: string;
+  startTime: string;
+
+  staffId?: string | number;
+
+  serviceIds: (string | number)[];
+  slotIds: (string | number)[];
+
+  customer: Customer;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * CONSENT
+ * ───────────────────────────────────────────────────────────── */
+
+export interface ConsentModalPayload {
+  typedName?: string;
+  accepted?: boolean;
+  signatureDataUrl?: string;
+  emailMe?: boolean;
+}
+
+export interface ConsentDraftEntry {
+  serviceId: string;
+  concentFormId: string;
+
+  signatureType: SignatureType;
+
+  typedName?: string;
+  isChecked?: boolean;
+  signatureDataUrl?: string;
+  emailMe?: boolean;
+}
+
+export interface ConsentDraftMap {
+  [serviceId: string]: ConsentDraftEntry;
+}
+
+export interface ConsentCheckStatus {
+  checked: boolean;
+  needsSignature: boolean;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * PAYMENT
+ * ───────────────────────────────────────────────────────────── */
+
+export interface PaymentMeta {
+  appointmentId: string | number;
+  customerId: string | number;
+}
+
+export interface CardData {
+  name: string;
+  number: string;
+  expiry: string;
+  cvv: string;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * REDUX STATE
+ * ───────────────────────────────────────────────────────────── */
+
+export interface BookingSliceState {
+  outletData: OutletData | null;
+  outletTimeZoneDate: string;
+  outletTimeZone: string;
+}
+
+export interface ServiceSliceState {
+  categories: Category[];
+  staff: Staff[];
+
+  selectedCategory: Category | null;
+  selectedServices: Service[];
+
+  selectedProfessional: Staff | null;
+
+  loading: boolean;
+  error: string | null;
+}
+
+export interface SlotsSliceState {
+  selectedSlotIds: (string | number)[];
+  selectedDate: string | null;
+  selectedTime: string;
+
+  selectedSlotIndexes: number[];
+
+  slots: SlotGroups;
+
+  loading: boolean;
+}
+
+export interface AppointmentSliceState {
+  loading: boolean;
+  success: boolean;
+
+  error: string | null;
+
+  data: AppointmentResponse | null;
+
+  appointmentId: string | null;
+  customerId: string | null;
+
+  userDetails: UserDetails | null;
+
+  tipPct: number;
+
+  bookingMode: BookingMode;
+}
+
+export interface RootState {
+  booking: BookingSliceState;
+  service: ServiceSliceState;
+  slots: SlotsSliceState;
+  appointment: AppointmentSliceState;
+}
+
+/* ─────────────────────────────────────────────────────────────
+ * API RESPONSES
+ * ───────────────────────────────────────────────────────────── */
 
 export interface ServiceResponse {
   categories: Category[];
   staff: Staff[];
 }
 
-export interface Slot {
-  id: string;
-  startTime: string;
-  endTime: string;
-}
-
-export type SlotsResponse = Slot[];
-
-// Breadcrumb related types
-export type Step =
-  | "services"
-  | "professionals"
-  | "time"
-  | "details"
-  | "confirm"
-  | "success";
-
-export type StepItem = {
-  label: React.ReactNode;
-  page: Step;
-};
-
-export type BookingState = {
-  step: Step;
-  staff: Staff[];
-  services: Service[];
-  slots: Slot[];
-  selectedStaff?: Staff;
-  selectedService?: Service;
-  selectedSlot?: Slot;
-  loading: boolean;
-  error?: string;
-};
-
-export interface BreadcrumbState {
-  currentStep: Step;
-  completedSteps: Step[];
-  isService: boolean;
-}
-
-// Appointment related types
-export type BookingMode = "booking" | "checkin";
-
-export interface UserDetails {
-  name?: string;
-  email?: string;
-  phone?: string;
-}
-
-export interface AppointmentResponse {
-  id?: string;
-  appointmentId?: string;
-  customerId?: string;
-  customer?: {
-    id?: string;
-  };
-  [key: string]: any;
-}
-
-export interface AppointmentPayload {
-  [key: string]: any;
-}
-
-export interface AppointmentState {
-  loading: boolean;
-  success: boolean;
-  error: string | null;
-  data: AppointmentResponse | null;
-  appointmentId: string | null;
-  customerId: string | null;
-  userDetails: UserDetails | null;
-  tipPct: number;
-  bookingMode: BookingMode;
-}
-
-// Service response type
-export interface ServiceItem {
-  id: string;
-  name: string;
-  qty: number;
-  duration?: number;
-  price?: number;
-}
-
-export interface ServiceState {
-  categories: Category[];
-  staff: Staff[];
-  selectedCategory: Category | null;
-  selectedServices: ServiceItem[];
-  selectedProfessional: Staff | null;
-  loading: boolean;
-  error: string | null;
+export interface FetchCustomerResponse {
+  data?: Customer[];
 }
 
 export interface FetchServicePayload {
@@ -305,85 +448,22 @@ export interface FetchServiceResponse {
   staff: Staff[];
 }
 
-// Booking slice types
-export type OutletData = {
-  id: string;
-  timeZone: string;
-  createdAt: string;
-  currency?: string;
-};
+/* ─────────────────────────────────────────────────────────────
+ * COMPONENT PROPS
+ * ───────────────────────────────────────────────────────────── */
 
-export type InitBookingPayload = {
-  outletData: OutletData;
-  outletTimeZoneDate: string;
-  outletTimeZoneYear: number;
-  outletTimeZone: string;
-  token?: string | null;
-};
-
-export type InitBookingArgs = {
-  outletId: string;
-};
-
-export type InitBookingState = {
-  outletData: OutletData | null;
-  token: string | null;
-  loading: boolean;
-  error: string | null;
-  outletId: string | null;
-  outletTimeZoneDate: string | null;
-  outletTimeZoneYear: number | null;
-  outletTimeZone: string | null;
-};
-
-/* TAX TYPES */
-export interface TaxRow {
-  isActive: boolean;
+export interface BookingPluginProps {
+  bookingCode: string;
 }
 
-/* PROFESSIONAL ASSIGNMENT */
-export interface Assignment {
-  id: string;
-  categoryId: string;
+export interface ProfessionalSidebarProps {
+  pro: Staff | null;
+  goToStep: (step: Step) => void;
 }
 
-/* FILTERED CATEGORY */
-export interface FilteredCategory extends Category {
-  services: Service[];
-}
-
-// sucess page types
-export interface AppointmentDetails {
-  staff?: Staff | null;
-  outlet?: Outlet | null;
-  services: Service[];
-  startLocal?: string;
-  appointmentDate: string;
-  startTime: string;
-  tipsCents: number;
-  taxCents: number;
-  totalCents: number;
-}
-
-// customer details types
 export interface FormValues {
   firstName: string;
   lastName: string;
   phone: string;
   email: string;
-}
-
-export interface Customer {
-  first_name?: string;
-  last_name?: string;
-  phone?: string;
-  email?: string;
-}
-
-export interface FetchCustomerResponse {
-  data?: Customer[];
-}
-export interface ProfessionalSidebarProps {
-  pro: Staff | null;
-  goToStep: (step: Step) => void;
 }
