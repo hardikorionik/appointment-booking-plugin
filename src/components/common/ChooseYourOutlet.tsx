@@ -91,7 +91,7 @@ export default function ChooseYourOutlet({
   return (
     <div className="min-h-screen bg-[#f3f1ee] px-4 py-10 sm:px-8 lg:px-16">
       <div className="mb-10">
-        <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tight text-gray-900 mb-3">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight text-gray-900 mb-3">
           Choose Your Outlet
         </h1>
         <div className="w-14 h-0.75 bg-red-600" />
