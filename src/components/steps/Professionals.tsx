@@ -10,7 +10,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { calculateServiceTax } from "@/utils/taxHelper";
 
 import MainLayout from "@/components/common/MainLayout";
-import ProfessionalSidebar from "@/components/ui/ProfessionalSidebar";
+import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
 

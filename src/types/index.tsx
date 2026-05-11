@@ -352,7 +352,6 @@ export interface FilteredCategory extends Category {
   services: Service[];
 }
 
-
 // sucess page types
 export interface AppointmentDetails {
   staff?: Staff | null;
@@ -383,4 +382,8 @@ export interface Customer {
 
 export interface FetchCustomerResponse {
   data?: Customer[];
+}
+export interface ProfessionalSidebarProps {
+  pro: Staff | null;
+  goToStep: (step: Step) => void;
 }

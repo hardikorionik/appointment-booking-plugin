@@ -15,7 +15,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import ProfessionalServiceSidebar from "@/components/ui/ProfessionalServiceSidebar";
+import ProfessionalServiceSidebar from "@/components/sidebar/ProfessionalServiceSidebar";
 
 import {
   ServiceState,
