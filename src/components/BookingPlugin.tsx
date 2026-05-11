@@ -60,7 +60,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
                     onSelectOutlet={setSelectedOutlet}
                 />
             ) : (
-                <DefaultAppointment />
+                <DefaultAppointment outletDetails={outlets[0] || selectedOutlet} />
             )}
         </>
     );

@@ -1,6 +1,5 @@
-import { useEffect, useState, ComponentType, JSX } from "react";
+import { useState, ComponentType, JSX } from "react";
 import { useLocation } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
 import ProfessionalServicePage from "@/components/pages/ProfessionalServicePage";
 import Professionals from "@/components/pages/Professionals";
@@ -15,10 +14,12 @@ import LoaderPage from "@/components/ui/LoaderPage";
 import { initBooking } from "@/slices/bookingSlice";
 import { setServiceMode } from "@/slices/breadcrumbSlice";
 import { AppDispatch, RootState } from "@/store"; // adjust path as needed
-import { StepKey, PageMap } from "@/types";
+import { StepKey, PageMap, Outlet } from "@/types";
 
-// ─── Redirect routes ──────────────────────────────────────────────────────────
 
+interface DefaultAppointmentProps {
+  outletDetails: Outlet;
+}
 const REDIRECT_ROUTES: string[] = [
   "/google",
   "/outlook",
@@ -28,7 +29,7 @@ const REDIRECT_ROUTES: string[] = [
 
 // ─── AppContent ───────────────────────────────────────────────────────────────
 
-function AppContent(): JSX.Element {
+function AppContent({ outletDetails }: { outletDetails: Outlet }): JSX.Element {
   const { currentStep, isService } = useSelector(
     (state: RootState) => state.breadcrumbs
   );
@@ -57,19 +58,15 @@ function AppContent(): JSX.Element {
   //       setLoading(false);
   //       return;
   //     }
-
-
   //     if (!tenantId || !outletId || !ref) {
   //       setIsInvalid(true);
   //       setLoading(false);
   //       return;
   //     }
-
   //     try {
   //       localStorage.setItem("tenantId", tenantId);
   //       localStorage.setItem("outletId", outletId);
   //       localStorage.setItem("isService", String(isService));
-
   //       await dispatch(initBooking({ tenantId, outletId, ref }));
   //       await dispatch(setServiceMode(isService));
   //     } catch (err: unknown) {
@@ -79,7 +76,6 @@ function AppContent(): JSX.Element {
   //       setLoading(false);
   //     }
   //   };
-
   //   init();
   // }, [dispatch, isRedirectRoute]);
 
@@ -109,10 +105,10 @@ function AppContent(): JSX.Element {
   );
 }
 
-// ─── App (root) ───────────────────────────────────────────────────────────────
-
-export default function DefaultAppointment(): JSX.Element {
+export default function DefaultAppointment({
+  outletDetails,
+}: DefaultAppointmentProps): JSX.Element {
   return (
-    <AppContent />
+    <AppContent outletDetails={outletDetails} />
   );
 }
