@@ -578,7 +578,9 @@ export interface SlotItem {
 
 /* ROOT STATE */
 export interface RootState {
-  appointment: AppointmentSliceState;
+  appointment: {
+    bookingMode: BookingMode;
+  };
 
   service: {
     staff: StaffMember[];
