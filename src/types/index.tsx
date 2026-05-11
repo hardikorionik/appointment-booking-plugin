@@ -192,11 +192,11 @@ export interface EnrichedService extends Service {
 }
 
 export interface ServiceItem {
-  id: string;
+  id: string | number
   name: string;
   qty: number;
   duration?: number;
-  price?: number;
+  price?: number | string | null;
 }
 
 /* ─────────────────────────────────────────────────────────────

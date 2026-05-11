@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Search, Minus, Plus, X } from "lucide-react";
-
 import { motion, AnimatePresence, Variants } from "framer-motion";
-
 import {
   fetchServiceData,
   setCategory,
@@ -12,46 +9,36 @@ import {
   incrementService,
   decrementService,
 } from "@/slices/serviceSlice";
-
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
 import ServiceSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
-
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { isConsentRequiredService } from "@/services";
 import { CurrencyIcon } from "@/utils";
-import { useWindowSize } from "@/hooks/useWindowSize";
-
 import type { RootState, AppDispatch } from "@/store";
-
 import type { Category, Service, ServiceItem, TaxRow } from "@/types";
 
 /* =========================
    ANIMATION
 ========================= */
-
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
     transform: "translateY(14px)",
   },
-
   visible: (index: number) => ({
     opacity: 1,
     transform: "translateY(0px)",
-
     transition: {
       delay: index * 0.05,
       duration: 0.32,
       ease: [0.22, 1, 0.36, 1],
     },
   }),
-
   exit: {
     opacity: 0,
     transform: "translateY(8px)",
-
     transition: {
       duration: 0.2,
     },
@@ -64,17 +51,10 @@ const cardVariants: Variants = {
 
 export default function ServicesPage() {
   const dispatch = useDispatch<AppDispatch>();
-
-  const { width } = useWindowSize();
-
   const hasFetched = useRef<boolean>(false);
-
   const scrollRef = useRef<HTMLDivElement | null>(null);
-
   const [searchTerm, setSearchTerm] = useState<string>("");
-
   const { outletData } = useSelector((state: RootState) => state.booking);
-
   const {
     categories,
     selectedCategory,
@@ -185,8 +165,8 @@ export default function ServicesPage() {
             <button
               onClick={() => dispatch(setCategory(null))}
               className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${!selectedCategory
-                  ? "bg-red text-white"
-                  : "bg-white border-border hover:border-red/80 hover:text-red transition"
+                ? "bg-red text-white"
+                : "bg-white border-border hover:border-red/80 hover:text-red transition"
                 }`}
             >
               All Services (
@@ -202,8 +182,8 @@ export default function ServicesPage() {
                 key={cat.id}
                 onClick={() => dispatch(setCategory(cat))}
                 className={`px-4 py-2 text-xs cursor-pointer border rounded whitespace-nowrap ${selectedCategory?.id === cat.id
-                    ? "bg-red text-white"
-                    : "bg-white border-border hover:border-red/80 hover:text-red transition"
+                  ? "bg-red text-white"
+                  : "bg-white border-border hover:border-red/80 hover:text-red transition"
                   }`}
               >
                 {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)} (
@@ -307,7 +287,7 @@ export default function ServicesPage() {
                           {svc.description}
                         </p>
 
-                        {svc.description?.length > 25 && (
+                        {svc.description && svc.description.length > 25 && (
                           <div className="absolute hidden group-hover:block bg-surface text-xs p-2 rounded top-full mt-1 z-10 w-52">
                             {svc.description}
                           </div>
