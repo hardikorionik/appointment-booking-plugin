@@ -9,8 +9,8 @@ import TimePage from "@/components/steps/TimePage";
 import ConfirmPage from "@/components/steps/ConfirmPage";
 import DetailsPage from "@/components/steps/DetailsPage";
 import SuccessPage from "@/components/steps/SuccessPage";
-import NotFoundPage from "@/components/steps/NotFoundPage";
-import LoaderPage from "@/components/ui/LoaderPage";
+import NotFoundPage from "@/components/common/NotFoundPage";
+import LoaderPage from "@/components/common/LoaderPage";
 import { initBooking } from "@/slices/bookingSlice";
 import { setServiceMode } from "@/slices/breadcrumbSlice";
 import { AppDispatch, RootState } from "@/store"; // adjust path as needed
