@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 import { useSelector, useDispatch } from "react-redux";
 import { Check, CalendarDays, CreditCard, Store } from "lucide-react";
 import { createAppointment, createCheckin } from "@/slices/appointmentSlice";
-import { PayCustomerDirect, finalizeInvoice } from "@/api/paymentService";
+import { payCustomerDirect, finalizeInvoice } from "@/services";
 import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import PaymentModal from "@/components/modals/PaymentModal";
 import ConsentModal from "@/components/modals/ConsentModal";
@@ -23,7 +23,7 @@ import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState } from "@/store";
-import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot } from "@/types";
+import { PaymentMeta, PayType, Service, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -540,7 +540,7 @@ export default function ConfirmPage(): JSX.Element {
                 return false;
             }
             const detectedCardType = getCardType(cardData.number);
-            const paymentPayload = {
+            const paymentPayload: PaymentPayload = {
                 appointmentId,
                 customerId,
                 outletId,
@@ -572,7 +572,7 @@ export default function ConfirmPage(): JSX.Element {
                 },
             };
 
-            const resp = await PayCustomerDirect(paymentPayload);
+            const resp = await payCustomerDirect(paymentPayload);
             const data = resp?.data?.data ?? resp?.data ?? resp ?? {};
             const orderId = data?.orderId;
             const isSuccess =
@@ -585,7 +585,11 @@ export default function ConfirmPage(): JSX.Element {
                     try {
                         await finalizeInvoice(orderId);
                     } catch (err) {
-                        toast.warning(err ?? "Payment done, but finalize failed");
+                        toast.warning(
+                            err instanceof Error
+                                ? err.message
+                                : String(err ?? "Payment done, but finalize failed"),
+                        );
                     }
                 }
             } else {

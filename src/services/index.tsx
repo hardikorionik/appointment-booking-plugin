@@ -1,3 +1,4 @@
+import { PaymentPayload } from "@/types";
 
 const token: string = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRpdHlJZCI6IjJlNGQ3OGFiLWNjNTItNGU4Mi04NTRhLTZjNmYwMzA4ZDFmMiIsImVudGl0eVR5cGUiOiJzdG9yZSIsImVtYWlsIjoic2hlYXJicmlsbGllbmNlQHZvbW90by5jb20iLCJ0ZW5hbnRJZCI6IjczYTUyY2Y3LTUwMjMtNDJmYi1iMjBmLTUwYWE2YzAzZGM2ZiIsImNsdXN0ZXJJZCI6IjdiNmE5YzhlLTRmNWQtNGEyYS05YjBhLTlhNmY1YzhmNGQyMSIsInJvbGVzIjpbeyJpZCI6IjBhOTQ5ZTVmLTgzYTItNDkxOC04ZjQ2LWEzZmQwNDc5MmI2NyIsIm5hbWUiOiJzdG9yZV9vd25lciJ9XSwiaWF0IjoxNzcxNjc3ODg5LCJleHAiOjE5Mjk0NjU4ODl9._fPXdjH_3ksNrlMTxAQN3ChnWVchXcNaatHsGhvTVTM`;
 const BASE_URL =
@@ -158,4 +159,57 @@ export const fetchCustomer = async ({
     const response = await res.json();
 
     return response;
+};
+
+// Pay Customer Directly
+export const payCustomerDirect = async (payload: PaymentPayload) => {
+    try {
+        const res = await fetch(
+            `${BASE_URL}/payment/pay/customer/direct`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(payload),
+            },
+        );
+
+        const response = await res.json();
+
+        if (!res.ok) {
+            throw response;
+        }
+
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Finalize Invoice
+export const finalizeInvoice = async (orderId: string) => {
+    try {
+        const res = await fetch(
+            `${BASE_URL}/payment/orders/${orderId}/invoicing/finalize`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+        );
+
+        const response = await res.json();
+
+        if (!res.ok) {
+            throw response;
+        }
+
+        return response;
+    } catch (error) {
+        throw error;
+    }
 };

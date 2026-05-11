@@ -365,6 +365,52 @@ export interface CardData {
   cvv: string;
 }
 
+export interface PaymentPayload {
+  appointmentId: string | number;
+  customerId: string | number;
+  outletId: string;
+  referenceNo: string | number;
+
+  currency: string;
+
+  amountCents: number;
+  tipAmountCents: number;
+  taxAmountCents: number;
+
+  transactionBody: TransactionBody;
+}
+
+export interface TransactionBody {
+  transactionOrigin: number;
+  transactionCode: string;
+
+  isDebit: boolean;
+
+  processMethod: number;
+  channelType: number;
+
+  tenderInfo: TenderInfo;
+
+  billingContact: BillingContact;
+}
+
+export interface TenderInfo {
+  cardHolderName: string;
+  cardNumber: string;
+  cardType: CardType;
+  cardExpiry: number | string;
+  cvData: string;
+}
+
+export interface BillingContact {
+  name: {
+    firstName: string;
+    lastName: string;
+  };
+
+  email: string;
+}
+
 /* ─────────────────────────────────────────────────────────────
  * REDUX STATE
  * ───────────────────────────────────────────────────────────── */
