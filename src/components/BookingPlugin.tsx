@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { BookingPluginProps, Category } from "@/types";
+import { BookingPluginProps } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import { applyTheme } from "@/utils/applyTheme";
+import DeafultAppointment from "@/steps";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
-    const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [outlets, setOutlets] = useState<any[]>([]);
@@ -53,34 +53,18 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     }
 
     return (
-        <>{outlets.length > 1 && !selectedOutlet ? <ChooseYourOutlet
-            outlets={outlets}
-            onSelectOutlet={(outlet) => {
-                console.log("Selected Outlet:", outlet);
-            }}
-        />
-            : <div className="p-4 border rounded bg-red-400 text-white">
-                <h2 className="text-5xl font-bold">
-                    Booking Plugin
-                </h2>
-                <div>
-                    <h3 className="font-semibold mb-2 text-lg">
-                        Categories
-                    </h3>
-                    {categories.length === 0 ? (
-                        <p className="text-white">No categories found</p>
-                    ) : (
-                        categories.map((category) => (
-                            <div
-                                key={category.id}
-                                className="p-2 border-b border-white"
-                            >
-                                {category.name}
-                            </div>
-                        ))
-                    )}
-                </div>
-            </div>}
+        <>
+            {outlets.length > 1 && !selectedOutlet ? (
+                <ChooseYourOutlet
+                    outlets={outlets}
+                    onSelectOutlet={setSelectedOutlet}
+                />
+            ) : (
+                <DeafultAppointment
+                    bookingCode={bookingCode}
+                    selectedOutlet={selectedOutlet}
+                />
+            )}
         </>
     );
 };

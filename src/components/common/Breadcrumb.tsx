@@ -99,7 +99,6 @@ export default function Breadcrumb() {
                         const isActive = currentStep === step.page;
                         const isCompleted = completedSteps?.includes(step.page);
                         const isClickable = isCompleted || i <= currentIndex;
-
                         return (
                             <span key={step.page} className="flex items-center gap-1">
                                 {i > 0 && <ChevronRight size={14} className="text-gray-300" />}
