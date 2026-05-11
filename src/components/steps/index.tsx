@@ -1,15 +1,15 @@
-import { useState, ComponentType, JSX } from "react";
+import { useEffect, useState, ComponentType, JSX } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import ProfessionalServicePage from "@/components/pages/ProfessionalServicePage";
-import Professionals from "@/components/pages/Professionals";
-import ServiceProfessionalPage from "@/components/pages/ServiceProfessionalPage";
-import ServicesPage from "@/components/pages/ServicesPage";
-import TimePage from "@/components/pages/TimePage";
-import ConfirmPage from "@/components/pages/ConfirmPage";
-import DetailsPage from "@/components/pages/DetailsPage";
-import SuccessPage from "@/components/pages/SuccessPage";
-import NotFoundPage from "@/components/pages/NotFoundPage";
+import ProfessionalServicePage from "@/components/steps/ProfessionalServicePage";
+import Professionals from "@/components/steps/Professionals";
+import ServiceProfessionalPage from "@/components/steps/ServiceProfessionalPage";
+import ServicesPage from "@/components/steps/ServicesPage";
+import TimePage from "@/components/steps/TimePage";
+import ConfirmPage from "@/components/steps/ConfirmPage";
+import DetailsPage from "@/components/steps/DetailsPage";
+import SuccessPage from "@/components/steps/SuccessPage";
+import NotFoundPage from "@/components/steps/NotFoundPage";
 import LoaderPage from "@/components/ui/LoaderPage";
 import { initBooking } from "@/slices/bookingSlice";
 import { setServiceMode } from "@/slices/breadcrumbSlice";
@@ -52,32 +52,29 @@ function AppContent({ outletDetails }: { outletDetails: Outlet }): JSX.Element {
   const pathname: string = location.pathname;
   const isRedirectRoute: boolean = REDIRECT_ROUTES.includes(pathname);
 
-  // useEffect(() => {
-  //   const init = async (): Promise<void> => {
-  //     if (isRedirectRoute) {
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     if (!tenantId || !outletId || !ref) {
-  //       setIsInvalid(true);
-  //       setLoading(false);
-  //       return;
-  //     }
-  //     try {
-  //       localStorage.setItem("tenantId", tenantId);
-  //       localStorage.setItem("outletId", outletId);
-  //       localStorage.setItem("isService", String(isService));
-  //       await dispatch(initBooking({ tenantId, outletId, ref }));
-  //       await dispatch(setServiceMode(isService));
-  //     } catch (err: unknown) {
-  //       console.error(err);
-  //       setIsInvalid(true);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   init();
-  // }, [dispatch, isRedirectRoute]);
+  useEffect(() => {
+    const init = async (): Promise<void> => {
+      if (isRedirectRoute) {
+        setLoading(false);
+        return;
+      }
+      if (!tenantId || !outletId || !ref) {
+        setIsInvalid(true);
+        setLoading(false);
+        return;
+      }
+      try {
+        await dispatch(initBooking({ tenantId, outletId, ref }));
+        await dispatch(setServiceMode(isService));
+      } catch (err: unknown) {
+        console.error(err);
+        setIsInvalid(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+    init();
+  }, [dispatch, isRedirectRoute]);
 
   if (isRedirectRoute) {
     return <LoaderPage />;
