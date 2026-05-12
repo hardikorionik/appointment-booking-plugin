@@ -20,20 +20,20 @@ import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
-    transform: "translateY(14px)",
+    y: 14,
   },
   visible: (index: number) => ({
     opacity: 1,
-    transform: "translateY(0px)",
+    y: 0,
     transition: {
       delay: index * 0.05,
-      duration: 0.32,
+      duration: 0.15,
       ease: [0.22, 1, 0.36, 1],
     },
   }),
   exit: {
     opacity: 0,
-    transform: "translateY(8px)",
+    y: 8,
     transition: { duration: 0.2 },
   },
 };
@@ -243,7 +243,7 @@ export default function ServicesPage() {
 
                     setSelectedSubCategory(superCat?.categories?.[0] || null);
                   }}
-                  className={`border text-left py-3 px-4 transition-all cursor-pointer min-w-fit ${
+                  className={`border text-left py-2 px-4 transition-all cursor-pointer min-w-fit ${
                     selectedSuperCategory?.id === superCat.id
                       ? "border-red-300 bg-red-50/50"
                       : "border-black/30 bg-white hover:border-red/50"
@@ -354,7 +354,7 @@ export default function ServicesPage() {
           className={`overflow-y-auto pb-20 lg:pb-4 scrollbar-none ${
             viewType === "standalone"
               ? "h-[calc(100dvh-315px)] md:h-[calc(100dvh-280px)]"
-              : "h-[calc(100dvh-415px)] lg:h-[calc(100dvh-370px)]"
+              : "h-[calc(100dvh-415px)] lg:h-[calc(100dvh-360px)]"
           }`}
         >
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
@@ -377,8 +377,7 @@ export default function ServicesPage() {
                       animate="visible"
                       exit="exit"
                       custom={index}
-                      layout="position"
-                      style={{ willChange: "transform, opacity" }}
+                      layout
                       onClick={() => {
                         const exists = selectedServices.find(
                           (s: any) => s.id === svc.id,
