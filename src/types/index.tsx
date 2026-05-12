@@ -104,11 +104,11 @@ export interface MainLayoutProps {
  * ───────────────────────────────────────────────────────────── */
 
 export interface Outlet {
-  id: string | number;
+  id: string;
   outletName: string;
   timeZone: string;
   image: string;
-  tenantId?: string | number;
+  tenantId?: string;
   address: string;
   isOpen: boolean;
   outletTimeZoneDate?: string;
@@ -139,7 +139,7 @@ export interface ServiceState {
 }
 
 export interface Service {
-  id: string | number;
+  id: string;
   name: string;
   description?: string;
 
@@ -190,7 +190,7 @@ export interface Service {
     heading?: string;
     consent?: string;
   } | null;
-  consent_form_id?: string | number | null;
+  consent_form_id?: string | null;
 
   duration?: number;
 }
@@ -227,7 +227,7 @@ export interface ServiceItem {
  * ───────────────────────────────────────────────────────────── */
 
 export interface Category {
-  id: string | number;
+  id: string;
   name: string;
   description: string;
   tenant_id: string;
@@ -264,7 +264,7 @@ export interface FilteredCategory {
  * ───────────────────────────────────────────────────────────── */
 
 export interface StaffAssignment {
-  id: string | number;
+  id: string;
   categoryId?: string;
   price?: number;
   duration?: number;
@@ -311,7 +311,7 @@ export interface SlotGroups {
 
 export interface SlotsState {
   selectedSlotIndexes: number[];
-  selectedSlotIds: (string | number)[];
+  selectedSlotIds: (string)[];
   selectedDate: SelectedDateType | string | null;
   selectedTime: string | null;
 
@@ -325,9 +325,9 @@ export interface SlotsState {
 }
 
 export interface GetStaffSlotsArgs {
-  staffId?: string | number;
+  staffId?: string;
   date: string; // e.g. "2026-05-11"
-  outletId?: string | number;
+  outletId?: string;
 }
 
 export interface StaffSlotsResponse {
@@ -337,7 +337,7 @@ export interface StaffSlotsResponse {
     evening: Slot[];
   }
   // optional metadata (if backend sends it)
-  staffId?: string | number;
+  staffId?: string;
   date?: string;
 }
 /* ─────────────────────────────────────────────────────────────
@@ -346,7 +346,7 @@ export interface StaffSlotsResponse {
 
 
 export interface UserDetails {
-  id?: string | number;
+  id?: string;
   name?: string;
 
   firstName?: string;
@@ -403,13 +403,13 @@ export interface CustomerInfo {
 export interface AppointmentPayload {
   tenantId: string | null;
   outletId: string | null;
-  staffId?: string | number;
+  staffId?: string;
 
   date: string;
   startTime: string | null;
 
-  serviceIds: (string | number)[];
-  slotIds: (string | number)[];
+  serviceIds: (string)[];
+  slotIds: (string)[];
 
   isWalkIn: boolean;
   requiresConsent: boolean;
@@ -424,10 +424,10 @@ export interface CheckinPayload {
   date: string | null;
   startTime: string | null;
 
-  staffId?: string | number;
+  staffId?: string;
 
-  serviceIds: (string | number)[];
-  slotIds: (string | number)[];
+  serviceIds: (string)[];
+  slotIds: (string)[];
 
   customer: Customer;
 }
@@ -499,11 +499,11 @@ export interface ConsentFormResponse {
 export interface SubmitFinalConsentPayload {
   tenantId: string | null;
   outletId: string | null;
-  appointmentId: string | number;
-  customerId: string | number;
-  serviceId: string | number;
-  formId: string | number;
-  staffId?: string | number;
+  appointmentId: string;
+  customerId: string;
+  serviceId: string;
+  formId: string;
+  staffId?: string;
   signatureType: SignatureType;
   isChecked?: boolean;
   typedName?: string;
@@ -515,8 +515,8 @@ export interface SubmitFinalConsentPayload {
  * ───────────────────────────────────────────────────────────── */
 
 export interface PaymentMeta {
-  appointmentId: string | number;
-  customerId: string | number;
+  appointmentId: string;
+  customerId: string;
 }
 
 export interface CardData {
@@ -527,10 +527,10 @@ export interface CardData {
 }
 
 export interface PaymentPayload {
-  appointmentId: string | number;
-  customerId: string | number;
+  appointmentId: string;
+  customerId: string;
   outletId: string;
-  referenceNo: string | number;
+  referenceNo: string;
 
   currency: string;
 
@@ -606,7 +606,7 @@ export interface ServiceSliceState {
 }
 
 export interface SlotsSliceState {
-  selectedSlotIds: (string | number)[];
+  selectedSlotIds: (string)[];
   selectedDate: DateObjectUnits | null;
   selectedTime: string;
 
@@ -700,7 +700,7 @@ export interface DateItem {
 
 /* SLOT TYPES */
 export interface SlotItem {
-  id: string | number;
+  id: string;
   start_time: string;
   end_time?: string;
   isBooked?: boolean;
