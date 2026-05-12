@@ -155,7 +155,7 @@ export default function ServicesPage() {
         <ServiceSidebar
           selectedServices={selectedServices}
           totalPrice={totalPrice}
-          goToStep={(data: string) => dispatch(nextStep())}
+          goToStep={() => dispatch(nextStep())}
         />
       }
       renderButton={
@@ -227,7 +227,7 @@ export default function ServicesPage() {
                 placeholder="Search services..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-black/30 rounded-md pl-9 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/20 w-full"
+                className="w-full border border-black/30 rounded-md pl-9 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/20"
               />
 
               {searchTerm && (
