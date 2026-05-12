@@ -25,6 +25,9 @@ export default defineConfig({
     },
   },
   build: {
+    target: "esnext",
+    minify: "esbuild",
+    sourcemap: false,
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
       name: "AppointmentPlugin",
@@ -39,7 +42,14 @@ export default defineConfig({
         "redux",
         "react-redux",
         "redux-persist",
-        'tailwindcss'
+        'tailwindcss',
+
+        // add these
+        "motion",
+        "lodash",
+        "luxon",
+        "react-toastify",
+        "react-hook-form",
       ],
       output: {
         globals: {
