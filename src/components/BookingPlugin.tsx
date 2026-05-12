@@ -4,6 +4,7 @@ import { DateTime } from "luxon";
 import { BookingPluginProps, Outlet } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import { setOutletData } from "@/slices/outletSlice";
+import { setServicePayload } from "@/slices/serviceSlice";
 import { goToStep } from "@/slices/breadcrumbSlice";
 import { applyTheme } from "@/utils/applyTheme";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
@@ -58,6 +59,14 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             if (!response?.success) {
                 setError(response?.message || "Failed to fetch outlet data");
             }
+            console.log("------------61", response?.data?.data?.staff)
+            dispatch(
+                setServicePayload({
+                    standaloneCategories: response?.data?.data?.standaloneCategories,
+                    superCategories: response?.data?.data?.superCategories,
+                    staff: response?.data?.data?.staff,
+                })
+            );
         } catch (err: any) {
             console.error(err);
             setError(err?.message || "Something went wrong");
@@ -67,7 +76,6 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     };
 
     const handleOutletSelection = async (data: Outlet) => {
-        console.log("--handleOutletSelection-----107", data)
         if (!data) return;
         await fetchOutletData(data?.tenantId, String(data?.id));
         const updatedOutlet = {

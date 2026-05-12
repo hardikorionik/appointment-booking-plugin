@@ -1,32 +1,9 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  PayloadAction,
-} from "@reduxjs/toolkit";
-import { fetchAllCategoriesAndStaffService } from "@/services";
-import { FetchServiceResponse, FetchServicePayload, ServiceState, Category, ServiceItem, Staff } from "@/types";
-
-
-export const fetchServiceData = createAsyncThunk<FetchServiceResponse, FetchServicePayload, { rejectValue: string }>(
-  "service/fetchServiceData",
-  async ({ tenantId, outletId }, { rejectWithValue }) => {
-    try {
-      const res = await fetchAllCategoriesAndStaffService(tenantId, outletId);
-      return {
-        categories: res?.categories ?? [],
-        staff: res?.staff ?? [],
-      };
-    } catch (err: any) {
-      return rejectWithValue(
-        err?.response?.data || err?.message || "Something went wrong"
-      );
-    }
-  }
-);
-
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ServiceState, Category, ServiceItem, Staff } from "@/types";
 
 const initialState: ServiceState = {
-  categories: [],
+  standaloneCategories: [],
+  superCategories: [],
   staff: [],
   selectedCategory: null,
   selectedServices: [],
@@ -39,6 +16,18 @@ const serviceSlice = createSlice({
   name: "service",
   initialState,
   reducers: {
+    setServicePayload: (
+      state,
+      action: PayloadAction<{
+        standaloneCategories: Category[];
+        superCategories: Category[];
+        staff: Staff[];
+      }>
+    ) => {
+      state.standaloneCategories = action.payload.standaloneCategories;
+      state.superCategories = action.payload.superCategories;
+      state.staff = action.payload.staff;
+    },
     setCategory: (state, action: PayloadAction<Category | null>) => {
       state.selectedCategory = action.payload;
     },
@@ -85,32 +74,10 @@ const serviceSlice = createSlice({
     },
     clearServices: () => initialState,
   },
-
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchServiceData.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(
-        fetchServiceData.fulfilled, (state, action: PayloadAction<FetchServiceResponse>) => {
-          state.loading = false;
-          state.categories = action.payload.categories;
-          state.staff = action.payload.staff;
-          if (action.payload.categories.length) {
-            state.selectedCategory = null;
-          }
-        }
-      )
-      .addCase(fetchServiceData.rejected, (state, action) => {
-        state.loading = false;
-        state.error =
-          action.payload || "Failed to fetch service data";
-      });
-  },
 });
 
 export const {
+  setServicePayload,
   setCategory,
   toggleService,
   clearServices,

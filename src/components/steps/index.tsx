@@ -1,4 +1,4 @@
-import { ComponentType, JSX, useEffect } from "react";
+import { ComponentType, JSX, } from "react";
 import { useSelector, } from "react-redux";
 import ProfessionalServicePage from "@/components/steps/ProfessionalServicePage";
 import Professionals from "@/components/steps/Professionals";

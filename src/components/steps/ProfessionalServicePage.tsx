@@ -4,10 +4,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { getUserName } from "@/utils";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { setSelectedDate } from "@/slices/slotSlice";
-import {
-  fetchServiceData,
-  toggleProfessional,
-} from "@/slices/serviceSlice";
+import { toggleProfessional } from "@/slices/serviceSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
 import Breadcrumb from "@/components/common/Breadcrumb";
@@ -58,30 +55,10 @@ export default function ProfessionalServicePage() {
 
   const dispatch = useDispatch<any>();
 
-  const hasFetched = useRef<boolean>(false);
-
   const { staff, selectedProfessional, loading } = useSelector(
     (state: RootState) => state.service,
   );
 
-  useEffect(() => {
-    if (hasFetched.current) return;
-
-    const tenantId = localStorage.getItem("tenantId");
-    const outletId = localStorage.getItem("outletId");
-
-    if (!tenantId || !outletId) return;
-
-    dispatch(fetchServiceData({ tenantId, outletId }));
-
-    const hasVisited = sessionStorage.getItem("services_visited");
-
-    if (!hasVisited) {
-      sessionStorage.setItem("services_visited", "true");
-    }
-
-    hasFetched.current = true;
-  }, [dispatch]);
 
   const isMobile = width < 768;
 

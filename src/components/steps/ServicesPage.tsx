@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
-  fetchServiceData,
   setCategory,
   toggleService,
   incrementService,
@@ -88,30 +87,6 @@ export default function ServicesPage() {
     price: svc.price !== null ? Number(svc.price) : undefined,
   });
 
-  useEffect(() => {
-    if (hasFetched.current) return;
-
-    const tenantId = localStorage.getItem("tenantId");
-
-    const outletId = localStorage.getItem("outletId");
-
-    if (!tenantId || !outletId) return;
-
-    dispatch(
-      fetchServiceData({
-        tenantId,
-        outletId,
-      }),
-    );
-
-    const hasVisited = sessionStorage.getItem("services_visited");
-
-    if (!hasVisited) {
-      sessionStorage.setItem("services_visited", "true");
-    }
-
-    hasFetched.current = true;
-  }, [dispatch]);
 
   const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
     const price = Number(s.price || 0);

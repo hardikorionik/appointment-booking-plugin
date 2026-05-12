@@ -32,8 +32,8 @@ export const fetchAllCategoriesAndStaffService = async (bookingCode: string, ten
             is_available_online_category:
                 "true",
         });
-    tenantId && params.append("tenant_id", tenantId);
-    outletId && params.append("outlet_id", outletId);
+    tenantId && params.append("tenantId", tenantId);
+    outletId && params.append("outletId", outletId);
     const url = `${BASE_URL}/integration/service/code/${bookingCode}?${params}`;
 
     const res = await fetch(url, {

@@ -129,7 +129,8 @@ export interface TaxRow {
  * SERVICE
  * ───────────────────────────────────────────────────────────── */
 export interface ServiceState {
-  categories: Category[];
+  standaloneCategories: Category[];
+  superCategories: Category[];
   staff: Staff[]; // or StaffMember[] but be consistent
   selectedCategory: Category | null;
   selectedServices: ServiceItem[];
