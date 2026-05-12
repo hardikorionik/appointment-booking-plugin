@@ -449,7 +449,7 @@ export default function TimePage(): JSX.Element {
                 className={[
                   "shrink-0 flex flex-col items-center px-3 py-2 rounded-sm cursor-pointer",
                   "transition-all duration-150 min-w-12.5 select-none",
-                  isSelected ? "bg-red text-white" : "hover:bg-red/10",
+                  isSelected ? "bg-btn-bg text-btn-text border-btn-bg" : "hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover",
                 ].join(" ")}
               >
                 <span className="text-[10px] uppercase mb-1">
