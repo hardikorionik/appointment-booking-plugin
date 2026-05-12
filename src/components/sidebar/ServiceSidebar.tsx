@@ -22,7 +22,7 @@ export default function ServiceSidebar({
       </p>
 
       {selectedServices?.length > 0 && (
-        <ul className="md:h-[calc(100dvh-70px)] h-[calc(100dvh-230px)] overflow-y-scroll mb-1 scrollbar-none">
+        <ul className="md:h-[calc(100dvh-290px)] h-[calc(100dvh-230px)] overflow-y-scroll mb-1 scrollbar-none">
           {selectedServices?.map((svc, index) => (
             <li
               key={svc.id}
@@ -59,7 +59,7 @@ export default function ServiceSidebar({
         <button
           onClick={() => goToStep("professionals")}
           disabled={!selectedServices.length}
-          className="btn-bg px-2 w-full relative py-3.75 btn-bg text-white hover:text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+          className="bg-black px-2 w-full relative py-3.75 btn-bg text-white hover:text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
         >
           <span className="flex flex-row justify-center items-center gap-2">
             Choose Professional <MoveRight />

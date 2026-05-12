@@ -1,131 +1,144 @@
-import {
-    useDispatch,
-    useSelector,
-} from "react-redux";
-import {
-    ChevronRight,
-    CircleCheck,
-    ChevronLeft,
-} from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { goToStep } from "@/slices/breadcrumbSlice";
 import { persistor } from "@/store";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { StepItem } from "@/types";
-import type {
-    RootState,
-    AppDispatch,
-} from "@/store";
+import type { RootState, AppDispatch } from "@/store";
+import {
+  ChevronRight,
+  CircleCheck,
+  ChevronLeft,
+  Scissors,
+  User,
+  Clock3,
+  Info,
+  CheckCircle2,
+} from "lucide-react";
 
 const SERVICE_STEPS: StepItem[] = [
-    { label: "Service", page: "services" },
-    { label: "Professional", page: "professionals" },
-    { label: "Time", page: "time" },
-    { label: "Details", page: "details" },
-    {
-        label: (
-            <span className="flex items-center gap-1">Done <CircleCheck size={13} /></span>
-        ),
-        page: "confirm",
-    },
+  {
+    label: "Services",
+    page: "services",
+    icon: <Scissors size={16} />,
+  },
+  {
+    label: "Professional",
+    page: "professionals",
+    icon: <User size={16} />,
+  },
+  {
+    label: "Time Slot",
+    page: "time",
+    icon: <Clock3 size={16} />,
+  },
+  {
+    label: "Details",
+    page: "details",
+    icon: <Info size={16} />,
+  },
+  {
+    label: "Confirmation",
+    page: "confirm",
+    icon: <CheckCircle2 size={16} />,
+  },
 ];
-
 const STEPS: StepItem[] = [
-    { label: "Professional", page: "professionals", },
-    { label: "Service", page: "services" },
-    { label: "Time", page: "time" },
-    { label: "Details", page: "details" },
-    {
-        label: (
-            <span className="flex items-center gap-1">Done <CircleCheck size={13} /></span>
-        ),
-        page: "confirm",
-    },
+  { label: "Professional", page: "professionals" },
+  { label: "Service", page: "services" },
+  { label: "Time", page: "time" },
+  { label: "Details", page: "details" },
+  {
+    label: (
+      <span className="flex items-center gap-1">
+        Done <CircleCheck size={13} />
+      </span>
+    ),
+    page: "confirm",
+  },
 ];
-
 
 export default function Breadcrumb() {
-    const dispatch = useDispatch<AppDispatch>();
-    const { width } = useWindowSize();
-    const { isService } = useSelector(
-        (state: RootState) => state.outletDetails
-    );
+  const dispatch = useDispatch<AppDispatch>();
+  const { width } = useWindowSize();
+  const { isService } = useSelector((state: RootState) => state.outletDetails);
 
-    const {
-        currentStep,
-        completedSteps,
-    } = useSelector(
-        (state: RootState) => state.breadcrumbs
-    );
-    const steps = isService ? SERVICE_STEPS : STEPS;
-    const currentIndex = steps.findIndex(
-        (s) => s.page === currentStep
-    );
+  const { currentStep, completedSteps } = useSelector(
+    (state: RootState) => state.breadcrumbs,
+  );
+  const steps = isService ? SERVICE_STEPS : STEPS;
+  const currentIndex = steps.findIndex((s) => s.page === currentStep);
 
-    const clearAllData = () => {
-        dispatch({ type: "RESET_ALL" });
-        persistor.purge();
-    };
+  const clearAllData = () => {
+    dispatch({ type: "RESET_ALL" });
+    persistor.purge();
+  };
 
-    const goToPrev = () => {
-        if (currentIndex <= 0) return;
-        const prevStep =
-            steps[currentIndex - 1];
-        if (prevStep.page === "services") {
-            clearAllData();
-        } else {
-            dispatch(goToStep(prevStep.page));
-        }
-    };
+  const goToPrev = () => {
+    if (currentIndex <= 0) return;
+    const prevStep = steps[currentIndex - 1];
+    if (prevStep.page === "services") {
+      clearAllData();
+    } else {
+      dispatch(goToStep(prevStep.page));
+    }
+  };
 
-    const currentStepData = steps[currentIndex];
+  const currentStepData = steps[currentIndex];
 
-    const isMobile = width < 480;
+  const isMobile = width < 480;
 
-    return (
-        <>
-            {isMobile ? (
-                <div className="flex items-center flex-row gap-4 font-semibold">
-                    <button
-                        onClick={goToPrev}
-                        disabled={currentIndex === 0}
-                        className="flex items-center text-xl disabled:text-gray-200 mr-2 cursor-pointer"
-                    >
-                        <ChevronLeft size={20} />
-                    </button>
-                    <span className="flex flex-row items-center text-base">
-                        {currentStepData?.label}
-                    </span>
-                </div>
-            ) : (
-                <nav className="flex items-center gap-1.5 text-xs overflow-x-auto whitespace-nowrap">
-                    {steps.map((step: StepItem, i: number) => {
-                        const isActive = currentStep === step.page;
-                        const isCompleted = completedSteps?.includes(step.page);
-                        const isClickable = isCompleted || i <= currentIndex;
-                        return (
-                            <span key={step.page} className="flex items-center gap-1">
-                                {i > 0 && <ChevronRight size={14} className="text-gray-300" />}
-                                <span
-                                    onClick={() => {
-                                        if (!isClickable) return;
-                                        // if (step.page === "services") {
-                                        //     clearAllData();
-                                        // } else {
-                                        dispatch(goToStep(step.page));
-                                        // }
-                                    }}
-                                    className={["transition-colors duration-150",
-                                        isClickable ? "cursor-pointer hover:text-black" : "cursor-not-allowed text-gray-400",
-                                        isActive ? "text-red-500 font-semibold" : "",
-                                    ].join(" ")}
-                                >
-                                    {step.label}
-                                </span>
-                            </span>
-                        );
-                    })}
-                </nav>
-            )}
-        </>
-    );
+  return (
+    <>
+      {isMobile ? (
+        <div className="flex items-center flex-row gap-4 font-semibold">
+          <button
+            onClick={goToPrev}
+            disabled={currentIndex === 0}
+            className="flex items-center text-xl disabled:text-gray-200 mr-2 cursor-pointer"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <span className="flex flex-row items-center text-base">
+            {currentStepData?.label}
+          </span>
+        </div>
+      ) : (
+        <nav className="hidden md:grid grid-cols-5 w-full overflow-hidden">
+          {steps.map((step: any, i: number) => {
+            const isActive = currentStep === step.page;
+            const isCompleted = completedSteps?.includes(step.page);
+            const isClickable = isCompleted || i <= currentIndex;
+
+            return (
+              <button
+                key={step.page}
+                onClick={() => {
+                  if (!isClickable) return;
+
+                  dispatch(goToStep(step.page));
+                }}
+                className={[
+                  "relative h-10 flex items-center justify-center gap-2 uppercase tracking-[1px] text-[11px] font-semibold transition-all border-b-2",
+                  isClickable
+                    ? "cursor-pointer"
+                    : "cursor-not-allowed opacity-40",
+                  isActive
+                    ? "border-red-500 text-black bg-red-50/40"
+                    : "border-transparent text-black/60 hover:text-black",
+                ].join(" ")}
+              >
+                <span
+                  className={`${isActive ? "text-red-500" : "text-red-400"}`}
+                >
+                  {step.icon}
+                </span>
+
+                <span>{step.label}</span>
+              </button>
+            );
+          })}
+        </nav>
+      )}
+    </>
+  );
 }

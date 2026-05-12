@@ -373,8 +373,8 @@ export default function ServicesPage() {
         <div
           className={`overflow-y-auto pb-20 lg:pb-4 scrollbar-none ${
             viewType === "standalone"
-              ? "h-[calc(100dvh-315px)] md:h-[calc(100dvh-280px)]"
-              : "h-[calc(100dvh-415px)] lg:h-[calc(100dvh-360px)]"
+              ? "h-[calc(100dvh-315px)] md:h-[calc(100dvh-300px)]"
+              : "h-[calc(100dvh-415px)] lg:h-[calc(100dvh-390px)]"
           }`}
         >
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
