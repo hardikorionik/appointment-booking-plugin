@@ -69,23 +69,23 @@ export const createAppointmentApi = async (payload: unknown) => {
     return reponse;
 };
 
-export const createCheckinApi = async (payload: unknown) => {
-    const res = await fetch(`${BASE_URL}/appointment/checkin`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-    });
-    if (!res.ok) {
-        throw new Error(
-            "Failed to fetch services"
-        );
-    }
-    const reponse = await res.json();
+// export const createCheckinApi = async (payload: unknown) => {
+//     const res = await fetch(`${BASE_URL}/appointment/checkin`, {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(payload),
+//     });
+//     if (!res.ok) {
+//         throw new Error(
+//             "Failed to fetch services"
+//         );
+//     }
+//     const reponse = await res.json();
 
-    return reponse;
-};
+//     return reponse;
+// };
 
 // Get Appointment Details by ID
 export const getAppointmentDetail = async (

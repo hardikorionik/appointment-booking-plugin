@@ -103,8 +103,8 @@ export default function ServiceProfessionalPage() {
 
   const displayedServices: Service[] =
     selectedCategoryId === "ALL"
-      ? filteredCategories.flatMap((cat: Category) => cat.services)
-      : filteredCategories.find(
+      ? filteredCategories?.flatMap((cat: Category) => cat.services)
+      : filteredCategories?.find(
         (cat: Category) => cat.id === selectedCategoryId,
       )?.services || [];
 

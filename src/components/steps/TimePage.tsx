@@ -19,14 +19,13 @@ import {
 } from "@/slices/slotSlice";
 import { getUserName } from "@/utils";
 import { nextStep } from "@/slices/breadcrumbSlice";
-import { RootState, SlotItem, DateItem, Slot } from "@/types";
+import { OutletRootState, SlotItem, DateItem, Slot } from "@/types";
 import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
-
 import { useWindowSize } from "@/hooks/useWindowSize";
-
+import type { AppDispatch } from "@/store";
 import "react-toastify/dist/ReactToastify.css";
 
 const MONTH_NAMES = [
@@ -47,21 +46,20 @@ const MONTH_NAMES = [
 const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function TimePage(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { height } = useWindowSize();
 
   const [visibleCount, setVisibleCount] = useState<number>(11);
 
-  const { bookingMode } = useSelector((state: RootState) => state.appointment);
 
   const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: RootState) => state.service,
+    (state: OutletRootState) => state.service,
   );
 
-  const { outletTimeZone } = useSelector((state: RootState) => state?.outletDetails);
+  const { outletTimeZone } = useSelector((state: OutletRootState) => state?.outletDetails);
 
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } =
-    useSelector((state: RootState) => state.slots);
+    useSelector((state: OutletRootState) => state.slots);
 
   const [calOpen, setCalOpen] = useState<boolean>(false);
   const [stripStart, setStripStart] = useState<number>(0);
@@ -77,9 +75,9 @@ export default function TimePage(): JSX.Element {
     [outletTimeZone],
   );
 
-  const generateDates = (mode: string, sdate: DateTime): DateItem[] => {
+  const generateDates = (sdate: DateTime): DateItem[] => {
     try {
-      const totalDays = mode === "checkin" ? 1 : 180;
+      const totalDays = 180;
 
       if (!sdate.isValid) {
         throw new Error("Invalid timezone or start date");
@@ -104,8 +102,8 @@ export default function TimePage(): JSX.Element {
   };
 
   const dates = useMemo<DateItem[]>(() => {
-    return generateDates(bookingMode, startDate);
-  }, [bookingMode, startDate]);
+    return generateDates(startDate);
+  }, [startDate]);
 
   const selectedStaffServices = useMemo(() => {
     if (!selectedProfessional?.id) return [];
@@ -189,8 +187,6 @@ export default function TimePage(): JSX.Element {
   }, [selectedDate, dates, visibleCount]);
 
   const handlePickDate = (d: DateItem): void => {
-    if (bookingMode === "checkin") return;
-
     const selected = {
       day: d.day,
       month: d.month,
@@ -395,7 +391,7 @@ export default function TimePage(): JSX.Element {
               return;
             }
 
-            dispatch(nextStep("details"));
+            dispatch(nextStep());
           }}
           showTaxesOnlyIfTime={true}
         />
@@ -407,7 +403,7 @@ export default function TimePage(): JSX.Element {
               toast.warning("Please select a time slot");
               return;
             }
-            dispatch(nextStep("details"));
+            dispatch(nextStep());
           }}
           disabled={!selectedTime || !selectedSlotIndexes.length}
           className="cta-btn p-3! px-8.5! text-sm relative rounded-full bg-ink text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
@@ -426,11 +422,10 @@ export default function TimePage(): JSX.Element {
 
       <div className="mt-2 mb-6 flex flex-row flex-wrap">
         <div className="flex items-stretch gap-1.5 overflow-x-auto no-scrollbar">
-          {bookingMode !== "checkin" && (
-            <DateNavBtn onClick={() => handleShift(-1)}>
-              <ChevronLeft size={20} />
-            </DateNavBtn>
-          )}
+
+          <DateNavBtn onClick={() => handleShift(-1)}>
+            <ChevronLeft size={20} />
+          </DateNavBtn>
 
           {dates.slice(stripStart, stripStart + visibleCount).map((d) => {
             const dt = DateTime.fromISO(d.fullDate || "");
@@ -467,15 +462,13 @@ export default function TimePage(): JSX.Element {
             );
           })}
 
-          {bookingMode !== "checkin" && (
-            <DateNavBtn onClick={() => handleShift(1)}>
-              <ChevronRight size={20} />
-            </DateNavBtn>
-          )}
+          <DateNavBtn onClick={() => handleShift(1)}>
+            <ChevronRight size={20} />
+          </DateNavBtn>
         </div>
 
         <button
-          onClick={() => bookingMode !== "checkin" && setCalOpen(true)}
+          onClick={() => setCalOpen(true)}
           className="ml-4 p-2 text-sm gap-1.5 font-semibold max-md:text-xs flex flex-col items-center justify-center rounded-sm cursor-pointer transition-all duration-150 min-w-12.5 select-none bg-red text-white!"
         >
           <Calendar1 size={16} />
@@ -509,7 +502,7 @@ export default function TimePage(): JSX.Element {
           <p className="font-semibold text-sm">{selectedProfessional?.name}</p>
 
           <p className="text-xs text-muted truncate">
-            {selectedStaffServices.map((s) => s.name).join(", ")} ·{" "}
+            {selectedStaffServices.map((s: any) => s.name).join(", ")} ·{" "}
             {totalDuration} mins
           </p>
         </div>

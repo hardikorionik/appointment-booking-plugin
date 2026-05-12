@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { getUserName } from "@/utils";
@@ -6,7 +5,6 @@ import { nextStep } from "@/slices/breadcrumbSlice";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { toggleProfessional } from "@/slices/serviceSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalServiceSidebar from "@/components/sidebar/ProfessionalServiceSidebar";
@@ -55,21 +53,21 @@ export default function ProfessionalServicePage() {
 
   const dispatch = useDispatch<any>();
 
-  const { staff, selectedProfessional, loading } = useSelector(
+  const { staff, selectedProfessional } = useSelector(
     (state: RootState) => state.service,
   );
 
 
   const isMobile = width < 768;
 
-  const showEmpty = !loading && (!staff || staff.length === 0);
+  const showEmpty = (!staff || staff.length === 0);
 
   return (
     <MainLayout
       sidebar={
         <ProfessionalServiceSidebar
           pro={selectedProfessional}
-          goToStep={(data: Step) => dispatch(nextStep(data))}
+          goToStep={(data: string) => dispatch(nextStep())}
         />
       }
     >
@@ -97,64 +95,58 @@ export default function ProfessionalServicePage() {
         </AnimatePresence>
         <div className="h-[calc(100dvh-210px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(195px,1fr))] gap-3">
-            {loading ? (
-              Array.from({ length: 10 }).map((_, i: number) => (
-                <ProfessionalSkeletonCard key={i} />
-              ))
-            ) : (
-              <AnimatePresence mode="popLayout">
-                {staff?.map((p: Staff, index: number) => {
-                  return (
-                    <motion.div
-                      key={p.id}
-                      variants={cardVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      custom={index}
-                      layout="position"
-                      style={{ willChange: "transform, opacity" }}
-                      onClick={() => {
-                        dispatch(toggleProfessional(p));
+            <AnimatePresence mode="popLayout">
+              {staff?.map((p: Staff, index: number) => {
+                return (
+                  <motion.div
+                    key={p.id}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    custom={index}
+                    layout="position"
+                    style={{ willChange: "transform, opacity" }}
+                    onClick={() => {
+                      dispatch(toggleProfessional(p));
 
-                        dispatch(setSelectedDate(null));
+                      dispatch(setSelectedDate(null));
 
-                        if (isMobile) {
-                          dispatch(nextStep("time"));
-                        }
-                      }}
-                      className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
-                        ? "border-red bg-[#fff8f8]"
-                        : "bg-white hover:border-red"
-                        }`}
-                    >
-                      {p.imageUrl ? (
-                        <img
-                          src={p.imageUrl}
-                          alt={p.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div
-                          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                          style={{ background: p.color || "#111" }}
-                        >
-                          {getUserName(p.name)}
-                        </div>
-                      )}
-
-                      <div>
-                        <p className="font-semibold text-sm">{p.name}</p>
-
-                        <p className="text-xs text-gray-500">
-                          {p.staff_type}
-                        </p>
+                      if (isMobile) {
+                        dispatch(nextStep());
+                      }
+                    }}
+                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
+                      ? "border-red bg-[#fff8f8]"
+                      : "bg-white hover:border-red"
+                      }`}
+                  >
+                    {p.imageUrl ? (
+                      <img
+                        src={p.imageUrl}
+                        alt={p.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                        style={{ background: p.color || "#111" }}
+                      >
+                        {getUserName(p.name)}
                       </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            )}
+                    )}
+
+                    <div>
+                      <p className="font-semibold text-sm">{p.name}</p>
+
+                      <p className="text-xs text-gray-500">
+                        {p.staff_type}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </div>
       </div>

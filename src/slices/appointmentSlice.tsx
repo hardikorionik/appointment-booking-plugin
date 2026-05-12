@@ -4,7 +4,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { AppointmentSliceState, AppointmentResponse, AppointmentPayload, BookingMode, UserDetails } from "@/types";
-import { createAppointmentApi, createCheckinApi } from "@/services";
+import { createAppointmentApi, } from "@/services";
 
 export const createAppointment = createAsyncThunk<
   AppointmentResponse,
@@ -25,23 +25,23 @@ export const createAppointment = createAsyncThunk<
 );
 
 
-export const createCheckin = createAsyncThunk<
-  AppointmentResponse,
-  AppointmentPayload,
-  { rejectValue: string }
->(
-  "checkin/create",
-  async (payload, { rejectWithValue }) => {
-    try {
-      const res = await createCheckinApi(payload);
-      return res as AppointmentResponse;
-    } catch (err: any) {
-      return rejectWithValue(
-        err?.message || "Failed to create checkin"
-      );
-    }
-  }
-);
+// export const createCheckin = createAsyncThunk<
+//   AppointmentResponse,
+//   AppointmentPayload,
+//   { rejectValue: string }
+// >(
+//   "checkin/create",
+//   async (payload, { rejectWithValue }) => {
+//     try {
+//       const res = await createCheckinApi(payload);
+//       return res as AppointmentResponse;
+//     } catch (err: any) {
+//       return rejectWithValue(
+//         err?.message || "Failed to create checkin"
+//       );
+//     }
+//   }
+// );
 
 
 const initialState: AppointmentSliceState = {
@@ -95,22 +95,22 @@ const appointmentSlice = createSlice({
         state.loading = false;
         state.error = action.payload || "Appointment failed";
       })
-      .addCase(createCheckin.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(createCheckin.fulfilled, (state, action) => {
-        state.loading = false;
-        state.success = true;
-        state.data = action.payload;
-        const data = action.payload;
-        state.appointmentId = data?.id || data?.appointmentId || null;
-        state.customerId = data?.customerId || state.customerId;
-      })
-      .addCase(createCheckin.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload || "Checkin failed";
-      });
+    // .addCase(createCheckin.pending, (state) => {
+    //   state.loading = true;
+    //   state.error = null;
+    // })
+    // .addCase(createCheckin.fulfilled, (state, action) => {
+    //   state.loading = false;
+    //   state.success = true;
+    //   state.data = action.payload;
+    //   const data = action.payload;
+    //   state.appointmentId = data?.id || data?.appointmentId || null;
+    //   state.customerId = data?.customerId || state.customerId;
+    // })
+    // .addCase(createCheckin.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.payload || "Checkin failed";
+    // });
   },
 });
 

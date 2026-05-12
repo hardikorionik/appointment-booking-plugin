@@ -45,7 +45,6 @@ const breadcrumbsSlice = createSlice({
             const steps = getStepsOrder(state.isOrder);
             const currentIndex = steps.indexOf(state.currentStep as Step);
             const next = steps[currentIndex + 1] as Step | undefined;
-
             if (next) {
                 if (!state.completedSteps.includes(state.currentStep as Step)) {
                     state.completedSteps.push(state.currentStep as Step);

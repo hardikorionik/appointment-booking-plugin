@@ -29,7 +29,7 @@ const serviceSlice = createSlice({
     setCategory: (state, action: PayloadAction<Category | null>) => {
       state.selectedCategory = action.payload;
     },
-    toggleService: (state, action: PayloadAction<Omit<ServiceItem, "qty">>) => {
+    toggleService: (state, action) => {
       const existing = state.selectedServices.find(
         (s) => s.id === action.payload.id
       );
