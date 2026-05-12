@@ -8,6 +8,7 @@ import { ComponentType, ReactNode } from "react";
 export interface StepItem {
   label: ReactNode;
   page: string;
+  icon?: ReactNode;
 }
 export type StepKey =
   | "services"
