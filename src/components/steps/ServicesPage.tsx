@@ -350,7 +350,7 @@ export default function ServicesPage() {
         )}
 
         {/* SERVICES */}
-        <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-270px)] overflow-y-auto pb-20 lg:pb-4 scrollbar-none">
+        <div className="h-[calc(100dvh-415px)] lg:h-[calc(100dvh-370px)] overflow-y-auto pb-20 lg:pb-4 scrollbar-none">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
             {loading ? (
               Array.from({ length: 10 }).map((_, i) => (
