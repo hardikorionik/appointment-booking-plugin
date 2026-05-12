@@ -5,7 +5,6 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { StepItem } from "@/types";
 import type { RootState, AppDispatch } from "@/store";
 import {
-  ChevronRight,
   CircleCheck,
   ChevronLeft,
   Scissors,
