@@ -49,7 +49,8 @@ export default function ServicesPage() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const {
-    categories,
+    superCategories,
+    standaloneCategories,
     selectedCategory,
     selectedServices,
     selectedProfessional,
@@ -64,33 +65,7 @@ export default function ServicesPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // BACKEND DATA
-  /**
-   * Assuming backend response:
-   *
-   * categories = standalone services
-   *
-   * superCategories = [
-   *   {
-   *      id,
-   *      name,
-   *      categories: [
-   *        {
-   *          id,
-   *          name,
-   *          services:[]
-   *        }
-   *      ]
-   *   }
-   * ]
-   */
-
-  const superCategories =
-    useSelector((state: any) => state.service.superCategories) || [];
-
-  // STANDALONE SERVICES
-
-  const allStandaloneServices = categories.flatMap((cat: any) => cat.services);
+  const allStandaloneServices = standaloneCategories.flatMap((cat: any) => cat.services);
 
   const standaloneServices = selectedCategory
     ? selectedCategory.services
@@ -285,14 +260,14 @@ export default function ServicesPage() {
                 }`}
               >
                 All Services (
-                {categories.reduce( 
+                {standaloneCategories.reduce( 
                   (sum: number, c: any) => sum + c.services.length,
                   0,
                 )}
                 )
               </button>
 
-              {categories.map((cat: any) => (
+              {standaloneCategories.map((cat: any) => (
                 <button
                   key={cat.id}
                   onClick={() => dispatch(setCategory(cat))}

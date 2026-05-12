@@ -8,8 +8,6 @@ const initialState: ServiceState = {
   selectedCategory: null,
   selectedServices: [],
   selectedProfessional: null,
-  loading: false,
-  error: null,
 };
 
 const serviceSlice = createSlice({
