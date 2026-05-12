@@ -423,11 +423,10 @@ export default function TimePage(): JSX.Element {
 
       <div className="mt-2 mb-6 flex flex-row flex-wrap">
         <div className="flex items-stretch gap-1.5 overflow-x-auto no-scrollbar">
-          {bookingMode !== "checkin" && (
-            <DateNavBtn onClick={() => handleShift(-1)}>
-              <ChevronLeft size={20} />
-            </DateNavBtn>
-          )}
+
+          <DateNavBtn onClick={() => handleShift(-1)}>
+            <ChevronLeft size={20} />
+          </DateNavBtn>
 
           {dates.slice(stripStart, stripStart + visibleCount).map((d) => {
             const dt = DateTime.fromISO(d.fullDate || "");
@@ -464,15 +463,13 @@ export default function TimePage(): JSX.Element {
             );
           })}
 
-          {bookingMode !== "checkin" && (
-            <DateNavBtn onClick={() => handleShift(1)}>
-              <ChevronRight size={20} />
-            </DateNavBtn>
-          )}
+          <DateNavBtn onClick={() => handleShift(1)}>
+            <ChevronRight size={20} />
+          </DateNavBtn>
         </div>
 
         <button
-          onClick={() => bookingMode !== "checkin" && setCalOpen(true)}
+          onClick={() => setCalOpen(true)}
           className="ml-4 p-2 text-sm gap-1.5 font-semibold max-md:text-xs flex flex-col items-center justify-center rounded-sm cursor-pointer transition-all duration-150 min-w-12.5 select-none bg-red text-white!"
         >
           <Calendar1 size={16} />
