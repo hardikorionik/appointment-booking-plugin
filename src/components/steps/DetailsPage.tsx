@@ -64,6 +64,7 @@ export default function DetailsPage(): JSX.Element {
     >(null);
 
     const {
+        register,
         handleSubmit,
         control,
         watch,
@@ -281,34 +282,20 @@ export default function DetailsPage(): JSX.Element {
                     </h1>
                     <div className="overflow-y-auto scrollbar-none pb-20 lg:pb-4" style={{ height: `${height - 200}px`, }} >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mt-5">
-                            {/* Phone */}
                             <div className="flex flex-col">
-                                <label
-                                    className="text-xs font-semibold text-gray-600 flex mb-1"
-                                    htmlFor="phone"
-                                >
-                                    Phone{" "}
-                                    {!emailValue && (
-                                        <span className="text-red-500">
-                                            *
-                                        </span>
-                                    )}
+                                <label className="text-xs font-semibold text-gray-600 flex mb-1" htmlFor="phone">
+                                    Phone {!emailValue && <span className="text-red-500">*</span>}
                                 </label>
                                 <Controller
                                     control={control}
                                     name="phone"
                                     rules={{
                                         validate: (value) => {
-                                            const hasPhone =
-                                                !!normalizePhone(value);
-                                            const hasEmail =
-                                                !!emailValue?.trim();
-                                            if (!hasPhone && !hasEmail) {
-                                                return "Enter phone or email";
-                                            }
-                                            if (hasPhone && !isValidPhoneNumber(value)) {
+                                            const hasPhone = !!normalizePhone(value);
+                                            const hasEmail = !!emailValue?.trim();
+                                            if (!hasPhone && !hasEmail) return "Enter phone or email";
+                                            if (hasPhone && !isValidPhoneNumber(value))
                                                 return "Enter valid phone number";
-                                            }
                                             return true;
                                         },
                                     }}
@@ -318,31 +305,20 @@ export default function DetailsPage(): JSX.Element {
                                                 {...field}
                                                 id="phone"
                                                 international
-                                                countries={[
-                                                    ...allowedCountries,
-                                                ]}
+                                                countries={allowedCountries}
                                                 defaultCountry="US"
                                                 value={field.value || ""}
                                                 onChange={(value) =>
-                                                    handleInputChange(
-                                                        value || "",
-                                                        field.onChange,
-                                                        "phone",
-                                                    )
+                                                    handleInputChange(value, field.onChange, "phone")
                                                 }
-                                                countryCallingCodeEditable={
-                                                    false
-                                                }
+                                                countryCallingCodeEditable={false}
                                                 className="w-full py-2 px-3 border border-border rounded-sm text-sm outline-none focus:border-red"
                                             />
-
-                                            {loading &&
-                                                loadingField ===
-                                                "phone" && (
-                                                    <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                                                        <div className="h-4 w-4 border-2 border-gray-300 border-t-black rounded-full animate-spin" />
-                                                    </div>
-                                                )}
+                                            {loading && loadingField === "phone" && (
+                                                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                                                    <div className="h-4 w-4 border-2 border-gray-300 border-t-black rounded-full animate-spin" />
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 />
@@ -353,12 +329,91 @@ export default function DetailsPage(): JSX.Element {
                                 )}
                                 {isAutoFilled && (
                                     <div className="mt-1 text-xs flex items-center gap-1 text-gray-600">
-                                        Using existing customer
-                                        <span onClick={handleClearCustomer} className="text-red cursor-pointer">
+                                        Using existing customer<span
+                                            onClick={handleClearCustomer}
+                                            className="text-red cursor-pointer"
+                                        >
                                             Clear
                                         </span>
                                     </div>
                                 )}
+                            </div>
+                            <div className="flex flex-col">
+                                <label className="text-xs font-semibold text-gray-600 flex mb-1" htmlFor="email">
+                                    Email {!phoneValue && <span className="text-red-500">*</span>}
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        id="email"
+                                        {...register("email", {
+                                            validate: (value) => {
+                                                const hasEmail = !!value?.trim();
+                                                const hasPhone = !!normalizePhone(phoneValue);
+                                                if (!hasEmail && !hasPhone) return "Enter phone or email";
+                                                if (hasEmail && !/^\S+@\S+\.\S+$/.test(value))
+                                                    return "Invalid email";
+                                                return true;
+                                            },
+                                            onChange: (e) => {
+                                                handleInputChange(e.target.value, null, "email");
+                                            },
+                                        })}
+                                        autoComplete='email'
+                                        placeholder="Email address"
+                                        className="w-full py-2 px-3 border border-border rounded-sm text-sm outline-none focus:border-red"
+                                    />
+                                    {loading && loadingField === "email" && (
+                                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                                            <div className="h-4 w-4 border-2 border-gray-300 border-t-black rounded-full animate-spin" />
+                                        </div>
+                                    )}
+                                </div>
+                                {errors.email && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.email.message}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="flex flex-col ">
+                                <label
+                                    htmlFor="first_name"
+                                    className="text-xs font-semibold text-gray-600 flex mb-1"
+                                >
+                                    First Name <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="first_name"
+                                    {...register("firstName", {
+                                        required: "First name required",
+                                        pattern: {
+                                            value: /^[A-Za-z\s]+$/,
+                                            message: "Only letters are allowed",
+                                        },
+                                    })}
+                                    autoComplete="given-name"
+                                    placeholder="First Name"
+                                    className="w-full py-2 px-3 border border-border rounded-sm text-sm outline-none focus:border-red"
+                                />
+                                {errors.first_name && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.first_name.message}
+                                    </p>
+                                )}
+                            </div>
+                            <div className="flex flex-col">
+                                <label
+                                    htmlFor="last_name"
+                                    className="text-xs font-semibold text-gray-600 flex mb-1"
+                                >
+                                    Last Name
+                                </label>
+                                <input
+                                    id="last_name"
+                                    autoComplete="family-name"
+                                    {...register("lastName")}
+                                    placeholder="Last Name"
+                                    className="w-full py-2 px-3 border border-border rounded-sm text-sm outline-none focus:border-red"
+                                />
                             </div>
                         </div>
                     </div>
