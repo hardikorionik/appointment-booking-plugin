@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
-import { BookingPluginProps, Outlet } from "@/types";
+import { BookingPluginProps, Outlet, RootState } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import { setOutletData } from "@/slices/outletSlice";
 import { setServicePayload } from "@/slices/serviceSlice";
@@ -16,6 +16,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     const [error, setError] = useState<string | null>(null);
     const [outlets, setOutlets] = useState<any[]>([]);
     const [selectedOutlet, setSelectedOutlet] = useState<any>(null);
+    const { id } = useSelector((state: RootState) => state.outletDetails);
 
     // Initial API
     const fetchInitialData = useCallback(async () => {
@@ -105,7 +106,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
 
     return (
         <>
-            {outlets.length > 1 && !selectedOutlet ? (
+            {outlets.length > 1 && !selectedOutlet && !id ? (
                 <ChooseYourOutlet
                     outlets={outlets}
                     onSelectOutlet={(data: Outlet) => {

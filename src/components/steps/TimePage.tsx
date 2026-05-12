@@ -58,7 +58,7 @@ export default function TimePage(): JSX.Element {
     (state: RootState) => state.service,
   );
 
-  const { outletTimeZone } = useSelector((state: RootState) => state.outletDetails);
+  const { outletTimeZone } = useSelector((state: RootState) => state?.outletDetails);
 
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } =
     useSelector((state: RootState) => state.slots);
