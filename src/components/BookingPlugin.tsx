@@ -22,9 +22,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
         try {
             setLoading(true);
             setError(null);
-            const response = await fetchAllCategoriesAndStaffService(
-                bookingCode
-            );
+            const response = await fetchAllCategoriesAndStaffService(bookingCode);
             if (response?.success) {
                 const outletList =
                     response?.data?.data?.outlets || [];
@@ -50,16 +48,10 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     ) => {
         try {
             setLoading(true);
-            const response =
-                await fetchAllCategoriesAndStaffService(
-                    bookingCode,
-                    tenantId,
-                    outletId
-                );
+            const response = await fetchAllCategoriesAndStaffService(bookingCode, tenantId, outletId);
             if (!response?.success) {
                 setError(response?.message || "Failed to fetch outlet data");
             }
-            console.log("------------61", response?.data?.data?.staff)
             dispatch(
                 setServicePayload({
                     standaloneCategories: response?.data?.data?.standaloneCategories,

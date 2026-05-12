@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -15,7 +15,6 @@ import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { Service, ServiceItem, TaxRow } from "@/types";
 
 const cardVariants: Variants = {
@@ -43,9 +42,6 @@ type ViewType = "supercategory" | "standalone";
 
 export default function ServicesPage() {
   const dispatch = useDispatch();
-  // const { width } = useWindowSize();
-
-  const hasFetched = useRef(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -149,11 +145,10 @@ export default function ServicesPage() {
               setSelectedSubCategory(null);
               setSelectedSuperCategory(null);
             }}
-            className={`relative text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-2 transition-all ${
-              viewType === "supercategory"
-                ? "text-red-600"
-                : "text-black/40 hover:text-black"
-            }`}
+            className={`relative text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-2 transition-all ${viewType === "supercategory"
+              ? "text-red-600"
+              : "text-black/40 hover:text-black"
+              }`}
           >
             Super Category
             {viewType === "supercategory" && (
@@ -165,11 +160,10 @@ export default function ServicesPage() {
             onClick={() => {
               setViewType("standalone");
             }}
-            className={`relative text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-2 transition-all ${
-              viewType === "standalone"
-                ? "text-red-600"
-                : "text-black/40 hover:text-black"
-            }`}
+            className={`relative text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-2 transition-all ${viewType === "standalone"
+              ? "text-red-600"
+              : "text-black/40 hover:text-black"
+              }`}
           >
             Standalone
             {viewType === "standalone" && (
@@ -194,11 +188,10 @@ export default function ServicesPage() {
                       superCat?.categories?.[0] || null,
                     );
                   }}
-                  className={`border text-left p-4 transition-all cursor-pointer ${
-                    selectedSuperCategory?.id === superCat.id
-                      ? "border-red bg-[#fff8f8]"
-                      : "border-border bg-white hover:border-red/50"
-                  }`}
+                  className={`border text-left p-4 transition-all cursor-pointer ${selectedSuperCategory?.id === superCat.id
+                    ? "border-red bg-[#fff8f8]"
+                    : "border-border bg-white hover:border-red/50"
+                    }`}
                 >
                   <h3 className="font-medium text-sm mb-1">{superCat.name}</h3>
 
@@ -225,11 +218,10 @@ export default function ServicesPage() {
                   <button
                     key={subCat.id}
                     onClick={() => setSelectedSubCategory(subCat)}
-                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                      selectedSubCategory?.id === subCat.id
-                        ? "bg-black text-white border-black"
-                        : "bg-white border-border hover:border-black"
-                    }`}
+                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedSubCategory?.id === subCat.id
+                      ? "bg-black text-white border-black"
+                      : "bg-white border-border hover:border-black"
+                      }`}
                   >
                     {subCat.name}
                   </button>
@@ -253,14 +245,13 @@ export default function ServicesPage() {
             >
               <button
                 onClick={() => dispatch(setCategory(null))}
-                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                  !selectedCategory
-                    ? "bg-red-600 text-white border-red-600"
-                    : "bg-white border-border hover:border-red-600"
-                }`}
+                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedCategory
+                  ? "bg-red-600 text-white border-red-600"
+                  : "bg-white border-border hover:border-red-600"
+                  }`}
               >
                 All Services (
-                {standaloneCategories.reduce( 
+                {standaloneCategories.reduce(
                   (sum: number, c: any) => sum + c.services.length,
                   0,
                 )}
@@ -271,11 +262,10 @@ export default function ServicesPage() {
                 <button
                   key={cat.id}
                   onClick={() => dispatch(setCategory(cat))}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                    selectedCategory?.id === cat.id
-                      ? "bg-red text-white border-red"
-                      : "bg-white border-border hover:border-red"
-                  }`}
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedCategory?.id === cat.id
+                    ? "bg-red text-white border-red"
+                    : "bg-white border-border hover:border-red"
+                    }`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>
