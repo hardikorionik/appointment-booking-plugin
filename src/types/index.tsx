@@ -319,7 +319,7 @@ export interface SlotGroups {
 export interface SlotsState {
   selectedSlotIndexes: number[];
   selectedSlotIds: (string)[];
-  selectedDate: SelectedDateType;
+  selectedDate: SelectedDateType | null;
   selectedTime: string | null;
 
   slots: {
@@ -332,20 +332,24 @@ export interface SlotsState {
 }
 
 export interface GetStaffSlotsArgs {
+  tenantId?: string;
   staffId?: string;
   date: string; // e.g. "2026-05-11"
   outletId?: string;
 }
 
 export interface StaffSlotsResponse {
-  groups: {
-    morning: Slot[];
-    afternoon: Slot[];
-    evening: Slot[];
+  data: {
+    groups: {
+      morning: Slot[];
+      afternoon: Slot[];
+      evening: Slot[];
+    }
+    // optional metadata (if backend sends it)
+    staffId?: string;
+    tenantId?: string;
+    date?: string;
   }
-  // optional metadata (if backend sends it)
-  staffId?: string;
-  date?: string;
 }
 /* ─────────────────────────────────────────────────────────────
  * USER
@@ -624,11 +628,16 @@ export interface SlotsSliceState {
 
   loading: boolean;
 }
-
-export interface SelectedDateType {
+export interface SloteDateType {
   day: string;
   month: string;
   year: string;
+}
+
+export interface SelectedDateType {
+  year: number;
+  month: number;
+  day: number;
 }
 
 export interface ConfirmDateType {

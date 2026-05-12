@@ -55,12 +55,12 @@ export default function CalendarOverlay({
     (state: OutletRootState) => state.slots,
   );
 
-  const { outletTimeZone, outletTimeZoneYear } = useSelector(
+  const { timeZone, outletTimeZoneYear } = useSelector(
     (state: OutletRootState) => state.outletDetails,
   );
 
   const [months] = useState<CalendarMonth[]>(
-    generateMonths(outletTimeZone || ""),
+    generateMonths(timeZone || ""),
   );
 
   const [currentMonthIndex, setCurrentMonthIndex] =
@@ -70,7 +70,7 @@ export default function CalendarOverlay({
 
   if (!isOpen) return null;
 
-  const startDate = DateTime.now().setZone(outletTimeZone ?? "UTC");
+  const startDate = DateTime.now().setZone(timeZone ?? "UTC");
 
   const handlePick = (monthIdx: number, day: number): void => {
     dispatch(

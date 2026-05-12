@@ -5,7 +5,7 @@ import { CurrencyIcon } from "@/utils";
 
 type RootState = {
   booking: {
-    outletTimeZone: string;
+    timeZone: string;
   };
 };
 
@@ -51,7 +51,7 @@ export default function PaymentModal({
   onPay,
   amount,
 }: PaymentModalProps) {
-  const { outletTimeZone } = useSelector(
+  const { timeZone } = useSelector(
     (state: RootState) => state.outletDetails
   );
 
@@ -195,7 +195,7 @@ export default function PaymentModal({
                       if (month < 1 || month > 12) {
                         return "Invalid month";
                       }
-                      const dt = DateTime.now().setZone(outletTimeZone);
+                      const dt = DateTime.now().setZone(timeZone);
                       const currentYear = dt.year % 100;
                       const currentMonth = dt.month;
                       if (

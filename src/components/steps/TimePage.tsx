@@ -56,7 +56,7 @@ export default function TimePage(): JSX.Element {
     (state: OutletRootState) => state.service,
   );
 
-  const { outletTimeZone } = useSelector((state: OutletRootState) => state?.outletDetails);
+  const { tenantId, timeZone } = useSelector((state: OutletRootState) => state?.outletDetails);
 
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } =
     useSelector((state: OutletRootState) => state.slots);
@@ -71,8 +71,8 @@ export default function TimePage(): JSX.Element {
   }, [slots]);
 
   const startDate = useMemo(
-    () => DateTime.now().setZone(outletTimeZone),
-    [outletTimeZone],
+    () => DateTime.now().setZone(timeZone),
+    [timeZone],
   );
 
   const generateDates = (sdate: DateTime): DateItem[] => {
@@ -134,16 +134,21 @@ export default function TimePage(): JSX.Element {
 
   const requiredSlots = Math.ceil(durationMins / SLOT_INTERVAL);
 
+  const formattedDate = selectedDate
+    ? DateTime.fromObject(selectedDate).toFormat("yyyy-MM-dd")
+    : null;
+
   useEffect(() => {
-    if (!selectedProfessional?.id || !selectedDate) return;
+    if (!selectedProfessional?.id || !formattedDate) return;
 
     dispatch(
       getStaffSlots({
-        staffId: selectedProfessional?.id,
-        date: DateTime.fromObject(selectedDate).toFormat("yyyy-MM-dd"),
-      }) as any,
+        tenantId,
+        staffId: selectedProfessional.id,
+        date: formattedDate,
+      })
     );
-  }, [selectedProfessional?.id, selectedDate, dispatch]);
+  }, [selectedProfessional?.id, formattedDate, dispatch, tenantId]);
 
   const handleShift = (dir: number): void => {
     setStripStart((prev) =>
@@ -337,7 +342,7 @@ export default function TimePage(): JSX.Element {
   );
 
   const setNextSlotDate = (): void => {
-    const tomorrow = DateTime.now().setZone(outletTimeZone).plus({ days: 1 });
+    const tomorrow = DateTime.now().setZone(timeZone).plus({ days: 1 });
 
     dispatch(
       setSelectedDate({
@@ -378,7 +383,7 @@ export default function TimePage(): JSX.Element {
     if (!loading && noSlotsAvailable) {
       setNextSlotDate();
     }
-  }, [loading, amSlots, pmSlots, evSlots]);
+  }, [amSlots, pmSlots, evSlots]);
 
   return (
     <MainLayout
@@ -430,7 +435,7 @@ export default function TimePage(): JSX.Element {
           {dates.slice(stripStart, stripStart + visibleCount).map((d) => {
             const dt = DateTime.fromISO(d.fullDate || "");
             const dow = dt.weekday % 7;
-            const today = DateTime.now().setZone(outletTimeZone).startOf("day");
+            const today = DateTime.now().setZone(timeZone).startOf("day");
             const isToday = dt.hasSame(today, "day");
             const isSelected =
               selectedDate?.day === d.day &&

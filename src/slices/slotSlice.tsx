@@ -3,11 +3,10 @@ import { fetchStaffSlots } from "@/services";
 import { GetStaffSlotsArgs, StaffSlotsResponse, SlotsState } from "@/types";
 
 export const getStaffSlots = createAsyncThunk<StaffSlotsResponse, GetStaffSlotsArgs>(
-    "slots/getStaffSlots", async ({ staffId, date }) => {
-        return await fetchStaffSlots(staffId, date);
+    "slots/getStaffSlots", async ({ tenantId, staffId, date }) => {
+        return await fetchStaffSlots(tenantId, staffId, date);
     }
 );
-
 const initialState: SlotsState = {
     selectedSlotIndexes: [],
     selectedSlotIds: [],
@@ -52,7 +51,7 @@ const slotSlice = createSlice({
             })
             .addCase(getStaffSlots.fulfilled, (state, action) => {
                 state.loading = false;
-                state.slots = action.payload.groups || {
+                state.slots = action.payload?.data?.groups || {
                     morning: [],
                     afternoon: [],
                     evening: [],

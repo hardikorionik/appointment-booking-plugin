@@ -78,11 +78,11 @@ export default function OrderSidebar({
     (state: RootState) => state.service,
   );
 
-  const { outletTimeZone } = useSelector(
+  const { timeZone } = useSelector(
     (state: RootState) => state.outletDetails,
   );
 
-  const startDate = DateTime.now().setZone(outletTimeZone ?? "UTC");
+  const startDate = DateTime.now().setZone(timeZone ?? "UTC");
 
   const [customTip, setCustomTip] = useState<string>("");
 
