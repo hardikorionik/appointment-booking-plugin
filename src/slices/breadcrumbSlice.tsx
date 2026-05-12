@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Step, BreadcrumbState } from "@/types";
-import { getState } from "@/store";
 
-const getStepsOrder = (): Step[] => {
-    const state = getState();
-    const isService = state.outletDetails.isService;
-
-    if (isService) {
+const getStepsOrder = (isOrder: boolean): Step[] => {
+    if (isOrder) {
         return ["services", "professionals", "time", "details", "confirm", "success"];
     }
     return ["professionals", "services", "time", "details", "confirm", "success",];
@@ -15,14 +11,18 @@ const getStepsOrder = (): Step[] => {
 export const initialState: BreadcrumbState = {
     currentStep: "services",
     completedSteps: ["services"],
+    isOrder: true
 };
 
 const breadcrumbsSlice = createSlice({
     name: "breadcrumbs",
     initialState,
     reducers: {
+        setIsOrder: (state, action) => {
+            state.isOrder = action.payload;
+        },
         goToStep: (state, action) => {
-            const steps = getStepsOrder();
+            const steps = getStepsOrder(state.isOrder);
             const nextStep = action.payload;
             const currentIndex = steps.indexOf(state.currentStep);
             const nextIndex = steps.indexOf(nextStep);
@@ -42,7 +42,7 @@ const breadcrumbsSlice = createSlice({
             }
         },
         nextStep: (state) => {
-            const steps = getStepsOrder();
+            const steps = getStepsOrder(state.isOrder);
             const currentIndex = steps.indexOf(state.currentStep as Step);
             const next = steps[currentIndex + 1] as Step | undefined;
 
@@ -54,7 +54,7 @@ const breadcrumbsSlice = createSlice({
             }
         },
         prevStep: (state) => {
-            const steps = getStepsOrder();
+            const steps = getStepsOrder(state.isOrder);
             const currentIndex = steps.indexOf(state.currentStep as Step);
             const prev = steps[currentIndex - 1] as Step | undefined;
             if (prev) {
@@ -69,6 +69,7 @@ const breadcrumbsSlice = createSlice({
 });
 
 export const {
+    setIsOrder,
     goToStep,
     completeStep,
     nextStep,

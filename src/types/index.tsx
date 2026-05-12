@@ -29,6 +29,7 @@ export type Step =
 export interface BreadcrumbState {
   currentStep: Step;
   completedSteps: string[];
+  isOrder: boolean
 }
 
 export type PageMap = Record<StepKey, ComponentType>;

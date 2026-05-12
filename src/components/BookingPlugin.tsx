@@ -5,7 +5,7 @@ import { BookingPluginProps, Outlet, RootState } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import { setOutletData } from "@/slices/outletSlice";
 import { setServicePayload } from "@/slices/serviceSlice";
-import { goToStep } from "@/slices/breadcrumbSlice";
+import { setIsOrder, goToStep } from "@/slices/breadcrumbSlice";
 import { applyTheme } from "@/utils/applyTheme";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import DefaultAppointment from "@/components/steps";
@@ -53,6 +53,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             if (!response?.success) {
                 setError(response?.message || "Failed to fetch outlet data");
             }
+            dispatch(setIsOrder(response?.data?.data?.outlets[0]?.isService))
             dispatch(
                 setServicePayload({
                     standaloneCategories: response?.data?.data?.standaloneCategories,
