@@ -142,7 +142,7 @@ export default function ServicesPage() {
         <button
           onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
-          className="cta-btn p-3 px-8 text-sm relative rounded-full bg-ink text-white hover:text-white border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
+          className="btn-bg p-3 px-8 text-sm relative rounded-full text-white hover:text-white border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
         >
           Choose Professional
         </button>
@@ -170,11 +170,10 @@ export default function ServicesPage() {
                 setSelectedSubCategory(null);
                 setSelectedSuperCategory(null);
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${
-                viewType === "supercategory"
-                  ? "text-red-600 border-b-2 border-red-600"
-                  : "text-black/40 hover:text-black border-b-2 border-transparent"
-              }`}
+              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "supercategory"
+                ? "text-red-600 border-b-2 border-red-600"
+                : "text-black/40 hover:text-black border-b-2 border-transparent"
+                }`}
             >
               Super Category
             </button>
@@ -183,11 +182,10 @@ export default function ServicesPage() {
               onClick={() => {
                 setViewType("standalone");
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${
-                viewType === "standalone"
-                  ? "text-red-600 border-b-2 border-red-600"
-                  : "text-black/40 hover:text-black border-b-2 border-transparent"
-              }`}
+              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "standalone"
+                ? "text-red-600 border-b-2 border-red-600"
+                : "text-black/40 hover:text-black border-b-2 border-transparent"
+                }`}
             >
               Standalone
             </button>
@@ -243,11 +241,10 @@ export default function ServicesPage() {
 
                     setSelectedSubCategory(superCat?.categories?.[0] || null);
                   }}
-                  className={`border text-left py-3 px-4 transition-all cursor-pointer min-w-fit ${
-                    selectedSuperCategory?.id === superCat.id
-                      ? "border-red-300 bg-red-50/50"
-                      : "border-black/30 bg-white hover:border-red/50"
-                  }`}
+                  className={`border text-left py-3 px-4 transition-all cursor-pointer min-w-fit ${selectedSuperCategory?.id === superCat.id
+                    ? "border-red-300 bg-red-50/50"
+                    : "border-black/30 bg-white hover:border-red/50"
+                    }`}
                 >
                   <h3 className="font-medium text-sm mb-1 font-serif">
                     {superCat.name}
@@ -273,11 +270,10 @@ export default function ServicesPage() {
               >
                 <button
                   onClick={() => setSelectedSubCategory(null)}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                    !selectedSubCategory
-                      ? "bg-black text-white border-black"
-                      : "bg-white border-border hover:border-black"
-                  }`}
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedSubCategory
+                    ? "bg-black text-white border-black"
+                    : "bg-white border-border hover:border-black"
+                    }`}
                 >
                   All Services (
                   {selectedSuperCategory?.categories?.reduce(
@@ -290,11 +286,10 @@ export default function ServicesPage() {
                   <button
                     key={subCat.id}
                     onClick={() => setSelectedSubCategory(subCat)}
-                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                      selectedSubCategory?.id === subCat.id
-                        ? "bg-black text-white border-black"
-                        : "bg-white border-border hover:border-black"
-                    }`}
+                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedSubCategory?.id === subCat.id
+                      ? "bg-black text-white border-black"
+                      : "bg-white border-border hover:border-black"
+                      }`}
                   >
                     {subCat.name}
                   </button>
@@ -318,11 +313,10 @@ export default function ServicesPage() {
             >
               <button
                 onClick={() => dispatch(setCategory(null))}
-                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                  !selectedCategory
-                    ? "bg-black text-white border-black"
-                    : "bg-white border-border hover:border-black"
-                }`}
+                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedCategory
+                  ? "bg-black text-white border-black"
+                  : "bg-white border-border hover:border-black"
+                  }`}
               >
                 All Services (
                 {standaloneCategories.reduce(
@@ -336,11 +330,10 @@ export default function ServicesPage() {
                 <button
                   key={cat.id}
                   onClick={() => dispatch(setCategory(cat))}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                    selectedCategory?.id === cat.id
-                      ? "bg-black text-white border-black"
-                      : "bg-white border-border hover:border-black"
-                  }`}
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedCategory?.id === cat.id
+                    ? "bg-black text-white border-black"
+                    : "bg-white border-border hover:border-black"
+                    }`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>

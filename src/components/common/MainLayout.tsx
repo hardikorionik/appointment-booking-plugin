@@ -17,7 +17,7 @@ export default function MainLayout({
                         {isConfirm ? (
                             <button
                                 onClick={handleSidebarOpen}
-                                className="cta-btn p-3! px-8.5! text-sm relative rounded-full bg-ink text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
+                                className="p-3! px-8.5! text-sm relative rounded-full btn-bg text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
                             >
                                 <span>
                                     View Order

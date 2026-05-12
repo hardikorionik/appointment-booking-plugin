@@ -42,7 +42,7 @@ const ProfessionalServiceSidebar = ({
         <button
           disabled={!pro}
           onClick={() => goToStep("time")}
-          className="cta-btn w-full relative py-3.75 bg-ink text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+          className="w-full relative py-3.75 btn-bg text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
         >
           <span className="flex flex-row justify-center items-center gap-2">
             Choose Services <MoveRight />

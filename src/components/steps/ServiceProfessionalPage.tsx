@@ -130,14 +130,14 @@ export default function ServiceProfessionalPage() {
         <ServiceProfessionalSidebar
           selectedServices={selectedServices}
           totalPrice={totalPrice}
-          goToStep={(data: string) => dispatch(nextStep(data))}
+          goToStep={(data: string) => dispatch(nextStep())}
         />
       }
       renderButton={
         <button
-          onClick={() => dispatch(nextStep("professionals"))}
+          onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
-          className="cta-btn p-3! px-8.5! text-sm relative rounded-full bg-ink text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
+          className="btn-bg p-3! px-8.5! text-sm relative rounded-full btn-bg text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
         >
           <span>Choose Professional</span>
         </button>
