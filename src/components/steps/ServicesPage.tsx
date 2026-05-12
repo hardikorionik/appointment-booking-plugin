@@ -15,7 +15,7 @@ import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
-import { RootState, Service, ServiceItem, TaxRow } from "@/types";
+import { OutletRootState , Service, ServiceItem, TaxRow } from "@/types";
 
 const cardVariants: Variants = {
   hidden: {
@@ -52,7 +52,7 @@ export default function ServicesPage() {
     loading,
   } = useSelector((state: any) => state.service);
   const { outletName } = useSelector(
-    (state: RootState) => state?.outletDetails,
+    (state: OutletRootState) => state?.outletDetails,
   );
 
   const [viewType, setViewType] = useState<ViewType>("supercategory");
