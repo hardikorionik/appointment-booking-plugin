@@ -112,7 +112,7 @@ export default function SuccessPage(): JSX.Element {
     const remainingCount = services.length - 5;
 
     return (
-        <div className="h-[calc(100dvh-5px)] max-md:h-[calc(100dvh-5px)] overflow-y-auto no-scrollbar">
+        <div className="h-[calc(100dvh-5px)] max-md:h-[calc(100dvh-5px)] overflow-y-auto scrollbar-none">
             <motion.div
                 initial="hidden"
                 animate="visible"

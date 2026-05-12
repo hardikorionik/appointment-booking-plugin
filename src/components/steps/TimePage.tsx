@@ -421,7 +421,7 @@ export default function TimePage(): JSX.Element {
       </div>
 
       <div className="mt-2 mb-6 flex flex-row flex-wrap">
-        <div className="flex items-stretch gap-1.5 overflow-x-auto no-scrollbar">
+        <div className="flex items-stretch gap-1.5 overflow-x-auto scrollbar-none">
 
           <DateNavBtn onClick={() => handleShift(-1)}>
             <ChevronLeft size={20} />
@@ -509,7 +509,7 @@ export default function TimePage(): JSX.Element {
       </div>
 
       <div
-        className="overflow-y-auto no-scrollbar pb-20 lg:pb-4"
+        className="overflow-y-auto scrollbar-none pb-20 lg:pb-4"
         style={{ height: `${height - 370}px` }}
       >
         {loading ? (

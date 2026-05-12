@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -15,7 +15,7 @@ import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
-import { OutletRootState , Service, ServiceItem, TaxRow } from "@/types";
+import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
 
 const cardVariants: Variants = {
   hidden: {
@@ -74,10 +74,18 @@ export default function ServicesPage() {
   // SUPER CATEGORY SERVICES
 
   const superCategoryServices = useMemo(() => {
-    if (!selectedSubCategory) return [];
+    if (!selectedSuperCategory) return [];
 
+    // ALL SERVICES OF SELECTED SUPER CATEGORY
+    if (!selectedSubCategory) {
+      return selectedSuperCategory.categories.flatMap(
+        (cat: any) => cat.services || [],
+      );
+    }
+
+    // SINGLE SUB CATEGORY SERVICES
     return selectedSubCategory.services || [];
-  }, [selectedSubCategory]);
+  }, [selectedSuperCategory, selectedSubCategory]);
 
   // FINAL SERVICES
   const baseServices =
@@ -106,6 +114,20 @@ export default function ServicesPage() {
 
     return sum + price * s.qty;
   }, 0);
+
+  useEffect(() => {
+    if (
+      viewType === "supercategory" &&
+      superCategories?.length > 0 &&
+      !selectedSuperCategory
+    ) {
+      const firstSuperCategory = superCategories[0];
+
+      setSelectedSuperCategory(firstSuperCategory);
+
+      setSelectedSubCategory(firstSuperCategory?.categories?.[0] || null);
+    }
+  }, [viewType, superCategories, selectedSuperCategory]);
 
   return (
     <MainLayout
@@ -211,7 +233,7 @@ export default function ServicesPage() {
                   scrollRef.current.scrollLeft += e.deltaY;
                 }
               }}
-              className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar w-full mb-3 border border-black/20 p-1"
+              className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-none w-full mb-3 border border-black/20 p-1"
             >
               {superCategories.map((superCat: any) => (
                 <button
@@ -239,7 +261,6 @@ export default function ServicesPage() {
             </div>
 
             {/* SUB CATEGORIES */}
-
             {selectedSuperCategory && (
               <div
                 ref={scrollRef}
@@ -248,10 +269,10 @@ export default function ServicesPage() {
                     scrollRef.current.scrollLeft += e.deltaY;
                   }
                 }}
-                className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar w-full mb-5"
+                className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-none w-full mb-5"
               >
                 <button
-                  onClick={() => dispatch(setCategory(null))}
+                  onClick={() => setSelectedSubCategory(null)}
                   className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
                     !selectedSubCategory
                       ? "bg-black text-white border-black"
@@ -293,7 +314,7 @@ export default function ServicesPage() {
                   scrollRef.current.scrollLeft += e.deltaY;
                 }
               }}
-              className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar w-full"
+              className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-none w-full"
             >
               <button
                 onClick={() => dispatch(setCategory(null))}
@@ -329,7 +350,7 @@ export default function ServicesPage() {
         )}
 
         {/* SERVICES */}
-        <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-270px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
+        <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-270px)] overflow-y-auto pb-20 lg:pb-4 scrollbar-none">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
             {loading ? (
               Array.from({ length: 10 }).map((_, i) => (

@@ -149,7 +149,7 @@ export default function Professionals() {
           )}
         </AnimatePresence>
 
-        <div className="h-[calc(100dvh-210px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
+        <div className="h-[calc(100dvh-210px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto scrollbar-none pb-20 lg:pb-4">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(195px,1fr))] gap-3">
             <AnimatePresence mode="popLayout">
               {filteredStaff.map((p: Staff, index: number) => {

@@ -670,7 +670,7 @@ export default function ConfirmPage(): JSX.Element {
                                 </p>
                             </div>
                         </div>
-                        <div className="h-[calc(100dvh-285px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar">
+                        <div className="h-[calc(100dvh-285px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto scrollbar-none">
                             <div className="xl:flex gap-7 justify-between">
                                 <div className="w-full">
                                     <SectionLabel>Appointment</SectionLabel>

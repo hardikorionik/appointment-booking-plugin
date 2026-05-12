@@ -163,7 +163,7 @@ export default function ServiceProfessionalPage() {
                 scrollRef.current.scrollLeft += e.deltaY;
               }
             }}
-            className="flex flex-nowrap gap-2 lg:mb-4 overflow-x-auto no-scrollbar max-w-full"
+            className="flex flex-nowrap gap-2 lg:mb-4 overflow-x-auto scrollbar-none max-w-full"
           >
             <button
               onClick={() => {
@@ -233,7 +233,7 @@ export default function ServiceProfessionalPage() {
           </div>
         </div>
 
-        <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-268px)] max-md:h-[calc(100dvh-310px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
+        <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-268px)] max-md:h-[calc(100dvh-310px)] overflow-y-auto scrollbar-none pb-20 lg:pb-4">
           <div className="w-full grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-2.5">
             {loading ? (
               Array.from({

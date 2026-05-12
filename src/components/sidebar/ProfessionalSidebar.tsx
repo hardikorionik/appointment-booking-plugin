@@ -62,7 +62,7 @@ const ProfessionalSidebar = ({
       )}
 
       {selectedStaffServices?.length > 0 && (
-        <ul className="md:h-[calc(100dvh-70px)] h-[calc(100dvh-230px)] overflow-y-scroll mb-1 no-scrollbar">
+        <ul className="md:h-[calc(100dvh-70px)] h-[calc(100dvh-230px)] overflow-y-scroll mb-1 scrollbar-none">
           {selectedStaffServices?.map(
             (svc: SelectedStaffService, index: number) => (
               <li

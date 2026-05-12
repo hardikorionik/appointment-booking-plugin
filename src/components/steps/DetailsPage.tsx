@@ -279,7 +279,7 @@ export default function DetailsPage(): JSX.Element {
                     <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
                         Your Details
                     </h1>
-                    <div className="overflow-y-auto no-scrollbar pb-20 lg:pb-4" style={{ height: `${height - 200}px`, }} >
+                    <div className="overflow-y-auto scrollbar-none pb-20 lg:pb-4" style={{ height: `${height - 200}px`, }} >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 mt-5">
                             {/* Phone */}
                             <div className="flex flex-col">

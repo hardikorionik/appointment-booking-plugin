@@ -388,7 +388,7 @@ export default function OrderSidebar({
       </div>
 
       <ul
-        className="overflow-y-scroll mb-1 no-scrollbar"
+        className="overflow-y-scroll mb-1 scrollbar-none"
         style={{ height: `${secondHeight}px` }}
       >
         {selectedStaffServices?.length > 0 &&
