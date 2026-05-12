@@ -12,10 +12,11 @@ const initialState = {
   outletTimeZoneYear: "",
   createdAt: "",
   isService: true,
+  currency: "",
 };
 
-const bookingSlice = createSlice({
-  name: "booking",
+const outletSlice = createSlice({
+  name: "outletDetails",
   initialState,
   reducers: {
     clearBooking: () => {
@@ -27,5 +28,5 @@ const bookingSlice = createSlice({
   },
 });
 
-export const { clearBooking, setOutletData } = bookingSlice.actions;
-export default bookingSlice.reducer;
+export const { clearBooking, setOutletData } = outletSlice.actions;
+export default outletSlice.reducer;

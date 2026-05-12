@@ -79,7 +79,7 @@ export default function OrderSidebar({
   );
 
   const { outletTimeZone } = useSelector(
-    (state: RootState) => state.booking,
+    (state: RootState) => state.outletDetails,
   );
 
   const startDate = DateTime.now().setZone(outletTimeZone ?? "UTC");

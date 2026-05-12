@@ -49,7 +49,7 @@ export default function ConfirmPage(): JSX.Element {
     const dispatch = useDispatch();
 
     const { outletData, outletTimeZoneDate, outletTimeZone } = useSelector(
-        (state: RootState) => state.booking,
+        (state: RootState) => state.outletDetails,
     );
     const { staff, selectedServices, selectedProfessional } = useSelector(
         (state: RootState) => state.service,
@@ -660,7 +660,7 @@ export default function ConfirmPage(): JSX.Element {
                         Review your appointment details before booking
                     </p>
                     <div className="max-md:max-w-full">
-                        <div className="flex gap-3 items-center p-3 bg-surface rounded-sm mb-2">
+                        {/* <div className="flex gap-3 items-center p-3 bg-surface rounded-sm mb-2">
                             {outletData?.image && (
                                 <div className="w-10 h-10 rounded-sm flex items-center justify-center text-white text-xs">
                                     <img
@@ -679,7 +679,7 @@ export default function ConfirmPage(): JSX.Element {
                                     <br />
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="h-[calc(100dvh-285px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar">
                             <div className="xl:flex gap-7 justify-between">
                                 <div className="w-full">

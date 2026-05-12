@@ -11,20 +11,14 @@ interface Service {
     min_price?: number;
 }
 
-interface OutletData {
-    outletName?: string;
-}
-
 interface ServiceSidebarProps {
     selectedServices: Service[];
-    outletData?: OutletData;
     totalPrice: number;
     goToStep: (step: string) => void;
 }
 
 export default function ServiceSidebar({
     selectedServices,
-    outletData,
     totalPrice,
     goToStep,
 }: ServiceSidebarProps) {
@@ -32,7 +26,7 @@ export default function ServiceSidebar({
         <>
             <p className="font-bebas text-2xl mb-0">Your Order</p>
             <p className="text-base font-bold text-muted mb-1 border-b border-gray-300 pb-2">
-                {outletData?.outletName || "-"}
+                {/* {outletName || "-"} */}
             </p>
             {selectedServices?.length > 0 && (
                 <ul className="md:h-[calc(100dvh-70px)] h-[calc(100dvh-230px)] overflow-y-scroll mb-1 no-scrollbar">

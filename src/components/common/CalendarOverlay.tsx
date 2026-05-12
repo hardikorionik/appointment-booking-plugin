@@ -58,7 +58,7 @@ export default function CalendarOverlay({
   );
 
   const { outletTimeZone, outletTimeZoneYear } = useSelector(
-    (state: RootState) => state.booking,
+    (state: RootState) => state.outletDetails,
   );
 
   const [months] = useState<CalendarMonth[]>(

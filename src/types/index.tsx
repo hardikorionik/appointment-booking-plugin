@@ -586,11 +586,20 @@ export interface BillingContact {
  * REDUX STATE
  * ───────────────────────────────────────────────────────────── */
 
-export interface BookingSliceState {
-  outletData: OutletData | null;
+export interface OutletSliceState {
+  id: string,
+  outletName: string,
+  timeZone: string,
+  image: string,
+  tenantId: string,
+  address: string,
+  isOpen: false,
+  createdAt: string,
+  isService: true,
   outletTimeZoneDate: string;
   outletTimeZoneYear: number;
   outletTimeZone: string | null;
+  currency: string,
 }
 
 export interface ServiceSliceState {
@@ -643,7 +652,7 @@ export interface AppointmentSliceState {
 }
 
 export interface RootState {
-  booking: BookingSliceState;
+  booking: OutletSliceState;
   service: ServiceSliceState;
   slots: SlotsSliceState;
   appointment: AppointmentSliceState;

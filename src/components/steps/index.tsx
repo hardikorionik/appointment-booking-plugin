@@ -20,7 +20,7 @@ function AppContent(): JSX.Element {
     (state: RootState) => state.breadcrumbs
   );
   const { isService } = useSelector(
-    (state: RootState) => state.booking
+    (state: RootState) => state.outletDetails
   );
 
   const PAGE_MAP: PageMap = {

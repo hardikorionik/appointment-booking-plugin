@@ -52,7 +52,7 @@ export default function PaymentModal({
   amount,
 }: PaymentModalProps) {
   const { outletTimeZone } = useSelector(
-    (state: RootState) => state.booking
+    (state: RootState) => state.outletDetails
   );
 
   const {

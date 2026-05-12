@@ -18,7 +18,7 @@ export default function ServiceSidebar({
       <p className="font-bebas text-2xl mb-0">Your Order</p>
 
       <p className="text-base font-bold text-muted mb-1 border-b border-gray-300 pb-2">
-        {outletData?.outletName || "-"}
+        {/* {outletData?.outletName || "-"} */}
       </p>
 
       {selectedServices?.length > 0 && (

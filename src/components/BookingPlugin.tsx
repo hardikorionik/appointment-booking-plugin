@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { DateTime } from "luxon";
 import { BookingPluginProps, Outlet } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
-import { setOutletData } from "@/slices/bookingSlice";
+import { setOutletData } from "@/slices/outletSlice";
 import { goToStep } from "@/slices/breadcrumbSlice";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import { applyTheme } from "@/utils/applyTheme";

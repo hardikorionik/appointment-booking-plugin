@@ -46,8 +46,8 @@ const STEPS: StepItem[] = [
 export default function Breadcrumb() {
     const dispatch = useDispatch<AppDispatch>();
     const { width } = useWindowSize();
-    const outletData = useSelector(
-        (state: RootState) => state.booking.outletData
+    const { isService } = useSelector(
+        (state: RootState) => state.outletDetails
     );
 
     const {
@@ -56,7 +56,7 @@ export default function Breadcrumb() {
     } = useSelector(
         (state: RootState) => state.breadcrumbs
     );
-    const steps = outletData?.isService ? SERVICE_STEPS : STEPS;
+    const steps = isService ? SERVICE_STEPS : STEPS;
     const currentIndex = steps.findIndex(
         (s) => s.page === currentStep
     );
