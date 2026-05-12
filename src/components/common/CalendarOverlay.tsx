@@ -2,10 +2,8 @@ import { JSX, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-
 import { setSelectedDate } from "@/slices/slotSlice";
-
-import type { RootState, CalendarMonth } from "@/types";
+import type { OutletRootState, CalendarMonth } from "@/types";
 
 const generateMonths = (outletTimeZone: string): CalendarMonth[] => {
   try {
@@ -54,11 +52,11 @@ export default function CalendarOverlay({
   const dispatch = useDispatch();
 
   const { selectedDate } = useSelector(
-    (state: RootState) => state.slots,
+    (state: OutletRootState) => state.slots,
   );
 
   const { outletTimeZone, outletTimeZoneYear } = useSelector(
-    (state: RootState) => state.outletDetails,
+    (state: OutletRootState) => state.outletDetails,
   );
 
   const [months] = useState<CalendarMonth[]>(

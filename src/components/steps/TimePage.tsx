@@ -19,13 +19,13 @@ import {
 } from "@/slices/slotSlice";
 import { getUserName } from "@/utils";
 import { nextStep } from "@/slices/breadcrumbSlice";
-import { RootState, SlotItem, DateItem, Slot } from "@/types";
+import { OutletRootState, SlotItem, DateItem, Slot } from "@/types";
 import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
 import { useWindowSize } from "@/hooks/useWindowSize";
-
+import type { AppDispatch } from "@/store";
 import "react-toastify/dist/ReactToastify.css";
 
 const MONTH_NAMES = [
@@ -46,21 +46,20 @@ const MONTH_NAMES = [
 const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function TimePage(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { height } = useWindowSize();
 
   const [visibleCount, setVisibleCount] = useState<number>(11);
 
-  const { bookingMode } = useSelector((state: RootState) => state.appointment);
 
   const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: RootState) => state.service,
+    (state: OutletRootState) => state.service,
   );
 
-  const { outletTimeZone } = useSelector((state: RootState) => state?.outletDetails);
+  const { outletTimeZone } = useSelector((state: OutletRootState) => state?.outletDetails);
 
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } =
-    useSelector((state: RootState) => state.slots);
+    useSelector((state: OutletRootState) => state.slots);
 
   const [calOpen, setCalOpen] = useState<boolean>(false);
   const [stripStart, setStripStart] = useState<number>(0);
@@ -76,7 +75,7 @@ export default function TimePage(): JSX.Element {
     [outletTimeZone],
   );
 
-  const generateDates = (mode: string, sdate: DateTime): DateItem[] => {
+  const generateDates = (sdate: DateTime): DateItem[] => {
     try {
       const totalDays = 180;
 
@@ -103,8 +102,8 @@ export default function TimePage(): JSX.Element {
   };
 
   const dates = useMemo<DateItem[]>(() => {
-    return generateDates(bookingMode, startDate);
-  }, [bookingMode, startDate]);
+    return generateDates(startDate);
+  }, [startDate]);
 
   const selectedStaffServices = useMemo(() => {
     if (!selectedProfessional?.id) return [];
@@ -503,7 +502,7 @@ export default function TimePage(): JSX.Element {
           <p className="font-semibold text-sm">{selectedProfessional?.name}</p>
 
           <p className="text-xs text-muted truncate">
-            {selectedStaffServices.map((s) => s.name).join(", ")} ·{" "}
+            {selectedStaffServices.map((s: any) => s.name).join(", ")} ·{" "}
             {totalDuration} mins
           </p>
         </div>

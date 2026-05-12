@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { DateTime } from "luxon";
 import { useSelector, useDispatch } from "react-redux";
 import { Check, CalendarDays, CreditCard, Store } from "lucide-react";
-import { createAppointment, createCheckin } from "@/slices/appointmentSlice";
+import { createAppointment } from "@/slices/appointmentSlice";
 import { payCustomerDirect, finalizeInvoice } from "@/services";
 import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import PaymentModal from "@/components/modals/PaymentModal";
@@ -459,7 +459,7 @@ export default function ConfirmPage(): JSX.Element {
             setLoading(true);
             let result = await dispatch(createAppointment(payload));
 
-            const isSuccess = createAppointment.fulfilled.match(result));
+            const isSuccess = createAppointment.fulfilled.match(result)
 
             if (isSuccess) {
                 const data = (result as { payload?: { data?: Record<string, unknown> } & Record<string, unknown> }).payload?.data

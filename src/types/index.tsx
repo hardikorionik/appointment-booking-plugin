@@ -655,7 +655,7 @@ export interface AppointmentSliceState {
   bookingMode: BookingMode;
 }
 
-export interface RootState {
+export interface OutletRootState {
   outletDetails: OutletSliceState;
   service: ServiceSliceState;
   slots: SlotsSliceState;

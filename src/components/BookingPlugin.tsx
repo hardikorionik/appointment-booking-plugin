@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
-import { BookingPluginProps, Outlet, RootState } from "@/types";
+import { BookingPluginProps, Outlet, OutletRootState, } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import { setOutletData } from "@/slices/outletSlice";
 import { setServicePayload } from "@/slices/serviceSlice";
@@ -9,14 +9,15 @@ import { setIsOrder, goToStep } from "@/slices/breadcrumbSlice";
 import { applyTheme } from "@/utils/applyTheme";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import DefaultAppointment from "@/components/steps";
+import type { AppDispatch } from "@/store";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [outlets, setOutlets] = useState<any[]>([]);
     const [selectedOutlet, setSelectedOutlet] = useState<any>(null);
-    const { id } = useSelector((state: RootState) => state.outletDetails);
+    const { id } = useSelector((state: OutletRootState) => state.outletDetails);
 
     // Initial API
     const fetchInitialData = useCallback(async () => {
