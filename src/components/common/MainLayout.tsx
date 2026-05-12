@@ -28,7 +28,7 @@ export default function MainLayout({
                         )}
                     </div>
                 </main>
-                <aside className="hidden md:flex flex-col bg-surface border-l border-border p-4 pb-3.5 h-[calc(100dvh-68px)]">
+                <aside className="hidden md:flex flex-col bg-surface border-l border-border p-4 pb-3.5">
                     {sidebar}
                 </aside>
             </div>
