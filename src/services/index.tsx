@@ -115,11 +115,13 @@ export const getAppointmentDetail = async (
 // Fetch Customers for Dropdown
 export const fetchCustomer = async ({
     search,
+    tenantId
 }: {
     search: string;
+    tenantId: string
 }) => {
     const res = await fetch(
-        `${BASE_URL}/customer/drop-down/list?search=${encodeURIComponent(search || "")}`,
+        `${BASE_URL}/integration/customer/drop-down/list?tenantId=${tenantId}&search=${encodeURIComponent(search || "")}`,
         {
             method: "GET",
             headers: {

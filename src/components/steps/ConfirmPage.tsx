@@ -23,7 +23,7 @@ import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState } from "@/store";
-import { PaymentMeta, PayType, Service, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
+import { PaymentMeta, PayType, Service, OutletRootState, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -47,7 +47,9 @@ const expiryToNumber = (exp: string): number => {
 
 export default function ConfirmPage(): JSX.Element {
     const dispatch = useDispatch();
-
+    const { tenantId, id: outletId } = useSelector(
+        (state: OutletRootState) => state.outletDetails
+    );
     const { outletTimeZoneDate, timeZone, image, outletName, address } = useSelector(
         (state: RootState) => state.outletDetails,
     );
@@ -145,11 +147,6 @@ export default function ConfirmPage(): JSX.Element {
     const dateStr: string | null = timeRange
         ? `${MONTH_NAMES[safeDate.month]} ${safeDate.day} at ${timeRange}`
         : null;
-
-    // ─── IDs from localStorage ──────────────────────────────────────────────────
-
-    const tenantId: string | null = localStorage.getItem("tenantId");
-    const outletId: string | null = localStorage.getItem("outletId");
 
     // ─── Price calculations ─────────────────────────────────────────────────────
 

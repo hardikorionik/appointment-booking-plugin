@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback, useRef, JSX } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { debounce } from "lodash";
-import PhoneInput, {
-    isValidPhoneNumber,
-} from "react-phone-number-input";
+import PhoneInput, { isValidPhoneNumber, } from "react-phone-number-input";
+import type { E164Number, CountryCode } from "libphonenumber-js";
 import { useDispatch, useSelector } from "react-redux";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import Breadcrumb from "@/components/common/Breadcrumb";
@@ -20,10 +19,10 @@ import { fetchCustomer } from "@/services";
 import type { RootState } from "@/store";
 
 import "react-phone-number-input/style.css";
-import { FormValues, FetchCustomerResponse } from "@/types";
+import { FormValues, FetchCustomerResponse, OutletRootState } from "@/types";
 
 // -------------------- Constants --------------------
-const allowedCountries = [
+const allowedCountries: CountryCode[] = [
     "IN",
     "US",
     "CA",
@@ -36,7 +35,7 @@ const allowedCountries = [
 // -------------------- Component --------------------
 export default function DetailsPage(): JSX.Element {
     const dispatch = useDispatch();
-
+    const { tenantId } = useSelector((state: OutletRootState) => state?.outletDetails);
     const { height } = useWindowSize();
 
     const { userDetails } = useSelector(
@@ -93,14 +92,8 @@ export default function DetailsPage(): JSX.Element {
 
     useEffect(() => {
         reset(
-            {
-                ...userDetails,
-                phone: userDetails?.phone || "",
-            },
-            {
-                keepErrors: true,
-                keepDirty: false,
-            },
+            { ...userDetails, phone: userDetails?.phone || "", },
+            { keepErrors: true, keepDirty: false }
         );
     }, [userDetails, reset]);
 
@@ -123,10 +116,7 @@ export default function DetailsPage(): JSX.Element {
     const onSubmit: SubmitHandler<FormValues> = (
         data,
     ): void => {
-        const payload = {
-            ...data,
-            phone: data?.phone ?? "",
-        };
+        const payload = { ...data, phone: data?.phone ?? "", };
 
         dispatch(setUserDetails(payload));
 
@@ -165,7 +155,8 @@ export default function DetailsPage(): JSX.Element {
             setLoading(true);
             setLoadingField(type);
             try {
-                const res: FetchCustomerResponse = await fetchCustomer({ search: searchKey, });
+                const res: FetchCustomerResponse = await fetchCustomer({ search: searchKey, tenantId });
+
                 const customer = res?.data?.[0];
                 if (customer) {
                     setValue("firstName", customer.first_name || "", {
@@ -308,8 +299,8 @@ export default function DetailsPage(): JSX.Element {
                                                 countries={allowedCountries}
                                                 defaultCountry="US"
                                                 value={field.value || ""}
-                                                onChange={(value) =>
-                                                    handleInputChange(value, field.onChange, "phone")
+                                                onChange={(value?: E164Number) =>
+                                                    handleInputChange(value ?? "", field.onChange, "phone")
                                                 }
                                                 countryCallingCodeEditable={false}
                                                 className="w-full py-2 px-3 border border-border rounded-sm text-sm outline-none focus:border-red"
@@ -394,9 +385,9 @@ export default function DetailsPage(): JSX.Element {
                                     placeholder="First Name"
                                     className="w-full py-2 px-3 border border-border rounded-sm text-sm outline-none focus:border-red"
                                 />
-                                {errors.first_name && (
+                                {errors.firstName && (
                                     <p className="text-red-500 text-sm mt-1">
-                                        {errors.first_name.message}
+                                        {errors.firstName.message}
                                     </p>
                                 )}
                             </div>
