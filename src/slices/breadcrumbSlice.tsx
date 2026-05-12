@@ -1,27 +1,28 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { Step, BreadcrumbState } from "@/types";
+import { getState } from "@/store";
 
+const getStepsOrder = (): Step[] => {
+    const state = getState();
+    const isService = state.outletDetails.isService;
 
-const getStepsOrder = (isService: boolean): Step[] => {
     if (isService) {
         return ["services", "professionals", "time", "details", "confirm", "success"];
     }
     return ["professionals", "services", "time", "details", "confirm", "success",];
 };
 
-
 export const initialState: BreadcrumbState = {
     currentStep: "services",
     completedSteps: ["services"],
 };
-
 
 const breadcrumbsSlice = createSlice({
     name: "breadcrumbs",
     initialState,
     reducers: {
         goToStep: (state, action) => {
-            const steps = getStepsOrder(state.isService);
+            const steps = getStepsOrder();
             const nextStep = action.payload;
             const currentIndex = steps.indexOf(state.currentStep);
             const nextIndex = steps.indexOf(nextStep);
@@ -41,7 +42,7 @@ const breadcrumbsSlice = createSlice({
             }
         },
         nextStep: (state) => {
-            const steps = getStepsOrder(state.isService);
+            const steps = getStepsOrder();
             const currentIndex = steps.indexOf(state.currentStep as Step);
             const next = steps[currentIndex + 1] as Step | undefined;
 
@@ -53,7 +54,7 @@ const breadcrumbsSlice = createSlice({
             }
         },
         prevStep: (state) => {
-            const steps = getStepsOrder(state.isService);
+            const steps = getStepsOrder();
             const currentIndex = steps.indexOf(state.currentStep as Step);
             const prev = steps[currentIndex - 1] as Step | undefined;
             if (prev) {
@@ -64,12 +65,6 @@ const breadcrumbsSlice = createSlice({
             state.currentStep = "services";
             state.completedSteps = ["services"];
         },
-        setServiceMode: (
-            state,
-            action: PayloadAction<boolean>
-        ) => {
-            state.isService = action.payload;
-        },
     },
 });
 
@@ -79,7 +74,6 @@ export const {
     nextStep,
     prevStep,
     clearSteps,
-    setServiceMode,
 } = breadcrumbsSlice.actions;
 
 

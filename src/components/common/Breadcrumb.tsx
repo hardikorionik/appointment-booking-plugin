@@ -108,11 +108,11 @@ export default function Breadcrumb() {
                                 <span
                                     onClick={() => {
                                         if (!isClickable) return;
-                                        if (step.page === "services") {
-                                            clearAllData();
-                                        } else {
-                                            dispatch(goToStep(step.page));
-                                        }
+                                        // if (step.page === "services") {
+                                        //     clearAllData();
+                                        // } else {
+                                        dispatch(goToStep(step.page));
+                                        // }
                                     }}
                                     className={["transition-colors duration-150",
                                         isClickable ? "cursor-pointer hover:text-black" : "cursor-not-allowed text-gray-400",
