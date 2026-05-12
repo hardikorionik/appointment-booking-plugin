@@ -23,7 +23,7 @@ import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState } from "@/store";
-import { PaymentMeta, PayType, Service, StaffMember, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, SelectedDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
+import { PaymentMeta, PayType, Service, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -48,7 +48,7 @@ const expiryToNumber = (exp: string): number => {
 export default function ConfirmPage(): JSX.Element {
     const dispatch = useDispatch();
 
-    const { outletData, outletTimeZoneDate, outletTimeZone } = useSelector(
+    const { outletTimeZoneDate, timeZone, image, outletName, address } = useSelector(
         (state: RootState) => state.outletDetails,
     );
     const { staff, selectedServices, selectedProfessional } = useSelector(
@@ -76,7 +76,7 @@ export default function ConfirmPage(): JSX.Element {
     const [consentOpen, setConsentOpen] = useState<boolean>(false);
     const [consentHeading, setConsentHeading] = useState<string>("");
     const [consentText, setConsentText] = useState<string>("");
-    const [consentEnforcement, setConsentEnforcement] = useState<string | null>(null);
+    const [consentEnforcement, setConsentEnforcement] = useState<EnforcementType | null>(null);
     const [pendingConsentServiceId, setPendingConsentServiceId] = useState<string | null>(null);
     const [consentAcceptedMap, setConsentAcceptedMap] = useState<Record<string, boolean>>({});
     const [consentCheckMap, setConsentCheckMap] = useState<Record<string, ConsentCheckStatus>>({});
@@ -86,7 +86,7 @@ export default function ConfirmPage(): JSX.Element {
     const consentFlowLockRef = useRef<boolean>(false);
     const lastOpenedConsentServiceRef = useRef<string>("");
 
-    const todayDate = DateTime.now().setZone(outletTimeZone ?? "UTC");
+    const todayDate = DateTime.now().setZone(timeZone ?? "UTC");
 
     // ─── Enriched services ──────────────────────────────────────────────────────
 
@@ -131,14 +131,11 @@ export default function ConfirmPage(): JSX.Element {
         return `${start} - ${end}`;
     };
 
-    const safeDate: SelectedDateType =
-        typeof selectedDate === "object" && selectedDate !== null
-            ? selectedDate
-            : {
-                day: todayDate.day,
-                month: todayDate.month,
-                year: todayDate.year,
-            };
+    const safeDate: ConfirmDateType = {
+        day: Number(selectedDate?.day ?? todayDate.day),
+        month: Number(selectedDate?.month ?? todayDate.month),
+        year: Number(selectedDate?.year ?? todayDate.year),
+    };
 
     const selectedStartIndex: number | undefined = selectedSlotIndexes?.[0];
 
@@ -189,7 +186,7 @@ export default function ConfirmPage(): JSX.Element {
         return { heading, consent };
     };
 
-    const markConsentDone = (serviceId: string | number): void => {
+    const markConsentDone = (serviceId: string): void => {
         setConsentAcceptedMap((prev) => ({ ...prev, [String(serviceId)]: true }));
     };
 
@@ -268,7 +265,7 @@ export default function ConfirmPage(): JSX.Element {
                 toast.error("Consent form missing.");
                 return;
             }
-            const method = getOnlineBookingRuleMethod(svc);
+            const method: any = getOnlineBookingRuleMethod(svc);
             if (!method) {
                 toast.error("Consent enforcement method not found.");
                 return;
@@ -312,7 +309,7 @@ export default function ConfirmPage(): JSX.Element {
         }
     };
 
-    const saveConsentDraft = (serviceId: string | number, data: ConsentDraftEntry): void => {
+    const saveConsentDraft = (serviceId: string, data: ConsentDraftEntry): void => {
         try {
             const raw = localStorage.getItem(CONSENT_DRAFT_KEY);
             const obj: ConsentDraftMap = raw ? JSON.parse(raw) : {};
@@ -367,9 +364,9 @@ export default function ConfirmPage(): JSX.Element {
     };
 
     const submitAllConsents = async (
-        appointmentId: string | number,
-        customerId: string | number,
-        staffId: string | number,
+        appointmentId: string,
+        customerId: string,
+        staffId: string,
     ): Promise<void> => {
         const consentDraft = readConsentDraft();
         const entries = Object.entries(consentDraft)
@@ -414,7 +411,7 @@ export default function ConfirmPage(): JSX.Element {
 
     let formattedDate = "";
     if (selectedDate) {
-        formattedDate = `${selectedDate.year}-${String(selectedDate.month + 1).padStart(2, "0")}-${String(selectedDate.day).padStart(2, "0")}`;
+        formattedDate = `${selectedDate?.year}-${String(selectedDate?.month + 1).padStart(2, "0")}-${String(selectedDate?.day).padStart(2, "0")}`;
     }
 
     const payload: AppointmentPayload = {
@@ -460,16 +457,9 @@ export default function ConfirmPage(): JSX.Element {
         }
         try {
             setLoading(true);
-            let result;
-            if (bookingMode === "checkin") {
-                result = await dispatch(createCheckin(checkinPayload));
-            } else {
-                result = await dispatch(createAppointment(payload));
-            }
+            let result = await dispatch(createAppointment(payload));
 
-            const isSuccess =
-                (bookingMode === "checkin" && createCheckin.fulfilled.match(result)) ||
-                (bookingMode === "booking" && createAppointment.fulfilled.match(result));
+            const isSuccess = createAppointment.fulfilled.match(result));
 
             if (isSuccess) {
                 const data = (result as { payload?: { data?: Record<string, unknown> } & Record<string, unknown> }).payload?.data
@@ -480,20 +470,20 @@ export default function ConfirmPage(): JSX.Element {
 
                 if (bookingMode === "booking" && doneConsentCount > 0) {
                     await submitAllConsents(
-                        appointmentId as string | number,
-                        customerId as string | number,
-                        staffId as string | number,
+                        appointmentId as string,
+                        customerId as string,
+                        staffId as string,
                     );
                 }
                 if (payType === "card") {
                     setPaymentMeta({
-                        appointmentId: appointmentId as string | number,
-                        customerId: customerId as string | number,
+                        appointmentId: appointmentId as string,
+                        customerId: customerId as string,
                     });
                     setShowPaymentModal(true);
                 } else {
                     dispatch(setAppointmentId(String(appointmentId)));
-                    dispatch(nextStep("success"));
+                    dispatch(nextStep());
                 }
             }
         } catch (err) {
@@ -537,7 +527,7 @@ export default function ConfirmPage(): JSX.Element {
         try {
             setLoading(true);
             const appointmentId = paymentMeta?.appointmentId;
-            const customerId = paymentMeta?.customerId;
+            const customerId = String(paymentMeta?.customerId);
             if (!appointmentId || !outletId) {
                 toast.error("Something went wrong.");
                 return false;
@@ -600,7 +590,7 @@ export default function ConfirmPage(): JSX.Element {
             }
             setShowPaymentModal(false);
             dispatch(setAppointmentId(String(paymentMeta?.appointmentId)));
-            dispatch(nextStep("success"));
+            dispatch(nextStep());
             return true;
         } catch (err) {
             toast.warning(
@@ -610,7 +600,7 @@ export default function ConfirmPage(): JSX.Element {
             );
             setShowPaymentModal(false);
             dispatch(setAppointmentId(String(paymentMeta?.appointmentId)));
-            dispatch(nextStep("success"));
+            dispatch(nextStep());
             return true;
         } finally {
             setLoading(false);
@@ -660,11 +650,11 @@ export default function ConfirmPage(): JSX.Element {
                         Review your appointment details before booking
                     </p>
                     <div className="max-md:max-w-full">
-                        {/* <div className="flex gap-3 items-center p-3 bg-surface rounded-sm mb-2">
-                            {outletData?.image && (
+                        <div className="flex gap-3 items-center p-3 bg-surface rounded-sm mb-2">
+                            {image && (
                                 <div className="w-10 h-10 rounded-sm flex items-center justify-center text-white text-xs">
                                     <img
-                                        src={outletData?.image ?? "/logo.svg"}
+                                        src={image ?? "/logo.svg"}
                                         alt="Logo"
                                         className="w-full h-full object-cover"
                                     />
@@ -672,14 +662,14 @@ export default function ConfirmPage(): JSX.Element {
                             )}
                             <div>
                                 <p className="font-semibold text-sm">
-                                    {outletData?.outletName ?? "-"}
+                                    {outletName ?? "-"}
                                 </p>
                                 <p className="text-xs text-black/70">
-                                    {outletData?.address ?? "-"}
+                                    {address ?? "-"}
                                     <br />
                                 </p>
                             </div>
-                        </div> */}
+                        </div>
                         <div className="h-[calc(100dvh-285px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar">
                             <div className="xl:flex gap-7 justify-between">
                                 <div className="w-full">
@@ -727,7 +717,6 @@ export default function ConfirmPage(): JSX.Element {
                     </div>
                 </div>
             </>
-
             {showPaymentModal && (
                 <PaymentModal
                     onClose={handlePaymentCancel}
@@ -735,14 +724,12 @@ export default function ConfirmPage(): JSX.Element {
                     amount={totalWithTax}
                 />
             )}
-
             {consentOpen && pendingConsentServiceId && (
                 <ConsentModal
                     key={pendingConsentServiceId ?? "consent"}
                     enforcement={consentEnforcement}
                     heading={consentHeading}
                     consent={consentText}
-                    serviceKey={pendingConsentServiceId}
                     onClose={onConsentClose}
                     onConfirm={onConsentConfirm}
                 />

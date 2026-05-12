@@ -22,7 +22,7 @@ const outletSlice = createSlice({
     clearBooking: () => {
       return initialState;
     },
-    setOutletData: (_state, action: PayloadAction<typeof initialState>) => {
+    setOutletData: (_state, action) => {
       return action.payload;
     },
   },

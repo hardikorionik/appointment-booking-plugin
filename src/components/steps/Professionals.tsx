@@ -10,7 +10,6 @@ import { calculateServiceTax } from "@/utils/taxHelper";
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
-import ProfessionalSkeletonCard from "@/components/common/ProfessionalSkeletonCard";
 import type { RootState, AppDispatch } from "@/store";
 import type { ServiceItem, Staff, StaffAssignment, StaffServiceAssignment, Step } from "@/types";
 
@@ -41,7 +40,7 @@ export default function Professionals() {
 
   const { width } = useWindowSize();
 
-  const { staff, selectedServices, selectedProfessional, loading } =
+  const { staff, selectedServices, selectedProfessional } =
     useSelector((state: RootState) => state.service);
 
   const [showEmpty, setShowEmpty] = useState<boolean>(false);
@@ -103,14 +102,14 @@ export default function Professionals() {
   const hasServicesSelected = selectedServiceIds.length > 0;
 
   useEffect(() => {
-    if (!loading && hasServicesSelected && filteredStaff.length === 0) {
+    if (hasServicesSelected && filteredStaff.length === 0) {
       const t = setTimeout(() => setShowEmpty(true), 300);
 
       return () => clearTimeout(t);
     } else {
       setShowEmpty(false);
     }
-  }, [loading, hasServicesSelected, filteredStaff]);
+  }, [hasServicesSelected, filteredStaff]);
 
   return (
     <MainLayout
@@ -120,7 +119,7 @@ export default function Professionals() {
           selectedStaffServices={selectedStaffServices}
           totalPrice={totalPrice}
           totalDuration={totalDuration}
-          goToStep={(data: Step) => dispatch(nextStep(data))}
+          goToStep={(data: string) => dispatch(nextStep())}
         />
       }
     >
@@ -152,65 +151,58 @@ export default function Professionals() {
 
         <div className="h-[calc(100dvh-210px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
           <div className="grid grid-cols-[repeat(auto-fill,minmax(195px,1fr))] gap-3">
-            {loading ? (
-              Array.from({ length: 10 }).map((_, index: number) => (
-                <ProfessionalSkeletonCard key={`skeleton-${index}`} />
-              ))
-            ) : (
-              <AnimatePresence mode="popLayout">
-                {filteredStaff.map((p: Staff, index: number) => {
-                  return (
-                    <motion.div
-                      key={p.id}
-                      variants={cardVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      custom={index}
-                      layout="position"
-                      style={{
-                        willChange: "transform, opacity",
-                      }}
-                      onClick={() => {
-                        dispatch(toggleProfessional(p));
-                        dispatch(setSelectedDate(null));
-
-                        if (isMobile) {
-                          dispatch(nextStep("time"));
-                        }
-                      }}
-                      className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
-                        ? "border-red bg-[#fff8f8]"
-                        : "bg-white hover:border-red"
-                        }`}
-                    >
-                      {p.imageUrl ? (
-                        <img
-                          src={p.imageUrl}
-                          alt={p.name}
-                          className="w-12 h-12 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div
-                          className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
-                          style={{
-                            background: p.color || "#111",
-                          }}
-                        >
-                          {getUserName(p.name)}
-                        </div>
-                      )}
-
-                      <div>
-                        <p className="font-semibold text-sm">{p.name}</p>
-
-                        <p className="text-xs text-gray-500">{p.staff_type}</p>
+            <AnimatePresence mode="popLayout">
+              {filteredStaff.map((p: Staff, index: number) => {
+                return (
+                  <motion.div
+                    key={p.id}
+                    variants={cardVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    custom={index}
+                    layout="position"
+                    style={{
+                      willChange: "transform, opacity",
+                    }}
+                    onClick={() => {
+                      dispatch(toggleProfessional(p));
+                      dispatch(setSelectedDate(null));
+                      if (isMobile) {
+                        dispatch(nextStep());
+                      }
+                    }}
+                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
+                      ? "border-red bg-[#fff8f8]"
+                      : "bg-white hover:border-red"
+                      }`}
+                  >
+                    {p.imageUrl ? (
+                      <img
+                        src={p.imageUrl}
+                        alt={p.name}
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                        style={{
+                          background: p.color || "#111",
+                        }}
+                      >
+                        {getUserName(p.name)}
                       </div>
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            )}
+                    )}
+
+                    <div>
+                      <p className="font-semibold text-sm">{p.name}</p>
+
+                      <p className="text-xs text-gray-500">{p.staff_type}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </div>
       </div>

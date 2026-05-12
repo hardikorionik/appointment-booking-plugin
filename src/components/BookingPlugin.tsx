@@ -74,15 +74,15 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
         await fetchOutletData(String(data?.tenantId), String(data?.id));
         const updatedOutlet = {
             ...data,
+            tenantId: data.tenantId ?? "",
+            currency: data.currency ?? "",
             outletTimeZoneDate: DateTime.now()
                 .setZone(data?.timeZone)
                 .toFormat("yyyy-MM-dd"),
             outletTimeZoneYear: DateTime.fromISO(
                 data?.createdAt,
                 { zone: "utc" }
-            )
-                .setZone(data?.timeZone)
-                .year,
+            ).setZone(data?.timeZone).year,
         };
         setSelectedOutlet(updatedOutlet?.id);
         dispatch(setOutletData(updatedOutlet));

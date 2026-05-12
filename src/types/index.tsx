@@ -34,7 +34,7 @@ export interface BreadcrumbState {
 
 export type PageMap = Record<StepKey, ComponentType>;
 
-export type BookingMode = "booking" | "checkin";
+export type BookingMode = "booking";
 
 export type PayType = "person" | "card";
 
@@ -108,14 +108,16 @@ export interface Outlet {
   outletName: string;
   timeZone: string;
   image: string;
-  tenantId?: string;
+  tenantId: string;
   address: string;
-  isOpen: boolean;
-  outletTimeZoneDate?: string;
-  outletTimeZoneYear?: string;
+  outletTimeZoneDate: string;
+  outletTimeZoneYear: number;
   createdAt: string;
+  currency: string;
   isService: boolean;
-  currency?: string;
+  currencyName: string | null;
+  currencySymbol: string | null;
+  isOpen: boolean;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -135,7 +137,7 @@ export interface ServiceState {
   staff: Staff[]; // or StaffMember[] but be consistent
   selectedCategory: Category | null;
   selectedServices: ServiceItem[];
-  selectedProfessional: Staff | null;
+  selectedProfessional: Staff;
 }
 
 export interface Service {
@@ -202,7 +204,7 @@ export interface EnrichedService extends Service {
 }
 
 export interface ServiceItem {
-  id: number | string;
+  id: string;
   name: string;
   qty: number;
   duration?: number;
@@ -293,14 +295,19 @@ export interface Staff {
 export type SlotStatus = "AVAILABLE" | "BOOKED";
 
 export interface Slot {
-  id?: string;
-  startTime?: string;
-  endTime?: string;
-  available?: boolean;
-  start_time?: string;
-  end_time?: string;
-  status: SlotStatus;
-  isBooked?: boolean;
+  id: string;
+  staffId: string;
+  date: string;
+  day: string;
+  start_time: string;
+  end_time: string;
+  startUtc: string;
+  endUtc: string;
+  isBooked: boolean;
+  source: "WEEKLY" | "CUSTOM" | string;
+  createdAt: string;
+  updatedAt: string;
+  status: "AVAILABLE" | "BOOKED" | "BLOCKED" | string;
 }
 
 export interface SlotGroups {
@@ -312,7 +319,7 @@ export interface SlotGroups {
 export interface SlotsState {
   selectedSlotIndexes: number[];
   selectedSlotIds: (string)[];
-  selectedDate: SelectedDateType | string | null;
+  selectedDate: SelectedDateType;
   selectedTime: string | null;
 
   slots: {
@@ -438,7 +445,8 @@ export interface CheckinPayload {
 export type EnforcementType =
   | "CHECKBOX_ONLY"
   | "TYPED_NAME"
-  | "DRAW_SIGNATURE";
+  | "DRAW_SIGNATURE"
+  | null;
 
 export interface ConsentFormData {
   accepted: boolean;
@@ -457,7 +465,7 @@ export interface ConsentPayload {
 export interface ConsentModalProps {
   onClose: () => void;
   onConfirm: (payload: ConsentPayload) => void;
-  enforcement: EnforcementType;
+  enforcement: EnforcementType | string;
   heading?: string;
   consent: string;
 }
@@ -599,7 +607,7 @@ export interface ServiceSliceState {
   selectedCategory: Category | null;
   selectedServices: Service[];
 
-  selectedProfessional: Staff | null;
+  selectedProfessional: Staff;
 
   loading: boolean;
   error: string | null;
@@ -618,6 +626,12 @@ export interface SlotsSliceState {
 }
 
 export interface SelectedDateType {
+  day: string;
+  month: string;
+  year: string;
+}
+
+export interface ConfirmDateType {
   day: number;
   month: number;
   year: number;
@@ -701,10 +715,18 @@ export interface DateItem {
 /* SLOT TYPES */
 export interface SlotItem {
   id: string;
+  staffId: string;
+  date: string;
+  day: string;
   start_time: string;
-  end_time?: string;
-  isBooked?: boolean;
-  status?: string;
+  end_time: string;
+  startUtc: string;
+  endUtc: string;
+  isBooked: boolean;
+  source: "WEEKLY" | "CUSTOM" | string;
+  createdAt: string;
+  updatedAt: string;
+  status: "AVAILABLE" | "BOOKED" | "BLOCKED" | string;
 }
 
 

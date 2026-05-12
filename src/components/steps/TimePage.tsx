@@ -24,7 +24,6 @@ import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
-
 import { useWindowSize } from "@/hooks/useWindowSize";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -79,7 +78,7 @@ export default function TimePage(): JSX.Element {
 
   const generateDates = (mode: string, sdate: DateTime): DateItem[] => {
     try {
-      const totalDays = mode === "checkin" ? 1 : 180;
+      const totalDays = 180;
 
       if (!sdate.isValid) {
         throw new Error("Invalid timezone or start date");
@@ -189,8 +188,6 @@ export default function TimePage(): JSX.Element {
   }, [selectedDate, dates, visibleCount]);
 
   const handlePickDate = (d: DateItem): void => {
-    if (bookingMode === "checkin") return;
-
     const selected = {
       day: d.day,
       month: d.month,
@@ -395,7 +392,7 @@ export default function TimePage(): JSX.Element {
               return;
             }
 
-            dispatch(nextStep("details"));
+            dispatch(nextStep());
           }}
           showTaxesOnlyIfTime={true}
         />
@@ -407,7 +404,7 @@ export default function TimePage(): JSX.Element {
               toast.warning("Please select a time slot");
               return;
             }
-            dispatch(nextStep("details"));
+            dispatch(nextStep());
           }}
           disabled={!selectedTime || !selectedSlotIndexes.length}
           className="cta-btn p-3! px-8.5! text-sm relative rounded-full bg-ink text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
