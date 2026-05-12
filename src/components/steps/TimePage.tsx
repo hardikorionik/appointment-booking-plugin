@@ -610,7 +610,6 @@ function SlotSection({
   onToggle,
 }: SlotSectionProps): JSX.Element | null {
   if (!slots || slots?.length === 0) return null;
-
   return (
     <div className="mb-4 border border-border rounded-sm overflow-hidden">
       <div

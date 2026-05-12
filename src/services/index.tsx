@@ -1,28 +1,8 @@
 import { ConsentCheckStatus, ConsentFormResponse, PaymentPayload, Service, SignatureType, SubmitFinalConsentPayload } from "@/types";
 
-const token: string = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbnRpdHlJZCI6IjJlNGQ3OGFiLWNjNTItNGU4Mi04NTRhLTZjNmYwMzA4ZDFmMiIsImVudGl0eVR5cGUiOiJzdG9yZSIsImVtYWlsIjoic2hlYXJicmlsbGllbmNlQHZvbW90by5jb20iLCJ0ZW5hbnRJZCI6IjczYTUyY2Y3LTUwMjMtNDJmYi1iMjBmLTUwYWE2YzAzZGM2ZiIsImNsdXN0ZXJJZCI6IjdiNmE5YzhlLTRmNWQtNGEyYS05YjBhLTlhNmY1YzhmNGQyMSIsInJvbGVzIjpbeyJpZCI6IjBhOTQ5ZTVmLTgzYTItNDkxOC04ZjQ2LWEzZmQwNDc5MmI2NyIsIm5hbWUiOiJzdG9yZV9vd25lciJ9XSwiaWF0IjoxNzcxNjc3ODg5LCJleHAiOjE5Mjk0NjU4ODl9._fPXdjH_3ksNrlMTxAQN3ChnWVchXcNaatHsGhvTVTM`;
 const BASE_URL =
     "https://prod.aaravpos.com/api/v1";
 
-
-//  Get Outlet Details 
-// export const getOutletDetailsById = async (outletId: string | number) => {
-//     const res = await fetch(`${BASE_URL}/outlet/${outletId}`, {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${token}`,
-//         },
-//     });
-//     if (!res.ok) {
-//         throw new Error(
-//             "Failed to fetch services"
-//         );
-//     }
-//     const reponse = await res.json();
-
-//     return reponse;
-// };
 
 //  Get All Services 
 export const fetchAllCategoriesAndStaffService = async (bookingCode: string, tenantId?: string, outletId?: string) => {
@@ -40,7 +20,6 @@ export const fetchAllCategoriesAndStaffService = async (bookingCode: string, ten
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
         },
     });
     if (!res.ok) {
@@ -59,7 +38,6 @@ export const fetchStaffSlots = async (staffId?: string | number, date?: string) 
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
         }
     );
@@ -78,7 +56,6 @@ export const createAppointmentApi = async (payload: unknown) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
     });
@@ -97,7 +74,6 @@ export const createCheckinApi = async (payload: unknown) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(payload),
     });
@@ -121,7 +97,6 @@ export const getAppointmentDetail = async (
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
         },
     );
@@ -147,7 +122,6 @@ export const fetchCustomer = async ({
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
         },
     );
@@ -170,7 +144,6 @@ export const payCustomerDirect = async (payload: PaymentPayload) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
             },
@@ -197,7 +170,6 @@ export const finalizeInvoice = async (orderId: string) => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
                 },
             },
         );
@@ -295,7 +267,6 @@ export const getConsentFormByFormId = async (
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
         },
     );
@@ -318,7 +289,6 @@ export const checkConsentRequirement = async (
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
         },
     );
@@ -394,7 +364,6 @@ export const submitFinalConsent = async (
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(payload),
         },

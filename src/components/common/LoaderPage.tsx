@@ -1,37 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import landing from "@/assets/landing.webp";
 import Loaderlogo from "@/assets/aaravpos-logo.png";
 
 const LoaderPage: FC = () => {
-    useEffect(() => {
-        const pathname: string = window.location.pathname || "";
-        const search: string = window.location.search || "";
-
-        const API_URL: string = `https://prod.aaravpos.com/api/v1`;
-
-        const params = new URLSearchParams(search);
-        const token: string = params.get("token") || "";
-
-        if (!token) return;
-
-        const routeMap: Record<string, string> = {
-            "/google": "/calendar/google",
-            "/outlook": "/calendar/outlook",
-            "/ics": "/calendar/ics",
-            "/cancelAppointment": "/calendar/cancelAppointment",
-        };
-
-        const apiPath = routeMap[pathname];
-
-        if (!apiPath) return;
-
-        const target = `${API_URL}${apiPath}?token=${encodeURIComponent(
-            token
-        )}`;
-
-        window.location.replace(target);
-    }, [window.location.pathname, window.location.search]);
-
     return (
         <div className="relative h-screen w-full flex items-center justify-center overflow-hidden">
             <img

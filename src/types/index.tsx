@@ -588,7 +588,7 @@ export interface OutletSliceState {
   isService: true,
   outletTimeZoneDate: string;
   outletTimeZoneYear: number;
-  outletTimeZone: string | null;
+  outletTimeZone: string;
   currency: string,
 }
 
