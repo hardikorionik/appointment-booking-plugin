@@ -65,8 +65,6 @@ const cardVariants: Variants = {
 export default function ServiceProfessionalPage() {
   const dispatch = useDispatch<AppDispatch>();
 
-  const { outletData } = useSelector((state: RootState) => state.booking);
-
   const {
     categories,
     selectedCategory,
@@ -131,7 +129,6 @@ export default function ServiceProfessionalPage() {
       sidebar={
         <ServiceProfessionalSidebar
           selectedServices={selectedServices}
-          outletData={outletData}
           totalPrice={totalPrice}
           goToStep={(data: string) => dispatch(nextStep(data))}
         />

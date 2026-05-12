@@ -54,7 +54,6 @@ export default function ServicesPage() {
   const hasFetched = useRef<boolean>(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { outletData } = useSelector((state: RootState) => state.booking);
   const {
     categories,
     selectedCategory,
@@ -125,7 +124,6 @@ export default function ServicesPage() {
       sidebar={
         <ServiceSidebar
           selectedServices={selectedServices}
-          outletData={outletData}
           totalPrice={totalPrice}
           goToStep={(data: string) => dispatch(nextStep(data))}
         />

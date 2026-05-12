@@ -13,7 +13,6 @@ const getStepsOrder = (isService: boolean): Step[] => {
 export const initialState: BreadcrumbState = {
     currentStep: "services",
     completedSteps: ["services"],
-    isService: false,
 };
 
 

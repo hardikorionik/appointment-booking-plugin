@@ -58,7 +58,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
             ? "border-red-300 bg-red-50/50"
             : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
       }`}
-      onClick={() => onSelect(item.id)}
+      onClick={() => onSelect(String(item?.id))}
     >
       <div className="p-4">
         <div className="flex items-start justify-between mb-3">
@@ -84,7 +84,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            onSelect(item.id);
+            onSelect(String(item.id));
           }}
         >
           {selected ? "✓ Selected" : "Select Outlet"}
@@ -105,11 +105,11 @@ export default function ChooseYourOutlet({
 
   const handleSelectOutlet = (id: string) => {
     setSelected(id);
-
-    const selectedOutlet = outlets.find((o) => o.id === id);
-
+    const selectedOutlet = outlets.find((o) => o.id == id);
     if (selectedOutlet) {
-      onSelectOutlet(selectedOutlet);
+      setTimeout(() => {
+        onSelectOutlet(selectedOutlet);
+      }, 400);
     }
   };
 

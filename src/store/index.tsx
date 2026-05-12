@@ -45,7 +45,6 @@ const rootReducer = (
                 booking: state?.booking,
                 breadcrumbs: {
                     ...initialState,
-                    isService: state?.breadcrumbs?.isService ?? false,
                 },
                 service: undefined as never,
                 slots: undefined as never,
