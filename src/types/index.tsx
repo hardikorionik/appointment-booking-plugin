@@ -108,7 +108,7 @@ export interface Outlet {
   outletName: string;
   timeZone: string;
   image: string;
-  tenantId?: string;
+  tenantId?: string | number;
   address: string;
   isOpen: boolean;
   outletTimeZoneDate?: string;

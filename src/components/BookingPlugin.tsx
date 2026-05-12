@@ -71,7 +71,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
 
     const handleOutletSelection = async (data: Outlet) => {
         if (!data) return;
-        await fetchOutletData(data?.tenantId, String(data?.id));
+        await fetchOutletData(String(data?.tenantId), String(data?.id));
         const updatedOutlet = {
             ...data,
             outletTimeZoneDate: DateTime.now()
