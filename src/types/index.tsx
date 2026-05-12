@@ -107,22 +107,13 @@ export interface Outlet {
   outletName: string;
   timeZone: string;
   image: string;
-  tenantId: string;
+  tenantId?: string;
   address: string;
   isOpen: boolean;
   outletTimeZoneDate?: string;
   outletTimeZoneYear?: string;
   createdAt: string;
   isService: boolean;
-}
-
-export interface OutletData {
-  id?: string;
-  outletName?: string;
-  address?: string;
-  image?: string;
-  timeZone?: string;
-  createdAt?: string;
   currency?: string;
 }
 
@@ -724,17 +715,4 @@ export interface CalendarMonth {
   year: number;
   startDow: number;
   days: number;
-}
-
-export interface InitBookingPayload {
-  outletData: OutletData;
-  token: string;
-  outletTimeZoneDate: string;
-  outletTimeZoneYear: number;
-  outletTimeZone: string;
-}
-
-export interface InitBookingArgs {
-  outletId: string | number;
-  token?: string;
 }

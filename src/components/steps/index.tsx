@@ -1,4 +1,4 @@
-import { ComponentType, JSX } from "react";
+import { ComponentType, JSX, useEffect } from "react";
 import { useSelector, } from "react-redux";
 import ProfessionalServicePage from "@/components/steps/ProfessionalServicePage";
 import Professionals from "@/components/steps/Professionals";
@@ -11,9 +11,6 @@ import SuccessPage from "@/components/steps/SuccessPage";
 import NotFoundPage from "@/components/common/NotFoundPage";
 import { RootState } from "@/store"; // adjust path as needed
 import { StepKey, PageMap } from "@/types";
-
-
-// ─── AppContent ───────────────────────────────────────────────────────────────
 
 function AppContent(): JSX.Element {
   const { currentStep } = useSelector(
@@ -35,6 +32,7 @@ function AppContent(): JSX.Element {
 
   const PageComponent: ComponentType =
     PAGE_MAP[currentStep as StepKey] ?? NotFoundPage;
+
 
   return (
     <div className="h-screen flex flex-col bg-canvas text-copy overflow-hidden">
