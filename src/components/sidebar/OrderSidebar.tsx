@@ -616,7 +616,7 @@ export default function OrderSidebar({
           <button
             onClick={onButtonClick}
             disabled={isButtonDisabled}
-            className="cta-btn px-2 h-11 w-full py-3.75 bg-ink text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+            className="btn-bg px-2 h-11 w-full py-3.75 text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
           >
             <span className="flex flex-row justify-center items-center gap-2">
               {finalButtonText}
