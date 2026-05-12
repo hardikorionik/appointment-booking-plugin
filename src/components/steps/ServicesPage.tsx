@@ -417,7 +417,7 @@ export default function ServicesPage() {
 
                       {/* DESCRIPTION */}
                       <div className="relative group">
-                        <p className="text-xs font-semibold text-black/50 line-clamp-1">
+                        <p className="text-xs font-semibold text-black/40 line-clamp-1 uppercase">
                           {svc.description}
                         </p>
 
@@ -429,7 +429,7 @@ export default function ServicesPage() {
                       </div>
 
                       {/* PRICE */}
-                      <p className="text-xs font-semibold text-black/80 mb-2 flex justify-between mt-2">
+                      <p className="text-sm font-semibold text-black/60 mb-2 flex justify-between mt-2">
                         <span>
                           {svc.estimated_time
                             ? `${svc.estimated_time} min`
@@ -437,7 +437,7 @@ export default function ServicesPage() {
                         </span>
 
                         <span className="font-mono flex items-center gap-1">
-                          <CurrencyIcon size={12} />
+                          <CurrencyIcon size={14} />
 
                           {svc.price
                             ? svc.price
