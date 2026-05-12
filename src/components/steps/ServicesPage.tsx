@@ -15,7 +15,7 @@ import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
-import { Service, ServiceItem, TaxRow } from "@/types";
+import { RootState, Service, ServiceItem, TaxRow } from "@/types";
 
 const cardVariants: Variants = {
   hidden: {
@@ -49,9 +49,11 @@ export default function ServicesPage() {
     standaloneCategories,
     selectedCategory,
     selectedServices,
-    selectedProfessional,
     loading,
   } = useSelector((state: any) => state.service);
+  const { outletName } = useSelector(
+    (state: RootState) => state?.outletDetails,
+  );
 
   const [viewType, setViewType] = useState<ViewType>("supercategory");
 
@@ -61,7 +63,9 @@ export default function ServicesPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const allStandaloneServices = standaloneCategories.flatMap((cat: any) => cat.services);
+  const allStandaloneServices = standaloneCategories.flatMap(
+    (cat: any) => cat.services,
+  );
 
   const standaloneServices = selectedCategory
     ? selectedCategory.services
@@ -97,13 +101,11 @@ export default function ServicesPage() {
     price: svc.price !== null ? Number(svc.price) : undefined,
   });
 
-
   const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
     const price = Number(s.price || 0);
 
     return sum + price * s.qty;
   }, 0);
-
 
   return (
     <MainLayout
@@ -134,68 +136,102 @@ export default function ServicesPage() {
         </h1>
 
         <p className="text-sm text-black/60 mb-6">
-          Select from {selectedProfessional?.name}'s available services
+          Select from {outletName} Outlet's available services
         </p>
 
         {/* SWITCH */}
-        <div className="flex items-center gap-8 border-b border-border pb-3 mb-5">
-          <button
-            onClick={() => {
-              setViewType("supercategory");
-              setSelectedSubCategory(null);
-              setSelectedSuperCategory(null);
-            }}
-            className={`relative text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-2 transition-all ${viewType === "supercategory"
-              ? "text-red-600"
-              : "text-black/40 hover:text-black"
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 lg:gap-8 mb-5 border-b border-black/40">
+          <div className="flex items-end gap-8 ">
+            <button
+              onClick={() => {
+                setViewType("supercategory");
+                setSelectedSubCategory(null);
+                setSelectedSuperCategory(null);
+              }}
+              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${
+                viewType === "supercategory"
+                  ? "text-red-600 border-b-2 border-red-600"
+                  : "text-black/40 hover:text-black border-b-2 border-transparent"
               }`}
-          >
-            Super Category
-            {viewType === "supercategory" && (
-              <span className="absolute left-0 bottom-0 h-0.5 w-full bg-red" />
-            )}
-          </button>
+            >
+              Super Category
+            </button>
 
-          <button
-            onClick={() => {
-              setViewType("standalone");
-            }}
-            className={`relative text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-2 transition-all ${viewType === "standalone"
-              ? "text-red-600"
-              : "text-black/40 hover:text-black"
+            <button
+              onClick={() => {
+                setViewType("standalone");
+              }}
+              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${
+                viewType === "standalone"
+                  ? "text-red-600 border-b-2 border-red-600"
+                  : "text-black/40 hover:text-black border-b-2 border-transparent"
               }`}
-          >
-            Standalone
-            {viewType === "standalone" && (
-              <span className="absolute left-0 bottom-0 h-0.5 w-full bg-red" />
-            )}
-          </button>
+            >
+              Standalone
+            </button>
+          </div>
+
+          {/* SEARCH */}
+          <div className="pb-2">
+            <div className="relative w-full">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                <Search size={18} />
+              </span>
+
+              <input
+                id="search"
+                name="search"
+                type="text"
+                placeholder="Search services..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full border border-black/30 rounded-md pl-9 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/20 w-full"
+              />
+
+              {searchTerm && (
+                <button
+                  onClick={() => setSearchTerm("")}
+                  className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition"
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+          </div>
         </div>
 
         {/* SUPER CATEGORY UI */}
         {viewType === "supercategory" && (
           <>
             {/* SUPER CATEGORY CARDS */}
-
-            <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3 mb-4">
+            <div
+              ref={scrollRef}
+              onWheel={(e) => {
+                if (scrollRef.current) {
+                  scrollRef.current.scrollLeft += e.deltaY;
+                }
+              }}
+              className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar w-full mb-3 border border-black/20 p-1"
+            >
               {superCategories.map((superCat: any) => (
                 <button
                   key={superCat.id}
                   onClick={() => {
                     setSelectedSuperCategory(superCat);
 
-                    setSelectedSubCategory(
-                      superCat?.categories?.[0] || null,
-                    );
+                    setSelectedSubCategory(superCat?.categories?.[0] || null);
                   }}
-                  className={`border text-left p-4 transition-all cursor-pointer ${selectedSuperCategory?.id === superCat.id
-                    ? "border-red bg-[#fff8f8]"
-                    : "border-border bg-white hover:border-red/50"
-                    }`}
+                  className={`border text-left py-3 px-4 transition-all cursor-pointer min-w-fit ${
+                    selectedSuperCategory?.id === superCat.id
+                      ? "border-red-300 bg-red-50/50"
+                      : "border-black/30 bg-white hover:border-red/50"
+                  }`}
                 >
-                  <h3 className="font-medium text-sm mb-1">{superCat.name}</h3>
+                  <h3 className="font-medium text-sm mb-1 font-serif">
+                    {superCat.name}
+                  </h3>
 
-                  <p className="text-[10px] uppercase tracking-[1.5px] text-black/50">
+                  <p className="text-[10px] uppercase tracking-[1px] font-semibold text-black/60">
                     {superCat?.categories?.length || 0} Sub Categories
                   </p>
                 </button>
@@ -212,16 +248,32 @@ export default function ServicesPage() {
                     scrollRef.current.scrollLeft += e.deltaY;
                   }
                 }}
-                className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar mb-5"
+                className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar w-full mb-5"
               >
+                <button
+                  onClick={() => dispatch(setCategory(null))}
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
+                    !selectedSubCategory
+                      ? "bg-black text-white border-black"
+                      : "bg-white border-border hover:border-black"
+                  }`}
+                >
+                  All Services (
+                  {selectedSuperCategory?.categories?.reduce(
+                    (sum: number, c: any) => sum + c.services.length,
+                    0,
+                  )}
+                  )
+                </button>
                 {selectedSuperCategory?.categories?.map((subCat: any) => (
                   <button
                     key={subCat.id}
                     onClick={() => setSelectedSubCategory(subCat)}
-                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedSubCategory?.id === subCat.id
-                      ? "bg-black text-white border-black"
-                      : "bg-white border-border hover:border-black"
-                      }`}
+                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
+                      selectedSubCategory?.id === subCat.id
+                        ? "bg-black text-white border-black"
+                        : "bg-white border-border hover:border-black"
+                    }`}
                   >
                     {subCat.name}
                   </button>
@@ -245,10 +297,11 @@ export default function ServicesPage() {
             >
               <button
                 onClick={() => dispatch(setCategory(null))}
-                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedCategory
-                  ? "bg-red-600 text-white border-red-600"
-                  : "bg-white border-border hover:border-red-600"
-                  }`}
+                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
+                  !selectedCategory
+                    ? "bg-black text-white border-black"
+                    : "bg-white border-border hover:border-black"
+                }`}
               >
                 All Services (
                 {standaloneCategories.reduce(
@@ -262,10 +315,11 @@ export default function ServicesPage() {
                 <button
                   key={cat.id}
                   onClick={() => dispatch(setCategory(cat))}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedCategory?.id === cat.id
-                    ? "bg-red text-white border-red"
-                    : "bg-white border-border hover:border-red"
-                    }`}
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
+                    selectedCategory?.id === cat.id
+                      ? "bg-black text-white border-black"
+                      : "bg-white border-border hover:border-black"
+                  }`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>
@@ -273,34 +327,6 @@ export default function ServicesPage() {
             </div>
           </div>
         )}
-
-        {/* SEARCH */}
-        <div className="mb-5">
-          <div className="relative w-full">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <Search size={18} />
-            </span>
-
-            <input
-              id="search"
-              name="search"
-              type="text"
-              placeholder="Search services..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border border-border rounded-md pl-9 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/20"
-            />
-
-            {searchTerm && (
-              <button
-                onClick={() => setSearchTerm("")}
-                className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition"
-              >
-                <X size={16} />
-              </button>
-            )}
-          </div>
-        </div>
 
         {/* SERVICES */}
         <div className="h-[calc(100dvh-315px)] lg:h-[calc(100dvh-270px)] overflow-y-auto no-scrollbar pb-20 lg:pb-4">
@@ -340,47 +366,49 @@ export default function ServicesPage() {
                       className={[
                         "relative border rounded-md p-3 cursor-pointer transition-all bg-white",
                         isSelected
-                          ? "border-red bg-[#fff8f8]"
-                          : "border-border hover:border-red/80",
+                          ? "border-red-400/80 bg-red-50/50"
+                          : "border-black/30 hover:border-red/80",
                       ].join(" ")}
                     >
                       {/* TAX */}
                       {hasActiveTax(svc) && (
-                        <span className="absolute top-0 left-0 text-[10px] px-2 py-0.5 bg-green-600 text-white rounded-br-md rounded-tl-md">
+                        <span className="absolute top-0 left-0 text-[9px] px-2 py-0.5 bg-green-700 text-white rounded-br-md rounded-tl-md">
                           TAX
                         </span>
                       )}
 
                       {/* CONSENT */}
                       {isConsentRequiredService(svc) && (
-                        <span className="absolute top-0 right-0 text-[10px] px-2 py-0.5 bg-red text-white rounded-bl-md rounded-tr-md">
+                        <span className="absolute top-0 right-0 text-[9px] px-2 py-0.5 bg-black/80 text-white rounded-bl-md rounded-tr-md">
                           CONSENT
                         </span>
                       )}
 
                       {/* NAME */}
-                      <p className="font-bold text-sm mb-1 mt-2 line-clamp-1 uppercase">
+                      <p className="font-bold text-sm mb-1 mt-3 line-clamp-1 uppercase">
                         {svc.name}
                       </p>
 
                       {/* DESCRIPTION */}
                       <div className="relative group">
-                        <p className="text-xs text-muted line-clamp-1">
+                        <p className="text-xs font-semibold text-black/50 line-clamp-1">
                           {svc.description}
                         </p>
 
-                        {svc.description?.length > 25 && (
-                          <div className="absolute hidden group-hover:block bg-surface text-xs p-2 rounded top-full mt-1 z-10 w-52">
+                        {svc.description?.length > 30 && (
+                          <div className="absolute hidden group-hover:block bg-neutral-100 text-xs p-2 rounded top-3 mt-1 z-10 w-52">
                             {svc.description}
                           </div>
                         )}
                       </div>
 
                       {/* PRICE */}
-                      <p className="text-xs text-black/80 mb-2 flex justify-between mt-2">
-                        {svc.estimated_time
-                          ? `${svc.estimated_time} min`
-                          : `${svc.min_time}-${svc.max_time} min`}
+                      <p className="text-xs font-semibold text-black/80 mb-2 flex justify-between mt-2">
+                        <span>
+                          {svc.estimated_time
+                            ? `${svc.estimated_time} min`
+                            : `${svc.min_time}-${svc.max_time} min`}
+                        </span>
 
                         <span className="font-mono flex items-center gap-1">
                           <CurrencyIcon size={12} />
@@ -392,19 +420,19 @@ export default function ServicesPage() {
                       </p>
 
                       {/* ACTIONS */}
-                      <div className="flex items-center justify-between gap-2 mt-3">
+                      <div className="flex items-center justify-start mt-4 border border-gray-300 max-w-fit">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
 
                             dispatch(decrementService(String(svc.id)));
                           }}
-                          className="w-10 h-8 border border-gray-300 flex items-center justify-center hover:bg-stone-100 transition-all"
+                          className="w-10 h-8 flex items-center justify-center hover:bg-stone-100 transition-all"
                         >
                           <Minus size={14} />
                         </button>
 
-                        <span className="text-sm font-semibold min-w-5 text-center">
+                        <span className="text-sm font-semibold min-w-5 w-10 h-8 border-x border-gray-300 text-center flex items-center justify-center">
                           {selectedServices.find((s: any) => s.id === svc.id)
                             ?.qty || 0}
                         </span>
@@ -423,7 +451,7 @@ export default function ServicesPage() {
                               dispatch(incrementService(String(svc.id)));
                             }
                           }}
-                          className="w-10 h-8 bg-red text-white flex items-center justify-center hover:bg-red/90 transition-all"
+                          className="w-10 h-8 bg-red-600 text-white flex items-center justify-center hover:bg-red-600/80 transition-all"
                         >
                           <Plus size={14} />
                         </button>
