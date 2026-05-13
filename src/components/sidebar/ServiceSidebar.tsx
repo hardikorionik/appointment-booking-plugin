@@ -1,6 +1,8 @@
 import { MoveRight, X } from "lucide-react";
+import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@/utils";
 import { ServiceItem, Step } from "@/types";
+import type { RootState } from "@/store";
 
 interface ServiceSidebarProps {
   selectedServices: ServiceItem[];
@@ -13,12 +15,15 @@ export default function ServiceSidebar({
   totalPrice,
   goToStep,
 }: ServiceSidebarProps) {
+  const { outletName, } = useSelector(
+    (state: RootState) => state.outletDetails,
+  );
   return (
     <>
       <p className="font-bebas text-2xl mb-0">Your Order</p>
 
       <p className="text-base font-bold text-muted mb-1 border-b border-gray-300 pb-2">
-        {/* {outletData?.outletName || "-"} */}
+        {outletName || "-"}
       </p>
 
       {selectedServices?.length > 0 && (

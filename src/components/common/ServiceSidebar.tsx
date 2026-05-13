@@ -1,5 +1,7 @@
 import { MoveRight, X } from "lucide-react";
+import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@/utils";
+import type { RootState } from "@/store";
 
 interface Service {
     id: string | number;
@@ -22,11 +24,14 @@ export default function ServiceSidebar({
     totalPrice,
     goToStep,
 }: ServiceSidebarProps) {
+    const { outletName, } = useSelector(
+        (state: RootState) => state.outletDetails,
+    );
     return (
         <>
             <p className="font-bebas text-2xl mb-0">Your Order</p>
             <p className="text-base font-bold text-muted mb-1 border-b border-gray-300 pb-2">
-                {/* {outletName || "-"} */}
+                {outletName || "-"}
             </p>
             {selectedServices?.length > 0 && (
                 <ul className="md:h-[calc(100dvh-70px)] h-[calc(100dvh-230px)] overflow-y-scroll mb-1 scrollbar-none">

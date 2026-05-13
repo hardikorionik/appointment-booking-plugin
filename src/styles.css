@@ -51,3 +51,8 @@
         color: var(--copy);
     }
 }
+
+.PhoneInput input.PhoneInputInput {
+    border: 0px !important;
+    outline: 0px !important;
+}
