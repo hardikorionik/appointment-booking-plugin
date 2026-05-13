@@ -42,7 +42,7 @@ const rootReducer = (
     if (action.type === "RESET_ALL") {
         return appReducer(
             {
-                outletDetails: state?.outletDetails,
+                outletDetails: undefined as never,
                 breadcrumbs: {
                     ...initialState,
                 },
