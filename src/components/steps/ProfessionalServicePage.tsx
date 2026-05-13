@@ -7,11 +7,11 @@ import { toggleProfessional } from "@/slices/serviceSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import ProfessionalServiceSidebar from "@/components/sidebar/ProfessionalServiceSidebar";
 import {
   ServiceState,
   Staff,
 } from "@/types";
+import ProfessionalSidebar from "../sidebar/ProfessionalSidebar";
 
 /* =========================
    ROOT STATE TYPE
@@ -64,7 +64,7 @@ export default function ProfessionalServicePage() {
   return (
     <MainLayout
       sidebar={
-        <ProfessionalServiceSidebar
+        <ProfessionalSidebar
           pro={selectedProfessional}
           goToStep={() => dispatch(nextStep())}
         />

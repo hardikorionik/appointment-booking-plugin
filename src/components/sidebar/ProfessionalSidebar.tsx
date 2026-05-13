@@ -16,17 +16,17 @@ interface SelectedStaffService extends Service {
 
 interface ProfessionalSidebarProps {
   pro: Staff | null;
-  selectedStaffServices: SelectedStaffService[];
-  totalPrice: number;
-  totalDuration: number;
+  selectedStaffServices?: SelectedStaffService[];
+  totalPrice?: number;
+  totalDuration?: number;
   goToStep: (step: Step) => void;
 }
 
 const ProfessionalSidebar = ({
   pro,
-  selectedStaffServices,
-  totalPrice,
-  totalDuration,
+  selectedStaffServices = [],
+  totalPrice = 0,
+  totalDuration = 0,
   goToStep,
 }: ProfessionalSidebarProps) => {
   const { outletName } = useSelector(
@@ -34,6 +34,8 @@ const ProfessionalSidebar = ({
   );
 
   const { isService } = useSelector((state: RootState) => state.outletDetails);
+
+  const hasServices = selectedStaffServices.length > 0;
 
   return (
     <>
@@ -69,14 +71,14 @@ const ProfessionalSidebar = ({
                   <div
                     className="w-10 h-10 rounded-md bg-btn-bg/50 text-white flex items-center justify-center"
                     style={{
-                      background: pro.color,
+                      background: pro.color || "#111",
                     }}
                   >
                     {getUserName(pro.name)}
                   </div>
                 )}
 
-                <div>
+                <div className="overflow-hidden">
                   <p className="text-sm font-bold uppercase line-clamp-1">
                     {pro.name}
                   </p>
@@ -90,80 +92,89 @@ const ProfessionalSidebar = ({
           )}
 
           {/* Services */}
-          <p className="text-sm font-semibold my-1.5 text-black/40 uppercase">
-            Selected Services
-          </p>
+          {hasServices && (
+            <>
+              <p className="text-sm font-semibold my-1.5 text-black/40 uppercase">
+                Selected Services
+              </p>
 
-          {selectedStaffServices?.length > 0 && (
-            <ul className="md:h-[calc(100dvh-410px)] h-[calc(100dvh-260px)] overflow-y-scroll scrollbar-none">
-              {selectedStaffServices.map((svc, index) => (
-                <li
-                  key={svc.id}
-                  className={`flex justify-start flex-col items-start text-sm py-2 ${
-                    index !== selectedStaffServices.length - 1
-                      ? "border-b border-dotted border-gray-400"
-                      : ""
-                  }`}
-                >
-                  <p className="flex justify-between flex-row items-center gap-1 line-clamp-1 text-sm font-medium uppercase">
-                    {svc.name}
-                  </p>
-
-                  <div className="grid grid-cols-3 items-center gap-2 w-full">
-                    {/* Qty */}
-                    <div className="flex items-center justify-start gap-1 text-xs text-black/60 font-medium">
-                      <Package2 size={13} />
-                      <span>{svc.qty}</span>
-                    </div>
-
-                    {/* Duration */}
-                    <div className="flex items-center justify-center gap-1 text-xs text-black/60 font-medium">
-                      <Clock3 size={13} />
-                      <span>{svc.min_time || svc.estimated_time} min</span>
-                    </div>
-
-                    {/* Price */}
-                    <p className="flex items-center justify-end gap-1 text-xs text-black/60 font-medium">
-                      <CurrencyIcon size={12} />
-                      {svc.price || svc.min_price}
+              <ul className="md:h-[calc(100dvh-410px)] h-[calc(100dvh-260px)] overflow-y-auto scrollbar-none">
+                {selectedStaffServices.map((svc, index) => (
+                  <li
+                    key={svc.id}
+                    className={`flex flex-col items-start text-sm py-2 ${
+                      index !== selectedStaffServices.length - 1
+                        ? "border-b border-dotted border-gray-400"
+                        : ""
+                    }`}
+                  >
+                    <p className="flex items-center gap-1 line-clamp-1 text-sm font-medium uppercase">
+                      {svc.name}
                     </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+
+                    <div className="grid grid-cols-3 items-center gap-2 w-full">
+                      {/* Qty */}
+                      <div className="flex items-center justify-start gap-1 text-xs text-black/60 font-medium">
+                        <Package2 size={13} />
+                        <span>{svc.qty}</span>
+                      </div>
+
+                      {/* Duration */}
+                      <div className="flex items-center justify-center gap-1 text-xs text-black/60 font-medium">
+                        <Clock3 size={13} />
+                        <span>{svc.min_time || svc.estimated_time} min</span>
+                      </div>
+
+                      {/* Price */}
+                      <p className="flex items-center justify-end gap-1 text-xs text-black/60 font-medium">
+                        <CurrencyIcon size={12} />
+                        {svc.price || svc.min_price}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
 
         {/* Footer */}
         <div className="p-3 border-t border-gray-300">
-          <div className="flex justify-between items-end mb-1">
-            <span className="font-medium text-sm text-black/60 uppercase">
-              Subtotal
-            </span>
+          {/* Totals */}
+          {hasServices && (
+            <>
+              <div className="flex justify-between items-end mb-1">
+                <span className="font-medium text-sm text-black/60 uppercase">
+                  Subtotal
+                </span>
 
-            <span className="font-mono font-semibold flex flex-row items-center">
-              <CurrencyIcon size={18} />
-              {totalPrice}
-            </span>
-          </div>
+                <span className="font-mono font-semibold flex items-center">
+                  <CurrencyIcon size={18} />
+                  {totalPrice}
+                </span>
+              </div>
 
-          <div className="flex justify-between items-end mb-1">
-            <span className="font-medium text-sm text-black/60 uppercase">
-              Duration
-            </span>
+              <div className="flex justify-between items-end mb-1">
+                <span className="font-medium text-sm text-black/60 uppercase">
+                  Duration
+                </span>
 
-            <span className="font-mono font-semibold">
-              {totalDuration} mins
-            </span>
-          </div>
+                <span className="font-mono font-semibold">
+                  {totalDuration} mins
+                </span>
+              </div>
+            </>
+          )}
 
+          {/* Button */}
           <button
-            disabled={!selectedStaffServices.length}
+            disabled={isService ? !selectedStaffServices.length : !pro}
             onClick={() => goToStep("time")}
             className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover px-2 w-full relative py-3 font-dm text-xs font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
           >
             <span className="flex flex-row justify-center items-center gap-2">
               {isService ? "Choose Time" : "Choose Services"}
+
               <ChevronRight size={16} />
             </span>
           </button>
