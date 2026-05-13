@@ -241,7 +241,7 @@ export default function ServiceProfessionalPage() {
       <div className="mt-5">
         {/* HEADER */}
 
-        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 mb-3">
+        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 pt-3">
           Choose a Service
         </h1>
 

@@ -11,8 +11,13 @@ import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import type { RootState, AppDispatch } from "@/store";
-import type { ServiceItem, Staff, StaffAssignment, StaffServiceAssignment } from "@/types";
-
+import type {
+  ServiceItem,
+  Staff,
+  StaffAssignment,
+  StaffServiceAssignment,
+} from "@/types";
+import { ChevronRight } from "lucide-react";
 
 const cardVariants: Variants = {
   hidden: {
@@ -40,8 +45,9 @@ export default function Professionals() {
 
   const { width } = useWindowSize();
 
-  const { staff, selectedServices, selectedProfessional } =
-    useSelector((state: RootState) => state.service);
+  const { staff, selectedServices, selectedProfessional } = useSelector(
+    (state: RootState) => state.service,
+  );
 
   const [showEmpty, setShowEmpty] = useState<boolean>(false);
 
@@ -76,12 +82,14 @@ export default function Professionals() {
   }, [selectedProfessional, staff, selectedServices]);
 
   const totalPrice = selectedStaffServices.reduce(
-    (sum: number, s: StaffServiceAssignment) => sum + Number(s.price || 0) * s.qty,
+    (sum: number, s: StaffServiceAssignment) =>
+      sum + Number(s.price || 0) * s.qty,
     0,
   );
 
   const totalDuration = selectedStaffServices.reduce(
-    (sum: number, s: StaffServiceAssignment) => sum + (s?.duration || 0) * s.qty,
+    (sum: number, s: StaffServiceAssignment) =>
+      sum + (s?.duration || 0) * s.qty,
     0,
   );
 
@@ -92,7 +100,10 @@ export default function Professionals() {
       const assignments = member.assignments ?? [];
 
       return selectedServiceIds?.every((serviceId: string | number) =>
-        assignments.some((a: StaffAssignment) => String(a.id) == String(serviceId) && Boolean(a?.assigned))
+        assignments.some(
+          (a: StaffAssignment) =>
+            String(a.id) == String(serviceId) && Boolean(a?.assigned),
+        ),
       );
     });
   }, [staff, selectedServiceIds]);
@@ -122,15 +133,26 @@ export default function Professionals() {
           goToStep={() => dispatch(nextStep())}
         />
       }
+      renderButton={
+        <button
+          onClick={() => dispatch(nextStep())}
+          disabled={!selectedServices.length}
+          className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover p-3 px-8 text-xs relative rounded border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed "
+        >
+          <span className="flex flex-row justify-center items-center gap-2">
+            Choose Time <ChevronRight size={16} />
+          </span>
+        </button>
+      }
     >
       <Breadcrumb />
 
       <div className="mt-5">
-        <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
+        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 pt-3">
           Choose a Professional
         </h1>
 
-        <p className="text-sm text-black/60 mb-4">
+        <p className="text-sm text-black/60 mb-6">
           Available based on selected services
         </p>
 
@@ -172,10 +194,11 @@ export default function Professionals() {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
-                      ? "border-red bg-[#fff8f8]"
-                      : "bg-white hover:border-red"
-                      }`}
+                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${
+                      selectedProfessional?.id === p.id
+                        ? "border-red bg-[#fff8f8]"
+                        : "bg-white hover:border-red"
+                    }`}
                   >
                     {p.imageUrl ? (
                       <img
