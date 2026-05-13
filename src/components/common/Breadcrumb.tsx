@@ -140,7 +140,6 @@ export default function Breadcrumb() {
                   key={step.page}
                   onClick={() => {
                     if (!isClickable) return;
-
                     dispatch(goToStep(step.page));
                   }}
                   className={[
@@ -158,7 +157,6 @@ export default function Breadcrumb() {
                   >
                     {step.icon}
                   </span>
-
                   <span>{step.label}</span>
                 </button>
               );
