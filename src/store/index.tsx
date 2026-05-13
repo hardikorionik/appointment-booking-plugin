@@ -45,9 +45,7 @@ const rootReducer = (
         return appReducer(
             {
                 outletDetails: undefined as never,
-                breadcrumbs: {
-                    ...initialState,
-                },
+                breadcrumbs: undefined as never,
                 service: undefined as never,
                 slots: undefined as never,
                 appointment: undefined as never,

@@ -458,6 +458,7 @@ export default function ConfirmPage(): JSX.Element {
                 createAppointment(payload)
             ).unwrap();
 
+
             const data: any = result?.data ?? result;
 
             const appointmentId =
@@ -486,8 +487,13 @@ export default function ConfirmPage(): JSX.Element {
                 dispatch(setAppointmentId(String(appointmentId)));
                 dispatch(nextStep());
             }
-        } catch (err) {
-            toast.error(typeof err === "string" ? err : "Something went wrong");
+        } catch (err: any) {
+            const errorMessage =
+                err?.payload?.message ||
+                err?.data?.message ||
+                err?.message || "Staff not working on this day" || "Something went wrong";
+            toast.error(errorMessage);
+
         } finally {
             setLoading(false);
         }

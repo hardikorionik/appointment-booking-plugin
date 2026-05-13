@@ -17,9 +17,13 @@ export const createAppointment = createAsyncThunk<
       const res = await createAppointmentApi(payload);
       return res as AppointmentResponse;
     } catch (err: any) {
-      return rejectWithValue(
-        err?.message || "Failed to create appointment"
-      );
+      const errorMessage =
+        err?.message ||
+        err?.error ||
+        err?.data?.message ||
+        err?.response?.data?.message ||
+        "Failed to create appointment";
+      return rejectWithValue(errorMessage);
     }
   }
 );

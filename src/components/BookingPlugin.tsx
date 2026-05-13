@@ -19,7 +19,6 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     );
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [selectedOutlet, setSelectedOutlet] = useState<any>(null);
     const { id: outletId } = useSelector(
         (state: OutletRootState) => state.outletDetails
     );
@@ -90,7 +89,6 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
                 { zone: "utc" }
             ).setZone(data?.timeZone).year,
         };
-        setSelectedOutlet(updatedOutlet?.id);
         dispatch(setOutletData(updatedOutlet));
         dispatch(
             goToStep(
@@ -113,7 +111,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
 
     return (
         <>
-            {outlets.length > 1 && !selectedOutlet && !outletId ? (
+            {outlets.length > 1 && !outletId ? (
                 <ChooseYourOutlet
                     outlets={outlets}
                     onSelectOutlet={(data: Outlet) => {
