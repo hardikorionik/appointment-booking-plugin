@@ -31,7 +31,7 @@ export default function ServiceSidebar({
         </p>
       </div>
       <div className="flex flex-col justify-between h-full">
-        <div className="p-3 border-b border-gray-300">
+        <div className="p-3">
           <p className="text-sm font-semibold my-1.5 text-black/40 uppercase line-clamp-1">
             SELECTED SERVICES
           </p>
@@ -72,7 +72,7 @@ export default function ServiceSidebar({
 
         {/* <div className="h-px bg-border mt-auto my-2.5" /> */}
 
-        <div className="p-3">
+        <div className="p-3 border-t border-gray-300">
           <div className="flex justify-between items-end mb-1">
             <span className="font-medium text-sm text-black/60 uppercase">
               Subtotal
