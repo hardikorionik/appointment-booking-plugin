@@ -10,6 +10,7 @@ import { setIsOrder, goToStep } from "@/slices/breadcrumbSlice";
 import { applyTheme } from "@/utils/applyTheme";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import DefaultAppointment from "@/components/steps";
+// import Spinner from "@/components/common/Spinner";
 import type { AppDispatch } from "@/store";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
@@ -103,7 +104,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
         fetchInitialData();
     }, [fetchInitialData]);
 
-    if (loading) { return <div className="p-4">Loading...</div> }
+    // if (loading) { return <div className="p-4 flex items-center justify-center"><Spinner /></div> }
 
     if (error) {
         return (<div className="p-4 text-red-500">{error}</div>);
