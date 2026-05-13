@@ -13,7 +13,7 @@ import { X, MoveRight } from "lucide-react";
 import { getUserName, CurrencyIcon } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import type {
-  RootState,
+  OutletRootState,
   ServiceItem,
   StaffMember,
   Slot,
@@ -71,15 +71,15 @@ export default function OrderSidebar({
   handleSidebarOpen,
 }: OrderSidebarProps): JSX.Element {
   const { selectedSlotIndexes, slots, selectedDate } = useSelector(
-    (state: RootState) => state.slots,
+    (state: OutletRootState) => state.slots,
   );
 
   const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: RootState) => state.service,
+    (state: OutletRootState) => state.service,
   );
 
   const { timeZone } = useSelector(
-    (state: RootState) => state.outletDetails,
+    (state: OutletRootState) => state.outletDetails,
   );
 
   const startDate = DateTime.now().setZone(timeZone ?? "UTC");
@@ -616,7 +616,7 @@ export default function OrderSidebar({
           <button
             onClick={onButtonClick}
             disabled={isButtonDisabled}
-            className="btn-bg px-2 h-11 w-full py-3.75 text-white border-none font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+            className="bg-btn-bg text-btn-text border-btn-bg px-2 w-full relative py-3 font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
           >
             <span className="flex flex-row justify-center items-center gap-2">
               {finalButtonText}
