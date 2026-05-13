@@ -15,9 +15,7 @@ import {
     PersistConfig,
 } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
-import breadcrumbs, {
-    initialState,
-} from "@/slices/breadcrumbSlice";
+import breadcrumbs from "@/slices/breadcrumbSlice";
 import outletDetails from "@/slices/outletSlice";
 import service from "@/slices/serviceSlice";
 import slots from "@/slices/slotSlice";
@@ -44,11 +42,12 @@ const rootReducer = (
     if (action.type === "RESET_ALL") {
         return appReducer(
             {
-                outletDetails: undefined as never,
                 breadcrumbs: undefined as never,
+                outletDetails: undefined as never,
                 service: undefined as never,
                 slots: undefined as never,
                 appointment: undefined as never,
+                outletList: undefined as never,
             },
             action
         );

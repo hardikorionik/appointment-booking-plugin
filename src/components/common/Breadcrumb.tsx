@@ -74,7 +74,7 @@ export default function Breadcrumb() {
 
   const goToPrev = () => {
     if (currentIndex <= 0) return;
-    const prevStep = steps[currentIndex - 1];
+    // const prevStep = steps[currentIndex - 1];
     // if (prevStep.page === "services") {
     clearAllData();
     // } else {
