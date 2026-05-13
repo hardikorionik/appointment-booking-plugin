@@ -491,10 +491,10 @@ export default function ServiceProfessionalPage() {
                         }
                       }}
                       className={[
-                        "relative border rounded-md p-3 cursor-pointer transition-all bg-white",
+                        "relative border rounded-md p-3 cursor-pointer transition-all ",
                         isSelected
-                          ? "border-btn-bg/80 bg-btn-bg/50"
-                          : "border-black/30 hover:border-btn-bg-hover/80",
+                          ? "border-btn-bg/80 bg-btn-bg-hover/5"
+                          : "border-black/30 hover:border-btn-bg-hover/80 bg-white",
                       ].join(" ")}
                     >
                       {/* TAX */}
