@@ -459,13 +459,20 @@ export default function ConfirmPage(): JSX.Element {
             ).unwrap();
 
             console.log(result);
-            const data = result?.data ?? result;
+            const data: any = result?.data ?? result;
+
             const appointmentId =
-                data?.id ?? data?.appointmentId;
+                data.id || "";
+
             const customerId =
-                data?.customerId ?? data?.customer?.id;
+                data.customerId ||
+                data.customer?.id ||
+                "";
+
             const staffId =
-                data?.staffId ?? selectedProfessional?.id;
+                data.staffId ||
+                selectedProfessional?.id ||
+                "";
             if (bookingMode === "booking" && doneConsentCount > 0) {
                 await submitAllConsents(
                     appointmentId,
