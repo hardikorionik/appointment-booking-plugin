@@ -298,13 +298,10 @@ export const checkConsentRequirement = async (
 // ✅ Get client IP
 export const getIpAddress = async (): Promise<string> => {
     const res = await fetch("https://api.ipify.org?format=json");
-
     if (!res.ok) {
         throw new Error("Failed to fetch IP address");
     }
-
     const data: { ip: string } = await res.json();
-
     return data.ip;
 };
 
@@ -326,7 +323,7 @@ export const submitFinalConsent = async (
         imageUrl,
     } = payloadData;
 
-    const ip = await getIpAddress();
+    // const ip = await getIpAddress();
 
     const payload: Record<string, unknown> = {
         tenantId,
@@ -338,7 +335,7 @@ export const submitFinalConsent = async (
         signatureType,
         channel: "Online_Web",
         staffId,
-        ipAddress: ip,
+        // ipAddress: ip,
     };
 
     if (signatureType === "CHECKBOX_ONLY") {
