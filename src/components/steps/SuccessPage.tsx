@@ -25,6 +25,7 @@ export default function SuccessPage(): JSX.Element {
     const appointmentId = useSelector(
         (state: RootState) => state.appointment.appointmentId,
     );
+    const { tenantId } = useSelector((state: RootState) => state.outletDetails)
 
     const [appointment, setAppointment] = useState<AppointmentDetails | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -40,8 +41,9 @@ export default function SuccessPage(): JSX.Element {
 
         const fetchAppointment = async (): Promise<void> => {
             try {
-                const response = await getAppointmentDetail(appointmentId);
+                const response = await getAppointmentDetail(appointmentId, tenantId);
 
+                console.log("------46----response--", response)
                 if (response.success) {
                     setAppointment(response.data as AppointmentDetails);
                 } else {

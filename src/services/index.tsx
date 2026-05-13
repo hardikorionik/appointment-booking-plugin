@@ -1,7 +1,7 @@
 import { ConsentCheckStatus, ConsentFormResponse, PaymentPayload, Service, SignatureType, SubmitFinalConsentPayload } from "@/types";
 
-const BASE_URL =
-    "https://prod.aaravpos.com/api/v1";
+const BASE_URL = "http://192.168.18.200:5004/api/v1";
+// "https://prod.aaravpos.com/api/v1";
 
 
 //  Get All Services 
@@ -54,7 +54,7 @@ export const fetchStaffSlots = async (tenantId?: string, staffId?: string, date?
 };
 
 export const createAppointmentApi = async (payload: unknown) => {
-    const res = await fetch(`${BASE_URL}/appointment`, {
+    const res = await fetch(`${BASE_URL}/integration/appointment/create`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -92,9 +92,10 @@ export const createAppointmentApi = async (payload: unknown) => {
 // Get Appointment Details by ID
 export const getAppointmentDetail = async (
     appointmentId: string,
+    tenantId: string
 ) => {
     const res = await fetch(
-        `${BASE_URL}/appointment/detail/${appointmentId}`,
+        `${BASE_URL}/integration/appointment/details?tenantId=${tenantId}&appointmentId=${appointmentId}`,
         {
             method: "GET",
             headers: {
