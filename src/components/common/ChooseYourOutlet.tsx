@@ -37,7 +37,7 @@ const cardVariants: Variants = {
 
 const StatusBadge = ({ status }: { status: boolean }) => (
   <span
-    className={`inline-flex rounded-br-md rounded-tl-md items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest border ${status
+    className={`inline-flex rounded-tr-md rounded-bl-md items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest border ${status
       ? "bg-emerald-50 text-emerald-700 border-emerald-200"
       : "bg-red-100 text-red-400 border-red-200"
       }`}
@@ -58,10 +58,10 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
         }`}
       onClick={() => onSelect(String(item?.id))}
     >
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-end">
         <StatusBadge status={item.isOpen} />
       </div>
-      <div className="p-4">
+      <div className="px-4 pb-4 pt-1">
         <div className="flex-1">
           <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-1">
             {item.outletName}
