@@ -187,7 +187,7 @@ export default function SuccessPage(): JSX.Element {
                                     className="flex justify-between text-sm py-1.5"
                                 >
                                     <span className="text-gray-700">
-                                        {s.name}
+                                        {s.serviceName}
                                     </span>
                                     <span className="text-gray-900 flex flex-row items-center">
                                         <CurrencyIcon size={14} />
