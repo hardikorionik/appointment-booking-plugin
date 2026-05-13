@@ -164,7 +164,7 @@ export default function Professionals() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.25 }}
-              className="text-sm text-red-500"
+              className="text-sm text-btn-bg/90 font-semibold"
             >
               No staff available for selected services
             </motion.p>
@@ -194,21 +194,21 @@ export default function Professionals() {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${
+                    className={`pro-card border-2 border-black/15 rounded p-3 cursor-pointer transition flex items-center gap-4 ${
                       selectedProfessional?.id === p.id
-                        ? "border-red bg-[#fff8f8]"
-                        : "bg-white hover:border-red"
+                        ? "border-btn-bg-hover/80 bg-btn-bg-hover/5"
+                        : "bg-white hover:border-btn-bg/80"
                     }`}
                   >
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
                         alt={p.name}
-                        className="w-12 h-12 rounded-full object-cover"
+                        className="w-12 h-12 rounded-lg object-cover border border-black/10"
                       />
                     ) : (
                       <div
-                        className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                        className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg"
                         style={{
                           background: p.color || "#111",
                         }}
@@ -218,9 +218,13 @@ export default function Professionals() {
                     )}
 
                     <div>
-                      <p className="font-semibold text-sm">{p.name}</p>
+                      <p className="font-semibold text-md uppercase">
+                        {p.name}
+                      </p>
 
-                      <p className="text-xs text-gray-500">{p.staff_type}</p>
+                      <p className="text-xs text-gray-500 uppercase">
+                        {p.staff_type}
+                      </p>
                     </div>
                   </motion.div>
                 );
