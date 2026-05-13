@@ -6,7 +6,7 @@ import { getAppointmentDetail } from "@/services";
 import { persistor } from "@/store";
 import { CurrencyIcon } from "@/utils";
 import type { RootState } from "@/store";
-import { AppointmentDetails, Service } from "@/types";
+import { AppointmentDetails } from "@/types";
 
 // -------------------- Animations --------------------
 const fadeIn = {
@@ -16,8 +16,6 @@ const fadeIn = {
         transition: { duration: 0.5, delay: 0.3 },
     },
 };
-
-
 // -------------------- Component --------------------
 export default function SuccessPage(): JSX.Element {
     const dispatch = useDispatch();
@@ -43,9 +41,8 @@ export default function SuccessPage(): JSX.Element {
             try {
                 const response = await getAppointmentDetail(appointmentId, tenantId);
 
-                console.log("------46----response--", response)
                 if (response.success) {
-                    setAppointment(response.data as AppointmentDetails);
+                    setAppointment(response?.data?.appointment as AppointmentDetails);
                 } else {
                     setError("Failed to load appointment details");
                 }
@@ -82,7 +79,7 @@ export default function SuccessPage(): JSX.Element {
 
                 <button
                     onClick={handleBookAnother}
-                    className="px-7 py-3 bg-black text-white text-base cursor-pointer uppercase tracking-wide rounded-sm flex flex-row items-center gap-2"
+                    className="px-7 py-3 bg-btn-bg text-btn-text border-btn-bg hover:text-btn-bg-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover text-base cursor-pointer uppercase tracking-wide rounded-sm flex flex-row items-center gap-2"
                 >
                     <MoveLeft />
                     Book Another Appointment
@@ -93,12 +90,12 @@ export default function SuccessPage(): JSX.Element {
 
     const { staff, outlet, services } = appointment;
 
-    const totalBasePrice = services.reduce(
-        (acc: number, s: Service) => acc + Number(s.price || 0),
+    const totalBasePrice: number = services?.reduce(
+        (acc: number, s: any) => acc + Number(s.price || 0),
         0,
     );
 
-    const tipAmt = (appointment.tipsCents || 0) / 100;
+    const tipAmt: number = (appointment.tipsCents || 0) / 100;
     const taxAmt = (appointment.taxCents || 0) / 100;
     const totalAmt = (appointment.totalCents || 0) / 100;
 
@@ -121,7 +118,7 @@ export default function SuccessPage(): JSX.Element {
                 variants={fadeIn}
                 className="flex flex-col h-full items-center justify-center bg-canvas text-center lg:p-12 p-4"
             >
-                <div className="w-16 h-16 bg-red text-white rounded-full shrink-0 flex items-center justify-center text-4xl mb-6 success-pulse">
+                <div className="w-16 h-16 bg-bg text-white rounded-full shrink-0 flex items-center justify-center text-4xl mb-6 success-pulse">
                     <Check />
                 </div>
 
@@ -184,7 +181,7 @@ export default function SuccessPage(): JSX.Element {
                         </div>
 
                         <div className="py-2 border-b border-gray-100 text-gray-600 text-sm whitespace-pre-wrap overflow-y-auto max-h-[23vh] font-bold">
-                            {visibleServices.map((s: Service) => (
+                            {visibleServices?.map((s: any) => (
                                 <div
                                     key={s.id}
                                     className="flex justify-between text-sm py-1.5"
@@ -192,7 +189,6 @@ export default function SuccessPage(): JSX.Element {
                                     <span className="text-gray-700">
                                         {s.name}
                                     </span>
-
                                     <span className="text-gray-900 flex flex-row items-center">
                                         <CurrencyIcon size={14} />
                                         {Number(s.price).toFixed(2)}
@@ -255,7 +251,7 @@ export default function SuccessPage(): JSX.Element {
 
                     <button
                         onClick={handleBookAnother}
-                        className="px-7 py-2.5 bg-ink cursor-pointer text-white md:text-base text-sm w-full flex flex-row items-center justify-center gap-2 uppercase tracking-wide rounded-sm hover:bg-gray-900 transition"
+                        className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover px-7 py-2.5 cursor-pointer md:text-base text-sm w-full flex flex-row items-center justify-center gap-2 uppercase tracking-wide rounded-sm transition"
                     >
                         <MoveLeft />
                         Book Another Appointment

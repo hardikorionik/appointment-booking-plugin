@@ -1,7 +1,6 @@
 import { ConsentCheckStatus, ConsentFormResponse, PaymentPayload, Service, SignatureType, SubmitFinalConsentPayload } from "@/types";
 
-const BASE_URL = "http://192.168.18.200:5004/api/v1";
-// "https://prod.aaravpos.com/api/v1";
+const BASE_URL = "https://prod.aaravpos.com/api/v1";
 
 
 //  Get All Services 
@@ -33,8 +32,6 @@ export const fetchAllCategoriesAndStaffService = async (bookingCode: string, ten
 
 //  Get Staff Slots
 export const fetchStaffSlots = async (tenantId?: string, staffId?: string, date?: string) => {
-    // http://localhost:5004/api/v1/integration/slot/tenant/78d5038c-473a-446c-9d3d-7ae8c97ade2e/staff/6c5852bf-d59f-4f28-905e-b1c6f4e742c6/online?date=2026-05-08
-
     const res = await fetch(`${BASE_URL}/integration/slot/tenant/${tenantId}/staff/${staffId}/online?date=${date}`,
         {
             method: "GET",

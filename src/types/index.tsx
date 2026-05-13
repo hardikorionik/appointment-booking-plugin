@@ -146,7 +146,7 @@ export interface Service {
   name: string;
   description?: string;
 
-  price?: number | string | null;
+  price: number;
   min_price?: number | string | null;
   max_price?: number | string | null;
 
@@ -390,19 +390,49 @@ export interface AppointmentResponse {
 
   [key: string]: unknown;
 }
+export interface AppointmentService {
+  id: string;
+  serviceId: string;
+  price: number;
+  duration: number;
+  serviceName: string;
+  serviceCategory: string;
+  service: Service;
+}
 
 export interface AppointmentDetails {
-  staff?: Staff | null;
-  outlet?: Outlet | null;
-  services: Service[];
-
-  startLocal?: string;
+  id: string;
+  tenantId: string;
+  customerId: string;
+  staffId: string;
+  outletId: string;
+  startUtc: string;
+  endUtc: string;
+  priority: "NORMAL" | string;
+  status: "BOOKED" | string;
+  isWalkIn: boolean;
+  occurrenceNumber: number | null;
+  isException: boolean;
+  paymentStatus: "PENDING" | "PAID" | string;
+  queuePosition: number | null;
+  firstName: string;
+  lastName: string;
+  isCallStatus: boolean;
+  requiresConsent: boolean;
+  services: AppointmentService[];
+  staff: Staff;
+  outlet: Outlet;
+  customer: Customer;
   appointmentDate: string;
   startTime: string;
-
-  tipsCents: number;
-  taxCents: number;
-  totalCents: number;
+  endTime: string;
+  startLocal: string;
+  endLocal: string;
+  currency: string;
+  estimatedWaitTime: number;
+  tipsCents?: number;
+  taxCents?: number;
+  totalCents?: number;
 }
 
 export interface CustomerInfo {
