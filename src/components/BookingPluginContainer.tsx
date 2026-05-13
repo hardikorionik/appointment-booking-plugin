@@ -13,7 +13,7 @@ import DefaultAppointment from "@/components/steps";
 // import Spinner from "@/components/common/Spinner";
 import type { AppDispatch } from "@/store";
 
-export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
+export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCode }) => {
     const dispatch = useDispatch<AppDispatch>();
     const outlets = useSelector(
         (state: any) => state.outletList.outlets
