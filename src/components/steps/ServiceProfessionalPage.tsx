@@ -337,8 +337,8 @@ export default function ServiceProfessionalPage() {
                   }}
                   className={`border text-left py-2 px-4 transition-all cursor-pointer min-w-fit ${
                     selectedSuperCategory?.id === superCat.id
-                      ? "border-red-300 bg-red-50/50"
-                      : "border-black/30 bg-white hover:border-red/50"
+                      ? "border-btn-bg-hover/50 bg-btn-bg-hover/10"
+                      : "border-black/30 bg-white hover:border-btn-bg/50"
                   }`}
                 >
                   <h3 className="font-medium text-sm mb-1 font-serif">
@@ -493,8 +493,8 @@ export default function ServiceProfessionalPage() {
                       className={[
                         "relative border rounded-md p-3 cursor-pointer transition-all bg-white",
                         isSelected
-                          ? "border-red-400/80 bg-red-50/50"
-                          : "border-black/30 hover:border-red/80",
+                          ? "border-btn-bg/80 bg-btn-bg/50"
+                          : "border-black/30 hover:border-btn-bg-hover/80",
                       ].join(" ")}
                     >
                       {/* TAX */}
@@ -591,7 +591,7 @@ export default function ServiceProfessionalPage() {
                               dispatch(incrementService(String(svc.id)));
                             }
                           }}
-                          className="w-10 h-8 bg-red-600 text-white flex items-center justify-center hover:bg-red-600/80 transition-all"
+                          className="w-10 h-8 bg-btn-bg/80 text-white flex items-center justify-center hover:bg-btn-bg-hover/90 transition-all"
                         >
                           <Plus size={14} />
                         </button>
