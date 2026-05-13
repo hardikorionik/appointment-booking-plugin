@@ -13,6 +13,7 @@ import {
   Info,
   CheckCircle2,
 } from "lucide-react";
+import { clearBooking } from "@/slices/outletSlice";
 
 const SERVICE_STEPS: StepItem[] = [
   {
@@ -77,7 +78,7 @@ export default function Breadcrumb() {
   const dispatch = useDispatch<AppDispatch>();
   const { width } = useWindowSize();
   const { isService } = useSelector((state: RootState) => state.outletDetails);
-
+  const outlets = useSelector((state: RootState) => state.outletList.outlets);
   const { currentStep, completedSteps } = useSelector(
     (state: RootState) => state.breadcrumbs,
   );
@@ -90,13 +91,20 @@ export default function Breadcrumb() {
   };
 
   const goToPrev = () => {
+    // Go back to outlet selection
+    if (currentIndex === 0 && outlets.length > 1) {
+      clearAllData();
+
+      dispatch(clearBooking());
+
+      return;
+    }
+
     if (currentIndex <= 0) return;
-    // const prevStep = steps[currentIndex - 1];
-    // if (prevStep.page === "services") {
-    clearAllData();
-    // } else {
-    //   dispatch(goToStep(prevStep.page));
-    // }
+
+    const prevStep = steps[currentIndex - 1];
+
+    dispatch(goToStep(prevStep.page));
   };
 
   const currentStepData = steps[currentIndex];
@@ -109,7 +117,7 @@ export default function Breadcrumb() {
         <div className="flex items-center flex-row gap-4 font-semibold">
           <button
             onClick={goToPrev}
-            disabled={currentIndex === 0}
+            disabled={false}
             className="flex items-center text-xl disabled:text-gray-200 mr-2 cursor-pointer"
           >
             <ChevronLeft size={20} />
@@ -119,41 +127,50 @@ export default function Breadcrumb() {
           </span>
         </div>
       ) : (
-        <nav className="hidden md:grid grid-cols-5 w-full overflow-hidden">
-          {steps.map((step: any, i: number) => {
-            const isActive = currentStep === step.page;
-            const isCompleted = completedSteps?.includes(step.page);
-            const isClickable = isCompleted || i <= currentIndex;
+        <div className="hidden md:flex items-center gap-4 w-full">
+          <button
+            onClick={goToPrev}
+            className="flex items-center justify-center h-10 w-10 rounded-full border border-gray-200 hover:bg-gray-100 transition"
+          >
+            <ChevronLeft size={20} />
+          </button>
 
-            return (
-              <button
-                key={step.page}
-                onClick={() => {
-                  if (!isClickable) return;
+          <nav className="grid grid-cols-5 w-full overflow-hidden">
+            {steps.map((step: any, i: number) => {
+              const isActive = currentStep === step.page;
+              const isCompleted = completedSteps?.includes(step.page);
+              const isClickable = isCompleted || i <= currentIndex;
 
-                  dispatch(goToStep(step.page));
-                }}
-                className={[
-                  "relative h-10 flex items-center justify-center gap-2 uppercase tracking-[1px] text-[11px] font-semibold transition-all border-b-2",
-                  isClickable
-                    ? "cursor-pointer"
-                    : "cursor-not-allowed opacity-40",
-                  isActive
-                    ? "border-btn-bg text-black bg-btn-bg-hover/5"
-                    : "border-transparent text-black/60 hover:text-black",
-                ].join(" ")}
-              >
-                <span
-                  className={`${isActive ? "text-btn-bg" : "text-btn-bg-hover"}`}
+              return (
+                <button
+                  key={step.page}
+                  onClick={() => {
+                    if (!isClickable) return;
+
+                    dispatch(goToStep(step.page));
+                  }}
+                  className={[
+                    "relative h-10 flex items-center justify-center gap-2 uppercase tracking-[1px] text-[11px] font-semibold transition-all border-b-2",
+                    isClickable
+                      ? "cursor-pointer"
+                      : "cursor-not-allowed opacity-40",
+                    isActive
+                      ? "border-btn-bg text-black bg-btn-bg-hover/5"
+                      : "border-transparent text-black/60 hover:text-black",
+                  ].join(" ")}
                 >
-                  {step.icon}
-                </span>
+                  <span
+                    className={`${isActive ? "text-btn-bg" : "text-btn-bg-hover"}`}
+                  >
+                    {step.icon}
+                  </span>
 
-                <span>{step.label}</span>
-              </button>
-            );
-          })}
-        </nav>
+                  <span>{step.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+        </div>
       )}
     </>
   );
