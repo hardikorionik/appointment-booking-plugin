@@ -20,7 +20,6 @@ import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
-import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState, AppDispatch } from "@/store";
 import { PaymentMeta, PayType, Service, OutletRootState, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
