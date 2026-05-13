@@ -2,12 +2,7 @@ import { useSelector } from "react-redux";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { DateTime } from "luxon";
 import { CurrencyIcon } from "@/utils";
-
-type RootState = {
-  booking: {
-    timeZone: string;
-  };
-};
+import { OutletRootState, } from "@/types";
 
 type PaymentFormValues = {
   name: string;
@@ -52,7 +47,7 @@ export default function PaymentModal({
   amount,
 }: PaymentModalProps) {
   const { timeZone } = useSelector(
-    (state: RootState) => state.outletDetails
+    (state: OutletRootState) => state?.outletDetails
   );
 
   const {
