@@ -26,7 +26,6 @@ import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import type { AppDispatch } from "@/store";
-import "react-toastify/dist/ReactToastify.css";
 
 const MONTH_NAMES = [
   "Jan",

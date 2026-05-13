@@ -1,5 +1,6 @@
 import { ComponentType, JSX, } from "react";
 import { useSelector, } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import ProfessionalServicePage from "@/components/steps/ProfessionalServicePage";
 import Professionals from "@/components/steps/Professionals";
 import ServiceProfessionalPage from "@/components/steps/ServiceProfessionalPage";
@@ -11,6 +12,7 @@ import SuccessPage from "@/components/steps/SuccessPage";
 import NotFoundPage from "@/components/common/NotFoundPage";
 import { RootState } from "@/store"; // adjust path as needed
 import { StepKey, PageMap } from "@/types";
+import "react-toastify/dist/ReactToastify.css";
 
 function AppContent(): JSX.Element {
   const { currentStep } = useSelector(
@@ -47,6 +49,9 @@ function AppContent(): JSX.Element {
 
 export default function DefaultAppointment(): JSX.Element {
   return (
-    <AppContent />
+    <>
+      <AppContent />
+      <ToastContainer position="top-right" autoClose={3000} />
+    </>
   );
 }

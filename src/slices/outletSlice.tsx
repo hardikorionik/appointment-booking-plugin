@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   id: "",
@@ -13,6 +13,7 @@ const initialState = {
   createdAt: "",
   isService: true,
   currency: "",
+  token: ""
 };
 
 const outletSlice = createSlice({
@@ -22,11 +23,17 @@ const outletSlice = createSlice({
     clearBooking: () => {
       return initialState;
     },
-    setOutletData: (_state, action) => {
-      return action.payload;
+    setOutletData: (state, action) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+    setOutletToken: (state, action) => {
+      state.token = action.payload;
     },
   },
 });
 
-export const { clearBooking, setOutletData } = outletSlice.actions;
+export const { clearBooking, setOutletData, setOutletToken } = outletSlice.actions;
 export default outletSlice.reducer;

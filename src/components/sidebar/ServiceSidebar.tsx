@@ -40,11 +40,10 @@ export default function ServiceSidebar({
               {selectedServices?.map((svc, index) => (
                 <li
                   key={svc.id}
-                  className={`flex justify-start flex-col items-start text-sm py-2 ${
-                    index !== selectedServices?.length - 1
-                      ? "border-b border-dotted border-gray-400"
-                      : ""
-                  }`}
+                  className={`flex justify-start flex-col items-start text-sm py-2 ${index !== selectedServices?.length - 1
+                    ? "border-b border-dotted border-gray-400"
+                    : ""
+                    }`}
                 >
                   <p className="flex justify-between flex-row items-center gap-1 line-clamp-1 text-sm font-medium uppercase">
                     {svc.name}

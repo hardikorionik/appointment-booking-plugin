@@ -20,7 +20,6 @@ import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
-import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
 import type { RootState, AppDispatch } from "@/store";
 import { PaymentMeta, PayType, Service, OutletRootState, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
@@ -459,14 +458,21 @@ export default function ConfirmPage(): JSX.Element {
                 createAppointment(payload)
             ).unwrap();
 
-            console.log(result);
-            const data = result?.data ?? result;
+
+            const data: any = result?.data ?? result;
+
             const appointmentId =
-                data?.id ?? data?.appointmentId;
+                data.id || "";
+
             const customerId =
-                data?.customerId ?? data?.customer?.id;
+                data.customerId ||
+                data.customer?.id ||
+                "";
+
             const staffId =
-                data?.staffId ?? selectedProfessional?.id;
+                data.staffId ||
+                selectedProfessional?.id ||
+                "";
             if (bookingMode === "booking" && doneConsentCount > 0) {
                 await submitAllConsents(
                     appointmentId,
@@ -481,8 +487,13 @@ export default function ConfirmPage(): JSX.Element {
                 dispatch(setAppointmentId(String(appointmentId)));
                 dispatch(nextStep());
             }
-        } catch (err) {
-            toast.error(typeof err === "string" ? err : "Something went wrong");
+        } catch (err: any) {
+            const errorMessage =
+                err?.payload?.message ||
+                err?.data?.message ||
+                err?.message || "Staff not working on this day" || "Something went wrong";
+            toast.error(errorMessage);
+
         } finally {
             setLoading(false);
         }

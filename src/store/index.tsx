@@ -22,6 +22,7 @@ import outletDetails from "@/slices/outletSlice";
 import service from "@/slices/serviceSlice";
 import slots from "@/slices/slotSlice";
 import appointment from "@/slices/appointmentSlice";
+import outletList from "@/slices/outletListSlice";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
 const appReducer = combineReducers({
@@ -30,6 +31,7 @@ const appReducer = combineReducers({
     service,
     slots,
     appointment,
+    outletList
 });
 
 
@@ -43,9 +45,7 @@ const rootReducer = (
         return appReducer(
             {
                 outletDetails: undefined as never,
-                breadcrumbs: {
-                    ...initialState,
-                },
+                breadcrumbs: undefined as never,
                 service: undefined as never,
                 slots: undefined as never,
                 appointment: undefined as never,

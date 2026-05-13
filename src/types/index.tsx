@@ -119,6 +119,7 @@ export interface Outlet {
   currencyName: string | null;
   currencySymbol: string | null;
   isOpen: boolean;
+  token: string
 }
 
 /* ─────────────────────────────────────────────────────────────
