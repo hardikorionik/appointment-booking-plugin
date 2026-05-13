@@ -5,15 +5,15 @@
 /* Dynamic Variables */
 :root {
     /* Button */
-    --btn-bg: #000000;
+    --btn-bg: #d7263d;
     --btn-text: #ffffff;
     --btn-bg-hover: #1f2937;
     --btn-text-hover: #ffffff;
 
     /* App Theme */
-    --app-bg: #103332;
+    --app-bg: #fafaf8;
     --app-link: #385b5a;
-    --app-text: #e9ebec;
+    --app-text: #e09898;
     --app-bg-hover: #4c6f6e;
     --app-text-hover: #ffffff;
 

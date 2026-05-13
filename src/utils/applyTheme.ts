@@ -9,60 +9,59 @@ export const hexToRgb = (hex: string) => {
     return `${r}, ${g}, ${b}`;
 };
 
-export const defaultTheme: ThemeSettings = {
-    button: {
-        bg: "#000000",
-        text: "#ffffff",
-        bgHover: "#1f2937",
-        textHover: "#ffffff",
-    },
-    colors: {
-        bg: "#103332",
-        link: "#385b5a",
-        text: "#e9ebec",
-        bgHover: "#4c6f6e",
-        textHover: "#ffffff",
-    },
-};
 
 export const applyTheme = (theme?: Partial<ThemeSettings>) => {
+    if (!theme) return;
+    console.log("------15", theme)
     const root = document.documentElement;
+
     /* Button */
-    root.style.setProperty(
-        "--btn-bg",
-        theme?.button?.bg || defaultTheme.button.bg
-    );
-    root.style.setProperty(
-        "--btn-text",
-        theme?.button?.text || defaultTheme.button.text
-    );
-    root.style.setProperty(
-        "--btn-bg-hover",
-        theme?.button?.bgHover || defaultTheme.button.bgHover
-    );
-    root.style.setProperty(
-        "--btn-text-hover",
-        theme?.button?.textHover || defaultTheme.button.textHover
-    );
-    /* App Theme */
-    root.style.setProperty(
-        "--app-bg",
-        theme?.colors?.bg || defaultTheme.colors.bg
-    );
-    root.style.setProperty(
-        "--app-link",
-        theme?.colors?.link || defaultTheme.colors.link
-    );
-    root.style.setProperty(
-        "--app-text",
-        theme?.colors?.text || defaultTheme.colors.text
-    );
-    root.style.setProperty(
-        "--app-bg-hover",
-        theme?.colors?.bgHover || defaultTheme.colors.bgHover
-    );
-    root.style.setProperty(
-        "--app-text-hover",
-        theme?.colors?.textHover || defaultTheme.colors.textHover
-    );
+    if (theme.button?.bg) {
+        root.style.setProperty("--btn-bg", theme.button.bg);
+    }
+
+    if (theme.button?.text) {
+        root.style.setProperty("--btn-text", theme.button.text);
+    }
+
+    if (theme.button?.bgHover) {
+        root.style.setProperty(
+            "--btn-bg-hover",
+            theme.button.bgHover
+        );
+    }
+
+    if (theme.button?.textHover) {
+        root.style.setProperty(
+            "--btn-text-hover",
+            theme.button.textHover
+        );
+    }
+
+    /* App */
+    if (theme.colors?.bg) {
+        root.style.setProperty("--app-bg", theme.colors.bg);
+    }
+
+    if (theme.colors?.link) {
+        root.style.setProperty("--app-link", theme.colors.link);
+    }
+
+    if (theme.colors?.text) {
+        root.style.setProperty("--app-text", theme.colors.text);
+    }
+
+    if (theme.colors?.bgHover) {
+        root.style.setProperty(
+            "--app-bg-hover",
+            theme.colors.bgHover
+        );
+    }
+
+    if (theme.colors?.textHover) {
+        root.style.setProperty(
+            "--app-text-hover",
+            theme.colors.textHover
+        );
+    }
 };
