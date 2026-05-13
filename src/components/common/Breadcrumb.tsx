@@ -42,10 +42,26 @@ const SERVICE_STEPS: StepItem[] = [
   },
 ];
 const STEPS: StepItem[] = [
-  { label: "Professional", page: "professionals" },
-  { label: "Service", page: "services" },
-  { label: "Time", page: "time" },
-  { label: "Details", page: "details" },
+  {
+    label: "Professional",
+    page: "professionals",
+    icon: <User size={16} />,
+  },
+  {
+    label: "Service",
+    page: "services",
+    icon: <Scissors size={16} />,
+  },
+  {
+    label: "Time",
+    page: "time",
+    icon: <Clock3 size={16} />,
+  },
+  {
+    label: "Details",
+    page: "details",
+    icon: <Info size={16} />,
+  },
   {
     label: (
       <span className="flex items-center gap-1">
@@ -53,6 +69,7 @@ const STEPS: StepItem[] = [
       </span>
     ),
     page: "confirm",
+    icon: <CheckCircle2 size={16} />,
   },
 ];
 
@@ -122,12 +139,12 @@ export default function Breadcrumb() {
                     ? "cursor-pointer"
                     : "cursor-not-allowed opacity-40",
                   isActive
-                    ? "border-red-500 text-black bg-red-50/40"
+                    ? "border-btn-bg text-black bg-btn-bg-hover/5"
                     : "border-transparent text-black/60 hover:text-black",
                 ].join(" ")}
               >
                 <span
-                  className={`${isActive ? "text-red-500" : "text-red-400"}`}
+                  className={`${isActive ? "text-btn-bg" : "text-btn-bg-hover"}`}
                 >
                   {step.icon}
                 </span>
