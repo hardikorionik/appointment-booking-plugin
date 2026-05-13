@@ -193,11 +193,10 @@ export default function ServicesPage() {
                 setSelectedSubCategory(null);
                 setSelectedSuperCategory(null);
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${
-                viewType === "supercategory"
+              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "supercategory"
                   ? "text-btn-bg border-b-2 border-btn-bg"
                   : "text-black/40 hover:text-black border-b-2 border-transparent"
-              }`}
+                }`}
             >
               Super Category
             </button>
@@ -206,11 +205,10 @@ export default function ServicesPage() {
               onClick={() => {
                 setViewType("standalone");
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${
-                viewType === "standalone"
+              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "standalone"
                   ? "text-btn-bg border-b-2 border-btn-bg"
                   : "text-black/40 hover:text-black border-b-2 border-transparent"
-              }`}
+                }`}
             >
               Standalone
             </button>
@@ -266,11 +264,10 @@ export default function ServicesPage() {
 
                     setSelectedSubCategory(superCat?.categories?.[0] || null);
                   }}
-                  className={`border text-left py-2 px-4 transition-all cursor-pointer min-w-fit ${
-                    selectedSuperCategory?.id === superCat.id
+                  className={`border text-left py-2 px-4 transition-all cursor-pointer min-w-fit ${selectedSuperCategory?.id === superCat.id
                       ? "border-btn-bg-hover/50 bg-btn-bg-hover/10"
                       : "border-black/30 bg-white hover:border-btn-bg/50"
-                  }`}
+                    }`}
                 >
                   <h3 className="font-medium text-sm mb-1 font-serif">
                     {superCat.name}
@@ -296,11 +293,10 @@ export default function ServicesPage() {
               >
                 <button
                   onClick={() => setSelectedSubCategory(null)}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                    !selectedSubCategory
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedSubCategory
                       ? "bg-black text-white border-black"
                       : "bg-white border-border hover:border-black"
-                  }`}
+                    }`}
                 >
                   All Services (
                   {selectedSuperCategory?.categories?.reduce(
@@ -313,11 +309,10 @@ export default function ServicesPage() {
                   <button
                     key={subCat.id}
                     onClick={() => setSelectedSubCategory(subCat)}
-                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                      selectedSubCategory?.id === subCat.id
+                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedSubCategory?.id === subCat.id
                         ? "bg-black text-white border-black"
                         : "bg-white border-border hover:border-black"
-                    }`}
+                      }`}
                   >
                     {subCat.name}
                   </button>
@@ -341,11 +336,10 @@ export default function ServicesPage() {
             >
               <button
                 onClick={() => dispatch(setCategory(null))}
-                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                  !selectedCategory
+                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedCategory
                     ? "bg-black text-white border-black"
                     : "bg-white border-border hover:border-black"
-                }`}
+                  }`}
               >
                 All Services (
                 {standaloneCategories.reduce(
@@ -359,11 +353,10 @@ export default function ServicesPage() {
                 <button
                   key={cat.id}
                   onClick={() => dispatch(setCategory(cat))}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${
-                    selectedCategory?.id === cat.id
+                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedCategory?.id === cat.id
                       ? "bg-black text-white border-black"
                       : "bg-white border-border hover:border-black"
-                  }`}
+                    }`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>
@@ -374,11 +367,10 @@ export default function ServicesPage() {
 
         {/* SERVICES */}
         <div
-          className={`overflow-y-auto pb-20 lg:pb-4 scrollbar-none ${
-            viewType === "standalone"
+          className={`overflow-y-auto pb-20 lg:pb-4 scrollbar-none ${viewType === "standalone"
               ? "h-[calc(100dvh-315px)] md:h-[calc(100dvh-300px)]"
               : "h-[calc(100dvh-415px)] lg:h-[calc(100dvh-390px)]"
-          }`}
+            }`}
         >
           <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
             {loading ? (

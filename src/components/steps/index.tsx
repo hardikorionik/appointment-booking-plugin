@@ -9,10 +9,8 @@ import TimePage from "@/components/steps/TimePage";
 import ConfirmPage from "@/components/steps/ConfirmPage";
 import DetailsPage from "@/components/steps/DetailsPage";
 import SuccessPage from "@/components/steps/SuccessPage";
-import NotFoundPage from "@/components/common/NotFoundPage";
 import { RootState } from "@/store"; // adjust path as needed
 import { StepKey, PageMap } from "@/types";
-import "react-toastify/dist/ReactToastify.css";
 
 function AppContent(): JSX.Element {
   const { currentStep } = useSelector(
@@ -29,11 +27,10 @@ function AppContent(): JSX.Element {
     details: DetailsPage,
     confirm: ConfirmPage,
     success: SuccessPage,
-    notfound: NotFoundPage,
   };
 
   const PageComponent: ComponentType =
-    PAGE_MAP[currentStep as StepKey] ?? NotFoundPage;
+    PAGE_MAP[currentStep as StepKey];
 
 
   return (

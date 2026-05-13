@@ -11,7 +11,6 @@ import ProfessionalServiceSidebar from "@/components/sidebar/ProfessionalService
 import {
   ServiceState,
   Staff,
-  Step,
 } from "@/types";
 
 /* =========================
@@ -67,7 +66,7 @@ export default function ProfessionalServicePage() {
       sidebar={
         <ProfessionalServiceSidebar
           pro={selectedProfessional}
-          goToStep={(data: string) => dispatch(nextStep())}
+          goToStep={() => dispatch(nextStep())}
         />
       }
     >

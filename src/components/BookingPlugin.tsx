@@ -18,7 +18,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
     const outlets = useSelector(
         (state: any) => state.outletList.outlets
     );
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { id: outletId } = useSelector(
         (state: OutletRootState) => state.outletDetails
@@ -26,7 +26,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
 
     const fetchInitialData = useCallback(async () => {
         try {
-            setLoading(true);
+            // setLoading(true);
             setError(null);
             const response = await fetchAllCategoriesAndStaffService(bookingCode);
             if (response?.success) {
@@ -44,7 +44,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     }, [bookingCode]);
 
@@ -53,7 +53,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
         outletId?: string
     ) => {
         try {
-            setLoading(true);
+            // setLoading(true);
             const response = await fetchAllCategoriesAndStaffService(bookingCode, tenantId, outletId);
             if (!response?.success) {
                 setError(response?.message || "Failed to fetch outlet data");
@@ -71,7 +71,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     };
 

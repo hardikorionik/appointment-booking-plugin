@@ -11,7 +11,7 @@ import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import type { RootState, AppDispatch } from "@/store";
-import type { ServiceItem, Staff, StaffAssignment, StaffServiceAssignment, Step } from "@/types";
+import type { ServiceItem, Staff, StaffAssignment, StaffServiceAssignment } from "@/types";
 
 
 const cardVariants: Variants = {
@@ -119,7 +119,7 @@ export default function Professionals() {
           selectedStaffServices={selectedStaffServices}
           totalPrice={totalPrice}
           totalDuration={totalDuration}
-          goToStep={(data: string) => dispatch(nextStep())}
+          goToStep={() => dispatch(nextStep())}
         />
       }
     >
