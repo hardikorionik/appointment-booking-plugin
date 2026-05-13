@@ -124,7 +124,7 @@ export default function Breadcrumb() {
         <div className="hidden md:flex items-center gap-4 w-full">
           <button
             onClick={goToPrev}
-            className="flex cursor-pointer items-center justify-center h-10 w-10 rounded-full border border-gray-200 hover:bg-gray-100 transition"
+            className="flex cursor-pointer items-center justify-center h-10 w-10 rounded-full border border-gray-200 hover:bg-gray-100 transition outline-none!"
           >
             <ChevronLeft size={20} />
           </button>
@@ -140,7 +140,6 @@ export default function Breadcrumb() {
                   key={step.page}
                   onClick={() => {
                     if (!isClickable) return;
-
                     dispatch(goToStep(step.page));
                   }}
                   className={[
@@ -158,7 +157,6 @@ export default function Breadcrumb() {
                   >
                     {step.icon}
                   </span>
-
                   <span>{step.label}</span>
                 </button>
               );
