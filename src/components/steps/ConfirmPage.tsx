@@ -22,7 +22,7 @@ import { nextStep } from "@/slices/breadcrumbSlice";
 import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import "react-toastify/dist/ReactToastify.css";
 import { calculateServiceTax } from "@/utils";
-import type { RootState } from "@/store";
+import type { RootState, AppDispatch } from "@/store";
 import { PaymentMeta, PayType, Service, OutletRootState, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
@@ -46,11 +46,12 @@ const expiryToNumber = (exp: string): number => {
 // ─── Component ───────────────────────────────────────────────────────────────
 
 export default function ConfirmPage(): JSX.Element {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
     const { tenantId, id: outletId } = useSelector(
         (state: OutletRootState) => state.outletDetails
     );
-    const { outletTimeZoneDate, timeZone, image, outletName, address } = useSelector(
+
+    const { timeZone, image, outletName, address } = useSelector(
         (state: RootState) => state.outletDetails,
     );
     const { staff, selectedServices, selectedProfessional } = useSelector(
@@ -63,7 +64,7 @@ export default function ConfirmPage(): JSX.Element {
         (state: RootState) => state.appointment,
     );
 
-    const services: Service[] = Array.isArray(selectedServices)
+    const services: any[] = Array.isArray(selectedServices)
         ? selectedServices
         : [selectedServices];
 
@@ -429,21 +430,21 @@ export default function ConfirmPage(): JSX.Element {
         },
     };
 
-    const checkinPayload: CheckinPayload = {
-        tenantId,
-        outletId,
-        date: outletTimeZoneDate,
-        staffId: selectedProfessional?.id,
-        serviceIds: services.map((s) => s.id),
-        slotIds: selectedSlotIds,
-        startTime: selectedTime,
-        customer: {
-            first_name: userDetails?.firstName,
-            last_name: userDetails?.lastName,
-            email: userDetails?.email,
-            phone: userDetails?.phone,
-        },
-    };
+    // const checkinPayload: CheckinPayload = {
+    //     tenantId,
+    //     outletId,
+    //     date: outletTimeZoneDate,
+    //     staffId: selectedProfessional?.id,
+    //     serviceIds: services.map((s) => s.id),
+    //     slotIds: selectedSlotIds,
+    //     startTime: selectedTime,
+    //     customer: {
+    //         first_name: userDetails?.firstName,
+    //         last_name: userDetails?.lastName,
+    //         email: userDetails?.email,
+    //         phone: userDetails?.phone,
+    //     },
+    // };
 
     // ─── Booking actions ────────────────────────────────────────────────────────
 
@@ -454,40 +455,34 @@ export default function ConfirmPage(): JSX.Element {
         }
         try {
             setLoading(true);
-            let result = await dispatch(createAppointment(payload));
+            const result = await dispatch(
+                createAppointment(payload)
+            ).unwrap();
 
-            const isSuccess = createAppointment.fulfilled.match(result)
-
-            if (isSuccess) {
-                const data = (result as { payload?: { data?: Record<string, unknown> } & Record<string, unknown> }).payload?.data
-                    ?? (result as { payload?: Record<string, unknown> }).payload;
-                const appointmentId = (data as Record<string, unknown>)?.id ?? (data as Record<string, unknown>)?.appointmentId;
-                const customerId = (data as Record<string, unknown>)?.customerId ?? (data as { customer?: { id?: unknown } })?.customer?.id;
-                const staffId = (data as Record<string, unknown>)?.staffId ?? selectedProfessional?.id;
-
-                if (bookingMode === "booking" && doneConsentCount > 0) {
-                    await submitAllConsents(
-                        appointmentId as string,
-                        customerId as string,
-                        staffId as string,
-                    );
-                }
-                if (payType === "card") {
-                    setPaymentMeta({
-                        appointmentId: appointmentId as string,
-                        customerId: customerId as string,
-                    });
-                    setShowPaymentModal(true);
-                } else {
-                    dispatch(setAppointmentId(String(appointmentId)));
-                    dispatch(nextStep());
-                }
+            console.log(result);
+            const data = result?.data ?? result;
+            const appointmentId =
+                data?.id ?? data?.appointmentId;
+            const customerId =
+                data?.customerId ?? data?.customer?.id;
+            const staffId =
+                data?.staffId ?? selectedProfessional?.id;
+            if (bookingMode === "booking" && doneConsentCount > 0) {
+                await submitAllConsents(
+                    appointmentId,
+                    customerId,
+                    staffId,
+                );
+            }
+            if (payType === "card") {
+                setPaymentMeta({ appointmentId, customerId });
+                setShowPaymentModal(true);
+            } else {
+                dispatch(setAppointmentId(String(appointmentId)));
+                dispatch(nextStep());
             }
         } catch (err) {
-            toast.error(
-                (err as { response?: { data?: { message?: string } } })?.response?.data?.message
-                ?? "Something went wrong",
-            );
+            toast.error(typeof err === "string" ? err : "Something went wrong");
         } finally {
             setLoading(false);
         }
