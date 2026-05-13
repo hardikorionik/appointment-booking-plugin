@@ -91,19 +91,13 @@ export default function Breadcrumb() {
   };
 
   const goToPrev = () => {
-    // Go back to outlet selection
     if (currentIndex === 0 && outlets.length > 1) {
       clearAllData();
-
       dispatch(clearBooking());
-
       return;
     }
-
     if (currentIndex <= 0) return;
-
     const prevStep = steps[currentIndex - 1];
-
     dispatch(goToStep(prevStep.page));
   };
 
