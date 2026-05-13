@@ -51,7 +51,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
     <div
       className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between rounded-md border transition-all duration-300
       ${selected
-          ? "border-btn-bg-hover shadow-lg"
+          ? "border-btn-bg-hover bg-white shadow-lg"
           : !item.isOpen
             ? "border-red-300 bg-red-50/50"
             : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
