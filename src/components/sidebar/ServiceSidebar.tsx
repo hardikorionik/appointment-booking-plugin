@@ -1,7 +1,8 @@
-import { ChevronRight, Clock3, Package2, } from "lucide-react";
+import { ChevronRight, Clock3, Package2 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, ServiceItem, Step } from "@/types";
+import { RootState } from "@/store";
 
 interface ServiceSidebarProps {
   selectedServices: ServiceItem[];
@@ -17,10 +18,13 @@ export default function ServiceSidebar({
   const { outletName } = useSelector(
     (state: OutletRootState) => state?.outletDetails,
   );
+  const { isService } = useSelector((state: RootState) => state.outletDetails);
   return (
     <>
       <div className="p-3 border-b border-gray-300">
-        <p className="font-bebas text-3xl mb-0">Your Order</p>
+        <p className="font-black uppercase tracking-tight text-2xl mb-0">
+          Your Order
+        </p>
 
         <p className="text-xs font-semibold text-black/40 uppercase line-clamp-1">
           {outletName || "-"} Outlet
@@ -84,11 +88,11 @@ export default function ServiceSidebar({
             <button
               onClick={() => goToStep("professionals")}
               disabled={!selectedServices.length}
-              className="bg-btn-bg text-btn-text border-btn-bg px-2 w-full relative py-3 font-dm text-xs font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+              className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover px-2 w-full relative py-3 font-dm text-xs font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
             >
               <span className="flex flex-row justify-center items-center gap-2">
-                Choose Professional <ChevronRight size={16} />
-                {/* Choose Time <ChevronRight size={16} /> */}
+                {isService ? "Choose Professional" : "Choose Time"}
+                <ChevronRight size={16} />
               </span>
             </button>
           </div>

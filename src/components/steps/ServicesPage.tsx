@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Search, Minus, Plus, X } from "lucide-react";
+import { Search, Minus, Plus, X, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   setCategory,
@@ -162,9 +162,11 @@ export default function ServicesPage() {
         <button
           onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
-          className="btn-bg p-3 px-8 text-sm relative rounded-full text-white hover:text-white border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
+          className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover p-3 px-8 text-xs relative rounded border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed "
         >
-          Choose Professional
+          <span className="flex flex-row justify-center items-center gap-2">
+            Choose Professional <ChevronRight size={16} />
+          </span>
         </button>
       }
     >
@@ -173,7 +175,8 @@ export default function ServicesPage() {
       <div className="mt-5">
         {/* HEADER */}
 
-        <h1 className="font-bebas text-2xl lg:text-4xl uppercase">
+        {/* <h1 className="font-bebas  uppercase"> */}
+        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 mb-3">
           Book A Service
         </h1>
 
