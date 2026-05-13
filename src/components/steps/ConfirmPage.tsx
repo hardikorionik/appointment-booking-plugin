@@ -458,7 +458,6 @@ export default function ConfirmPage(): JSX.Element {
                 createAppointment(payload)
             ).unwrap();
 
-            console.log(result);
             const data: any = result?.data ?? result;
 
             const appointmentId =

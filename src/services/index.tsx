@@ -1,8 +1,17 @@
+import { store } from "@/store";
 import { ConsentCheckStatus, ConsentFormResponse, PaymentPayload, Service, SignatureType, SubmitFinalConsentPayload } from "@/types";
 
 const BASE_URL = "https://prod.aaravpos.com/api/v1";
 
+export const getHeaders = () => {
+    const token =
+        store.getState()?.outletDetails?.token;
 
+    return {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+    };
+};
 //  Get All Services 
 export const fetchAllCategoriesAndStaffService = async (bookingCode: string, tenantId?: string, outletId?: string) => {
     const params =
@@ -35,9 +44,7 @@ export const fetchStaffSlots = async (tenantId?: string, staffId?: string, date?
     const res = await fetch(`${BASE_URL}/integration/slot/tenant/${tenantId}/staff/${staffId}/online?date=${date}`,
         {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getHeaders(),
         }
     );
     if (!res.ok) {
@@ -53,9 +60,7 @@ export const fetchStaffSlots = async (tenantId?: string, staffId?: string, date?
 export const createAppointmentApi = async (payload: unknown) => {
     const res = await fetch(`${BASE_URL}/integration/appointment/create`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: getHeaders(),
         body: JSON.stringify(payload),
     });
     if (!res.ok) {
@@ -95,9 +100,7 @@ export const getAppointmentDetail = async (
         `${BASE_URL}/integration/appointment/details?tenantId=${tenantId}&appointmentId=${appointmentId}`,
         {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getHeaders(),
         },
     );
 
@@ -122,9 +125,7 @@ export const fetchCustomer = async ({
         `${BASE_URL}/integration/customer/drop-down/list?tenantId=${tenantId}&search=${encodeURIComponent(search || "")}`,
         {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getHeaders(),
         },
     );
 
@@ -144,9 +145,7 @@ export const payCustomerDirect = async (payload: PaymentPayload) => {
             `${BASE_URL}/payment/pay/customer/direct`,
             {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: getHeaders(),
                 body: JSON.stringify(payload),
             },
         );
@@ -170,9 +169,7 @@ export const finalizeInvoice = async (orderId: string) => {
             `${BASE_URL}/payment/orders/${orderId}/invoicing/finalize`,
             {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: getHeaders(),
             },
         );
 
@@ -267,9 +264,7 @@ export const getConsentFormByFormId = async (
         `${BASE_URL}/concent/formId/${formId}`,
         {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getHeaders(),
         },
     );
     if (!res.ok) {
@@ -289,9 +284,7 @@ export const checkConsentRequirement = async (
         `${BASE_URL}/concent/check/${customerId}/${formId}?serviceId=${serviceId}`,
         {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getHeaders(),
         },
     );
 
@@ -364,9 +357,7 @@ export const submitFinalConsent = async (
         `${BASE_URL}/concent/customer-sign`,
         {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+            headers: getHeaders(),
             body: JSON.stringify(payload),
         },
     );

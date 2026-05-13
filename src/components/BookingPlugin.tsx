@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
 import { BookingPluginProps, Outlet, OutletRootState, } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
-import { setOutletData } from "@/slices/outletSlice";
+import { setOutletData, setOutletToken } from "@/slices/outletSlice";
+import { setOutletList } from "@/slices/outletListSlice";
 import { setServicePayload } from "@/slices/serviceSlice";
 import { setIsOrder, goToStep } from "@/slices/breadcrumbSlice";
 import { applyTheme } from "@/utils/applyTheme";
@@ -13,13 +14,16 @@ import type { AppDispatch } from "@/store";
 
 export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { bookingCode: string }) => {
     const dispatch = useDispatch<AppDispatch>();
+    const outlets = useSelector(
+        (state: any) => state.outletList.outlets
+    );
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [outlets, setOutlets] = useState<any[]>([]);
     const [selectedOutlet, setSelectedOutlet] = useState<any>(null);
-    const { id } = useSelector((state: OutletRootState) => state.outletDetails);
+    const { id: outletId } = useSelector(
+        (state: OutletRootState) => state.outletDetails
+    );
 
-    // Initial API
     const fetchInitialData = useCallback(async () => {
         try {
             setLoading(true);
@@ -28,7 +32,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             if (response?.success) {
                 const outletList =
                     response?.data?.data?.outlets || [];
-                setOutlets(outletList);
+                dispatch(setOutletList(outletList));
                 applyTheme(response?.data?.result);
                 if (outletList.length === 1) {
                     handleOutletSelection(outletList[0]);
@@ -54,6 +58,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
             if (!response?.success) {
                 setError(response?.message || "Failed to fetch outlet data");
             }
+            dispatch(setOutletToken(response?.data?.token));
             dispatch(setIsOrder(response?.data?.data?.outlets[0]?.isService))
             dispatch(
                 setServicePayload({
@@ -108,7 +113,7 @@ export const BookingPlugin: React.FC<BookingPluginProps> = ({ bookingCode }: { b
 
     return (
         <>
-            {outlets.length > 1 && !selectedOutlet && !id ? (
+            {outlets.length > 1 && !selectedOutlet && !outletId ? (
                 <ChooseYourOutlet
                     outlets={outlets}
                     onSelectOutlet={(data: Outlet) => {
