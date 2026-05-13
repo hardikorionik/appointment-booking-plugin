@@ -22,7 +22,7 @@ import { nextStep } from "@/slices/breadcrumbSlice";
 import { setAppointmentId, setTips } from "@/slices/appointmentSlice";
 import { calculateServiceTax } from "@/utils";
 import type { RootState, AppDispatch } from "@/store";
-import { PaymentMeta, PayType, Service, OutletRootState, StaffMember, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, CheckinPayload, SubmitFinalConsentPayload } from "@/types";
+import { PaymentMeta, PayType, Service, OutletRootState, EnforcementType, ConsentCheckStatus, EnrichedService, Slot, PaymentPayload, ConfirmDateType, ConsentDraftEntry, ConsentDraftMap, CardType, CardData, ConsentModalPayload, SignatureType, AppointmentPayload, SubmitFinalConsentPayload } from "@/types";
 
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -755,11 +755,7 @@ function Card({ children }: CardProps): JSX.Element {
     );
 }
 
-interface AvatarProps {
-    pro: StaffMember;
-}
-
-function Avatar({ pro }: AvatarProps): JSX.Element {
+function Avatar({ pro }: any): JSX.Element {
     return (
         <>
             {pro.imageUrl ? (

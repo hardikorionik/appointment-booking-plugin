@@ -51,7 +51,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
     <div
       className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between rounded-md border transition-all duration-300
       ${selected
-          ? "border-btn-bg-hover shadow-lg"
+          ? "border-btn-bg-hover bg-white shadow-lg"
           : !item.isOpen
             ? "border-red-300 bg-red-50/50"
             : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
@@ -66,13 +66,11 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
           <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-1">
             {item.outletName}
           </h2>
-
           <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-2 min-h-10">
             {item.address}
           </p>
         </div>
-
-        <button
+        {/* <button
           className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200
           ${selected
               ? "bg-btn-bg text-btn-text border-btn-bg"
@@ -84,7 +82,7 @@ const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
           }}
         >
           {selected ? "✓ Selected" : "Select Outlet"}
-        </button>
+        </button> */}
       </div>
     </div>
   );
@@ -105,7 +103,7 @@ export default function ChooseYourOutlet({
     if (selectedOutlet) {
       setTimeout(() => {
         onSelectOutlet(selectedOutlet);
-      }, 400);
+      }, 100);
     }
   };
 

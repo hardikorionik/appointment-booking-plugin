@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ServiceState, Category, ServiceItem, Staff } from "@/types";
+import { ServiceState, Category, Staff } from "@/types";
 
 const initialState: ServiceState = {
   standaloneCategories: [],
@@ -67,7 +67,7 @@ const serviceSlice = createSlice({
         }
       }
     },
-    toggleProfessional: (state, action: PayloadAction<Staff | null>) => {
+    toggleProfessional: (state, action) => {
       state.selectedProfessional = action.payload;
     },
     clearServices: () => initialState,

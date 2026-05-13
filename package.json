@@ -1,6 +1,6 @@
 {
-  "name": "@aaravpos/appointment-booking-plugin-v4",
-  "version": "2.0.0",
+  "name": "@aaravpos/appointment-booking-plugin",
+  "version": "1.0.0",
   "description": "A React component library built with Tailwind CSS v4 and TypeScript",
   "type": "module",
   "packageManager": "pnpm@10.33.0",
@@ -35,7 +35,7 @@
     "typescript",
     "ui-kit"
   ],
-  "author": "Hardik Dongre",
+  "author": "Aaravpos",
   "license": "ISC",
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.4",
@@ -46,6 +46,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/react-signature-canvas": "1.0.7",
     "@vitejs/plugin-react": "^6.0.1",
+    "esbuild": "0.28.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "tailwindcss": "^4.2.4",

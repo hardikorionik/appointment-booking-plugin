@@ -1,4 +1,3 @@
-import { number } from "framer-motion";
 import { DateObjectUnits } from "luxon";
 import { ComponentType, ReactNode } from "react";
 
@@ -17,7 +16,6 @@ export type StepKey =
   | "details"
   | "confirm"
   | "success"
-  | "notfound";
 
 export type Step =
   | "services"
@@ -139,7 +137,7 @@ export interface ServiceState {
   staff: Staff[]; // or StaffMember[] but be consistent
   selectedCategory: Category | null;
   selectedServices: ServiceItem[];
-  selectedProfessional: Staff;
+  selectedProfessional: Staff | null;
 }
 
 export interface Service {

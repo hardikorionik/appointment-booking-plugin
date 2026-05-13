@@ -18,7 +18,6 @@ import { fetchCustomer } from "@/services";
 
 import type { RootState } from "@/store";
 
-import "react-phone-number-input/style.css";
 import { FormValues, FetchCustomerResponse, OutletRootState } from "@/types";
 
 // -------------------- Constants --------------------
