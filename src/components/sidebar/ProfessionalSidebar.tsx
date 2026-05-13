@@ -163,7 +163,7 @@ const ProfessionalSidebar = ({
             className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover px-2 w-full relative py-3 font-dm text-xs font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
           >
             <span className="flex flex-row justify-center items-center gap-2">
-              {isService ? "Choose Time" : "Continue"}
+              {isService ? "Choose Time" : "Choose Services"}
               <ChevronRight size={16} />
             </span>
           </button>
