@@ -147,7 +147,7 @@ export default function Professionals() {
     >
       <Breadcrumb />
 
-      <div className="mt-5">
+      <div className="aaravpos-margin-top-20">
         <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 pt-3">
           Choose a Professional
         </h1>

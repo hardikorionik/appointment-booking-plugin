@@ -9,15 +9,15 @@ export default function MainLayout({
     isSidebarOpen = false,
 }: MainLayoutProps) {
     return (
-        <div className="h-screen flex flex-col">
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_350px] lg:grid-cols-[minmax(0,1fr)_360px] overflow-hidden relative">
-                <main className="p-4">
+        <div className="aaravpos-main-layout">
+            <div className="aaravpos-layout-wrapper">
+                <main className="aaravpos-main-content">
                     {children}
-                    <div className="md:hidden fixed bottom-5 left-0 right-0 flex items-center justify-center z-50 px-4">
+                    <div className="aaravpos-mobile-button">
                         {isConfirm ? (
                             <button
                                 onClick={handleSidebarOpen}
-                                className="p-3! px-8.5! text-sm relative rounded-full btn-bg text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
+                                className="aaravpos-view-order-btn"
                             >
                                 <span>
                                     View Order
@@ -28,13 +28,13 @@ export default function MainLayout({
                         )}
                     </div>
                 </main>
-                <aside className="hidden md:flex flex-col bg-surface border-l border-black/10 p-4 pb-3.5 h-[calc(100dvh)]">
+                <aside className="aaravpos-sidebar">
                     {sidebar}
                 </aside>
             </div>
             {isSidebarOpen && (
-                <div className="fixed z-999 bottom-0 left-0 right-0 h-screen bg-white rounded-t-2xl flex flex-col animate-fade-in">
-                    <div className="flex-1 md:px-6 p-4 fixed top-0 left-0 right-0 bottom-0">
+                <div className="aaravpos-sidebar-mobile">
+                    <div className="aaravpos-sidebar-mobile-content">
                         {sidebar}
                     </div>
                 </div>

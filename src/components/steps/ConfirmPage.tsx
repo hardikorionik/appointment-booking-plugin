@@ -645,7 +645,7 @@ export default function ConfirmPage(): JSX.Element {
         >
             <>
                 <Breadcrumb />
-                <div className="mt-5">
+               <div className="aaravpos-margin-top-20">
                     <h1 className="aaravpos-page-title">
           Confirm Booking
         </h1>

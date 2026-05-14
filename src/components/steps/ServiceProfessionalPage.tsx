@@ -236,71 +236,61 @@ export default function ServiceProfessionalPage() {
       }
     >
       <Breadcrumb />
-
-      <div className="mt-5">
+      <div className="aaravpos-margin-top-20">
         {/* HEADER */}
-
-        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 pt-3">
+        <h1 className="aaravpos-page-title">
           Choose a Service
         </h1>
-
-        <p className="text-sm text-black/60 mb-6">
+        <p className="aaravpos-sub-title">
           Select from {selectedProfessional?.name}'s available services
         </p>
-
         {/* SWITCH */}
-
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 lg:gap-8 mb-5 border-b border-black/40">
-          <div className="flex items-end gap-8">
+        <div className="aaravpos-topbar">
+          <div className="aaravpos-tab-group">
             <button
               onClick={() => {
                 setViewType("supercategory");
                 setSelectedSubCategory(null);
                 setSelectedSuperCategory(null);
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "supercategory"
-                ? "text-btn-bg border-b-2 border-btn-bg"
-                : "text-black/40 hover:text-black border-b-2 border-transparent"
+              className={`aaravpos-tab-btn ${viewType === "supercategory"
+                ? "active"
+                : "inactive"
                 }`}
             >
               Super Category
             </button>
-
             <button
               onClick={() => {
                 setViewType("standalone");
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "standalone"
-                ? "text-btn-bg border-b-2 border-btn-bg"
-                : "text-black/40 hover:text-black border-b-2 border-transparent"
+              className={`aaravpos-tab-btn ${viewType === "standalone"
+                ? "active"
+                : "inactive"
                 }`}
             >
               Standalone
             </button>
           </div>
-
           {/* SEARCH */}
-
-          <div className="pb-2">
-            <div className="relative w-full">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <Search size={18} />
-              </span>
-
-              <input
-                id="search"
-                name="search"
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-black/30 rounded-md pl-9 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/20"
-              />
-
+          <div className="aaravpos-search-wrapper aaravpos-mb-10">
+            <span className="aaravpos-search-icon">
+              <Search size={18} />
+            </span>
+            <input
+              id="search"
+              name="search"
+              type="text"
+              placeholder="Search services..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="aaravpos-search-input"
+            />
+            <div className="aaravpos-search-actions">
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm("")}
-                  className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition"
+                  className="aaravpos-search-clear"
                 >
                   <X size={16} />
                 </button>
@@ -308,13 +298,10 @@ export default function ServiceProfessionalPage() {
             </div>
           </div>
         </div>
-
         {/* SUPER CATEGORY UI */}
-
         {viewType === "supercategory" && (
           <>
             {/* SUPER CATEGORY CARDS */}
-
             <div
               ref={scrollRef}
               onWheel={(e) => {
@@ -322,7 +309,7 @@ export default function ServiceProfessionalPage() {
                   scrollRef.current.scrollLeft += e.deltaY;
                 }
               }}
-              className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-none w-full mb-3 border border-black/20 p-1"
+              className="aaravpos-supercategory-wrapper"
             >
               {filteredSuperCategories.map((superCat: any) => (
                 <button
@@ -332,24 +319,21 @@ export default function ServiceProfessionalPage() {
 
                     setSelectedSubCategory(superCat?.categories?.[0] || null);
                   }}
-                  className={`border text-left py-2 px-4 transition-all cursor-pointer min-w-fit ${selectedSuperCategory?.id === superCat.id
-                    ? "border-btn-bg-hover/50 bg-btn-bg-hover/10"
-                    : "border-black/30 bg-white hover:border-btn-bg/50"
+                  className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id
+                    ? "active"
+                    : ""
                     }`}
                 >
-                  <h3 className="font-medium text-sm mb-1 font-serif">
+                  <h3 className="aaravpos-supercategory-title">
                     {superCat.name}
                   </h3>
-
-                  <p className="text-[10px] uppercase tracking-[1px] font-semibold text-black/60">
+                  <p className="aaravpos-supercategory-count">
                     {superCat?.categories?.length || 0} Sub Categories
                   </p>
                 </button>
               ))}
             </div>
-
             {/* SUB CATEGORIES */}
-
             {selectedSuperCategory && (
               <div
                 ref={scrollRef}
@@ -358,13 +342,11 @@ export default function ServiceProfessionalPage() {
                     scrollRef.current.scrollLeft += e.deltaY;
                   }
                 }}
-                className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-none w-full mb-5"
+                className="aaravpos-supercategory-wrapper"
               >
                 <button
                   onClick={() => setSelectedSubCategory(null)}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedSubCategory
-                    ? "bg-black text-white border-black"
-                    : "bg-white border-border hover:border-black"
+                  className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
                     }`}
                 >
                   All Services (
@@ -374,14 +356,13 @@ export default function ServiceProfessionalPage() {
                   )}
                   )
                 </button>
-
                 {selectedSuperCategory?.categories?.map((subCat: any) => (
                   <button
                     key={subCat.id}
                     onClick={() => setSelectedSubCategory(subCat)}
-                    className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedSubCategory?.id === subCat.id
-                      ? "bg-black text-white border-black"
-                      : "bg-white border-border hover:border-black"
+                    className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === subCat.id
+                      ? "active"
+                      : ""
                       }`}
                   >
                     {subCat.name}
@@ -391,60 +372,45 @@ export default function ServiceProfessionalPage() {
             )}
           </>
         )}
-
         {/* STANDALONE CATEGORY UI */}
-
         {viewType === "standalone" && (
-          <div className="flex flex-col lg:flex-row gap-4 items-start mb-4">
-            <div
-              ref={scrollRef}
-              onWheel={(e) => {
-                if (scrollRef.current) {
-                  scrollRef.current.scrollLeft += e.deltaY;
-                }
-              }}
-              className="flex flex-nowrap gap-2 overflow-x-auto scrollbar-none w-full"
+          <div
+            ref={scrollRef}
+            onWheel={(e) => {
+              if (scrollRef.current) {
+                scrollRef.current.scrollLeft += e.deltaY;
+              }
+            }}
+            className="aaravpos-supercategory-wrapper"
+          >
+            <button
+              onClick={() => dispatch(setCategory(null))}
+              className={`aaravpos-supercategory-btn ${!selectedCategory ? "active" : ""}`}
             >
+              All Services (
+              {filteredStandaloneCategories.reduce(
+                (sum: number, c: any) => sum + c.services.length,
+                0,
+              )}
+              )
+            </button>
+            {filteredStandaloneCategories.map((cat: any) => (
               <button
-                onClick={() => dispatch(setCategory(null))}
-                className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${!selectedCategory
-                  ? "bg-black text-white border-black"
-                  : "bg-white border-border hover:border-black"
+                key={cat.id}
+                onClick={() => dispatch(setCategory(cat))}
+                className={`aaravpos-supercategory-btn ${selectedCategory?.id === cat.id
+                  ? "active"
+                  : ""
                   }`}
               >
-                All Services (
-                {filteredStandaloneCategories.reduce(
-                  (sum: number, c: any) => sum + c.services.length,
-                  0,
-                )}
-                )
+                {cat.name} ({cat.services.length})
               </button>
-
-              {filteredStandaloneCategories.map((cat: any) => (
-                <button
-                  key={cat.id}
-                  onClick={() => dispatch(setCategory(cat))}
-                  className={`px-4 py-2 text-xs border whitespace-nowrap transition-all cursor-pointer ${selectedCategory?.id === cat.id
-                    ? "bg-black text-white border-black"
-                    : "bg-white border-border hover:border-black"
-                    }`}
-                >
-                  {cat.name} ({cat.services.length})
-                </button>
-              ))}
-            </div>
+            ))}
           </div>
         )}
-
         {/* SERVICES */}
-
-        <div
-          className={`overflow-y-auto pb-20 lg:pb-4 scrollbar-none ${viewType === "standalone"
-            ? "h-[calc(100dvh-315px)] md:h-[calc(100dvh-300px)]"
-            : "h-[calc(100dvh-415px)] lg:h-[calc(100dvh-390px)]"
-            }`}
-        >
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-3">
+        <div className={`aaravpos-services-wrapper ${viewType}`}>
+          <div className="aaravpos-services-grid">
             {loading ? (
               Array.from({ length: 10 }).map((_, i) => (
                 <ServiceSkeletonCard key={i} />
@@ -455,7 +421,6 @@ export default function ServiceProfessionalPage() {
                   const isSelected = selectedServices.some(
                     (s: any) => s.id === svc.id,
                   );
-
                   return (
                     <motion.div
                       key={svc.id}
@@ -481,94 +446,71 @@ export default function ServiceProfessionalPage() {
                           );
                         }
                       }}
-                      className={[
-                        "relative border rounded-md p-3 cursor-pointer transition-all ",
-                        isSelected
-                          ? "border-btn-bg/80 bg-btn-bg-hover/5"
-                          : "border-black/30 hover:border-btn-bg-hover/80 bg-white",
-                      ].join(" ")}
+                      className={`aaravpos-service-card ${isSelected ? "active" : ""}`}
                     >
                       {/* TAX */}
-
                       {hasActiveTax(svc) && (
-                        <span className="absolute top-0 left-0 text-[9px] px-2 py-0.5 bg-green-700 text-white rounded-br-md rounded-tl-md">
+                        <span className="aaravpos-tax-badge">
                           TAX
                         </span>
                       )}
-
                       {/* CONSENT */}
-
                       {isConsentRequiredService(svc) && (
-                        <span className="absolute top-0 right-0 text-[9px] px-2 py-0.5 bg-black/80 text-white rounded-bl-md rounded-tr-md">
+                        <span className="aaravpos-consent-badge">
                           CONSENT
                         </span>
                       )}
-
                       {/* NAME */}
-
-                      <p className="font-bold text-sm mb-1 mt-3 line-clamp-1 uppercase">
+                      <p className="aaravpos-service-title">
                         {svc.name}
                       </p>
-
                       {/* DESCRIPTION */}
-
-                      <div className="relative group">
-                        <p className="text-xs font-semibold text-black/40 line-clamp-1 uppercase">
+                      <div className="aaravpos-service-description-wrapper">
+                        <p className="aaravpos-service-description">
                           {svc.description}
                         </p>
-
                         {svc.description?.length > 30 && (
-                          <div className="absolute hidden group-hover:block bg-neutral-100 text-xs p-2 rounded top-3 mt-1 z-10 w-52">
+                          <div className="aaravpos-service-tooltip">
                             {svc.description}
                           </div>
                         )}
                       </div>
-
                       {/* PRICE */}
-
-                      <p className="text-sm font-semibold text-black/60 mb-2 flex justify-between mt-2">
+                      <p className="aaravpos-service-price">
                         <span>
                           {svc.estimated_time
                             ? `${svc.estimated_time} min`
                             : `${svc.min_time}-${svc.max_time} min`}
                         </span>
-
-                        <span className="font-mono flex items-center gap-1">
+                        <span className="aaravpos-service-price-right">
                           <CurrencyIcon size={14} />
-
                           {svc.price
                             ? svc.price
                             : `${svc.min_price}-${svc.max_price}`}
                         </span>
                       </p>
-
                       {/* ACTIONS */}
-
-                      <div className="flex items-center justify-start mt-4 border border-gray-300 max-w-fit">
+                      <div className="aaravpos-service-actions">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
 
                             dispatch(decrementService(String(svc.id)));
                           }}
-                          className="w-10 h-8 flex items-center justify-center hover:bg-stone-100 transition-all"
+                          className="aaravpos-service-action-btn"
                         >
                           <Minus size={14} />
                         </button>
-
-                        <span className="text-sm font-semibold min-w-5 w-10 h-8 border-x border-gray-300 text-center flex items-center justify-center">
+                        <span className="aaravpos-service-qty">
                           {selectedServices.find((s: any) => s.id === svc.id)
                             ?.qty || 0}
                         </span>
-
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-
                             const exists = selectedServices.find(
                               (s: any) => s.id === svc.id,
                             );
-
                             if (!exists) {
                               dispatch(
                                 toggleService({
@@ -582,7 +524,7 @@ export default function ServiceProfessionalPage() {
                               dispatch(incrementService(String(svc.id)));
                             }
                           }}
-                          className="w-10 h-8 bg-btn-bg/80 text-white flex items-center justify-center hover:bg-btn-bg-hover/90 transition-all"
+                          className="aaravpos-service-action-btn plus"
                         >
                           <Plus size={14} />
                         </button>
@@ -595,6 +537,6 @@ export default function ServiceProfessionalPage() {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </MainLayout >
   );
 }

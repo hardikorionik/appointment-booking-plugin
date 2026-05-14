@@ -137,6 +137,97 @@
     line-height: 1.1;
 }
 
+
+.aaravpos-main-layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* CONTENT WRAPPER */
+.aaravpos-layout-wrapper {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    position: relative;
+}
+
+.aaravpos-main-content {
+    padding: 16px;
+    position: relative;
+}
+
+.aaravpos-mobile-button {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aaravpos-view-order-btn {
+    padding: 12px 34px;
+    font-size: 14px;
+    border-radius: 999px;
+    background: var(--btn-bg);
+    color: #ffffff;
+    border: none;
+    font-family: var(--font-dm-sans);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-view-order-btn:hover {
+    opacity: 0.9;
+}
+
+.aaravpos-view-order-btn:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+}
+
+.aaravpos-sidebar {
+    display: none;
+    flex-direction: column;
+    background: var(--surface-bg, #ffffff);
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    padding-bottom: 14px;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.aaravpos-sidebar-mobile {
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    height: 100vh;
+    background: #ffffff;
+    border-radius: 16px 16px 0 0;
+
+    display: flex;
+    flex-direction: column;
+
+    animation: aaravposFadeIn 0.25s ease;
+}
+
+.aaravpos-sidebar-mobile-content {
+    flex: 1;
+    position: fixed;
+    inset: 0;
+    padding: 16px;
+    overflow-y: auto;
+}
+
 /* =========================
    OUTLET LIST COMPONENT
 ========================= */
@@ -572,6 +663,266 @@
     color: #000;
 }
 
+.aaravpos-supercategory-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
+    overflow-x: auto;
+    margin-bottom: 12px;
+    padding: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    scrollbar-width: none;
+}
+
+.aaravpos-supercategory-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.aaravpos-supercategory-btn {
+    min-width: fit-content;
+    padding: 8px 16px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background: #ffffff;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.aaravpos-supercategory-btn:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+.aaravpos-supercategory-btn.active {
+    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff
+}
+
+.aaravpos-supercategory-btn.active .aaravpos-supercategory-count {
+    color: #fff
+}
+
+.aaravpos-supercategory-title {
+    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.aaravpos-supercategory-count {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* SERVICES CONTAINER */
+.aaravpos-services-wrapper {
+    overflow-y: auto;
+    padding-bottom: 80px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.aaravpos-services-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+/* STANDALONE HEIGHT */
+.aaravpos-services-wrapper.standalone {
+    height: calc(100dvh - 315px);
+}
+
+/* SUPER CATEGORY HEIGHT */
+.aaravpos-services-wrapper.supercategory {
+    height: calc(100dvh - 415px);
+}
+
+/* GRID */
+.aaravpos-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+}
+
+/* CARD */
+.aaravpos-service-card {
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    padding: 12px;
+    cursor: pointer;
+    background: #ffffff;
+    transition: all 0.25s ease;
+}
+
+.aaravpos-service-card:hover {
+    border-color: rgba(0, 0, 0, 0.6);
+}
+
+.aaravpos-service-card.active {
+    border-color: var(--btn-bg);
+    background: rgba(0, 0, 0, 0.03);
+}
+
+/* BADGES */
+.aaravpos-tax-badge,
+.aaravpos-consent-badge {
+    position: absolute;
+    top: 0;
+    font-size: 9px;
+    padding: 2px 8px;
+    color: #fff;
+}
+
+.aaravpos-tax-badge {
+    left: 0;
+    background: #15803d;
+    border-radius: 0 0 6px 0;
+}
+
+.aaravpos-consent-badge {
+    right: 0;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 0 0 0 6px;
+}
+
+/* TITLE */
+.aaravpos-service-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* DESCRIPTION */
+.aaravpos-service-description-wrapper {
+    position: relative;
+}
+
+.aaravpos-service-description {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.45);
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.aaravpos-service-tooltip {
+    position: absolute;
+    display: none;
+    top: 20px;
+    left: 0;
+    z-index: 10;
+    width: 208px;
+    padding: 8px;
+    font-size: 12px;
+    background: #f5f5f5;
+    border-radius: 6px;
+}
+
+.aaravpos-service-description-wrapper:hover .aaravpos-service-tooltip {
+    display: block;
+}
+
+/* PRICE ROW */
+.aaravpos-service-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.aaravpos-service-price-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: monospace;
+}
+
+/* ACTIONS */
+.aaravpos-service-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 16px;
+    border: 1px solid #d1d5db;
+    width: fit-content;
+}
+
+.aaravpos-service-action-btn {
+    width: 40px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.aaravpos-service-action-btn:hover {
+    background: #f5f5f4;
+}
+
+.aaravpos-service-action-btn.plus {
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+}
+
+.aaravpos-service-action-btn.plus:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+.aaravpos-service-qty {
+    width: 40px;
+    height: 32px;
+    border-left: 1px solid #d1d5db;
+    border-right: 1px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* =========================
+   SKELETON CARD
+========================= */
+.aaravpos-skeleton-card {
+    position: relative;
+    height: 134px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #e0e0e0;
+}
+
+.aaravpos-skeleton-shimmer {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.5),
+            transparent);
+    animation: aaravpos-shimmer 1.2s infinite;
+}
+
+
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */
@@ -604,6 +955,27 @@
 
     .aaravpos-services-wrapper.standalone {
         height: calc(100dvh - 300px);
+    }
+
+    .aaravpos-services-wrapper.standalone {
+        height: calc(100dvh - 300px);
+    }
+
+    .aaravpos-layout-wrapper {
+        grid-template-columns: minmax(0, 1fr) 350px;
+    }
+
+    .aaravpos-sidebar {
+        display: flex;
+    }
+
+    .aaravpos-mobile-button {
+        display: none;
+    }
+
+    .aaravpos-sidebar-mobile-content {
+        padding-left: 24px;
+        padding-right: 24px;
     }
 }
 
@@ -649,6 +1021,18 @@
         align-items: flex-end;
         gap: 32px;
     }
+
+    .aaravpos-services-wrapper {
+        padding-bottom: 16px;
+    }
+
+    .aaravpos-services-wrapper.supercategory {
+        height: calc(100dvh - 390px);
+    }
+
+    .aaravpos-layout-wrapper {
+        grid-template-columns: minmax(0, 1fr) 360px;
+    }
 }
 
 @media (min-width: 1280px) {
@@ -667,7 +1051,20 @@
     }
 }
 
-/* ─── KEYFRAMES ───────────────────────────────────────────── */
+/* =========================
+   KEYFRAMES
+========================= */
+
+@keyframes aaravpos-shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
 @keyframes fadeUp {
     from {
         opacity: 0;
@@ -722,6 +1119,18 @@
     from {
         opacity: 0;
         transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes aaravposFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
     }
 
     to {

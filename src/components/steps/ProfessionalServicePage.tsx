@@ -67,7 +67,7 @@ export default function ProfessionalServicePage() {
       }
     >
       <Breadcrumb />
-      <div className="mt-5">
+      <div className="aaravpos-margin-top-20">
         <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
           Choose a Professional
         </h1>
@@ -111,11 +111,10 @@ export default function ProfessionalServicePage() {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${
-                      selectedProfessional?.id === p.id
+                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
                         ? "border-red bg-[#fff8f8]"
                         : "bg-white hover:border-red"
-                    }`}
+                      }`}
                   >
                     {p.imageUrl ? (
                       <img
