@@ -65,11 +65,11 @@ const ProfessionalSidebar = ({
                   <img
                     src={pro.imageUrl}
                     alt={pro.name}
-                    className="w-10 h-10 rounded-md object-cover"
+                    className="w-10 h-10 rounded-lg object-cover border border-black/10"
                   />
                 ) : (
                   <div
-                    className="w-10 h-10 rounded-md bg-btn-bg/50 text-white flex items-center justify-center"
+                    className="w-10 h-10 rounded-lg bg-btn-bg/50 text-white flex items-center justify-center"
                     style={{
                       background: pro.color || "#111",
                     }}

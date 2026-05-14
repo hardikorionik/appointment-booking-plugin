@@ -7,10 +7,7 @@ import { toggleProfessional } from "@/slices/serviceSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import {
-  ServiceState,
-  Staff,
-} from "@/types";
+import { ServiceState, Staff } from "@/types";
 import ProfessionalSidebar from "../sidebar/ProfessionalSidebar";
 
 /* =========================
@@ -56,10 +53,9 @@ export default function ProfessionalServicePage() {
     (state: RootState) => state.service,
   );
 
-
   const isMobile = width < 768;
 
-  const showEmpty = (!staff || staff.length === 0);
+  const showEmpty = !staff || staff.length === 0;
 
   return (
     <MainLayout
@@ -86,7 +82,7 @@ export default function ProfessionalServicePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.25 }}
-              className="text-sm text-red-500"
+              className="text-sm text-btn-bg/90 font-semibold"
             >
               No staff available for selected services
             </motion.p>
@@ -115,10 +111,11 @@ export default function ProfessionalServicePage() {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
-                      ? "border-red bg-[#fff8f8]"
-                      : "bg-white hover:border-red"
-                      }`}
+                    className={`pro-card border border-border rounded-sm p-4 cursor-pointer transition flex items-center gap-4 ${
+                      selectedProfessional?.id === p.id
+                        ? "border-red bg-[#fff8f8]"
+                        : "bg-white hover:border-red"
+                    }`}
                   >
                     {p.imageUrl ? (
                       <img
@@ -138,9 +135,7 @@ export default function ProfessionalServicePage() {
                     <div>
                       <p className="font-semibold text-sm">{p.name}</p>
 
-                      <p className="text-xs text-gray-500">
-                        {p.staff_type}
-                      </p>
+                      <p className="text-xs text-gray-500">{p.staff_type}</p>
                     </div>
                   </motion.div>
                 );
