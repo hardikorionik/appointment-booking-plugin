@@ -145,7 +145,7 @@ export default function ServicesPage() {
 
       setSelectedSuperCategory(firstSuperCategory);
 
-      setSelectedSubCategory(firstSuperCategory?.categories?.[0] || null);
+      setSelectedSubCategory(null);
     }
   }, [viewType, superCategories, selectedSuperCategory]);
 
@@ -245,8 +245,7 @@ export default function ServicesPage() {
                   key={superCat.id}
                   onClick={() => {
                     setSelectedSuperCategory(superCat);
-
-                    setSelectedSubCategory(superCat?.categories?.[0] || null);
+                    setSelectedSubCategory(null);
                   }}
                   className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id
                     ? "active"
@@ -295,7 +294,7 @@ export default function ServicesPage() {
                       : ""
                       }`}
                   >
-                    {subCat.name}
+                    {subCat.name} ({subCat.services.length})
                   </button>
                 ))}
               </div>
@@ -348,7 +347,23 @@ export default function ServicesPage() {
               ))
             ) : (
               <AnimatePresence mode="popLayout">
-                {servicesToShow?.map((svc: any, index: number) => {
+                {!servicesToShow?.length ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="aaravpos-empty-services"
+                  >
+                    <h3 className="aaravpos-empty-services-title">
+                      No Services Found
+                    </h3>
+                    <p className="aaravpos-empty-services-text">
+                      {searchTerm
+                        ? "No services found for your search."
+                        : "No services are available for selected category."}
+                    </p>
+                  </motion.div>
+                ) : servicesToShow?.map((svc: any, index: number) => {
                   const isSelected = selectedServices.some(
                     (s: any) => s.id === svc.id,
                   );
@@ -409,10 +424,18 @@ export default function ServicesPage() {
                             : `${svc.min_time}-${svc.max_time} min`}
                         </span>
                         <span className="aaravpos-service-price-right">
-                          <CurrencyIcon size={14} />
-                          {svc.price
-                            ? svc.price
-                            : `${svc.min_price}-${svc.max_price}`}
+                          {svc.price ? (
+                            <>
+                              <CurrencyIcon size={14} />
+                              {svc.price}
+                            </>
+                          ) : (
+                            <>
+                              <CurrencyIcon size={14} />
+                              {svc.min_price} - <CurrencyIcon size={14} />
+                              {svc.max_price}
+                            </>
+                          )}
                         </span>
                       </p>
                       {/* ACTIONS */}

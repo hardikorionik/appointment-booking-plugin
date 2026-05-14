@@ -1612,6 +1612,32 @@
     transform: translate(-50%);
 }
 
+.aaravpos-empty-services {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+    text-align: center;
+    border: 1px dashed rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+.aaravpos-empty-services-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.aaravpos-empty-services-text {
+    max-width: 500px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.5);
+}
+
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */

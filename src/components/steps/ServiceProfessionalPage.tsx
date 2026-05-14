@@ -94,39 +94,56 @@ export default function ServiceProfessionalPage() {
       : [],
   );
 
-  /* FILTER STANDALONE CATEGORIES */
-
+  // FILTER STANDALONE CATEGORIES
   const filteredStandaloneCategories = standaloneCategories
-    ?.filter((category: any) => assignedCategoryIds.has(category.id))
-    ?.map((category: any) => ({
+    .map((category: any) => ({
       ...category,
-
-      services: category.services.filter((service: Service) =>
-        assignedServiceIds.has(service.id),
-      ),
-    }));
-
-  /* FILTER SUPER CATEGORIES */
-
-  const filteredSuperCategories = superCategories
-    ?.map((superCat: any) => ({
-      ...superCat,
-
-      categories: superCat.categories
-        ?.filter((category: any) => assignedCategoryIds.has(category.id))
-        ?.map((category: any) => ({
-          ...category,
-
-          services: category.services.filter((service: Service) =>
-            assignedServiceIds.has(service.id),
-          ),
-        }))
-        ?.filter((category: any) => category.services.length > 0),
+      services:
+        category.services?.filter((service: Service) =>
+          assignedServiceIds.has(service.id),
+        ) || [],
     }))
-    ?.filter((superCat: any) => superCat.categories.length > 0);
+    .filter(
+      (category: any) =>
+        assignedCategoryIds.has(category.id) && category.services.length > 0,
+    );
+
+  // FILTER SUPER CATEGORIES
+  const filteredSuperCategories = superCategories
+    .map((superCat: any) => ({
+      ...superCat,
+      categories:
+        superCat.categories
+          ?.map((category: any) => ({
+            ...category,
+            services:
+              category.services?.filter((service: Service) =>
+                assignedServiceIds.has(service.id),
+              ) || [],
+          }))
+          .filter(
+            (category: any) =>
+              assignedCategoryIds.has(category.id) &&
+              category.services.length > 0,
+          ) || [],
+    }))
+    .filter((superCat: any) => superCat.categories.length > 0);
+
+  const hasStandaloneServices = filteredStandaloneCategories.length > 0;
+
+  const hasSuperCategoryServices = filteredSuperCategories.length > 0;
+
+  useEffect(() => {
+    if (!hasSuperCategoryServices && hasStandaloneServices) {
+      setViewType("standalone");
+    }
+
+    if (!hasStandaloneServices && hasSuperCategoryServices) {
+      setViewType("supercategory");
+    }
+  }, [hasStandaloneServices, hasSuperCategoryServices]);
 
   /* STANDALONE SERVICES */
-
   const allStandaloneServices = filteredStandaloneCategories?.flatMap(
     (cat: any) => cat.services,
   );
@@ -211,7 +228,7 @@ export default function ServiceProfessionalPage() {
 
       setSelectedSuperCategory(firstSuperCategory);
 
-      setSelectedSubCategory(firstSuperCategory?.categories?.[0] || null);
+      setSelectedSubCategory(null);
     }
   }, [viewType, filteredSuperCategories, selectedSuperCategory]);
 
@@ -249,6 +266,7 @@ export default function ServiceProfessionalPage() {
           <div className="aaravpos-tab-group">
             <button
               onClick={() => {
+                if (!hasSuperCategoryServices) return;
                 setViewType("supercategory");
                 setSelectedSubCategory(null);
                 setSelectedSuperCategory(null);
@@ -262,6 +280,7 @@ export default function ServiceProfessionalPage() {
             </button>
             <button
               onClick={() => {
+                if (!hasStandaloneServices) return;
                 setViewType("standalone");
               }}
               className={`aaravpos-tab-btn ${viewType === "standalone"
@@ -317,7 +336,7 @@ export default function ServiceProfessionalPage() {
                   onClick={() => {
                     setSelectedSuperCategory(superCat);
 
-                    setSelectedSubCategory(superCat?.categories?.[0] || null);
+                    setSelectedSubCategory(null);
                   }}
                   className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id
                     ? "active"
@@ -365,7 +384,7 @@ export default function ServiceProfessionalPage() {
                       : ""
                       }`}
                   >
-                    {subCat.name}
+                    {subCat.name} ({subCat.services.length})
                   </button>
                 ))}
               </div>
@@ -417,7 +436,23 @@ export default function ServiceProfessionalPage() {
               ))
             ) : (
               <AnimatePresence mode="popLayout">
-                {servicesToShow?.map((svc: any, index: number) => {
+                {!servicesToShow?.length ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="aaravpos-empty-services"
+                  >
+                    <h3 className="aaravpos-empty-services-title">
+                      No Services Found
+                    </h3>
+                    <p className="aaravpos-empty-services-text">
+                      {searchTerm
+                        ? "No services found for your search."
+                        : "No services are available for this professional."}
+                    </p>
+                  </motion.div>
+                ) : servicesToShow?.map((svc: any, index: number) => {
                   const isSelected = selectedServices.some(
                     (s: any) => s.id === svc.id,
                   );
@@ -483,10 +518,18 @@ export default function ServiceProfessionalPage() {
                             : `${svc.min_time}-${svc.max_time} min`}
                         </span>
                         <span className="aaravpos-service-price-right">
-                          <CurrencyIcon size={14} />
-                          {svc.price
-                            ? svc.price
-                            : `${svc.min_price}-${svc.max_price}`}
+                          {svc.price ? (
+                            <>
+                              <CurrencyIcon size={14} />
+                              {svc.price}
+                            </>
+                          ) : (
+                            <>
+                              <CurrencyIcon size={14} />
+                              {svc.min_price} - <CurrencyIcon size={14} />
+                              {svc.max_price}
+                            </>
+                          )}
                         </span>
                       </p>
                       {/* ACTIONS */}
