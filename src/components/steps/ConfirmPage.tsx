@@ -645,79 +645,122 @@ export default function ConfirmPage(): JSX.Element {
         >
             <>
                 <Breadcrumb />
-                <div className="aaravpos-margin-top-20">
-                    <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
-                        Confirm Booking
-                    </h1>
-                    <p className="text-sm text-black/60 mb-6 max-md:text-xs">
-                        Review your appointment details before booking
-                    </p>
-                    <div className="max-md:max-w-full">
-                        <div className="flex gap-3 items-center p-3 bg-surface rounded-sm mb-2">
-                            {image && (
-                                <div className="w-10 h-10 rounded-sm flex items-center justify-center text-white text-xs">
-                                    <img
-                                        src={image ?? "/logo.svg"}
-                                        alt="Logo"
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            )}
-                            <div>
-                                <p className="font-semibold text-sm">
-                                    {outletName ?? "-"}
-                                </p>
-                                <p className="text-xs text-black/70">
-                                    {address ?? "-"}
-                                    <br />
-                                </p>
-                            </div>
+               <div className="aaravpos-margin-top-20">
+                    <h1 className="aaravpos-page-title">
+          Confirm Booking
+        </h1>
+        <p className="aaravpos-sub-title">
+          Review your appointment details before booking
+        </p>
+                   
+                    <div className="arravpos-booking-wrapper">
+
+    {/* Outlet Info */}
+    <div className="arravpos-outlet-info">
+
+        {image && (
+            <div className="arravpos-outlet-logo">
+                <img
+                    src={image ?? "/logo.svg"}
+                    alt="Logo"
+                    className="arravpos-outlet-logo-img"
+                />
+            </div>
+        )}
+
+        <div className="arravpos-outlet-content">
+            <p className="arravpos-outlet-name">
+                {outletName ?? "-"}
+            </p>
+
+            <p className="arravpos-outlet-address">
+                {address ?? "-"}
+                <br />
+            </p>
+        </div>
+
+    </div>
+
+    {/* Main Scroll */}
+    <div className="arravpos-booking-scroll">
+
+        <div className="arravpos-booking-grid">
+
+            {/* Appointment Section */}
+            <div className="arravpos-booking-column">
+
+                <SectionLabel>
+                    Appointment
+                </SectionLabel>
+
+                <Card>
+
+                    <div className="arravpos-appointment-header">
+
+                        <Avatar pro={selectedProfessional} />
+
+                        <div className="arravpos-appointment-content">
+
+                            <p className="arravpos-appointment-name">
+                                {selectedProfessional?.name}
+                            </p>
+
+                            <p className="arravpos-appointment-services">
+                                {services
+                                    .map((s) => s.name)
+                                    .join(", ")}
+                            </p>
+
                         </div>
-                        <div className="h-[calc(100dvh-285px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto scrollbar-none">
-                            <div className="xl:flex gap-7 justify-between">
-                                <div className="w-full">
-                                    <SectionLabel>Appointment</SectionLabel>
-                                    <Card>
-                                        <div className="flex items-center gap-3">
-                                            <Avatar pro={selectedProfessional} />
-                                            <div className="flex-1">
-                                                <p className="font-semibold text-sm">
-                                                    {selectedProfessional?.name}
-                                                </p>
-                                                <p className="text-xs text-gray-500 line-clamp-1">
-                                                    {services.map((s) => s.name).join(", ")}
-                                                </p>
-                                            </div>
-                                            <span className="font-mono font-semibold">
-                                                ${totalBasePrice}
-                                            </span>
-                                        </div>
-                                        <div className="flex flex-row items-center gap-2 mt-3 pt-3 border-t">
-                                            <CalendarDays />
-                                            <span className="font-semibold text-sm">
-                                                {dateStr ?? "No time selected"}
-                                            </span>
-                                        </div>
-                                    </Card>
-                                </div>
-                                <div className="w-full">
-                                    <SectionLabel>Payment Method</SectionLabel>
-                                    <PayOption
-                                        icon={<Store />}
-                                        label="Pay in person"
-                                        selected={payType === "person"}
-                                        onClick={() => setPayType("person")}
-                                    />
-                                    <PayOption
-                                        icon={<CreditCard />}
-                                        label="Pay with card"
-                                        selected={payType === "card"}
-                                        onClick={() => setPayType("card")}
-                                    />
-                                </div>
-                            </div>
-                        </div>
+
+                        <span className="arravpos-appointment-price">
+                            ${totalBasePrice}
+                        </span>
+
                     </div>
+
+                    <div className="arravpos-appointment-date">
+
+                        <CalendarDays />
+
+                        <span className="arravpos-appointment-date-text">
+                            {dateStr ?? "No time selected"}
+                        </span>
+
+                    </div>
+
+                </Card>
+
+            </div>
+
+            {/* Payment Section */}
+            <div className="arravpos-booking-column">
+
+                <SectionLabel>
+                    Payment Method
+                </SectionLabel>
+
+                <PayOption
+                    icon={<Store />}
+                    label="Pay in person"
+                    selected={payType === "person"}
+                    onClick={() => setPayType("person")}
+                />
+
+                <PayOption
+                    icon={<CreditCard />}
+                    label="Pay with card"
+                    selected={payType === "card"}
+                    onClick={() => setPayType("card")}
+                />
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
                 </div>
             </>
             {showPaymentModal && (
