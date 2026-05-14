@@ -50,12 +50,13 @@ export default function TimePage(): JSX.Element {
 
   const [visibleCount, setVisibleCount] = useState<number>(11);
 
-
   const { staff, selectedServices, selectedProfessional } = useSelector(
     (state: OutletRootState) => state.service,
   );
 
-  const { tenantId, timeZone } = useSelector((state: OutletRootState) => state?.outletDetails);
+  const { tenantId, timeZone } = useSelector(
+    (state: OutletRootState) => state?.outletDetails,
+  );
 
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } =
     useSelector((state: OutletRootState) => state.slots);
@@ -69,10 +70,7 @@ export default function TimePage(): JSX.Element {
     return [slots.morning, slots.afternoon, slots.evening].flat();
   }, [slots]);
 
-  const startDate = useMemo(
-    () => DateTime.now().setZone(timeZone),
-    [timeZone],
-  );
+  const startDate = useMemo(() => DateTime.now().setZone(timeZone), [timeZone]);
 
   const generateDates = (sdate: DateTime): DateItem[] => {
     try {
@@ -145,7 +143,7 @@ export default function TimePage(): JSX.Element {
         tenantId,
         staffId: selectedProfessional.id,
         date: formattedDate,
-      })
+      }),
     );
   }, [selectedProfessional?.id, formattedDate, dispatch, tenantId]);
 
@@ -410,7 +408,8 @@ export default function TimePage(): JSX.Element {
             dispatch(nextStep());
           }}
           disabled={!selectedTime || !selectedSlotIndexes.length}
-          className="aaravpos-btn">
+          className="aaravpos-btn"
+        >
           <span className="aaravpos-btn-content">Fill Details</span>
         </button>
       }
@@ -418,23 +417,26 @@ export default function TimePage(): JSX.Element {
       <Breadcrumb />
 
       <div className="mt-5 flex items-center justify-between mb-3">
-        <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl tracking-[1px] leading-none">
+        <h1 className="aaravpos-page-title aaravpos-margin-bottom-20 ">
           Choose a Time
         </h1>
       </div>
 
-      <div className="mt-2 mb-6 flex flex-row flex-wrap">
-        <div className="flex items-stretch gap-1.5 overflow-x-auto scrollbar-none">
-
+      <div className="arravpos-date-wrapper">
+        <div className="arravpos-date-strip">
           <DateNavBtn onClick={() => handleShift(-1)}>
             <ChevronLeft size={20} />
           </DateNavBtn>
 
           {dates.slice(stripStart, stripStart + visibleCount).map((d) => {
             const dt = DateTime.fromISO(d.fullDate || "");
+
             const dow = dt.weekday % 7;
+
             const today = DateTime.now().setZone(timeZone).startOf("day");
+
             const isToday = dt.hasSame(today, "day");
+
             const isSelected =
               selectedDate?.day === d.day &&
               selectedDate?.month === d.month &&
@@ -444,22 +446,18 @@ export default function TimePage(): JSX.Element {
               <div
                 key={`${d.day}-${d.month}-${d.year}`}
                 onClick={() => handlePickDate(d)}
-                className={[
-                  "shrink-0 flex flex-col items-center px-3 py-2 rounded-sm cursor-pointer",
-                  "transition-all duration-150 min-w-12.5 select-none",
-                  isSelected ? "bg-btn-bg text-btn-text border-btn-bg" : "hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover",
-                ].join(" ")}
+                className={`arravpos-date-card ${
+                  isSelected
+                    ? "arravpos-date-card-active"
+                    : "arravpos-date-card-default"
+                }`}
               >
-                <span className="text-[10px] uppercase mb-1">
-                  {WEEK_DAYS[dow]}
-                </span>
+                <span className="arravpos-date-week">{WEEK_DAYS[dow]}</span>
 
-                <span className="font-mono text-lg">{d.day}</span>
+                <span className="arravpos-date-day">{d.day}</span>
 
                 {isToday && !isSelected && (
-                  <span className="text-[8px] text-red mt-1 font-bold">
-                    TODAY
-                  </span>
+                  <span className="arravpos-date-today">TODAY</span>
                 )}
               </div>
             );
@@ -472,27 +470,26 @@ export default function TimePage(): JSX.Element {
 
         <button
           onClick={() => setCalOpen(true)}
-          className="ml-4 p-2 text-sm gap-1.5 font-semibold max-md:text-xs flex flex-col items-center justify-center rounded-sm cursor-pointer transition-all duration-150 min-w-12.5 select-none bg-red text-white!"
+          className="arravpos-calendar-btn"
         >
           <Calendar1 size={16} />
+
           {selectedDate?.month != null
             ? `${MONTH_NAMES[selectedDate.month - 1]} ${selectedDate.year}`
             : `${MONTH_NAMES[startDate.month - 1]} ${startDate.year}`}
         </button>
       </div>
 
-      <div className="h-px bg-border mb-5" />
-
-      <div className="flex items-center gap-3 mb-5 p-3 bg-surface rounded-sm border border-border flex-wrap">
+      <div className="arravpos-selected-professional">
         {selectedProfessional?.imageUrl ? (
           <img
             src={selectedProfessional.imageUrl}
             alt={selectedProfessional.name}
-            className="w-10 h-10 rounded-full object-cover"
+            className="arravpos-selected-professional-image"
           />
         ) : (
           <div
-            className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"
+            className="arravpos-selected-professional-avatar"
             style={{
               background: selectedProfessional?.color || "#111",
             }}
@@ -501,10 +498,12 @@ export default function TimePage(): JSX.Element {
           </div>
         )}
 
-        <div className="flex-1 min-w-0">
-          <p className="font-semibold text-sm">{selectedProfessional?.name}</p>
+        <div className="arravpos-selected-professional-content">
+          <p className="arravpos-selected-professional-name">
+            {selectedProfessional?.name}
+          </p>
 
-          <p className="text-xs text-muted truncate">
+          <p className="arravpos-selected-professional-services">
             {selectedStaffServices.map((s: any) => s.name).join(", ")} ·{" "}
             {totalDuration} mins
           </p>
@@ -512,18 +511,18 @@ export default function TimePage(): JSX.Element {
       </div>
 
       <div
-        className="overflow-y-auto scrollbar-none pb-20 lg:pb-4"
+        className="arravpos-scroll-area"
         style={{ height: `${height - 370}px` }}
       >
         {loading ? (
-          <div className="flex items-center justify-center w-full h-full">
-            <div className="animate-spin rounded-full h-8 w-8 border-3 border-red border-t-transparent"></div>
+          <div className="arravpos-loader-wrapper">
+            <div className="arravpos-loader" />
           </div>
         ) : (
           <>
             <SlotSection
               label="Morning"
-              icon={<Sunrise size={18} className="text-orange-400" />}
+              icon={<Sunrise size={18}className="arravpos-slot-icon" />}
               slots={amSlots}
               allSlots={allSlots}
               selectedSlotIndexes={selectedSlotIndexes}
@@ -536,7 +535,7 @@ export default function TimePage(): JSX.Element {
 
             <SlotSection
               label="Afternoon"
-              icon={<Sun size={18} className="text-orange-400" />}
+              icon={<Sun size={18} className="arravpos-slot-icon" />}
               slots={pmSlots}
               allSlots={allSlots}
               selectedSlotIndexes={selectedSlotIndexes}
@@ -549,7 +548,7 @@ export default function TimePage(): JSX.Element {
 
             <SlotSection
               label="Evening"
-              icon={<Moon size={18} className="text-orange-400" />}
+              icon={<Moon size={18} className="arravpos-slot-icon"/>}
               slots={evSlots}
               allSlots={allSlots}
               selectedSlotIndexes={selectedSlotIndexes}
@@ -607,54 +606,98 @@ function SlotSection({
 }: SlotSectionProps): JSX.Element | null {
   if (!slots || slots?.length === 0) return null;
   return (
-    <div className="mb-4 border border-border rounded-sm overflow-hidden">
-      <div
+
+    <div className="arravpos-slot-section">
+
+    <div
         onClick={onToggle}
-        className="flex items-center justify-between px-4 py-3 cursor-pointer bg-surface hover:bg-[rgba(215,38,61,0.08)] transition"
-      >
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-[1.2px] text-black/80">
-          <span>{icon}</span> {label}
+        className="arravpos-slot-section-header"
+    >
+
+        <div className="arravpos-slot-section-title">
+
+            <span>{icon}</span>
+
+            {label}
+
         </div>
+
         <span
-          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
+            className={`arravpos-slot-section-arrow ${
+                isOpen
+                    ? "arravpos-slot-section-arrow-open"
+                    : ""
             }`}
         >
-          <ChevronDown />
+            <ChevronDown />
         </span>
-      </div>
-      {isOpen && (
-        <div className="p-3 border-t border-border bg-white">
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2">
-            {slots.map((slot: SlotItem) => {
-              const globalIndex = allSlots.findIndex((s: SlotItem) => s.id === slot.id);
-              const isSelected = selectedSlotIndexes.includes(globalIndex);
-              const isDisabled = slot.isBooked || slot.status !== "AVAILABLE";
-              return (
-                <div
-                  key={slot.id}
-                  onClick={() => {
-                    if (!isDisabled) handleSlotSelect(globalIndex);
-                  }}
-                  className={[
-                    "pro-card flex flex-col items-center justify-center",
-                    "p-3 border border-border rounded-sm gap-1 transition-all",
-                    isDisabled
-                      ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                      : isSelected
-                        ? "bg-[#fff8f8] text-red border-red"
-                        : "bg-white hover:text-red hover:border-red cursor-pointer",
-                  ].join(" ")}
-                >
-                  <span className="font-mono text-sm">{slot.start_time}</span>
-                  <span className="text-[10px]">
-                    {isDisabled ? "Booked" : "Available"}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+
     </div>
+
+    {isOpen && (
+        <div className="arravpos-slot-section-content">
+
+            <div className="arravpos-slot-grid">
+
+                {slots.map((slot: SlotItem) => {
+                    const globalIndex =
+                        allSlots.findIndex(
+                            (s: SlotItem) =>
+                                s.id === slot.id
+                        );
+
+                    const isSelected =
+                        selectedSlotIndexes.includes(
+                            globalIndex
+                        );
+
+                    const isDisabled =
+                        slot.isBooked ||
+                        slot.status !==
+                            "AVAILABLE";
+
+                    return (
+                        <div
+                            key={slot.id}
+                            onClick={() => {
+                                if (
+                                    !isDisabled
+                                ) {
+                                    handleSlotSelect(
+                                        globalIndex
+                                    );
+                                }
+                            }}
+                            className={`arravpos-slot-card ${
+                                isDisabled
+                                    ? "arravpos-slot-card-disabled"
+                                    : isSelected
+                                    ? "arravpos-slot-card-selected"
+                                    : "arravpos-slot-card-default"
+                            }`}
+                        >
+
+                            <span className="arravpos-slot-time">
+                                {
+                                    slot.start_time
+                                }
+                            </span>
+
+                            <span className="arravpos-slot-status">
+                                {isDisabled
+                                    ? "Booked"
+                                    : "Available"}
+                            </span>
+
+                        </div>
+                    );
+                })}
+
+            </div>
+
+        </div>
+    )}
+
+</div>
   );
 }
