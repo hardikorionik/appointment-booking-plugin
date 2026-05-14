@@ -34,34 +34,32 @@ export default function ServiceSidebar({
           <p className="aaravpos-order-section-title">
             SELECTED SERVICES
           </p>
-          {selectedServices?.length > 0 && (
-            <ul className="aaravpos-order-list">
-              {selectedServices?.map((svc) => (
-                <li
-                  key={svc.id}
-                  className="aaravpos-order-item"
-                >
-                  <p className="aaravpos-order-service-name">
-                    {svc.name}
-                  </p>
-                  <div className="aaravpos-order-details">
-                    <div className="aaravpos-order-detail">
-                      <Package2 size={13} />
-                      <span>{svc.qty}</span>
-                    </div>
-                    <div className="aaravpos-order-detail center">
-                      <Clock3 size={13} />
-                      <span>{svc.min_time || svc.estimated_time} min</span>
-                    </div>
-                    <p className="aaravpos-order-detail right">
-                      <CurrencyIcon size={12} />
-                      {svc.price || svc.min_price}
-                    </p>
+          <ul className="aaravpos-order-list">
+            {selectedServices?.length > 0 && selectedServices?.map((svc) => (
+              <li
+                key={svc.id}
+                className="aaravpos-order-item"
+              >
+                <p className="aaravpos-order-service-name">
+                  {svc.name}
+                </p>
+                <div className="aaravpos-order-details">
+                  <div className="aaravpos-order-detail">
+                    <Package2 size={13} />
+                    <span>{svc.qty}</span>
                   </div>
-                </li>
-              ))}
-            </ul>
-          )}
+                  <div className="aaravpos-order-detail center">
+                    <Clock3 size={13} />
+                    <span>{svc.min_time || svc.estimated_time} min</span>
+                  </div>
+                  <p className="aaravpos-order-detail right">
+                    <CurrencyIcon size={12} />
+                    {svc.price || svc.min_price}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="aaravpos-order-footer">
           <div className="aaravpos-order-subtotal">
