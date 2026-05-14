@@ -206,13 +206,11 @@ export default function ServicesPage() {
               Standalone
             </button>
           </div>
-          <div className="aaravpos-search-wrapper">
+          <div className="aaravpos-search-wrapper aaravpos-mb-10">
             <span className="aaravpos-search-icon">
               <Search size={18} />
             </span>
             <input
-              id="search"
-              name="search"
               type="text"
               placeholder="Search services..."
               value={searchTerm}
@@ -231,7 +229,6 @@ export default function ServicesPage() {
             </div>
           </div>
         </div>
-
 
         {/* SUPER CATEGORY UI */}
         {viewType === "supercategory" && (
