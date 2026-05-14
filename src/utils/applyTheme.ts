@@ -12,7 +12,6 @@ export const hexToRgb = (hex: string) => {
 
 export const applyTheme = (theme?: Partial<ThemeSettings>) => {
     if (!theme) return;
-    console.log("------15", theme)
     const root = document.documentElement;
 
     /* Button */

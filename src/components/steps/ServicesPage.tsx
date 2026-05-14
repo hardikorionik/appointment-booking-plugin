@@ -172,66 +172,58 @@ export default function ServicesPage() {
     >
       <Breadcrumb />
       <div className="mt-5">
-        {/* HEADER */}
         <h1 className="aaravpos-page-title">
           Book A Service
         </h1>
-        {/* aaravpos-sub-title */}
         <p className="aaravpos-sub-title">
           Select from {outletName} Outlet's available services
         </p>
 
-        {/* SWITCH */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 lg:gap-8 mb-5 border-b border-black/40">
-          <div className="flex items-end gap-8 ">
+        <div className="aaravpos-topbar">
+          <div className="aaravpos-tab-group">
             <button
               onClick={() => {
                 setViewType("supercategory");
                 setSelectedSubCategory(null);
                 setSelectedSuperCategory(null);
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "supercategory"
-                ? "text-btn-bg border-b-2 border-btn-bg"
-                : "text-black/40 hover:text-black border-b-2 border-transparent"
+              className={`aaravpos-tab-btn ${viewType === "supercategory"
+                ? "active"
+                : "inactive"
                 }`}
             >
               Super Category
             </button>
-
             <button
               onClick={() => {
                 setViewType("standalone");
               }}
-              className={`text-xs uppercase tracking-[2px] font-semibold cursor-pointer pb-4 transition-all ${viewType === "standalone"
-                ? "text-btn-bg border-b-2 border-btn-bg"
-                : "text-black/40 hover:text-black border-b-2 border-transparent"
+              className={`aaravpos-tab-btn ${viewType === "standalone"
+                ? "active"
+                : "inactive"
                 }`}
             >
               Standalone
             </button>
           </div>
-
-          {/* SEARCH */}
-          <div className="pb-2">
-            <div className="relative w-full">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-                <Search size={18} />
-              </span>
-
-              <input
-                id="search"
-                name="search"
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full border border-black/30 rounded-md pl-9 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-black/20"
-              />
-
+          <div className="aaravpos-search-wrapper">
+            <span className="aaravpos-search-icon">
+              <Search size={18} />
+            </span>
+            <input
+              id="search"
+              name="search"
+              type="text"
+              placeholder="Search services..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="aaravpos-search-input"
+            />
+            <div className="aaravpos-search-actions">
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm("")}
-                  className="absolute cursor-pointer right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition"
+                  className="aaravpos-search-clear"
                 >
                   <X size={16} />
                 </button>
@@ -239,6 +231,7 @@ export default function ServicesPage() {
             </div>
           </div>
         </div>
+
 
         {/* SUPER CATEGORY UI */}
         {viewType === "supercategory" && (
@@ -502,6 +495,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </MainLayout >
   );
 }

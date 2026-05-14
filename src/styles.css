@@ -169,7 +169,7 @@
 
 .aaravpos-search-input {
     width: 100%;
-    height: 44px;
+    height: 36px;
     border-radius: 6px;
     border: 1px solid #d1d5db;
     background: #ffffff;
@@ -481,6 +481,90 @@
     line-height: 1.5;
 }
 
+.aaravpos-topbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.aaravpos-tab-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 32px;
+}
+
+.aaravpos-tab-btn {
+    padding-bottom: 16px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.aaravpos-tab-btn.active {
+    color: var(--btn-bg, #000);
+    border-bottom-color: var(--btn-bg, #000);
+}
+
+.aaravpos-tab-btn.inactive {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.aaravpos-tab-btn.inactive:hover {
+    color: #000;
+}
+
+.aaravpos-search-box {
+    position: relative;
+    width: 100%;
+}
+
+.aaravpos-search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.aaravpos-search-input {
+    width: 100%;
+    padding: 8px 40px 8px 36px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.aaravpos-search-input:focus {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.aaravpos-search-clear {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #9ca3af;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.aaravpos-search-clear:hover {
+    color: #000;
+}
+
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */
@@ -528,7 +612,7 @@
     }
 
     .aaravpos-search-wrapper {
-        max-width: 448px;
+        max-width: 300px;
     }
 
     .aaravpos-outlet-grid {
@@ -551,6 +635,12 @@
 
     .aaravpos-page-title {
         font-size: 36px;
+    }
+
+    .aaravpos-topbar {
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 32px;
     }
 }
 
