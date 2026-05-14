@@ -98,187 +98,244 @@ const ConsentModal = ({
           : false);
 
   return (
-    <div className="fixed inset-0 z-1024 bg-black/40 flex items-center justify-center">
-      <div className="fixed inset-0 bg-black/60" />
+    <div className="arravpos-consent-overlay">
 
-      <div className="relative bg-white rounded-xl p-4 w-[90%] lg:w-[60%] max-h-[95vh] overflow-y-auto z-10">
-        <div className="flex justify-between mb-2.5">
-          <h3 className="lg:text-xl text-base font-semibold text-gray-900">
-            {heading || "Consent Form"}
-          </h3>
+    <div className="arravpos-consent-backdrop" />
 
-          <button
-            onClick={handleClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-          >
-            <X />
-          </button>
+    <div className="arravpos-consent-modal">
+
+        {/* Header */}
+        <div className="arravpos-consent-header">
+
+            <h3 className="arravpos-consent-title">
+                {heading || "Consent Form"}
+            </h3>
+
+            <button
+                onClick={handleClose}
+                className="arravpos-consent-close-btn"
+            >
+                <X />
+            </button>
+
         </div>
 
-        <div className="max-h-[42vh]">
-          <div className="border border-gray-200 rounded-md p-4 bg-gray-50">
-            <div
-              dangerouslySetInnerHTML={{ __html: consent }}
-              className="text-gray-700 whitespace-pre-wrap overflow-y-auto max-h-[30vh]"
-            />
-          </div>
+        {/* Content */}
+        <div className="arravpos-consent-content-wrapper">
+
+            <div className="arravpos-consent-content-box">
+
+                <div
+                    dangerouslySetInnerHTML={{
+                        __html: consent,
+                    }}
+                    className="arravpos-consent-content"
+                />
+
+            </div>
+
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {enforcement === "CHECKBOX_ONLY" && (
-            <label
-              className="flex gap-2 items-center mt-3 border-gray-200"
-              htmlFor="accepted"
-            >
-              <input
-                type="checkbox"
-                {...register("accepted", {
-                  required: "You must accept terms",
-                })}
-                id="accepted"
-                className="w-4.5 h-4.5 text-red-500 bg-gray-100 border-gray-300 rounded"
-              />
 
-              <span className="text-sm text-gray-700 font-medium">
-                I have read and agree to the terms above
-              </span>
-            </label>
-          )}
+            {/* Checkbox */}
+            {enforcement === "CHECKBOX_ONLY" && (
+                <label
+                    className="arravpos-consent-checkbox-label"
+                    htmlFor="accepted"
+                >
 
-          {enforcement === "TYPED_NAME" && (
-            <div className="mt-4">
-              <label
-                className="block text-sm font-medium text-gray-700 mb-2"
-                htmlFor="typedName"
-              >
-                Full Name{" "}
-                <span className="text-red-500">*</span>
-              </label>
+                    <input
+                        type="checkbox"
+                        {...register("accepted", {
+                            required:
+                                "You must accept terms",
+                        })}
+                        id="accepted"
+                        className="arravpos-consent-checkbox"
+                    />
 
-              <input
-                {...register("typedName", {
-                  required: "Name is required",
-                  validate: (v: string) =>
-                    v.trim().length > 2 ||
-                    "Enter full name",
-                })}
-                id="typedName"
-                placeholder="Type your full name"
-                className={`w-full px-3 py-2 border rounded-md focus:outline-none ${errors.typedName
-                  ? "border-red-500 focus:ring-red-500"
-                  : "border-gray-300"
-                  }`}
-              />
+                    <span className="arravpos-consent-checkbox-text">
+                        I have read and agree to the terms above
+                    </span>
 
-              <p className="text-xs text-gray-500 mt-1">
-                By typing your name, you agree to the consent above
-              </p>
+                </label>
+            )}
 
-              {errors.typedName && (
-                <p className="text-red-500 text-sm">
-                  {errors.typedName.message}
-                </p>
-              )}
-            </div>
-          )}
-
-          {enforcement === "DRAW_SIGNATURE" && (
-            <Controller
-              control={control}
-              name="signatureDataUrl"
-              rules={{
-                validate: () =>
-                  sigCanvasRef.current &&
-                    !sigCanvasRef.current.isEmpty()
-                    ? true
-                    : "Signature required",
-              }}
-              render={({ field }) => (
-                <div className="mt-4">
-                  <SignatureCanvas
-                    ref={sigCanvasRef}
-                    canvasProps={{
-                      className:
-                        "w-full h-34 bg-white border border-gray-300 rounded-md overflow-hidden",
-                    }}
-                    onEnd={() => {
-                      const canvas = sigCanvasRef.current;
-
-                      if (!canvas) return;
-
-                      const dataUrl = canvas
-                        .getCanvas()
-                        .toDataURL("image/png");
-
-                      field.onChange(dataUrl);
-                    }}
-                  />
-
-                  {errors.signatureDataUrl && (
-                    <p className="text-red-500 text-sm my-1">
-                      {errors.signatureDataUrl.message}
-                    </p>
-                  )}
-
-                  <div className="flex justify-between mt-2">
-                    <button
-                      type="button"
-                      onClick={handleClearSignature}
-                      className="px-2 py-1 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-md flex flex-row items-center gap-1 cursor-pointer"
-                    >
-                      <RotateCw size={14} />
-                      Clear
-                    </button>
+            {/* Typed Name */}
+            {enforcement === "TYPED_NAME" && (
+                <div className="arravpos-consent-typed-wrapper">
 
                     <label
-                      className="flex gap-2 text-sm items-center cursor-pointer"
-                      htmlFor="emailme"
+                        className="arravpos-consent-input-label"
+                        htmlFor="typedName"
                     >
-                      <input
-                        type="checkbox"
-                        {...register("emailMe")}
-                        id="emailme"
-                        className="w-4 h-4 text-red-500 bg-gray-100 border-gray-300 rounded"
-                      />
+                        Full Name
 
-                      <span className="text-sm text-gray-700">
-                        Email me
-                      </span>
+                        <span className="arravpos-consent-required">
+                            *
+                        </span>
                     </label>
-                  </div>
+
+                    <input
+                        {...register("typedName", {
+                            required:
+                                "Name is required",
+                            validate: (v) =>
+                                v.trim().length > 2 ||
+                                "Enter full name",
+                        })}
+                        id="typedName"
+                        placeholder="Type your full name"
+                        className={`arravpos-consent-input ${
+                            errors.typedName
+                                ? "arravpos-consent-input-error"
+                                : "arravpos-consent-input-normal"
+                        }`}
+                    />
+
+                    <p className="arravpos-consent-helper-text">
+                        By typing your name, you agree to the consent above
+                    </p>
+
+                    {errors.typedName && (
+                        <p className="arravpos-consent-error">
+                            {errors.typedName.message}
+                        </p>
+                    )}
+
                 </div>
-              )}
-            />
-          )}
+            )}
 
-          <div className="flex justify-end gap-3 mt-5">
-            <button
-              type="button"
-              onClick={handleClose}
-              className="px-4 py-2 text-gray-700 cursor-pointer hover:text-gray-900 border border-gray-300 rounded-md transition-colors"
-            >
-              Cancel
-            </button>
+            {/* Signature */}
+            {enforcement === "DRAW_SIGNATURE" && (
+                <Controller
+                    control={control}
+                    name="signatureDataUrl"
+                    rules={{
+                        validate: () =>
+                            sigCanvasRef.current &&
+                            !sigCanvasRef.current.isEmpty()
+                                ? true
+                                : "Signature required",
+                    }}
+                    render={({ field }) => (
+                        <div className="arravpos-consent-signature-wrapper">
 
-            <button
-              type="submit"
-              disabled={!canSubmit}
-              className={`px-4 py-2 rounded-md flex items-center gap-2 transition ${!canSubmit
-                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                : "bg-red-500 text-white hover:bg-red-600 cursor-pointer"
-                }`}
-            >
-              <Check />
+                            <SignatureCanvas
+                                ref={sigCanvasRef}
+                                canvasProps={{
+                                    className:
+                                        "arravpos-consent-signature-canvas",
+                                }}
+                                onEnd={() => {
+                                    const canvas =
+                                        sigCanvasRef.current;
 
-              {enforcement === "DRAW_SIGNATURE" ||
-                enforcement === "TYPED_NAME"
-                ? "Sign & Continue"
-                : "I Agree"}
-            </button>
-          </div>
+                                    if (!canvas) return;
+
+                                    const dataUrl =
+                                        canvas
+                                            .getCanvas()
+                                            .toDataURL(
+                                                "image/png"
+                                            );
+
+                                    field.onChange(dataUrl);
+                                }}
+                            />
+
+                            {errors.signatureDataUrl && (
+                                <p className="arravpos-consent-error arravpos-consent-error-signature">
+                                    {
+                                        errors
+                                            .signatureDataUrl
+                                            .message
+                                    }
+                                </p>
+                            )}
+
+                            <div className="arravpos-consent-signature-actions">
+
+                                <button
+                                    type="button"
+                                    onClick={
+                                        handleClearSignature
+                                    }
+                                    className="arravpos-consent-clear-btn"
+                                >
+
+                                    <RotateCw size={14} />
+
+                                    Clear
+
+                                </button>
+
+                                <label
+                                    className="arravpos-consent-email-label"
+                                    htmlFor="emailme"
+                                >
+
+                                    <input
+                                        type="checkbox"
+                                        {...register(
+                                            "emailMe"
+                                        )}
+                                        id="emailme"
+                                        className="arravpos-consent-email-checkbox"
+                                    />
+
+                                    <span className="arravpos-consent-email-text">
+                                        Email me
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                        </div>
+                    )}
+                />
+            )}
+
+            {/* Footer Buttons */}
+            <div className="arravpos-consent-footer">
+
+                <button
+                    type="button"
+                    onClick={handleClose}
+                    className="arravpos-consent-cancel-btn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    disabled={!canSubmit}
+                    className={`arravpos-consent-submit-btn ${
+                        !canSubmit
+                            ? "arravpos-consent-submit-disabled"
+                            : "arravpos-consent-submit-active"
+                    }`}
+                >
+
+                    <Check />
+
+                    {enforcement ===
+                        "DRAW_SIGNATURE" ||
+                    enforcement === "TYPED_NAME"
+                        ? "Sign & Continue"
+                        : "I Agree"}
+
+                </button>
+
+            </div>
+
         </form>
-      </div>
+
     </div>
+
+</div>
   );
 };
 
