@@ -1548,7 +1548,7 @@
 }
 
 .aaravpos-calendar-day-selected {
-    background: var(--btn-text-hover);
+    background: var(--btn-bg);
     color: #fff;
 }
 
