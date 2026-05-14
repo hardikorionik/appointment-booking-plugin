@@ -1,4 +1,4 @@
-/* @import "tailwindcss"; */
+@import "tailwindcss";
 @import "react-toastify/dist/ReactToastify.css";
 @import "react-phone-number-input/style.css";
 
@@ -9,14 +9,12 @@
     --btn-text: #ffffff;
     --btn-bg-hover: #1f2937;
     --btn-text-hover: #ffffff;
-
     /* App Theme */
     --app-bg: #fafaf8;
     --app-link: #385b5a;
     --app-text: #e09898;
     --app-bg-hover: #4c6f6e;
     --app-text-hover: #ffffff;
-
     /* Fonts */
     --font-heading: 'Bebas Neue', sans-serif;
     --font-body: 'DM Sans', sans-serif;
@@ -44,7 +42,6 @@
     padding: 16px;
     color: #ef4444;
 }
-
 
 /* =========================
    COMMON CSS
@@ -80,16 +77,12 @@
     position: relative;
 }
 
-
 .aaravpos-layout-page {
     height: 100%;
     animation: aaravposFadeIn 0.3s ease;
 }
 
-/* =========================
-   OUTLET LIST COMPONENT
-========================= */
-.aaravpos-outlet-title {
+.aaravpos-title {
     font-size: 30px;
     font-weight: 900;
     text-transform: uppercase;
@@ -99,6 +92,9 @@
     line-height: 1.1;
 }
 
+/* =========================
+   OUTLET LIST COMPONENT
+========================= */
 .aaravpos-outlet-divider {
     width: 56px;
     height: 2px;
@@ -441,8 +437,8 @@
         padding-right: 32px;
     }
 
-    .aaravpos-outlet-title {
-        font-size: 36px;
+    .aaravpos-title {
+        font-size: 34px;
     }
 
     .aaravpos-outlet-grid {
@@ -502,8 +498,8 @@
 }
 
 @media (min-width: 1280px) {
-    .aaravpos-outlet-title {
-        font-size: 48px;
+    .aaravpos-title {
+        font-size: 36px;
     }
 
     .aaravpos-outlet-grid {
