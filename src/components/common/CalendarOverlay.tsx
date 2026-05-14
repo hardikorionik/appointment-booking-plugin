@@ -86,130 +86,119 @@ export default function CalendarOverlay({
 
   return (
     <div
-      className="fixed inset-0 z-200 bg-[rgba(14,14,14,0.55)] backdrop-blur-sm flex items-center justify-center min-h-[calc(100dvh-56px)]"
+      className="aaravpos-date-modal-overlay"
       onClick={(e: React.MouseEvent<HTMLDivElement>) =>
         e.target === e.currentTarget && onClose()
       }
     >
-      <div className="bg-canvas rounded-lg max-w-[95vw] max-h-[90vh] flex flex-col shadow-2xl animate-pop-in max-md:h-[fit] max-md:rounded-t-2xl max-md:rounded-b-none">
-        <div className="flex items-center justify-between p-4 border-b border-border max-md:px-4 sticky top-0 bg-canvas z-10">
-          <h2 className="font-bebas text-[26px] tracking-[1px] max-md:text-xl">
+      <div className="aaravpos-date-modal">
+        <div className="aaravpos-date-modal-header">
+          <h2 className="aaravpos-date-modal-title">
             Pick a Date
           </h2>
 
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full cursor-pointer bg-surface flex items-center justify-center text-muted hover:bg-red hover:text-white transition"
+            className="aaravpos-date-close-btn"
           >
             <X />
           </button>
         </div>
+        <div className="aaravpos-date-modal-body">
+          <div className="aaravpos-date-nav">
+            <button
+              disabled={currentMonthIndex === 0}
+              onClick={() =>
+                setCurrentMonthIndex((prev) =>
+                  Math.max(prev - 1, 0),
+                )
+              }
+              className="aaravpos-date-nav-btn"
+            >
+              <ChevronLeft />
+            </button>
 
-        <div className="overflow-y-auto px-7 py-5 max-md:px-4">
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <button
-                disabled={currentMonthIndex === 0}
-                onClick={() =>
-                  setCurrentMonthIndex((prev) =>
-                    Math.max(prev - 1, 0),
-                  )
-                }
-                className={`text-lg disabled:opacity-30 hover:red transition hover:text-red ${currentMonthIndex === 0
-                  ? "cursor-not-allowed"
-                  : "cursor-pointer"
-                  }`}
+            <div className="aaravpos-date-month-label">
+              {currentMonth?.label}
+            </div>
+
+            <button
+              disabled={currentMonthIndex === months.length - 1}
+              onClick={() =>
+                setCurrentMonthIndex((prev) =>
+                  Math.min(prev + 1, months.length - 1),
+                )
+              }
+              className="aaravpos-date-nav-btn"
+            >
+              <ChevronRight />
+            </button>
+          </div>
+
+          <div className="aaravpos-calendar-grid">
+            {WD.map((d, i) => (
+              <div
+                key={i}
+                className="aaravpos-calendar-weekday"
               >
-                <ChevronLeft />
-              </button>
-
-              <div className="text-sm font-semibold">
-                {currentMonth?.label}
+                {d}
               </div>
+            ))}
 
-              <button
-                disabled={currentMonthIndex === months.length - 1}
-                onClick={() =>
-                  setCurrentMonthIndex((prev) =>
-                    Math.min(prev + 1, months.length - 1),
-                  )
-                }
-                className={`text-lg disabled:opacity-30 hover:red transition hover:text-red ${currentMonthIndex === months.length - 1
-                  ? "cursor-not-allowed"
-                  : "cursor-pointer"
-                  }`}
-              >
-                <ChevronRight />
-              </button>
-            </div>
+            {Array.from({
+              length: currentMonth?.startDow || 0,
+            }).map((_, i) => (
+              <div key={`e${i}`} />
+            ))}
 
-            <div className="grid grid-cols-7 gap-1.5 max-md:gap-2">
-              {WD.map((d, i) => (
+            {Array.from(
+              { length: currentMonth?.days || 0 },
+              (_, i) => i + 1,
+            ).map((day) => {
+              const sel =
+                selectedDate?.month === currentMonth?.monthIdx &&
+                selectedDate?.day === day;
+
+              const today =
+                currentMonth?.monthIdx === startDate.month &&
+                day === startDate.day;
+
+              const past = isPast(
+                currentMonth?.monthIdx || 0,
+                day,
+              );
+
+              return (
                 <div
-                  key={i}
-                  className="text-[10px] font-semibold uppercase text-muted text-center py-1"
+                  key={day}
+                  onClick={() => {
+                    if (!past) {
+                      handlePick(
+                        currentMonth.monthIdx,
+                        day,
+                      );
+                    }
+                  }}
+                  className={[
+                    "aaravpos-calendar-day",
+                    !sel && !past
+                      ? "aaravpos-calendar-day-active"
+                      : "",
+                    today && !sel
+                      ? "aaravpos-calendar-day-today"
+                      : "",
+                    sel
+                      ? "aaravpos-calendar-day-selected"
+                      : "",
+                    past
+                      ? "aaravpos-calendar-day-disabled"
+                      : "",
+                  ].join(" ")}
                 >
-                  {d}
+                  {day}
                 </div>
-              ))}
-
-              {Array.from({
-                length: currentMonth?.startDow || 0,
-              }).map((_, i) => (
-                <div key={`e${i}`} />
-              ))}
-
-              {Array.from(
-                { length: currentMonth?.days || 0 },
-                (_, i) => i + 1,
-              ).map((day) => {
-                const sel =
-                  selectedDate?.month === currentMonth?.monthIdx &&
-                  selectedDate?.day === day;
-
-                const today =
-                  currentMonth?.monthIdx === startDate.month &&
-                  day === startDate.day;
-
-                const past = isPast(
-                  currentMonth?.monthIdx || 0,
-                  day,
-                );
-
-                return (
-                  <div
-                    key={day}
-                    onClick={() => {
-                      if (!past) {
-                        handlePick(
-                          currentMonth.monthIdx,
-                          day,
-                        );
-                      }
-                    }}
-                    className={[
-                      "aspect-square flex items-center justify-center rounded-full",
-                      "text-xs font-mono transition-all duration-150",
-                      "min-h-8.5 max-md:min-h-10",
-                      !sel && !past
-                        ? "hover:bg-red/10 hover:text-red cursor-pointer"
-                        : "",
-                      today && !sel
-                        ? "outline-[1.5px] outline-border outline-offset-1"
-                        : "",
-                      sel
-                        ? "cal-avail cal-selected bg-red! text-white!"
-                        : "",
-                      past
-                        ? "opacity-40 cursor-not-allowed"
-                        : "",
-                    ].join(" ")}
-                  >
-                    {day}
-                  </div>
-                );
-              })}
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

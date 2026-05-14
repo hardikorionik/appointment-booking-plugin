@@ -1403,6 +1403,185 @@
     background: rgba(0, 0, 0, 0.05);
 }
 
+
+
+/* =========================
+   DATE PICKER MODAL
+========================= */
+.aaravpos-date-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100dvh - 56px);
+    background: rgba(14, 14, 14, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+.aaravpos-date-modal {
+    width: 100%;
+    max-width: 95vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--canvas-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    animation: aaravposPopIn 0.2s ease;
+}
+
+.aaravpos-date-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: var(--canvas-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.aaravpos-date-modal-title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.aaravpos-date-close-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 999px;
+    background: var(--surface-bg);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-date-close-btn:hover {
+    background: var(--red-color);
+    color: #fff;
+}
+
+.aaravpos-date-modal-body {
+    overflow-y: auto;
+    padding: 20px 28px;
+}
+
+.aaravpos-date-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.aaravpos-date-nav-btn {
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-date-nav-btn:hover {
+    color: var(--red-color);
+}
+
+.aaravpos-date-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.aaravpos-date-month-label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.aaravpos-calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+.aaravpos-calendar-weekday {
+    padding: 4px 0;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.aaravpos-calendar-day {
+    aspect-ratio: 1 / 1;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 12px;
+    font-family: monospace;
+    transition: all 0.15s ease;
+}
+
+.aaravpos-calendar-day-active {
+    cursor: pointer;
+}
+
+.aaravpos-calendar-day-active:hover {
+    background: rgba(255, 0, 0, 0.08);
+    color: var(--red-color);
+}
+
+.aaravpos-calendar-day-today {
+    outline: 1.5px solid var(--border-color);
+    outline-offset: 1px;
+}
+
+.aaravpos-calendar-day-selected {
+    background: var(--red-color);
+    color: #fff;
+}
+
+.aaravpos-calendar-day-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* PROFESSIONAL SKELETON */
+.aaravpos-professional-skeleton {
+    position: relative;
+    height: 82px;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #e0e0e0;
+}
+
+.aaravpos-professional-skeleton::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.5),
+            transparent);
+    animation: aaravposShimmer 1.2s infinite;
+}
+
+
+
+
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */
@@ -1482,6 +1661,37 @@
     .aaravpos-common-btn {
         padding: 14px 8px;
         font-size: 12px;
+    }
+
+    .aaravpos-date-modal {
+        height: fit-content;
+
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .aaravpos-date-modal-header {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .aaravpos-date-modal-title {
+        font-size: 20px;
+    }
+
+    .aaravpos-date-modal-body {
+        padding: 20px 16px;
+    }
+
+    .aaravpos-calendar-grid {
+        gap: 8px;
+    }
+
+    .aaravpos-calendar-day {
+        min-height: 40px;
     }
 }
 
@@ -1646,5 +1856,24 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+
+@keyframes aaravposPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes aaravposShimmer {
+    100% {
+        left: 100%;
     }
 }
