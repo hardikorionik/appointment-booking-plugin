@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { DateTime } from "luxon";
-import { X, MoveRight } from "lucide-react";
+import { X, MoveRight, Clock3, Package2 } from "lucide-react";
 import { getUserName, CurrencyIcon } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import type {
@@ -322,11 +322,10 @@ export default function OrderSidebar({
   ]);
 
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="first" ref={firstRef}>
-        <p className="font-bebas text-xl mb-3 flex flex-row justify-between items-center">
+    <div className="aaravpos-order-sidebar">
+      <div className="aaravpos-order-header">
+        <p className="aaravpos-order-title">
           Your Order
-
           {handleSidebarOpen && (
             <button
               onClick={handleSidebarOpen}
@@ -336,7 +335,6 @@ export default function OrderSidebar({
             </button>
           )}
         </p>
-
         {selectedProfessional?.id && (
           <div className="flex items-center gap-3 mb-3 p-3 border border-border rounded bg-white">
             {selectedProfessional.imageUrl ? (
@@ -359,7 +357,6 @@ export default function OrderSidebar({
                 )}
               </div>
             )}
-
             <div>
               <p className="text-sm font-semibold">
                 {selectedProfessional.name}
@@ -371,7 +368,6 @@ export default function OrderSidebar({
             </div>
           </div>
         )}
-
         <div className="text-sm mb-3 border-b border-border pb-2 font-bold flex justify-between">
           <span>Date & Time:</span>
 
@@ -386,46 +382,38 @@ export default function OrderSidebar({
           )}
         </div>
       </div>
-
       <ul
         className="overflow-y-scroll mb-1 scrollbar-none"
         style={{ height: `${secondHeight}px` }}
       >
         {selectedStaffServices?.length > 0 &&
-          selectedStaffServices.map(
-            (svc, index) => (
-              <li
-                key={svc.id}
-                className={`flex justify-between text-sm py-1.5 ${index !==
-                  selectedStaffServices?.length - 1
-                  ? "border-b border-dotted border-gray-400"
-                  : ""
-                  }`}
-              >
-                <span className="flex justify-between flex-row items-center gap-1">
-                  {svc.name} <X size={12} />{" "}
-                  {svc.qty} ({svc.duration} min)
-                </span>
-
-                <span className="flex flex-col items-end">
-                  <span className="flex items-center">
-                    <CurrencyIcon size={12} />
-                    {svc.price}
-                  </span>
-
-                  {svc.tax > 0 && (
-                    <span className="flex items-center text-[11px] text-gray-700">
-                      + Tax:{" "}
-                      <CurrencyIcon size={11} />
-                      {svc.unitTax.toFixed(2)}
-                    </span>
-                  )}
-                </span>
-              </li>
-            ),
+          selectedStaffServices.map((svc) => (
+            <li
+              key={svc.id}
+              className="aaravpos-order-item"
+            >
+              <p className="aaravpos-order-service-name">
+                {svc.name}
+              </p>
+              <div className="aaravpos-order-details">
+                <div className="aaravpos-order-detail">
+                  <Package2 size={13} />
+                  <span>{svc.qty}</span>
+                </div>
+                {/* Duration */}
+                <div className="aaravpos-order-detail center">
+                  <Clock3 size={13} />
+                  <span>{svc.min_time || svc.estimated_time} min</span>
+                </div>
+                <p className="aaravpos-order-detail right">
+                  <CurrencyIcon size={12} />
+                  {svc.price || svc.min_price}
+                </p>
+              </div>
+            </li>
+          ),
           )}
       </ul>
-
       <div className="third" ref={thirdRef}>
         {showTip && (
           <>
@@ -542,7 +530,6 @@ export default function OrderSidebar({
             </AnimatePresence>
           </>
         )}
-
         {consentRequired &&
           consentCompleted < totalConsents && (
             <div className="mb-3 p-2 bg-yellow-50 border border-yellow-200 rounded-sm">
@@ -565,7 +552,6 @@ export default function OrderSidebar({
               </div>
             </div>
           )}
-
         <div className="mt-auto">
           <PriceRow
             label="Service"
@@ -576,7 +562,6 @@ export default function OrderSidebar({
               </span>
             }
           />
-
           {showTip && (
             <PriceRow
               label={`Tip (${safeTipPct}%)`}
@@ -588,7 +573,6 @@ export default function OrderSidebar({
               }
             />
           )}
-
           {(!showTaxesOnlyIfTime ||
             timeRange) && (
               <PriceRow
@@ -601,24 +585,20 @@ export default function OrderSidebar({
                 }
               />
             )}
-
-          <div className="flex justify-between text-lg pt-3 border-t mt-2">
-            <span className="font-semibold">
+          <div className="aaravpos-order-subtotal">
+            <span className="aaravpos-order-subtotal-label">
               Total
             </span>
-
-            <span className="font-mono font-semibold text-red text-lg flex items-center">
+            <span className="aaravpos-order-subtotal-price">
               <CurrencyIcon size={18} />
               {total.toFixed(2)}
             </span>
           </div>
-
           <button
             onClick={onButtonClick}
             disabled={isButtonDisabled}
-            className="bg-btn-bg text-btn-text border-btn-bg px-2 w-full relative py-3 font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
-          >
-            <span className="flex flex-row justify-center items-center gap-2">
+            className="aaravpos-common-btn">
+            <span className="aaravpos-common-btn-content">
               {finalButtonText}
             </span>
           </button>

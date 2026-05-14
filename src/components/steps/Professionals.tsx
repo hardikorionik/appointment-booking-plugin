@@ -146,16 +146,13 @@ export default function Professionals() {
       }
     >
       <Breadcrumb />
-
       <div className="aaravpos-margin-top-20">
-        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 pt-3">
+        <h1 className="aaravpos-page-title">
           Choose a Professional
         </h1>
-
-        <p className="text-sm text-black/60 mb-6">
+        <p className="aaravpos-sub-title">
           Available based on selected services
         </p>
-
         <AnimatePresence mode="wait">
           {showEmpty && (
             <motion.p
@@ -164,15 +161,14 @@ export default function Professionals() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 6 }}
               transition={{ duration: 0.25 }}
-              className="text-sm text-btn-bg/90 font-semibold"
+              className="aaravpos-no-staff"
             >
               No staff available for selected services
             </motion.p>
           )}
         </AnimatePresence>
-
-        <div className="h-[calc(100dvh-210px)] max-md:h-[calc(100dvh-200px)] overflow-y-auto scrollbar-none pb-20 lg:pb-4">
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(195px,1fr))] gap-3">
+        <div className="aaravpos-staff-wrapper">
+          <div className="aaravpos-staff-grid">
             <AnimatePresence mode="popLayout">
               {filteredStaff.map((p: Staff, index: number) => {
                 return (
@@ -194,20 +190,20 @@ export default function Professionals() {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`pro-card border-2 border-black/15 rounded p-3 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
-                      ? "border-btn-bg-hover/80 bg-btn-bg-hover/5"
-                      : "bg-white hover:border-btn-bg/80"
+                    className={`aaravpos-pro-card ${selectedProfessional?.id === p.id
+                      ? "active"
+                      : ""
                       }`}
                   >
                     {p.imageUrl ? (
                       <img
                         src={p.imageUrl}
                         alt={p.name}
-                        className="w-12 h-12 rounded-lg object-cover border border-black/10"
+                        className="aaravpos-pro-image"
                       />
                     ) : (
                       <div
-                        className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg"
+                        className="aaravpos-pro-avatar"
                         style={{
                           background: p.color || "#111",
                         }}
@@ -215,13 +211,11 @@ export default function Professionals() {
                         {getUserName(p.name)}
                       </div>
                     )}
-
-                    <div>
-                      <p className="font-semibold text-md uppercase">
+                    <div className="aaravpos-pro-info">
+                      <p className="aaravpos-pro-name">
                         {p.name}
                       </p>
-
-                      <p className="text-xs text-gray-500 uppercase">
+                      <p className="aaravpos-pro-type">
                         {p.staff_type}
                       </p>
                     </div>
