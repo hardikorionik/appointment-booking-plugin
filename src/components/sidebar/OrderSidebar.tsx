@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { DateTime } from "luxon";
-import { X, MoveRight } from "lucide-react";
+import { X, MoveRight, Clock3, Package2 } from "lucide-react";
 import { getUserName, CurrencyIcon } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import type {
@@ -322,32 +322,30 @@ export default function OrderSidebar({
   ]);
 
   return (
-    <div className="h-full flex flex-col justify-between">
-      <div className="first" ref={firstRef}>
-        <p className="font-bebas text-xl mb-3 flex flex-row justify-between items-center">
+    <div className="aaravpos-order-sidebar">
+      <div className="aaravpos-order-header">
+        <p className="aaravpos-order-title">
           Your Order
-
           {handleSidebarOpen && (
             <button
               onClick={handleSidebarOpen}
-              className="md:hidden block w-auto p-2 text-3xl border-none cursor-pointer rounded"
+              className="aaravpos-sidebar-close-btn"
             >
               <X />
             </button>
           )}
         </p>
-
         {selectedProfessional?.id && (
-          <div className="flex items-center gap-3 mb-3 p-3 border border-border rounded bg-white">
+          <div className="aaravpos-pro-card aaravpos-mb-10">
             {selectedProfessional.imageUrl ? (
               <img
                 src={selectedProfessional.imageUrl}
                 alt={selectedProfessional.name}
-                className="w-10 h-10 rounded-full object-cover"
+                className="aaravpos-pro-image"
               />
             ) : (
               <div
-                className="w-10 h-10 rounded-full text-white flex items-center justify-center"
+                className="aaravpos-pro-avatar"
                 style={{
                   background:
                     selectedProfessional.color ||
@@ -359,81 +357,69 @@ export default function OrderSidebar({
                 )}
               </div>
             )}
-
-            <div>
-              <p className="text-sm font-semibold">
+            <div className="aaravpos-pro-info">
+              <p className="aaravpos-pro-name">
                 {selectedProfessional.name}
               </p>
-
-              <p className="text-xs text-gray-500">
+              <p className="aaravpos-pro-type">
                 {selectedProfessional.staff_type}
               </p>
             </div>
           </div>
         )}
-
-        <div className="text-sm mb-3 border-b border-border pb-2 font-bold flex justify-between">
-          <span>Date & Time:</span>
+        <div className="aaravpos-date-time">
+          <span className="aaravpos-date-time-label">Date & Time:</span>
 
           {dateStr ? (
-            <span className="text-red">
+            <span className="aaravpos-date-time-value">
               {dateStr}
             </span>
           ) : (
-            <span className="text-muted">
+            <span className="aaravpos-date-time-empty">
               No time selected
             </span>
           )}
         </div>
       </div>
-
       <ul
-        className="overflow-y-scroll mb-1 scrollbar-none"
+        className="aaravpos-order-list"
         style={{ height: `${secondHeight}px` }}
       >
         {selectedStaffServices?.length > 0 &&
-          selectedStaffServices.map(
-            (svc, index) => (
-              <li
-                key={svc.id}
-                className={`flex justify-between text-sm py-1.5 ${index !==
-                  selectedStaffServices?.length - 1
-                  ? "border-b border-dotted border-gray-400"
-                  : ""
-                  }`}
-              >
-                <span className="flex justify-between flex-row items-center gap-1">
-                  {svc.name} <X size={12} />{" "}
-                  {svc.qty} ({svc.duration} min)
-                </span>
-
-                <span className="flex flex-col items-end">
-                  <span className="flex items-center">
-                    <CurrencyIcon size={12} />
-                    {svc.price}
-                  </span>
-
-                  {svc.tax > 0 && (
-                    <span className="flex items-center text-[11px] text-gray-700">
-                      + Tax:{" "}
-                      <CurrencyIcon size={11} />
-                      {svc.unitTax.toFixed(2)}
-                    </span>
-                  )}
-                </span>
-              </li>
-            ),
+          selectedStaffServices.map((svc) => (
+            <li
+              key={svc.id}
+              className="aaravpos-order-item"
+            >
+              <p className="aaravpos-order-service-name">
+                {svc.name}
+              </p>
+              <div className="aaravpos-order-details">
+                <div className="aaravpos-order-detail">
+                  <Package2 size={13} />
+                  <span>{svc.qty}</span>
+                </div>
+                {/* Duration */}
+                <div className="aaravpos-order-detail center">
+                  <Clock3 size={13} />
+                  <span>{svc.min_time || svc.estimated_time} min</span>
+                </div>
+                <p className="aaravpos-order-detail right">
+                  <CurrencyIcon size={12} />
+                  {svc.price || svc.min_price}
+                </p>
+              </div>
+            </li>
+          ),
           )}
       </ul>
-
       <div className="third" ref={thirdRef}>
         {showTip && (
           <>
-            <p className="text-[10px] font-bold uppercase tracking-[1.5px] mt-4 mb-2">
+            <p className="aaravpos-tip-title">
               Add Tip
             </p>
-
-            <div className="flex gap-1 mb-2">
+            <div className="aaravpos-tip-options">
               {[...TIP_OPTIONS, "custom"].map(
                 (item, index) => {
                   const isCustom =
@@ -450,7 +436,6 @@ export default function OrderSidebar({
                     [...TIP_OPTIONS, "custom"]
                       .length -
                     1;
-
                   return (
                     <button
                       key={item}
@@ -471,14 +456,14 @@ export default function OrderSidebar({
                           );
                         }
                       }}
-                      className={`
-                      px-2 py-1.5 border rounded-sm cursor-pointer text-xs text-center
-                      ${isFirst || isLast ? "flex-none w-16" : "flex-1"}
-                      ${isActive
-                          ? "bg-red text-white border-red"
-                          : "bg-white border-border"
-                        }
-                    `}
+                      className={`aaravpos-tip-btn  
+                        ${isFirst || isLast
+                          ? "aaravpos-tip-btn-fixed"
+                          : "aaravpos-tip-btn-flex"
+                        } ${isActive
+                          ? "aaravpos-tip-btn-active"
+                          : ""
+                        }`}
                     >
                       {isCustom
                         ? "Custom"
@@ -490,7 +475,6 @@ export default function OrderSidebar({
                 },
               )}
             </div>
-
             <AnimatePresence initial={false}>
               {isCustomTip && (
                 <motion.div
@@ -510,7 +494,7 @@ export default function OrderSidebar({
                     duration: 0.25,
                     ease: "easeInOut",
                   }}
-                  className="overflow-hidden"
+                  className="aaravpos-tip-input-wrapper"
                 >
                   <input
                     id="number"
@@ -535,26 +519,24 @@ export default function OrderSidebar({
                         );
                       }
                     }}
-                    className="w-full px-3 py-2 border rounded-sm text-sm mb-3"
+                    className="aaravpos-tip-input"
                   />
                 </motion.div>
               )}
             </AnimatePresence>
           </>
         )}
-
         {consentRequired &&
           consentCompleted < totalConsents && (
-            <div className="mb-3 p-2 bg-yellow-50 border border-yellow-200 rounded-sm">
-              <p className="text-xs text-yellow-800 font-medium">
+            <div className="aaravpos-consent-box">
+              <p className="aaravpos-consent-text">
                 Consent Required:{" "}
                 {consentCompleted}/
                 {totalConsents} completed
               </p>
-
-              <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
+              <div className="aaravpos-consent-progress">
                 <div
-                  className="bg-yellow-600 h-1.5 rounded-full transition-all duration-300"
+                  className="aaravpos-consent-progress-bar"
                   style={{
                     width: `${(consentCompleted /
                       totalConsents) *
@@ -565,60 +547,54 @@ export default function OrderSidebar({
               </div>
             </div>
           )}
-
-        <div className="mt-auto">
+        <div className="aaravpos-mt-auto">
           <PriceRow
             label="Service"
             value={
-              <span className="flex items-center">
+              <>
                 <CurrencyIcon size={14} />
                 {totalBasePrice.toFixed(2)}
-              </span>
+              </>
             }
           />
-
           {showTip && (
             <PriceRow
               label={`Tip (${safeTipPct}%)`}
               value={
-                <span className="flex items-center">
+                <>
                   <CurrencyIcon size={14} />
                   {tipAmt.toFixed(2)}
-                </span>
+                </>
               }
             />
           )}
-
           {(!showTaxesOnlyIfTime ||
             timeRange) && (
               <PriceRow
                 label="Taxes"
                 value={
-                  <span className="flex items-center">
+                  <>
                     <CurrencyIcon size={14} />
                     {taxAmt.toFixed(2)}
-                  </span>
+                  </>
                 }
               />
             )}
-
-          <div className="flex justify-between text-lg pt-3 border-t mt-2">
-            <span className="font-semibold">
+          <div className="aaravpos-order-subtotal">
+            <span className="aaravpos-order-subtotal-label">
               Total
             </span>
-
-            <span className="font-mono font-semibold text-red text-lg flex items-center">
+            <span className="aaravpos-order-subtotal-price">
               <CurrencyIcon size={18} />
               {total.toFixed(2)}
             </span>
           </div>
-
           <button
             onClick={onButtonClick}
             disabled={isButtonDisabled}
-            className="bg-btn-bg text-btn-text border-btn-bg px-2 w-full relative py-3 font-dm text-sm font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 rounded-sm transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+            className="aaravpos-common-btn aaravpos-padding-btn"
           >
-            <span className="flex flex-row justify-center items-center gap-2">
+            <span className="aaravpos-common-btn-content">
               {finalButtonText}
             </span>
           </button>
@@ -638,10 +614,9 @@ function PriceRow({
   value,
 }: PriceRowProps): JSX.Element {
   return (
-    <div className="flex justify-between text-sm font-semibold text-gray-700 mb-1.5">
-      <span>{label}</span>
-
-      <span className="font-mono flex flex-row items-center">
+    <div className="aaravpos-summary-row">
+      <span className="aaravpos-summary-label">{label}</span>
+      <span className="aaravpos-summary-value">
         {value}
       </span>
     </div>

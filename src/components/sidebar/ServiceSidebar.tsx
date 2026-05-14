@@ -20,46 +20,40 @@ export default function ServiceSidebar({
   );
   const { isService } = useSelector((state: RootState) => state.outletDetails);
   return (
-    <>
-      <div className="p-3 border-b border-gray-300">
-        <p className="font-black uppercase tracking-tight text-2xl mb-0">
+    <div className="aaravpos-order-sidebar">
+      <div className="aaravpos-order-header">
+        <p className="aaravpos-order-title">
           Your Order
         </p>
-
-        <p className="text-xs font-semibold text-black/40 uppercase line-clamp-1">
+        <p className="aaravpos-order-subtitle">
           {outletName || "-"} Outlet
         </p>
       </div>
-      <div className="flex flex-col justify-between h-full">
-        <div className="p-3">
-          <p className="text-sm font-semibold my-1.5 text-black/40 uppercase line-clamp-1">
+      <div className="aaravpos-order-sidebar">
+        <div className="aaravpos-order-body">
+          <p className="aaravpos-order-section-title">
             SELECTED SERVICES
           </p>
           {selectedServices?.length > 0 && (
-            <ul className="md:h-[calc(100dvh-270px)] h-[calc(100dvh-230px)] overflow-y-scroll scrollbar-none">
-              {selectedServices?.map((svc, index) => (
+            <ul className="aaravpos-order-list">
+              {selectedServices?.map((svc) => (
                 <li
                   key={svc.id}
-                  className={`flex justify-start flex-col items-start text-sm py-2 ${index !== selectedServices?.length - 1
-                    ? "border-b border-dotted border-gray-400"
-                    : ""
-                    }`}
+                  className="aaravpos-order-item"
                 >
-                  <p className="flex justify-between flex-row items-center gap-1 line-clamp-1 text-sm font-medium uppercase">
+                  <p className="aaravpos-order-service-name">
                     {svc.name}
                   </p>
-                  <div className="grid grid-cols-3 items-center gap-2 w-full">
-                    <div className="flex items-center justify-start gap-1 text-xs text-black/60 font-medium">
+                  <div className="aaravpos-order-details">
+                    <div className="aaravpos-order-detail">
                       <Package2 size={13} />
                       <span>{svc.qty}</span>
                     </div>
-
-                    <div className="flex items-center justify-center gap-1 text-xs text-black/60 font-medium">
+                    <div className="aaravpos-order-detail center">
                       <Clock3 size={13} />
                       <span>{svc.min_time || svc.estimated_time} min</span>
                     </div>
-
-                    <p className="flex items-center justify-end gap-1 text-xs text-black/60 font-medium">
+                    <p className="aaravpos-order-detail right">
                       <CurrencyIcon size={12} />
                       {svc.price || svc.min_price}
                     </p>
@@ -69,28 +63,23 @@ export default function ServiceSidebar({
             </ul>
           )}
         </div>
-
-        {/* <div className="h-px bg-border mt-auto my-2.5" /> */}
-
-        <div className="p-3 border-t border-gray-300">
-          <div className="flex justify-between items-end mb-1">
-            <span className="font-medium text-sm text-black/60 uppercase">
+        <div className="aaravpos-order-footer">
+          <div className="aaravpos-order-subtotal">
+            <span className="aaravpos-order-subtotal-label">
               Subtotal
             </span>
-
-            <span className="font-mono font-semibold flex flex-row items-center">
+            <span className="aaravpos-order-subtotal-price">
               <CurrencyIcon size={18} />
               {totalPrice}
             </span>
           </div>
-
           <div>
             <button
               onClick={() => goToStep("professionals")}
               disabled={!selectedServices.length}
-              className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover px-2 w-full relative py-3 font-dm text-xs font-bold tracking-[1.5px] uppercase cursor-pointer mt-3.5 transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed max-md:py-3.5 max-md:text-xs"
+              className="aaravpos-common-btn"
             >
-              <span className="flex flex-row justify-center items-center gap-2">
+              <span className="aaravpos-common-btn-content">
                 {isService ? "Choose Professional" : "Choose Time"}
                 <ChevronRight size={16} />
               </span>
@@ -98,6 +87,6 @@ export default function ServiceSidebar({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

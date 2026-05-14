@@ -60,8 +60,13 @@
 .aaravpos-margin-top-20 {
     margin-top: 20px;
 }
+
 .aaravpos-margin-bottom-20 {
     margin-bottom: 20px;
+}
+
+.aaravpos-mt-auto {
+    margin-top: auto;
 }
 
 /* COMMON BUTTON */
@@ -103,6 +108,10 @@
 
 .aaravpos-mb-10 {
     margin-bottom: 10px;
+}
+
+.aaravpos-padding-btn {
+    padding: 9px 8px !important;
 }
 
 /* =========================
@@ -922,6 +931,477 @@
     animation: aaravpos-shimmer 1.2s infinite;
 }
 
+/* =========================
+   PROFESSIONAL PAGE
+========================= */
+.aaravpos-no-staff {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(var(--btn-bg-rgb, 0, 0, 0), 0.9);
+}
+
+.aaravpos-staff-wrapper {
+    height: calc(100dvh - 210px);
+    overflow-y: auto;
+    padding-bottom: 80px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.aaravpos-staff-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.aaravpos-staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
+    gap: 12px;
+}
+
+.aaravpos-pro-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    padding: 12px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.aaravpos-pro-card:hover {
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+.aaravpos-pro-card.active {
+    border-color: rgba(var(--btn-bg-rgb, 0, 0, 0), 0.8);
+    background: rgba(var(--btn-bg-rgb, 0, 0, 0), 0.05);
+}
+
+.aaravpos-pro-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.aaravpos-pro-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.aaravpos-pro-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.aaravpos-pro-name {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.aaravpos-pro-type {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+}
+
+
+/* =========================
+   SIDEBAR CSS
+========================= */
+.aaravpos-order-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.aaravpos-order-header {
+    padding: 0px 0px 12px 0px;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.aaravpos-order-title {
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+}
+
+.aaravpos-order-subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.aaravpos-order-body {
+    padding: 12px 0px;
+}
+
+.aaravpos-order-section-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px 0;
+    color: rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.aaravpos-order-list {
+    height: calc(100dvh - 240px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.aaravpos-pro-order-list {
+    height: calc(100dvh - 415px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.aaravpos-order-list::-webkit-scrollbar,
+.aaravpos-pro-order-list::-webkit-scrollbar {
+    display: none;
+}
+
+.aaravpos-order-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px dotted #9ca3af;
+}
+
+.aaravpos-order-item:last-child {
+    border-bottom: none;
+}
+
+.aaravpos-order-service-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.aaravpos-order-details {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.aaravpos-order-detail {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.aaravpos-order-detail.center {
+    justify-content: center;
+}
+
+.aaravpos-order-detail.right {
+    justify-content: flex-end;
+}
+
+.aaravpos-order-footer {
+    padding: 12px 0px;
+    border-top: 1px solid #d1d5db;
+}
+
+.aaravpos-order-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4px;
+}
+
+.aaravpos-order-subtotal-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+    text-transform: uppercase;
+}
+
+.aaravpos-order-subtotal-price {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.aaravpos-common-btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px 8px;
+    border: none;
+    background: var(--btn-bg);
+    color: var(--btn-text, #ffffff);
+    font-size: 12px;
+    font-weight: 700;
+    font-family: var(--font-dm-sans);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-common-btn:hover {
+    background: var(--btn-bg-hover);
+    color: var(--btn-text-hover, #ffffff);
+}
+
+.aaravpos-common-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.aaravpos-common-btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
+.aaravpos-order-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 6px 0;
+    color: rgba(0, 0, 0, 0.4);
+    text-transform: uppercase;
+}
+
+.aaravpos-pro-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.aaravpos-pro-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+.aaravpos-pro-info {
+    overflow: hidden;
+}
+
+.aaravpos-pro-name {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.aaravpos-pro-type {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.aaravpos-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.aaravpos-summary-label {
+    display: block;
+}
+
+.aaravpos-summary-value {
+    display: flex;
+    align-items: center;
+    font-family: monospace;
+}
+
+
+.aaravpos-consent-box {
+    margin-bottom: 12px;
+    padding: 8px;
+    background: #fefce8;
+    border: 1px solid #fde68a;
+    border-radius: 4px;
+}
+
+.aaravpos-consent-text {
+    font-size: 12px;
+    font-weight: 500;
+    color: #854d0e;
+}
+
+.aaravpos-consent-progress {
+    width: 100%;
+    height: 6px;
+    margin-top: 4px;
+    background: #e5e7eb;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.aaravpos-consent-progress-bar {
+    height: 100%;
+    background: #ca8a04;
+    border-radius: 9999px;
+    transition: width 0.3s ease;
+}
+
+.aaravpos-tip-input-wrapper {
+    overflow: hidden;
+}
+
+.aaravpos-tip-input {
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.aaravpos-tip-input:focus {
+    border-color: #9ca3af;
+}
+
+.aaravpos-tip-title {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.aaravpos-tip-options {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.aaravpos-tip-btn {
+    padding: 6px 8px;
+    border: 1px solid var(--btn-bg-hover);
+    border-radius: 4px;
+    background: #fff;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-tip-btn-flex {
+    flex: 1;
+}
+
+.aaravpos-tip-btn-fixed {
+    flex: none;
+    width: 64px;
+}
+
+.aaravpos-tip-btn-active {
+    background: var(--btn-bg);
+    border-color: var(--btn-bg);
+    color: #fff;
+}
+
+.aaravpos-date-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--btn-bg-hover);
+}
+
+/* LABEL */
+.aaravpos-date-time-label {
+    color: #111827;
+}
+
+/* SELECTED DATE */
+.aaravpos-date-time-value {
+    color: var(--btn-bg);
+    font-weight: 700;
+}
+
+/* EMPTY STATE */
+.aaravpos-date-time-empty {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+
+.aaravpos-sidebar-close-btn {
+    display: block;
+    width: auto;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 30px;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-sidebar-close-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
 
 /* =========================
    RESPONSIVE MEDIA QUERIES
@@ -976,6 +1456,32 @@
     .aaravpos-sidebar-mobile-content {
         padding-left: 24px;
         padding-right: 24px;
+    }
+
+    .aaravpos-staff-wrapper {
+        height: calc(100dvh - 200px);
+    }
+
+    .aaravpos-order-list {
+        height: calc(100dvh - 255px);
+    }
+
+
+    .aaravpos-pro-order-list {
+        height: calc(100dvh - 400px);
+    }
+
+
+    .aaravpos-sidebar-close-btn {
+        display: none;
+    }
+
+}
+
+@media (max-width: 767px) {
+    .aaravpos-common-btn {
+        padding: 14px 8px;
+        font-size: 12px;
     }
 }
 
@@ -1032,6 +1538,10 @@
 
     .aaravpos-layout-wrapper {
         grid-template-columns: minmax(0, 1fr) 360px;
+    }
+
+    .aaravpos-staff-wrapper {
+        padding-bottom: 16px;
     }
 }
 
