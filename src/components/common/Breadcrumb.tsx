@@ -108,28 +108,28 @@ export default function Breadcrumb() {
   return (
     <>
       {isMobile ? (
-        <div className="flex items-center flex-row gap-4 font-semibold">
+        <div className="aaravpos-mobile-stepper">
           <button
             onClick={goToPrev}
             disabled={false}
-            className="flex items-center text-xl disabled:text-gray-200 mr-2 cursor-pointer"
+            className="aaravpos-mobile-back-btn"
           >
             <ChevronLeft size={20} />
           </button>
-          <span className="flex flex-row items-center text-base">
+          <span className="aaravpos-mobile-step-label">
             {currentStepData?.label}
           </span>
         </div>
       ) : (
-        <div className="hidden md:flex items-center gap-4 w-full">
+        <div className="aaravpos-desktop-stepper">
           <button
             onClick={goToPrev}
-            className="flex cursor-pointer items-center justify-center h-10 w-10 rounded-full border border-gray-200 hover:bg-gray-100 transition outline-none!"
+            className="aaravpos-desktop-back-btn"
           >
             <ChevronLeft size={20} />
           </button>
 
-          <nav className="grid grid-cols-5 w-full overflow-hidden">
+          <nav className="aaravpos-step-nav">
             {steps.map((step: any, i: number) => {
               const isActive = currentStep === step.page;
               const isCompleted = completedSteps?.includes(step.page);
@@ -142,18 +142,14 @@ export default function Breadcrumb() {
                     if (!isClickable) return;
                     dispatch(goToStep(step.page));
                   }}
-                  className={[
-                    "relative h-10 flex items-center justify-center gap-2 uppercase tracking-[1px] text-[11px] font-semibold transition-all border-b-2",
-                    isClickable
-                      ? "cursor-pointer"
-                      : "cursor-not-allowed opacity-40",
-                    isActive
-                      ? "border-btn-bg text-black bg-btn-bg-hover/5"
-                      : "border-transparent text-black/60 hover:text-black",
-                  ].join(" ")}
+                  className={`aaravpos-step-btn
+                    ${isClickable ? "clickable" : "disabled"}
+                    ${isActive ? "active" : "inactive"}
+                  `}
                 >
                   <span
-                    className={`${isActive ? "text-btn-bg" : "text-btn-bg-hover"}`}
+                    className={`aaravpos-step-icon ${isActive ? "active" : "inactive"
+                      }`}
                   >
                     {step.icon}
                   </span>

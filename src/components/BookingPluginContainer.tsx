@@ -107,7 +107,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
     // if (loading) { return <div className="p-4 flex items-center justify-center"><Spinner /></div> }
 
     if (error) {
-        return (<div className="p-4 text-red-500">{error}</div>);
+        return (<div className="arravpos-error-box">{error}</div>);
     }
 
     return (

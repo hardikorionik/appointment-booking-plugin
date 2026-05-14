@@ -36,11 +36,10 @@ const cardVariants: Variants = {
 };
 
 const StatusBadge = ({ status }: { status: boolean }) => (
-  <span
-    className={`inline-flex rounded-tr-md rounded-bl-md items-center px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest border ${status
-      ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-      : "bg-red-100 text-red-400 border-red-200"
-      }`}
+  <span className={`aaravpos-status-badge ${status
+    ? "aaravpos-status-open"
+    : "aaravpos-status-closed"
+    }`}
   >
     {status ? "Open" : "Closed"}
   </span>
@@ -49,40 +48,24 @@ const StatusBadge = ({ status }: { status: boolean }) => (
 const OutletCard = ({ item, onSelect, selected }: OutletCardProps) => {
   return (
     <div
-      className={`group cursor-pointer overflow-hidden relative flex flex-col justify-between rounded-md border transition-all duration-300
-      ${selected
-          ? "border-btn-bg-hover bg-white shadow-lg"
-          : !item.isOpen
-            ? "border-red-300 bg-red-50/50"
-            : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
-        }`}
+      className={`aaravpos-outlet-card
+        ${selected ? "selected" : ""}
+        ${!item.isOpen ? "closed" : ""}
+      `}
       onClick={() => onSelect(String(item?.id))}
     >
-      <div className="flex items-start justify-end">
+      <div className="aaravpos-outlet-card-top">
         <StatusBadge status={item.isOpen} />
       </div>
-      <div className="px-4 pb-4 pt-1">
-        <div className="flex-1">
-          <h2 className="text-lg font-black uppercase tracking-tight text-gray-900 line-clamp-1">
+      <div className="aaravpos-outlet-card-content">
+        <div className="aaravpos-outlet-card-inner">
+          <h2 className="aaravpos-outlet-card-title">
             {item.outletName}
           </h2>
-          <p className="text-sm text-neutral-500 mt-1 break-all line-clamp-2 min-h-10">
+          <p className="aaravpos-outlet-card-address">
             {item.address}
           </p>
         </div>
-        {/* <button
-          className={`mt-5 cursor-pointer w-full py-3 text-[11px] font-bold uppercase tracking-[0.2em] border transition-all duration-200
-          ${selected
-              ? "bg-btn-bg text-btn-text border-btn-bg"
-              : "bg-white text-btn-bg-hover border-btn-bg-hover group-hover:bg-btn-bg-hover group-hover:text-btn-text"
-            }`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect(String(item.id));
-          }}
-        >
-          {selected ? "✓ Selected" : "Select Outlet"}
-        </button> */}
       </div>
     </div>
   );
@@ -94,7 +77,6 @@ export default function ChooseYourOutlet({
 }: OutletProps) {
   const [selected, setSelected] = useState<string | null>(null);
 
-  // SEARCH STATE
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSelectOutlet = (id: string) => {
@@ -107,7 +89,6 @@ export default function ChooseYourOutlet({
     }
   };
 
-  // FILTERED OUTLETS
   const filteredOutlets = useMemo(() => {
     if (!searchTerm.trim()) return outlets;
 
@@ -122,39 +103,30 @@ export default function ChooseYourOutlet({
   }, [outlets, searchTerm]);
 
   return (
-    <div className="min-h-screen bg-[#f3f1ee] px-4 py-10 sm:px-8 lg:px-16">
-      {/* HEADER */}
-      <div className="mb-8 flex flex-col lg:flex-row lg:items-center gap-4 justify-between">
+    <div className="arravpos-container">
+      <div className="aaravpos-header">
         <div>
-          <h1 className="text-3xl sm:text-4xl xl:text-5xl font-black uppercase tracking-tight text-gray-900 mb-3">
+          <h1 className="aaravpos-outlet-title">
             Choose Your Outlet
           </h1>
-
-          <div className="w-14 h-0.5 bg-btn-bg" />
+          <div className="aaravpos-outlet-divider" />
         </div>
-        {/* SEARCH BOX */}
-        <div className="relative w-full lg:max-w-md flex items-center">
-          {/* SEARCH ICON */}
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+        <div className="aaravpos-search-wrapper">
+          <span className="aaravpos-search-icon">
             <Search size={18} />
           </span>
-
-          {/* INPUT */}
           <input
             type="text"
             placeholder="Search outlet..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full h-11 rounded-md border border-gray-300 bg-white pl-10 pr-20 text-sm outline-none transition-all focus:border-gray-400"
+            className="aaravpos-search-input"
           />
-
-          {/* ACTION BUTTONS */}
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-            {/* CLEAR SEARCH */}
+          <div className="aaravpos-search-actions">
             {searchTerm && (
               <button
                 onClick={() => setSearchTerm("")}
-                className="text-gray-400 hover:text-black transition-all cursor-pointer"
+                className="aaravpos-search-clear"
               >
                 <X size={16} />
               </button>
@@ -162,11 +134,9 @@ export default function ChooseYourOutlet({
           </div>
         </div>
       </div>
-
-      {/* OUTLET LIST */}
-      <div className="py-2 max-h-[70vh] md:max-h-[80vh] overflow-auto scrollbar-none">
+      <div className="aaravpos-outlet-list-wrapper">
         {filteredOutlets.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+          <div className="aaravpos-outlet-grid">
             <AnimatePresence mode="popLayout">
               {filteredOutlets.map((outlet: Outlet, index: number) => (
                 <motion.div
@@ -189,13 +159,12 @@ export default function ChooseYourOutlet({
             </AnimatePresence>
           </div>
         ) : (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+          <div className="aaravpos-empty-state">
+            <div className="aaravpos-empty-content">
+              <h3 className="aaravpos-empty-title">
                 No outlets found
               </h3>
-
-              <p className="text-sm text-gray-500">
+              <p className="aaravpos-empty-text">
                 Try searching with a different keyword
               </p>
             </div>
