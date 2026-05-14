@@ -410,9 +410,8 @@ export default function TimePage(): JSX.Element {
             dispatch(nextStep());
           }}
           disabled={!selectedTime || !selectedSlotIndexes.length}
-          className="btn-bg p-3! px-8.5! text-sm relative rounded-full btn-bg text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
-        >
-          <span>Fill Details</span>
+          className="aaravpos-btn">
+          <span className="aaravpos-btn-content">Fill Details</span>
         </button>
       }
     >

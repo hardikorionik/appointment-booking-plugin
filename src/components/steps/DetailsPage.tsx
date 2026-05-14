@@ -254,9 +254,9 @@ export default function DetailsPage(): JSX.Element {
                 <button
                     onClick={handleSubmit(onSubmit)}
                     disabled={isSubmitting}
-                    className="p-3! px-8.5! text-sm relative rounded-full btn-bg text-white hover:text-white border-none font-dm font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed"
+                    className="aaravpos-btn"
                 >
-                    <span className="flex flex-row justify-center items-center gap-2">
+                    <span className="aaravpos-btn-content">
                         {isSubmitting
                             ? "Submitting..."
                             : "Confirm Details"}

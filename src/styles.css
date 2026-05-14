@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 @import "react-toastify/dist/ReactToastify.css";
 @import "react-phone-number-input/style.css";
@@ -60,6 +61,43 @@
     margin-top: 20px;
 }
 
+/* COMMON BUTTON */
+.aaravpos-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 6px;
+    background: var(--btn-bg, #000);
+    color: var(--btn-text, #fff);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-btn:hover {
+    background: var(--btn-bg-hover, #222);
+    color: var(--btn-text-hover, #fff);
+}
+
+.aaravpos-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.aaravpos-btn-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
 /* =========================
    MAIN LAYOUT
 ========================= */
@@ -84,7 +122,7 @@
 
 .aaravpos-title {
     font-size: 30px;
-    font-weight: 900;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: -0.025em;
     color: #111827;
@@ -176,7 +214,7 @@
 .aaravpos-outlet-list-wrapper {
     padding-top: 8px;
     padding-bottom: 8px;
-    max-height: 70vh;
+    max-height: 40vh;
     overflow: auto;
     scrollbar-width: none;
 }
@@ -259,7 +297,7 @@
 
 .aaravpos-outlet-card-title {
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: -0.025em;
     color: #111827;
@@ -309,7 +347,7 @@
 }
 
 /* =========================
-   RESPONSIVE MEDIA QUERIES
+   BREADCRUMB STYLE
 ========================= */
 .aaravpos-mobile-stepper {
     display: flex;
@@ -426,7 +464,22 @@
 /* =========================
    SERVICE PAGE
 ========================= */
+.aaravpos-page-title {
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    color: #111827;
+    padding-top: 12px;
+    line-height: 1.1;
+}
 
+.aaravpos-sub-title {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
 
 /* =========================
    RESPONSIVE MEDIA QUERIES
@@ -494,6 +547,10 @@
 
     .aaravpos-services-wrapper.supercategory {
         height: calc(100dvh - 390px);
+    }
+
+    .aaravpos-page-title {
+        font-size: 36px;
     }
 }
 

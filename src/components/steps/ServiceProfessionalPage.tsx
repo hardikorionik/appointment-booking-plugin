@@ -228,9 +228,8 @@ export default function ServiceProfessionalPage() {
         <button
           onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
-          className="bg-btn-bg text-btn-bg border-btn-bg hover:text-btn-bg-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover p-3 px-8 text-xs relative rounded border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed"
-        >
-          <span className="flex flex-row justify-center items-center gap-2">
+          className="aaravpos-btn" >
+          <span className="aaravpos-btn-content">
             Choose Time <ChevronRight size={16} />
           </span>
         </button>

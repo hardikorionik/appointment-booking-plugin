@@ -162,25 +162,22 @@ export default function ServicesPage() {
         <button
           onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
-          className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover p-3 px-8 text-xs relative rounded border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed "
+          className="aaravpos-btn"
         >
-          <span className="flex flex-row justify-center items-center gap-2">
+          <span className="aaravpos-btn-content">
             Choose Professional <ChevronRight size={16} />
           </span>
         </button>
       }
     >
       <Breadcrumb />
-
       <div className="mt-5">
         {/* HEADER */}
-
-        {/* <h1 className="font-bebas  uppercase"> */}
-        <h1 className="text-2xl lg:text-4xl font-black uppercase tracking-tight text-gray-900 pt-3">
+        <h1 className="aaravpos-page-title">
           Book A Service
         </h1>
-
-        <p className="text-sm text-black/60 mb-6">
+        {/* aaravpos-sub-title */}
+        <p className="aaravpos-sub-title">
           Select from {outletName} Outlet's available services
         </p>
 

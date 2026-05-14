@@ -106,7 +106,7 @@ export default function ChooseYourOutlet({
     <div className="arravpos-container">
       <div className="aaravpos-header">
         <div>
-          <h1 className="aaravpos-outlet-title">
+          <h1 className="aaravpos-title">
             Choose Your Outlet
           </h1>
           <div className="aaravpos-outlet-divider" />

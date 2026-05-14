@@ -137,9 +137,9 @@ export default function Professionals() {
         <button
           onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
-          className="bg-btn-bg text-btn-text border-btn-bg hover:text-btn-text-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover p-3 px-8 text-xs relative rounded border-none font-bold tracking-[1.5px] uppercase cursor-pointer transition-all duration-200 disabled:bg-btn-bg-hover/70 disabled:cursor-not-allowed "
+          className="aaravpos-btn"
         >
-          <span className="flex flex-row justify-center items-center gap-2">
+          <span className="aaravpos-btn-content">
             Choose Time <ChevronRight size={16} />
           </span>
         </button>
@@ -194,11 +194,10 @@ export default function Professionals() {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`pro-card border-2 border-black/15 rounded p-3 cursor-pointer transition flex items-center gap-4 ${
-                      selectedProfessional?.id === p.id
-                        ? "border-btn-bg-hover/80 bg-btn-bg-hover/5"
-                        : "bg-white hover:border-btn-bg/80"
-                    }`}
+                    className={`pro-card border-2 border-black/15 rounded p-3 cursor-pointer transition flex items-center gap-4 ${selectedProfessional?.id === p.id
+                      ? "border-btn-bg-hover/80 bg-btn-bg-hover/5"
+                      : "bg-white hover:border-btn-bg/80"
+                      }`}
                   >
                     {p.imageUrl ? (
                       <img
