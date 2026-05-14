@@ -971,12 +971,12 @@
 }
 
 .aaravpos-pro-card:hover {
-    border-color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(var(--btn-bg, 0, 0, 0), 0.5);
 }
 
 .aaravpos-pro-card.active {
-    border-color: rgba(var(--btn-bg-rgb, 0, 0, 0), 0.8);
-    background: rgba(var(--btn-bg-rgb, 0, 0, 0), 0.05);
+    border-color: rgba(var(--btn-bg, 0, 0, 0), 0.04);
+    background: rgba(var(--btn-bg, 0, 0, 0), 0.05);
 }
 
 .aaravpos-pro-image {
