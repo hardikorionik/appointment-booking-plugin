@@ -1366,7 +1366,7 @@
     margin-bottom: 12px;
     font-size: 14px;
     font-weight: 700;
-    border-bottom: 1px solid var(--btn-bg-hover);
+    border-bottom: 1px solid #9ca3af;
 }
 
 /* LABEL */
@@ -1580,7 +1580,23 @@
 }
 
 
+.aaravpos-spinner-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.aaravpos-spinner {
+    width: 40px;
+    height: 40px;
+
+    border: 4px solid var(--btn-bg-hover);
+    border-top-color: transparent;
+
+    border-radius: 50%;
+
+    animation: aaravposSpin 0.8s linear infinite;
+}
 
 /* =========================
    RESPONSIVE MEDIA QUERIES
@@ -1875,5 +1891,15 @@
 @keyframes aaravposShimmer {
     100% {
         left: 100%;
+    }
+}
+
+@keyframes aaravposSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }
