@@ -286,7 +286,7 @@ export default function ServiceProfessionalPage() {
               className={`aaravpos-tab-btn ${viewType === "standalone"
                 ? "active"
                 : "inactive"
-                }`}
+                } ${hasStandaloneServices ? "aaravpos-tab-enabled" : "aaravpos-tab-disabled"}`}
             >
               Standalone
             </button>
