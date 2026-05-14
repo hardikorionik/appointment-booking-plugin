@@ -266,7 +266,7 @@ export default function DetailsPage(): JSX.Element {
         >
             <form>
                 <Breadcrumb />
-                <div className="mt-5">
+                <div className="aaravpos-margin-top-20">
                     <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
                         Your Details
                     </h1>

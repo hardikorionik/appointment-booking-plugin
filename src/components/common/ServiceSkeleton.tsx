@@ -2,9 +2,9 @@ import type { JSX } from "react";
 
 export default function ServiceSkeletonCard(): JSX.Element {
     return (
-        <div className="h-33.5 rounded-sm relative overflow-hidden bg-[#e0e0e0]">
+        <div className="aaravpos-skeleton-card">
             <div
-                className="absolute top-0 -left-full h-full w-full"
+                className="aaravpos-skeleton-shimmer"
                 style={{
                     background:
                         "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
