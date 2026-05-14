@@ -32,11 +32,10 @@ function AppContent(): JSX.Element {
   const PageComponent: ComponentType =
     PAGE_MAP[currentStep as StepKey];
 
-
   return (
-    <div className="h-screen flex flex-col bg-canvas text-copy overflow-hidden">
-      <div className="flex-1 relative">
-        <div key={currentStep} className="h-full animate-fade-in">
+    <div className="aaravpos-layout">
+      <div className="aaravpos-layout-content">
+        <div key={currentStep} className="aaravpos-layout-page">
           <PageComponent />
         </div>
       </div>
