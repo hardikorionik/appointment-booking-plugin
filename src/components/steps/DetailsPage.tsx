@@ -266,7 +266,7 @@ export default function DetailsPage(): JSX.Element {
         >
             <form>
                 <Breadcrumb />
-                <div className="mt-5">
+                {/* <div className="mt-5">
                     <h1 className="font-bebas text-xl md:text-2xl lg:text-4xl">
                         Your Details
                     </h1>
@@ -407,8 +407,215 @@ export default function DetailsPage(): JSX.Element {
                             </div>
                         </div>
                     </div>
+                </div> */}
+            
+            <div className="arravpos-details-section">
+    <h1 className="aaravpos-page-title aaravpos-margin-bottom-20 ">
+        Your Details
+    </h1>
+
+    <div
+        className="arravpos-details-scroll"
+        style={{ height: `${height - 200}px` }}
+    >
+        <div className="arravpos-details-grid">
+
+            {/* Phone */}
+            <div className="arravpos-form-group">
+                <label
+                    className="arravpos-form-label"
+                    htmlFor="phone"
+                >
+                    Phone {!emailValue && (
+                        <span className="arravpos-required">*</span>
+                    )}
+                </label>
+
+                <Controller
+                    control={control}
+                    name="phone"
+                    rules={{
+                        validate: (value) => {
+                            const hasPhone = !!normalizePhone(value);
+                            const hasEmail = !!emailValue?.trim();
+
+                            if (!hasPhone && !hasEmail) {
+                                return "Enter phone or email";
+                            }
+
+                            if (
+                                hasPhone &&
+                                !isValidPhoneNumber(value)
+                            ) {
+                                return "Enter valid phone number";
+                            }
+
+                            return true;
+                        },
+                    }}
+                    render={({ field }) => (
+                        <div className="arravpos-input-wrapper">
+                            <PhoneInput
+                                {...field}
+                                id="phone"
+                                international
+                                countries={allowedCountries}
+                                defaultCountry="US"
+                                value={field.value || ""}
+                                onChange={(value) =>
+                                    handleInputChange(
+                                        value ?? "",
+                                        field.onChange,
+                                        "phone"
+                                    )
+                                }
+                                countryCallingCodeEditable={false}
+                                className="arravpos-custom-input"
+                            />
+
+                            {loading &&
+                                loadingField === "phone" && (
+                                    <div className="arravpos-loader-wrapper">
+                                        <div className="arravpos-loader" />
+                                    </div>
+                                )}
+                        </div>
+                    )}
+                />
+
+                {errors.phone && (
+                    <p className="arravpos-error-text">
+                        {errors.phone.message}
+                    </p>
+                )}
+
+                {isAutoFilled && (
+                    <div className="arravpos-autofill-text">
+                        Using existing customer
+
+                        <span
+                            onClick={handleClearCustomer}
+                            className="arravpos-clear-text"
+                        >
+                            Clear
+                        </span>
+                    </div>
+                )}
+            </div>
+
+            {/* Email */}
+            <div className="arravpos-form-group">
+                <label
+                    className="arravpos-form-label"
+                    htmlFor="email"
+                >
+                    Email {!phoneValue && (
+                        <span className="arravpos-required">*</span>
+                    )}
+                </label>
+
+                <div className="arravpos-input-wrapper">
+                    <input
+                        id="email"
+                        {...register("email", {
+                            validate: (value) => {
+                                const hasEmail = !!value?.trim();
+                                const hasPhone = !!normalizePhone(phoneValue);
+
+                                if (!hasEmail && !hasPhone) {
+                                    return "Enter phone or email";
+                                }
+
+                                if (
+                                    hasEmail &&
+                                    !/^\S+@\S+\.\S+$/.test(value)
+                                ) {
+                                    return "Invalid email";
+                                }
+
+                                return true;
+                            },
+
+                            onChange: (e) => {
+                                handleInputChange(
+                                    e.target.value,
+                                    null,
+                                    "email"
+                                );
+                            },
+                        })}
+                        autoComplete="email"
+                        placeholder="Email address"
+                        className="arravpos-custom-input"
+                    />
+
+                    {loading &&
+                        loadingField === "email" && (
+                            <div className="arravpos-loader-wrapper">
+                                <div className="arravpos-loader" />
+                            </div>
+                        )}
                 </div>
-            </form>
+
+                {errors.email && (
+                    <p className="arravpos-error-text">
+                        {errors.email.message}
+                    </p>
+                )}
+            </div>
+
+            {/* First Name */}
+            <div className="arravpos-form-group">
+                <label
+                    htmlFor="first_name"
+                    className="arravpos-form-label"
+                >
+                    First Name{" "}
+                    <span className="arravpos-required">*</span>
+                </label>
+
+                <input
+                    id="first_name"
+                    {...register("firstName", {
+                        required: "First name required",
+                        pattern: {
+                            value: /^[A-Za-z\s]+$/,
+                            message: "Only letters are allowed",
+                        },
+                    })}
+                    autoComplete="given-name"
+                    placeholder="First Name"
+                    className="arravpos-custom-input"
+                />
+
+                {errors.firstName && (
+                    <p className="arravpos-error-text">
+                        {errors.firstName.message}
+                    </p>
+                )}
+            </div>
+
+            {/* Last Name */}
+            <div className="arravpos-form-group">
+                <label
+                    htmlFor="last_name"
+                    className="arravpos-form-label"
+                >
+                    Last Name
+                </label>
+
+                <input
+                    id="last_name"
+                    autoComplete="family-name"
+                    {...register("lastName")}
+                    placeholder="Last Name"
+                    className="arravpos-custom-input"
+                />
+            </div>
+
+        </div>
+    </div>
+</div></form>
         </MainLayout>
     );
 }
