@@ -4,7 +4,9 @@ import { BookingPluginContainer } from "./BookingPluginContainer";
 import { BookingPluginProps, } from "@/types";
 
 
-export const BookingPlugin: React.FC<BookingPluginProps> = (props) => {
+export const BookingPlugin: React.FC<BookingPluginProps> = ({
+    ...props
+}) => {
     return (
         <BookingPluginProvider>
             <BookingPluginContainer {...props} />

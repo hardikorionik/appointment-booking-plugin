@@ -111,7 +111,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
     }
 
     return (
-        <>
+        <div>
             {outlets.length > 1 && !outletId ? (
                 <ChooseYourOutlet
                     outlets={outlets}
@@ -123,6 +123,6 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
             ) : (
                 <DefaultAppointment />
             )}
-        </>
+        </div>
     );
 };
