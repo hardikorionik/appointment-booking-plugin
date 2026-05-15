@@ -2756,7 +2756,98 @@
     display: none;
 }
 
+.arravpos-profile-image {
+    width: 40px;
+    height: 40px;
 
+    border-radius: 9999px;
+
+    object-fit: cover;
+
+    flex-shrink: 0;
+}
+.arravpos-profile-avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 9999px;
+
+    background-color: #000000;
+
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+.arravpos-card-box {
+    background-color: #ffffff;
+
+       border: 1px solid var(--btn-bg);
+
+
+    border-radius: 2px;
+
+    padding: 16px;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+}
+.arravpos-section-label {
+    margin-top: 20px;
+    margin-bottom: 8px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1.5px;
+
+    color: rgba(0, 0, 0, 0.7);
+}
+.arravpos-select-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border-radius: 2px;
+
+    cursor: pointer;
+
+    margin-bottom: 8px;
+
+    border: 1px solid;
+}
+.arravpos-select-card-default {
+    border-color: var(--border);
+
+    background-color: transparent;
+}
+
+/* Active */
+.arravpos-select-card-active {
+    border-color: var(--red);
+
+    background-color: rgba(255, 0, 0, 0.05);
+}
+.arravpos-select-check {
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */
@@ -2779,7 +2870,25 @@
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) { 
+    
+    .arravpos-section-label {
+        margin-top: 18px;
+
+        font-size: 9px;
+
+        letter-spacing: 1.3px;
+    }
+     .arravpos-profile-avatar {
+        width: 36px;
+        height: 36px;
+
+        font-size: 14px;
+    }
+      .arravpos-profile-image {
+        width: 36px;
+        height: 36px;
+    }
     .aaravpos-outlet-list-wrapper {
         max-height: 80vh;
     }
@@ -2847,12 +2956,17 @@
 
     .arravpos-details-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+       gap: 20px;
     }
 
 }
 
 @media (max-width: 767px) {
+     .arravpos-select-card {
+        gap: 10px;
+
+        padding: 10px;
+    }
     .aaravpos-common-btn {
         padding: 14px 8px;
         font-size: 12px;
@@ -2996,6 +3110,15 @@
 
 
 @media (max-width: 768px) {
+     .arravpos-select-check svg {
+        width: 18px;
+        height: 18px;
+    }
+      .arravpos-card-box {
+        padding: 14px;
+
+        font-size: 13px;
+    }
     .arravpos-booking-scroll {
         height: calc(100dvh - 200px);
     }
@@ -3057,6 +3180,36 @@
 
 
 @media (max-width: 480px) {
+     .arravpos-select-check svg {
+        width: 16px;
+        height: 16px;
+    }
+     .arravpos-select-card {
+        gap: 8px;
+
+        padding: 8px;
+    }
+    .arravpos-section-label {
+        margin-top: 16px;
+
+        font-size: 8px;
+
+        letter-spacing: 1.1px;
+    }
+    .arravpos-card-box {
+        padding: 12px;
+
+        font-size: 12px;
+    }
+      .arravpos-profile-image {
+        width: 32px;
+        height: 32px;
+    }.arravpos-profile-avatar {
+        width: 32px;
+        height: 32px;
+
+        font-size: 12px;
+    }
     .arravpos-outlet-name {
         font-size: 13px;
     }
