@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import { DateTime } from "luxon";
 import { X, MoveRight, Clock3, Package2 } from "lucide-react";
-import { getUserName, CurrencyIcon } from "@/utils";
+import { CurrencyIcon } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import type {
   OutletRootState,

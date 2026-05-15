@@ -1,6 +1,6 @@
 import { ChevronRight, Clock3, Package2 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { getUserName, CurrencyIcon } from "@/utils";
+import { CurrencyIcon } from "@/utils";
 import { Staff, Step, Service, OutletRootState } from "@/types";
 import { RootState } from "@/store";
 

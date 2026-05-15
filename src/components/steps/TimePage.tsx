@@ -24,7 +24,7 @@ import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
-import { useWindowSize } from "@/hooks/useWindowSize";
+// import { useWindowSize } from "@/hooks/useWindowSize";
 import type { AppDispatch } from "@/store";
 import { isDateDisabled } from "@/utils/isDateDisabled";
 
@@ -47,7 +47,7 @@ const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function TimePage(): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
-  const { height } = useWindowSize();
+  // const { height } = useWindowSize();
 
   const [visibleCount, setVisibleCount] = useState<number>(11);
 
