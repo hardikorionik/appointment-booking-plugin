@@ -1599,6 +1599,39 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+/* DISABLED DATE SLASH */
+
+.aaravpos-calendar-day {
+  position: relative;
+}
+
+.aaravpos-calendar-day-disabled {
+  background: rgba(0, 0, 0, 0.03);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.aaravpos-calendar-day-slash {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.aaravpos-calendar-day-slash::after {
+  content: "";
+  width: 140%;
+  height: 1.5px;
+  background: var(--app-bg);
+  transform: rotate(-45deg);
+}
+
+.aaravpos-calendar-day-text {
+  position: relative;
+  z-index: 2;
+}
 
 /* PROFESSIONAL SKELETON */
 .aaravpos-professional-skeleton {

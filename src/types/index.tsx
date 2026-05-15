@@ -15,7 +15,7 @@ export type StepKey =
   | "time"
   | "details"
   | "confirm"
-  | "success"
+  | "success";
 
 export type Step =
   | "services"
@@ -28,7 +28,7 @@ export type Step =
 export interface BreadcrumbState {
   currentStep: Step;
   completedSteps: string[];
-  isOrder: boolean
+  isOrder: boolean;
 }
 
 export type PageMap = Record<StepKey, ComponentType>;
@@ -37,12 +37,7 @@ export type BookingMode = "booking";
 
 export type PayType = "person" | "card";
 
-export type CardType =
-  | "VISA"
-  | "MASTERCARD"
-  | "AMEX"
-  | "DISCOVER"
-  | "UNKNOWN";
+export type CardType = "VISA" | "MASTERCARD" | "AMEX" | "DISCOVER" | "UNKNOWN";
 
 export type SignatureType =
   | "CHECKBOX_ONLY"
@@ -117,7 +112,7 @@ export interface Outlet {
   currencyName: string | null;
   currencySymbol: string | null;
   isOpen: boolean;
-  token: string
+  token: string;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -178,10 +173,7 @@ export interface Service {
   consent_rule?: {
     enforcementMode?: string | null;
 
-    frequency?:
-    | "EVERY_X_DAYS"
-    | "ONCE_PER_CUSTOMER"
-    | "EVERY_VISIT";
+    frequency?: "EVERY_X_DAYS" | "ONCE_PER_CUSTOMER" | "EVERY_VISIT";
   } | null;
 
   consent_template?: {
@@ -277,6 +269,30 @@ export interface StaffAssignment {
   assignedts?: string;
 }
 
+export interface StaffLeaveDate {
+  status?: string;
+  leaveType?: string;
+  leavePeriod?: {
+    date?: string;
+  };
+  returnDate?: {
+    date?: string;
+  };
+}
+
+export interface StaffDateOverride {
+  date: string;
+  type: "CLOSED" | "TIME";
+}
+
+export interface WeeklyDayConfig {
+  isClosed?: boolean;
+}
+
+export interface WeeklyHours {
+  weeklyJson?: Record<string, WeeklyDayConfig>;
+}
+
 export interface Staff {
   id: string;
   name: string;
@@ -285,8 +301,10 @@ export interface Staff {
   staff_type?: string;
   imageUrl?: string;
   color?: string;
-
   assignments?: StaffAssignment[];
+  futureLeaveDates?: StaffLeaveDate[];
+  dateOverrides?: StaffDateOverride[];
+  weeklyHours?: WeeklyHours;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -318,7 +336,7 @@ export interface SlotGroups {
 
 export interface SlotsState {
   selectedSlotIndexes: number[];
-  selectedSlotIds: (string)[];
+  selectedSlotIds: string[];
   selectedDate: SelectedDateType | null;
   selectedTime: string | null;
 
@@ -344,17 +362,16 @@ export interface StaffSlotsResponse {
       morning: Slot[];
       afternoon: Slot[];
       evening: Slot[];
-    }
+    };
     // optional metadata (if backend sends it)
     staffId?: string;
     tenantId?: string;
     date?: string;
-  }
+  };
 }
 /* ─────────────────────────────────────────────────────────────
  * USER
  * ───────────────────────────────────────────────────────────── */
-
 
 export interface UserDetails {
   id?: string;
@@ -449,8 +466,8 @@ export interface AppointmentPayload {
   date: string;
   startTime: string | null;
 
-  serviceIds: (string)[];
-  slotIds: (string)[];
+  serviceIds: string[];
+  slotIds: string[];
 
   isWalkIn: boolean;
   requiresConsent: boolean;
@@ -467,8 +484,8 @@ export interface CheckinPayload {
 
   staffId?: string;
 
-  serviceIds: (string)[];
-  slotIds: (string)[];
+  serviceIds: string[];
+  slotIds: string[];
 
   customer: Customer;
 }
@@ -619,19 +636,19 @@ export interface BillingContact {
  * ───────────────────────────────────────────────────────────── */
 
 export interface OutletSliceState {
-  id: string,
-  outletName: string,
-  timeZone: string,
-  image: string,
-  tenantId: string,
-  address: string,
-  isOpen: false,
-  createdAt: string,
-  isService: true,
+  id: string;
+  outletName: string;
+  timeZone: string;
+  image: string;
+  tenantId: string;
+  address: string;
+  isOpen: false;
+  createdAt: string;
+  isService: true;
   outletTimeZoneDate: string;
   outletTimeZoneYear: number;
   outletTimeZone: string;
-  currency: string,
+  currency: string;
 }
 
 export interface ServiceSliceState {
@@ -648,7 +665,7 @@ export interface ServiceSliceState {
 }
 
 export interface SlotsSliceState {
-  selectedSlotIds: (string)[];
+  selectedSlotIds: string[];
   selectedDate: DateObjectUnits | null;
   selectedTime: string;
 
@@ -767,7 +784,6 @@ export interface SlotItem {
   updatedAt: string;
   status: "AVAILABLE" | "BOOKED" | "BLOCKED" | string;
 }
-
 
 export interface CalendarMonth {
   label: string;
