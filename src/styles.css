@@ -1705,7 +1705,6 @@
 
 /* Inputs */
 .arravpos-custom-input {
-    width: 100%;
     border: 1px solid #d1d5db;
     border-radius: 4px;
     padding: 10px 12px;
@@ -2973,9 +2972,6 @@
         padding-bottom: 16px;
     }
 
-    .arravpos-details-grid {
-        gap: 24px;
-    }
 
     .arravpos-custom-input,
     .arravpos-custom-input input {
