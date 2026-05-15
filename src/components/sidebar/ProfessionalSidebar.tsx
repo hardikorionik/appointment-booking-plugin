@@ -111,6 +111,7 @@ const ProfessionalSidebar = ({
             </ul>
           </div>
         </div>
+        <div className="aaravpos-divider" />
         {/* Footer */}
         <div className="aaravpos-order-footer">
           {/* Totals */}

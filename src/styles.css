@@ -93,7 +93,6 @@
     gap: 8px;
     padding: 12px 32px;
     border: none;
-    border-radius: 6px;
     background: var(--btn-bg, #000);
     color: var(--btn-text, #fff);
     font-size: 12px;
@@ -102,11 +101,19 @@
     letter-spacing: 1.5px;
     cursor: pointer;
     transition: all 0.2s ease;
+    border-radius: 20px;
 }
 
 .aaravpos-btn:hover {
     background: var(--btn-bg-hover, #222);
     color: var(--btn-text-hover, #fff);
+}
+
+.aaravpos-divider {
+    height: 1px;
+    background: var(--border-color, #d4d4d4);
+    margin-top: auto;
+    margin-bottom: 8px;
 }
 
 .aaravpos-btn:disabled {
@@ -1150,7 +1157,6 @@
 
 .aaravpos-order-footer {
     padding: 12px 0px;
-    border-top: 1px solid #d1d5db;
 }
 
 .aaravpos-order-subtotal {
@@ -1160,17 +1166,11 @@
     margin-bottom: 4px;
 }
 
-.aaravpos-order-subtotal-time {
-    border-top: 1px solid #d1d5db;
-    padding-top: 10px;
-    margin-top: 15px;
-}
-
 .aaravpos-order-subtotal-label {
     font-size: 16px;
     font-weight: 600;
     color: rgba(0, 0, 0, 0.6);
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 .aaravpos-order-subtotal-price {
@@ -2766,6 +2766,7 @@
 
     flex-shrink: 0;
 }
+
 .arravpos-profile-avatar {
     width: 40px;
     height: 40px;
@@ -2782,10 +2783,11 @@
 
     flex-shrink: 0;
 }
+
 .arravpos-card-box {
     background-color: #ffffff;
 
-       border: 1px solid var(--btn-bg);
+    border: 1px solid var(--btn-bg);
 
 
     border-radius: 2px;
@@ -2796,6 +2798,7 @@
 
     font-size: 14px;
 }
+
 .arravpos-section-label {
     margin-top: 20px;
     margin-bottom: 8px;
@@ -2810,6 +2813,7 @@
 
     color: rgba(0, 0, 0, 0.7);
 }
+
 .arravpos-select-card {
     display: flex;
     flex-direction: row;
@@ -2827,6 +2831,7 @@
 
     border: 1px solid;
 }
+
 .arravpos-select-card-default {
     border-color: var(--border);
 
@@ -2839,6 +2844,7 @@
 
     background-color: rgba(255, 0, 0, 0.05);
 }
+
 .arravpos-select-check {
     margin-left: auto;
 
@@ -2848,6 +2854,7 @@
 
     flex-shrink: 0;
 }
+
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */
@@ -2870,8 +2877,8 @@
     }
 }
 
-@media (min-width: 768px) { 
-    
+@media (min-width: 768px) {
+
     .arravpos-section-label {
         margin-top: 18px;
 
@@ -2879,16 +2886,19 @@
 
         letter-spacing: 1.3px;
     }
-     .arravpos-profile-avatar {
+
+    .arravpos-profile-avatar {
         width: 36px;
         height: 36px;
 
         font-size: 14px;
     }
-      .arravpos-profile-image {
+
+    .arravpos-profile-image {
         width: 36px;
         height: 36px;
     }
+
     .aaravpos-outlet-list-wrapper {
         max-height: 80vh;
     }
@@ -2956,17 +2966,18 @@
 
     .arravpos-details-grid {
         grid-template-columns: repeat(2, 1fr);
-       gap: 20px;
+        gap: 20px;
     }
 
 }
 
 @media (max-width: 767px) {
-     .arravpos-select-card {
+    .arravpos-select-card {
         gap: 10px;
 
         padding: 10px;
     }
+
     .aaravpos-common-btn {
         padding: 14px 8px;
         font-size: 12px;
@@ -3110,15 +3121,17 @@
 
 
 @media (max-width: 768px) {
-     .arravpos-select-check svg {
+    .arravpos-select-check svg {
         width: 18px;
         height: 18px;
     }
-      .arravpos-card-box {
+
+    .arravpos-card-box {
         padding: 14px;
 
         font-size: 13px;
     }
+
     .arravpos-booking-scroll {
         height: calc(100dvh - 200px);
     }
@@ -3180,15 +3193,17 @@
 
 
 @media (max-width: 480px) {
-     .arravpos-select-check svg {
+    .arravpos-select-check svg {
         width: 16px;
         height: 16px;
     }
-     .arravpos-select-card {
+
+    .arravpos-select-card {
         gap: 8px;
 
         padding: 8px;
     }
+
     .arravpos-section-label {
         margin-top: 16px;
 
@@ -3196,20 +3211,25 @@
 
         letter-spacing: 1.1px;
     }
+
     .arravpos-card-box {
         padding: 12px;
 
         font-size: 12px;
     }
-      .arravpos-profile-image {
+
+    .arravpos-profile-image {
         width: 32px;
         height: 32px;
-    }.arravpos-profile-avatar {
+    }
+
+    .arravpos-profile-avatar {
         width: 32px;
         height: 32px;
 
         font-size: 12px;
     }
+
     .arravpos-outlet-name {
         font-size: 13px;
     }
