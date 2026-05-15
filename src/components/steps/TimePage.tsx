@@ -416,11 +416,9 @@ export default function TimePage(): JSX.Element {
     >
       <Breadcrumb />
 
-      <div className="mt-5 flex items-center justify-between mb-3">
         <h1 className="aaravpos-page-title aaravpos-margin-bottom-20 ">
           Choose a Time
         </h1>
-      </div>
 
       <div className="arravpos-date-wrapper">
         <div className="arravpos-date-strip">
@@ -576,7 +574,7 @@ function DateNavBtn({ onClick, children }: DateNavBtnProps): JSX.Element {
   return (
     <button
       onClick={onClick}
-      className="shrink-0 w-8.5 bg-surface border p-2 border-border rounded-sm cursor-pointer text-sm text-muted flex items-center justify-center self-stretch transition-all duration-150 hover:border-red hover:text-red hover:bg-[rgba(215,38,61,0.12)]"
+     className="arravpos-date-nav-btn"
     >
       {children}
     </button>
