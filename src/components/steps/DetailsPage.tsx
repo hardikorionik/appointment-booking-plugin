@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef, JSX } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { debounce } from "lodash";
 import PhoneInput, { isValidPhoneNumber, } from "react-phone-number-input";
-import type { E164Number, CountryCode } from "libphonenumber-js";
+import type { CountryCode } from "libphonenumber-js";
 import { useDispatch, useSelector } from "react-redux";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import Breadcrumb from "@/components/common/Breadcrumb";
