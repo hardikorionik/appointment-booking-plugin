@@ -958,18 +958,6 @@
     color: rgba(var(--btn-bg-rgb, 0, 0, 0), 0.9);
 }
 
-.aaravpos-staff-wrapper {
-    height: calc(100dvh - 210px);
-    overflow-y: auto;
-    padding-bottom: 80px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.aaravpos-staff-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
 .aaravpos-staff-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(195px, 1fr));
@@ -2749,6 +2737,22 @@
 .arravpos-slot-status {
     font-size: 10px;
 }
+
+
+
+/* --------------------------------- */
+.aaravpos-staff-wrapper {
+    height: calc(100dvh - 210px);
+    overflow-y: auto;
+    padding-bottom: 80px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.aaravpos-staff-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
 
 /* =========================
    RESPONSIVE MEDIA QUERIES
