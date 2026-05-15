@@ -103,7 +103,7 @@ export default function Breadcrumb() {
 
   const currentStepData = steps[currentIndex];
 
-  const isMobile = width < 480;
+  const isMobile = width < 991;
 
   return (
     <>
