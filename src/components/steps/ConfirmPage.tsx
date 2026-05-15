@@ -645,122 +645,122 @@ export default function ConfirmPage(): JSX.Element {
         >
             <>
                 <Breadcrumb />
-               <div className="aaravpos-margin-top-20">
+                <div className="aaravpos-margin-top-20">
                     <h1 className="aaravpos-page-title">
-          Confirm Booking
-        </h1>
-        <p className="aaravpos-sub-title">
-          Review your appointment details before booking
-        </p>
-                   
+                        Confirm Booking
+                    </h1>
+                    <p className="aaravpos-sub-title">
+                        Review your appointment details before booking
+                    </p>
+
                     <div className="arravpos-booking-wrapper">
 
-    {/* Outlet Info */}
-    <div className="arravpos-outlet-info">
+                        {/* Outlet Info */}
+                        <div className="arravpos-outlet-info">
 
-        {image && (
-            <div className="arravpos-outlet-logo">
-                <img
-                    src={image ?? "/logo.svg"}
-                    alt="Logo"
-                    className="arravpos-outlet-logo-img"
-                />
-            </div>
-        )}
+                            {image && (
+                                <div className="arravpos-outlet-logo">
+                                    <img
+                                        src={image ?? "/logo.svg"}
+                                        alt="Logo"
+                                        className="arravpos-outlet-logo-img"
+                                    />
+                                </div>
+                            )}
 
-        <div className="arravpos-outlet-content">
-            <p className="arravpos-outlet-name">
-                {outletName ?? "-"}
-            </p>
+                            <div className="arravpos-outlet-content">
+                                <p className="arravpos-outlet-name">
+                                    {outletName ?? "-"}
+                                </p>
 
-            <p className="arravpos-outlet-address">
-                {address ?? "-"}
-                <br />
-            </p>
-        </div>
-
-    </div>
-
-    {/* Main Scroll */}
-    <div className="arravpos-booking-scroll">
-
-        <div className="arravpos-booking-grid">
-
-            {/* Appointment Section */}
-            <div className="arravpos-booking-column">
-
-                <SectionLabel>
-                    Appointment
-                </SectionLabel>
-
-                <Card>
-
-                    <div className="arravpos-appointment-header">
-
-                        <Avatar pro={selectedProfessional} />
-
-                        <div className="arravpos-appointment-content">
-
-                            <p className="arravpos-appointment-name">
-                                {selectedProfessional?.name}
-                            </p>
-
-                            <p className="arravpos-appointment-services">
-                                {services
-                                    .map((s) => s.name)
-                                    .join(", ")}
-                            </p>
+                                <p className="arravpos-outlet-address">
+                                    {address ?? "-"}
+                                    <br />
+                                </p>
+                            </div>
 
                         </div>
 
-                        <span className="arravpos-appointment-price">
-                            ${totalBasePrice}
-                        </span>
+                        {/* Main Scroll */}
+                        <div className="arravpos-booking-scroll">
+
+                            <div className="arravpos-booking-grid">
+
+                                {/* Appointment Section */}
+                                <div className="arravpos-booking-column">
+
+                                    <SectionLabel>
+                                        Appointment
+                                    </SectionLabel>
+
+                                    <Card>
+
+                                        <div className="arravpos-appointment-header">
+
+                                            <Avatar pro={selectedProfessional} />
+
+                                            <div className="arravpos-appointment-content">
+
+                                                <p className="arravpos-appointment-name">
+                                                    {selectedProfessional?.name}
+                                                </p>
+
+                                                <p className="arravpos-appointment-services">
+                                                    {services
+                                                        .map((s) => s.name)
+                                                        .join(", ")}
+                                                </p>
+
+                                            </div>
+
+                                            <span className="arravpos-appointment-price">
+                                                ${totalBasePrice}
+                                            </span>
+
+                                        </div>
+
+                                        <div className="arravpos-appointment-date">
+
+                                            <CalendarDays />
+
+                                            <span className="arravpos-appointment-date-text">
+                                                {dateStr ?? "No time selected"}
+                                            </span>
+
+                                        </div>
+
+                                    </Card>
+
+                                </div>
+
+                                {/* Payment Section */}
+                                <div className="arravpos-booking-column">
+
+                                    <SectionLabel>
+                                        Payment Method
+                                    </SectionLabel>
+
+                                    <PayOption
+                                        icon={<Store />}
+                                        label="Pay in person"
+                                        selected={payType === "person"}
+                                        onClick={() => setPayType("person")}
+                                    />
+
+                                    <PayOption
+                                        icon={<CreditCard />}
+                                        label="Pay with card"
+                                        selected={payType === "card"}
+                                        onClick={() => setPayType("card")}
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
 
                     </div>
-
-                    <div className="arravpos-appointment-date">
-
-                        <CalendarDays />
-
-                        <span className="arravpos-appointment-date-text">
-                            {dateStr ?? "No time selected"}
-                        </span>
-
-                    </div>
-
-                </Card>
-
-            </div>
-
-            {/* Payment Section */}
-            <div className="arravpos-booking-column">
-
-                <SectionLabel>
-                    Payment Method
-                </SectionLabel>
-
-                <PayOption
-                    icon={<Store />}
-                    label="Pay in person"
-                    selected={payType === "person"}
-                    onClick={() => setPayType("person")}
-                />
-
-                <PayOption
-                    icon={<CreditCard />}
-                    label="Pay with card"
-                    selected={payType === "card"}
-                    onClick={() => setPayType("card")}
-                />
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
                 </div>
             </>
             {showPaymentModal && (

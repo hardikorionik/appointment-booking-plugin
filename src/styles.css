@@ -2825,18 +2825,17 @@
         padding-right: 24px;
     }
 
-    /* .aaravpos-staff-wrapper {
-        height: calc(100dvh - 200px);
-    }
-
     .aaravpos-order-list {
-        height: calc(100dvh - 380px);
+        height: calc(100dvh - 280px);
     }
-
 
     .aaravpos-pro-order-list {
-        height: calc(100dvh - 440px);
-    } */
+        height: calc(100dvh - 420px);
+    }
+
+    /* .aaravpos-staff-wrapper {
+        height: calc(100dvh - 200px);
+    }*/
 
 
     .aaravpos-sidebar-close-btn {
