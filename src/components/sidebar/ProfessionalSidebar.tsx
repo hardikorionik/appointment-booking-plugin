@@ -120,7 +120,7 @@ const ProfessionalSidebar = ({
               Subtotal
             </span>
             <span className="aaravpos-order-subtotal-price">
-              <CurrencyIcon size={18} />
+              <CurrencyIcon size={16} />
               {totalPrice}
             </span>
           </div>
