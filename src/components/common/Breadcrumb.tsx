@@ -122,13 +122,12 @@ export default function Breadcrumb() {
         </div>
       ) : (
         <div className="aaravpos-desktop-stepper">
-          <button
+          {outlets.length > 1 && <button
             onClick={goToPrev}
             className="aaravpos-desktop-back-btn"
           >
             <ChevronLeft size={20} />
-          </button>
-
+          </button>}
           <nav className="aaravpos-step-nav">
             {steps.map((step: any, i: number) => {
               const isActive = currentStep === step.page;

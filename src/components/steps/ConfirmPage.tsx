@@ -15,7 +15,7 @@ import {
     checkConsentRequirement,
     submitFinalConsent,
 } from "@/services";
-import { getUserName } from "@/utils";
+import { getUserName, CurrencyIcon } from "@/utils";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import { nextStep } from "@/slices/breadcrumbSlice";
@@ -693,7 +693,7 @@ export default function ConfirmPage(): JSX.Element {
                                                 </p>
                                             </div>
                                             <span className="arravpos-appointment-price">
-                                                ${totalBasePrice}
+                                                <CurrencyIcon size={14} />{totalBasePrice}
                                             </span>
                                         </div>
                                         <div className="arravpos-appointment-date">

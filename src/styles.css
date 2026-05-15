@@ -62,10 +62,8 @@
 }
 
 .arravpos-container {
-  min-height: 100vh;
   background-color: #fafaf8;
-  /* background: var(--app-bg); */
-  padding: 40px 16px;
+  padding: 16px;
   width: 100%;
   box-sizing: border-box;
   margin: 0 auto;
@@ -158,12 +156,12 @@
 }
 
 .aaravpos-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: -0.025em;
   color: #111827;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
   line-height: 1.1;
   margin-top: 0px;
 }
@@ -273,7 +271,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 10px;
 }
 
 .aaravpos-search-wrapper {
@@ -342,7 +340,7 @@
 .aaravpos-outlet-list-wrapper {
   padding-top: 8px;
   padding-bottom: 8px;
-  max-height: 60vh;
+  max-height: 320px;
   overflow: auto;
   scrollbar-width: none;
 }
@@ -413,10 +411,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  position: absolute;
+  right: 0px
 }
 
 .aaravpos-outlet-card-content {
-  padding: 4px 16px 16px;
+  padding: 14px;
 }
 
 .aaravpos-outlet-card-inner {
@@ -434,6 +434,8 @@
   line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .aaravpos-outlet-card-address {
@@ -447,6 +449,7 @@
   line-clamp: 1;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  margin-bottom: 0px;
 }
 
 .aaravpos-status-badge {
@@ -597,15 +600,16 @@
   text-transform: uppercase;
   letter-spacing: -0.025em;
   color: #111827;
-  padding-top: 12px;
+  padding-top: 0px;
   line-height: 1.1;
   margin-bottom: 0px;
+  margin-top: 0px;
 }
 
 .aaravpos-sub-title {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 24px;
+  margin-bottom: 4px;
   line-height: 1.5;
   margin-top: 0px;
 }
@@ -615,7 +619,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
 
@@ -626,7 +630,7 @@
 }
 
 .aaravpos-tab-btn {
-  padding-bottom: 16px;
+  padding-bottom: 12px;
   border: none;
   border-bottom: 2px solid transparent;
   background: transparent;
@@ -712,7 +716,7 @@
 
 .aaravpos-supercategory-btn {
   min-width: fit-content;
-  padding: 8px 16px;
+  padding: 8px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   background: #ffffff;
   text-align: left;
@@ -736,10 +740,10 @@
 }
 
 .aaravpos-supercategory-title {
-  margin-top: 4px;
+  margin-top: 0px;
   font-size: 14px;
   font-weight: 500;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
 }
 
 .aaravpos-supercategory-count {
@@ -748,7 +752,8 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: rgba(0, 0, 0, 0.6);
-  margin-bottom: 4px;
+  margin-bottom: 0px;
+  margin-top: 6px;
 }
 
 /* SERVICES CONTAINER */
@@ -832,6 +837,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-top: 12px;
 }
 
 /* DESCRIPTION */
@@ -882,7 +888,6 @@
 .aaravpos-service-price-right {
   display: flex;
   align-items: center;
-  gap: 4px;
   font-family: monospace;
 }
 
@@ -950,12 +955,10 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent);
   animation: aaravpos-shimmer 1.2s infinite;
 }
 
@@ -1161,10 +1164,10 @@
 .aaravpos-order-details {
   width: 100%;
   display: grid;
+  gap: 4px;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  gap: 8px;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .aaravpos-order-detail {
@@ -1174,6 +1177,7 @@
   font-size: 12px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.6);
+  margin: 0px;
 }
 
 .aaravpos-order-detail.center {
@@ -1182,6 +1186,7 @@
 
 .aaravpos-order-detail.right {
   justify-content: flex-end;
+  gap: 0px;
 }
 
 .aaravpos-order-footer {
@@ -1599,6 +1604,7 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
 /* DISABLED DATE SLASH */
 
 .aaravpos-calendar-day {
@@ -1649,12 +1655,10 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.5),
+      transparent);
   animation: aaravposShimmer 1.2s infinite;
 }
 
@@ -1932,6 +1936,9 @@
   font-size: 15px;
   color: #111827;
   white-space: nowrap;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
 }
 
 .arravpos-appointment-date {
@@ -3037,7 +3044,7 @@
   }
 
   .aaravpos-title {
-    font-size: 34px;
+    font-size: 28px;
   }
 
   .aaravpos-outlet-grid {
@@ -3173,7 +3180,7 @@
     height: 36px;
   }
 
-    /* .aaravpos-outlet-list-wrapper {
+  /* .aaravpos-outlet-list-wrapper {
         max-height: 85vh;
     } */
 
@@ -3424,7 +3431,7 @@
 
 @media (min-width: 1280px) {
   .aaravpos-title {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .aaravpos-outlet-grid {
@@ -3489,6 +3496,7 @@
 }
 
 @keyframes pulseBrand {
+
   0%,
   100% {
     box-shadow: 0 0 0 16px color-mix(in srgb, var(--app-bg) 12%, transparent);
