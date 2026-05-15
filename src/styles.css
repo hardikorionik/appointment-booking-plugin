@@ -3137,9 +3137,9 @@
         height: 36px;
     }
 
-    .aaravpos-outlet-list-wrapper {
+    /* .aaravpos-outlet-list-wrapper {
         max-height: 85vh;
-    }
+    } */
 
     .aaravpos-desktop-stepper {
         display: flex;
