@@ -2,6 +2,6 @@ import { BookingPlugin } from "@/components/BookingPlugin";
 
 export default function App() {
   return (
-    <BookingPlugin bookingCode="X4M8Q1" />
+    <BookingPlugin bookingCode="QK9E2A" />
   );
 }
