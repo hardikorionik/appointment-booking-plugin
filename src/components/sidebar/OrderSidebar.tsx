@@ -381,7 +381,7 @@ export default function OrderSidebar({
           )}
         </div>
       </div>
-      <ul className="aaravpos-order-list">
+      <ul className="aaravpos-order-list" style={{ height: `${secondHeight}px` }}>
         {selectedStaffServices?.length > 0 &&
           selectedStaffServices.map((svc) => (
             <li
@@ -577,6 +577,7 @@ export default function OrderSidebar({
                 }
               />
             )}
+          <div className="aaravpos-divider" />
           <div className="aaravpos-order-subtotal">
             <span className="aaravpos-order-subtotal-label">
               Total

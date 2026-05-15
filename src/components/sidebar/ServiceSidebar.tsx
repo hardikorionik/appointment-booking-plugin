@@ -61,6 +61,7 @@ export default function ServiceSidebar({
             ))}
           </ul>
         </div>
+        <div className="aaravpos-divider" />
         <div className="aaravpos-order-footer">
           <div className="aaravpos-order-subtotal">
             <span className="aaravpos-order-subtotal-label">
