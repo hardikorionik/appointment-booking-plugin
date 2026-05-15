@@ -113,7 +113,7 @@ export default function ChooseYourOutlet({
         </div>
         <div className="aaravpos-search-wrapper">
           <span className="aaravpos-search-icon">
-            <Search size={18} />
+            <Search size={14} />
           </span>
           <input
             type="text"

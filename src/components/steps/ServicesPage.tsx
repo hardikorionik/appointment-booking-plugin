@@ -207,7 +207,7 @@ export default function ServicesPage() {
           </div>
           <div className="aaravpos-search-wrapper aaravpos-mb-10">
             <span className="aaravpos-search-icon">
-              <Search size={18} />
+              <Search size={14} />
             </span>
             <input
               type="text"
