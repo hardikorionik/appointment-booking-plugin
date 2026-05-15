@@ -321,7 +321,7 @@ export default function ServiceProfessionalPage() {
         {viewType === "supercategory" && (
           <>
             {/* SUPER CATEGORY CARDS */}
-            <div
+            {filteredSuperCategories.length > 0 && <div
               ref={scrollRef}
               onWheel={(e) => {
                 if (scrollRef.current) {
@@ -351,9 +351,9 @@ export default function ServiceProfessionalPage() {
                   </p>
                 </button>
               ))}
-            </div>
+            </div>}
             {/* SUB CATEGORIES */}
-            {selectedSuperCategory && (
+            {selectedSuperCategory?.categories?.length > 0 && selectedSuperCategory && (
               <div
                 ref={scrollRef}
                 onWheel={(e) => {

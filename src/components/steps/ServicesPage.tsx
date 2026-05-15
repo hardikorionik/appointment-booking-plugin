@@ -231,7 +231,7 @@ export default function ServicesPage() {
         {/* SUPER CATEGORY UI */}
         {viewType === "supercategory" && (
           <>
-            <div
+            {superCategories?.length > 0 && <div
               ref={scrollRef}
               onWheel={(e) => {
                 if (scrollRef.current) {
@@ -261,9 +261,9 @@ export default function ServicesPage() {
                   </p>
                 </button>
               ))}
-            </div>
+            </div>}
             {/* SUB CATEGORIES */}
-            {selectedSuperCategory && (
+            {selectedSuperCategory?.categories?.length > 0 && selectedSuperCategory && (
               <div
                 ref={scrollRef}
                 onWheel={(e) => {
