@@ -344,7 +344,7 @@
 .aaravpos-outlet-list-wrapper {
     padding-top: 8px;
     padding-bottom: 8px;
-    max-height: 40vh;
+    max-height: 60vh;
     overflow: auto;
     scrollbar-width: none;
 }
@@ -2981,6 +2981,306 @@
    RESPONSIVE MEDIA QUERIES
 ========================= */
 
+@media (min-width: 640px) {
+    .custom-container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .aaravpos-title {
+        font-size: 34px;
+    }
+
+    .aaravpos-outlet-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .aaravpos-modal {
+        max-width: 32rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .arravpos-select-card {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .aaravpos-common-btn {
+        padding: 14px 8px;
+        font-size: 12px;
+    }
+
+    .aaravpos-date-modal {
+        height: fit-content;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .aaravpos-date-modal-header {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .aaravpos-date-modal-title {
+        font-size: 18px;
+    }
+
+    .aaravpos-date-modal-body {
+        padding: 20px 16px;
+    }
+
+    .aaravpos-calendar-grid {
+        gap: 8px;
+    }
+
+    .aaravpos-calendar-day {
+        min-height: 40px;
+    }
+
+    .arravpos-date-nav-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .arravpos-date-strip {
+        gap: 5px;
+    }
+
+    .arravpos-date-week {
+        font-size: 9px;
+    }
+
+    .arravpos-date-day {
+        font-size: 20px;
+    }
+
+    .arravpos-date-today {
+        font-size: 7px;
+    }
+
+    .arravpos-select-check svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .arravpos-card-box {
+        padding: 14px;
+
+        font-size: 13px;
+    }
+
+    .arravpos-booking-scroll {
+        height: calc(100dvh - 200px);
+    }
+
+    .arravpos-calendar-btn {
+        font-size: 12px;
+    }
+
+    .arravpos-outlet-info {
+        padding: 10px;
+    }
+
+    .arravpos-outlet-logo {
+        width: 36px;
+        height: 36px;
+    }
+
+    .arravpos-appointment-header {
+        align-items: flex-start;
+    }
+
+    .arravpos-appointment-price {
+        font-size: 14px;
+    }
+
+    .arravpos-appointment-services {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+}
+
+@media (min-width: 768px) {
+    .arravpos-section-label {
+        margin-top: 18px;
+        font-size: 9px;
+        letter-spacing: 1.3px;
+    }
+
+    .arravpos-profile-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .arravpos-profile-image {
+        width: 36px;
+        height: 36px;
+    }
+
+    .aaravpos-outlet-list-wrapper {
+        max-height: 85vh;
+    }
+
+    .aaravpos-desktop-stepper {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+    }
+
+    .arravpos-book-btn {
+        font-size: 16px;
+    }
+
+    .arravpos-success-title {
+        font-size: 24px;
+    }
+
+    .aaravpos-services-wrapper.standalone {
+        height: calc(100dvh - 300px);
+    }
+
+    .aaravpos-services-wrapper.standalone {
+        height: calc(100dvh - 300px);
+    }
+
+    .aaravpos-layout-wrapper {
+        grid-template-columns: minmax(0, 1fr) 350px;
+    }
+
+    .aaravpos-sidebar {
+        display: flex;
+    }
+
+    .aaravpos-mobile-button {
+        display: none;
+    }
+
+    .aaravpos-sidebar-mobile-content {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .aaravpos-order-list {
+        height: calc(100dvh - 280px);
+    }
+
+    .aaravpos-pro-order-list {
+        height: calc(100dvh - 420px);
+    }
+
+    /* .aaravpos-staff-wrapper {
+        height: calc(100dvh - 200px);
+    }*/
+
+
+    .aaravpos-sidebar-close-btn {
+        display: none;
+    }
+
+    .arravpos-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .aaravpos-modal {
+        max-width: 36rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .arravpos-date-nav-btn {
+        width: 30px;
+        padding: 6px;
+    }
+
+    .arravpos-date-nav-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .arravpos-date-strip {
+        gap: 4px;
+    }
+
+    .arravpos-date-card {
+        min-width: 26px;
+        min-height: 40px;
+        padding: 8px 4px;
+    }
+
+    .arravpos-date-week {
+        font-size: 8px;
+        margin-bottom: 3px;
+    }
+
+    .arravpos-date-day {
+        font-size: 18px;
+    }
+
+    .arravpos-date-today {
+        margin-top: 4px;
+        font-size: 6px;
+    }
+
+    .arravpos-select-check svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .arravpos-select-card {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .arravpos-section-label {
+        margin-top: 16px;
+        font-size: 8px;
+        letter-spacing: 1.1px;
+    }
+
+    .arravpos-card-box {
+        padding: 12px;
+        font-size: 12px;
+    }
+
+    .arravpos-profile-image {
+        width: 32px;
+        height: 32px;
+    }
+
+    .arravpos-profile-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+
+    .arravpos-outlet-name {
+        font-size: 13px;
+    }
+
+    .arravpos-outlet-address {
+        font-size: 11px;
+    }
+
+    .arravpos-appointment-name {
+        font-size: 13px;
+    }
+
+    .arravpos-appointment-date-text {
+        font-size: 13px;
+    }
+}
+
 @media (min-width: 1024px) {
     .arravpos-date-strip {
         gap: 6px;
@@ -3092,305 +3392,6 @@
     }
 }
 
-
-@media (min-width: 768px) {
-    .arravpos-section-label {
-        margin-top: 18px;
-        font-size: 9px;
-        letter-spacing: 1.3px;
-    }
-
-    .arravpos-profile-avatar {
-        width: 36px;
-        height: 36px;
-        font-size: 14px;
-    }
-
-    .arravpos-profile-image {
-        width: 36px;
-        height: 36px;
-    }
-
-    .aaravpos-outlet-list-wrapper {
-        max-height: 80vh;
-    }
-
-    .aaravpos-desktop-stepper {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        width: 100%;
-    }
-
-    .arravpos-book-btn {
-        font-size: 16px;
-    }
-
-    .arravpos-success-title {
-        font-size: 24px;
-    }
-
-    .aaravpos-services-wrapper.standalone {
-        height: calc(100dvh - 300px);
-    }
-
-    .aaravpos-services-wrapper.standalone {
-        height: calc(100dvh - 300px);
-    }
-
-    .aaravpos-layout-wrapper {
-        grid-template-columns: minmax(0, 1fr) 350px;
-    }
-
-    .aaravpos-sidebar {
-        display: flex;
-    }
-
-    .aaravpos-mobile-button {
-        display: none;
-    }
-
-    .aaravpos-sidebar-mobile-content {
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-
-    .aaravpos-order-list {
-        height: calc(100dvh - 280px);
-    }
-
-    .aaravpos-pro-order-list {
-        height: calc(100dvh - 420px);
-    }
-
-    /* .aaravpos-staff-wrapper {
-        height: calc(100dvh - 200px);
-    }*/
-
-
-    .aaravpos-sidebar-close-btn {
-        display: none;
-    }
-
-    .arravpos-details-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .aaravpos-modal {
-        max-width: 36rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .arravpos-select-card {
-        gap: 10px;
-        padding: 10px;
-    }
-
-    .aaravpos-common-btn {
-        padding: 14px 8px;
-        font-size: 12px;
-    }
-
-    .aaravpos-date-modal {
-        height: fit-content;
-        border-top-left-radius: 18px;
-        border-top-right-radius: 18px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .aaravpos-date-modal-header {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .aaravpos-date-modal-title {
-        font-size: 18px;
-    }
-
-    .aaravpos-date-modal-body {
-        padding: 20px 16px;
-    }
-
-    .aaravpos-calendar-grid {
-        gap: 8px;
-    }
-
-    .aaravpos-calendar-day {
-        min-height: 40px;
-    }
-
-    .arravpos-date-nav-btn svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .arravpos-date-strip {
-        gap: 5px;
-    }
-
-    .arravpos-date-week {
-        font-size: 9px;
-    }
-
-    .arravpos-date-day {
-        font-size: 20px;
-    }
-
-    .arravpos-date-today {
-        font-size: 7px;
-    }
-
-    .arravpos-select-check svg {
-        width: 18px;
-        height: 18px;
-    }
-
-    .arravpos-card-box {
-        padding: 14px;
-
-        font-size: 13px;
-    }
-
-    .arravpos-booking-scroll {
-        height: calc(100dvh - 200px);
-    }
-
-    .arravpos-calendar-btn {
-        font-size: 12px;
-    }
-
-    .arravpos-outlet-info {
-        padding: 10px;
-    }
-
-    .arravpos-outlet-logo {
-        width: 36px;
-        height: 36px;
-    }
-
-    .arravpos-appointment-header {
-        align-items: flex-start;
-    }
-
-    .arravpos-appointment-price {
-        font-size: 14px;
-    }
-
-    .arravpos-appointment-services {
-        white-space: normal;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        -webkit-box-orient: vertical;
-    }
-
-}
-
-@media (min-width: 640px) {
-    .custom-container {
-        padding-left: 32px;
-        padding-right: 32px;
-    }
-
-    .aaravpos-title {
-        font-size: 34px;
-    }
-
-    .aaravpos-outlet-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .aaravpos-modal {
-        max-width: 32rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .arravpos-date-nav-btn {
-        width: 30px;
-        padding: 6px;
-    }
-
-    .arravpos-date-nav-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .arravpos-date-strip {
-        gap: 4px;
-    }
-
-    .arravpos-date-card {
-        min-width: 26px;
-        min-height: 40px;
-        padding: 8px 4px;
-    }
-
-    .arravpos-date-week {
-        font-size: 8px;
-        margin-bottom: 3px;
-    }
-
-    .arravpos-date-day {
-        font-size: 18px;
-    }
-
-    .arravpos-date-today {
-        margin-top: 4px;
-        font-size: 6px;
-    }
-
-    .arravpos-select-check svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .arravpos-select-card {
-        gap: 8px;
-        padding: 8px;
-    }
-
-    .arravpos-section-label {
-        margin-top: 16px;
-        font-size: 8px;
-        letter-spacing: 1.1px;
-    }
-
-    .arravpos-card-box {
-        padding: 12px;
-        font-size: 12px;
-    }
-
-    .arravpos-profile-image {
-        width: 32px;
-        height: 32px;
-    }
-
-    .arravpos-profile-avatar {
-        width: 32px;
-        height: 32px;
-        font-size: 12px;
-    }
-
-    .arravpos-outlet-name {
-        font-size: 13px;
-    }
-
-    .arravpos-outlet-address {
-        font-size: 11px;
-    }
-
-    .arravpos-appointment-name {
-        font-size: 13px;
-    }
-
-    .arravpos-appointment-date-text {
-        font-size: 13px;
-    }
-}
 
 /* =========================
    KEYFRAMES
