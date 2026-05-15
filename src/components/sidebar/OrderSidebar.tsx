@@ -273,10 +273,10 @@ export default function OrderSidebar({
       const totalOffset =
         ((firstHeight +
           (isCustomTip
-            ? 70
+            ? 98
             : showTip
-              ? 68
-              : 56)) ||
+              ? 95
+              : 95)) ||
           0) + thirdHeight;
 
       setSecondHeight(
@@ -335,7 +335,7 @@ export default function OrderSidebar({
             </button>
           )}
         </p>
-        {selectedProfessional?.id && (
+        {/* {selectedProfessional?.id && (
           <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10">
             {selectedProfessional.imageUrl ? (
               <img
@@ -366,7 +366,7 @@ export default function OrderSidebar({
               </p>
             </div>
           </div>
-        )}
+        )} */}
         <div className="aaravpos-date-time">
           <span className="aaravpos-date-time-label">Date & Time:</span>
 

@@ -452,8 +452,8 @@ export default function TimePage(): JSX.Element {
       }
     >
       <Breadcrumb />
-      <div className="aaravpos-margin-top-20">
-        <h1 className="aaravpos-page-title aaravpos-margin-bottom-20">
+      <div style={{ marginTop: 15 }}>
+        <h1 className="aaravpos-page-title" style={{ marginBottom: 10 }}>
           Choose a Time
         </h1>
       </div>
@@ -568,10 +568,7 @@ export default function TimePage(): JSX.Element {
         </div>
       </div>
 
-      <div
-        className="arravpos-scroll-area"
-        style={{ height: `${height - 370}px` }}
-      >
+      <div className="arravpos-scroll-area">
         {loading ? (
           <div className="arravpos-loader-wrapper">
             <div className="arravpos-loader" />
@@ -670,9 +667,8 @@ function SlotSection({
         </div>
 
         <span
-          className={`arravpos-slot-section-arrow ${
-            isOpen ? "arravpos-slot-section-arrow-open" : ""
-          }`}
+          className={`arravpos-slot-section-arrow ${isOpen ? "arravpos-slot-section-arrow-open" : ""
+            }`}
         >
           <ChevronDown />
         </span>
@@ -698,13 +694,12 @@ function SlotSection({
                       handleSlotSelect(globalIndex);
                     }
                   }}
-                  className={`arravpos-slot-card ${
-                    isDisabled
-                      ? "arravpos-slot-card-disabled"
-                      : isSelected
-                        ? "arravpos-slot-card-selected"
-                        : "arravpos-slot-card-default"
-                  }`}
+                  className={`arravpos-slot-card ${isDisabled
+                    ? "arravpos-slot-card-disabled"
+                    : isSelected
+                      ? "arravpos-slot-card-selected"
+                      : "arravpos-slot-card-default"
+                    }`}
                 >
                   <span className="arravpos-slot-time">{slot.start_time}</span>
 
