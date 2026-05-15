@@ -792,7 +792,7 @@ interface CardProps {
 
 function Card({ children }: CardProps): JSX.Element {
     return (
-        <div className="bg-white border rounded-sm p-4 mb-2 text-sm">
+        <div className="arravpos-card-box">
             {children}
         </div>
     );
@@ -805,11 +805,11 @@ function Avatar({ pro }: any): JSX.Element {
                 <img
                     src={pro.imageUrl}
                     alt={pro.name}
-                    className="w-10 h-10 rounded-full object-cover"
+                   className="arravpos-profile-image"
                 />
             ) : (
                 <div
-                    className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"
+className="arravpos-profile-avatar"
                     style={{ background: pro.color ?? "#111" }}
                 >
                     {getUserName(pro.name)}
@@ -825,7 +825,7 @@ interface SectionLabelProps {
 
 function SectionLabel({ children }: SectionLabelProps): JSX.Element {
     return (
-        <p className="text-[10px] font-bold uppercase tracking-[1.5px] text-black/70 mt-5 mb-2">
+        <p className="arravpos-section-label">
             {children}
         </p>
     );
@@ -842,12 +842,17 @@ function PayOption({ icon, label, selected, onClick }: PayOptionProps): JSX.Elem
     return (
         <div
             onClick={onClick}
-            className={`flex flex-row items-center gap-3 p-3 border rounded-sm cursor-pointer mb-2 ${selected ? "border-red bg-red/5" : "border-border"
-                }`}
+          className={`arravpos-select-card ${
+    selected
+        ? "arravpos-select-card-active"
+        : "arravpos-select-card-default"
+}`}
         >
             <div>{icon}</div>
             {label}
-            <span className="ml-auto">{selected && <Check />}</span>
+            <span className="arravpos-select-check">
+    {selected && <Check />}
+</span>
         </div>
     );
 }
