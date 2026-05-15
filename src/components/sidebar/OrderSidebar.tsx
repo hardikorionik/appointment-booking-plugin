@@ -336,7 +336,7 @@ export default function OrderSidebar({
           )}
         </p>
         {selectedProfessional?.id && (
-          <div className="aaravpos-pro-card aaravpos-mb-10">
+          <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10">
             {selectedProfessional.imageUrl ? (
               <img
                 src={selectedProfessional.imageUrl}

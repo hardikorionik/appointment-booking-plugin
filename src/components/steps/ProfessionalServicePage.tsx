@@ -1,14 +1,19 @@
 import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+
 import { getUserName } from "@/utils";
+
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { toggleProfessional } from "@/slices/serviceSlice";
+
 import { useWindowSize } from "@/hooks/useWindowSize";
+
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import { ServiceState, Staff } from "@/types";
 import ProfessionalSidebar from "../sidebar/ProfessionalSidebar";
+
+import { ServiceState, Staff } from "@/types";
 
 /* =========================
    ROOT STATE TYPE
@@ -21,6 +26,7 @@ interface RootState {
 /* =========================
    ANIMATION
 ========================= */
+
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
@@ -30,6 +36,7 @@ const cardVariants: Variants = {
   visible: (index: number) => ({
     opacity: 1,
     transform: "translateY(0px)",
+
     transition: {
       delay: index * 0.05,
       duration: 0.32,
@@ -57,6 +64,44 @@ export default function ProfessionalServicePage() {
 
   const showEmpty = !staff || staff.length === 0;
 
+  /* =========================
+     STAFF LEAVE HANDLER
+  ========================= */
+
+  const getLeaveInfo = (professional: any) => {
+    if (!professional?.futureLeaveDates?.length) {
+      return {
+        isOnLeave: false,
+        availableFrom: null,
+      };
+    }
+
+    const approvedLeave = professional.futureLeaveDates.find(
+      (leave: any) =>
+        leave.status === "APPROVED" && leave.leaveType === "FULL_DAY",
+    );
+
+    if (!approvedLeave?.returnDate?.date) {
+      return {
+        isOnLeave: false,
+        availableFrom: null,
+      };
+    }
+
+    const formattedAvailableDate = new Date(
+      approvedLeave.returnDate.date,
+    ).toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
+    return {
+      isOnLeave: true,
+      availableFrom: formattedAvailableDate,
+    };
+  };
+
   return (
     <MainLayout
       sidebar={
@@ -67,13 +112,14 @@ export default function ProfessionalServicePage() {
       }
     >
       <Breadcrumb />
+
       <div className="aaravpos-margin-top-20">
-        <h1 className="aaravpos-page-title">
-          Choose a Professional
-        </h1>
+        <h1 className="aaravpos-page-title">Choose a Professional</h1>
+
         <p className="aaravpos-sub-title">
           Available based on selected services
         </p>
+
         <AnimatePresence mode="wait">
           {showEmpty && (
             <motion.p
@@ -88,10 +134,13 @@ export default function ProfessionalServicePage() {
             </motion.p>
           )}
         </AnimatePresence>
+
         <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">
             <AnimatePresence mode="popLayout">
               {staff?.map((p: Staff, index: number) => {
+                const { isOnLeave, availableFrom } = getLeaveInfo(p);
+
                 return (
                   <motion.div
                     key={p.id}
@@ -101,37 +150,59 @@ export default function ProfessionalServicePage() {
                     exit="exit"
                     custom={index}
                     layout="position"
-                    style={{ willChange: "transform, opacity" }}
+                    style={{
+                      willChange: "transform, opacity",
+                    }}
                     onClick={() => {
                       dispatch(toggleProfessional(p));
+
                       dispatch(setSelectedDate(null));
+
                       if (isMobile) {
                         dispatch(nextStep());
                       }
                     }}
-                    className={`aaravpos-pro-card ${selectedProfessional?.id === p.id
-                      ? "active"
-                      : ""
-                      }`}
+                    className={`aaravpos-pro-card ${
+                      selectedProfessional?.id === p.id ? "active" : ""
+                    }`}
                   >
-                    {p.imageUrl ? (
-                      <img
-                        src={p.imageUrl}
-                        alt={p.name}
-                        className="aaravpos-pro-image"
-                      />
-                    ) : (
-                      <div
-                        className="aaravpos-pro-avatar"
-                        style={{ background: p.color || "#111" }}
-                      >
-                        {getUserName(p.name)}
+                    <div className="aaravpos-display-flex">
+                      {/* Avatar */}
+                      {p.imageUrl ? (
+                        <img
+                          src={p.imageUrl}
+                          alt={p.name}
+                          className="aaravpos-pro-image"
+                        />
+                      ) : (
+                        <div
+                          className="aaravpos-pro-avatar"
+                          style={{
+                            background: p.color || "#111",
+                          }}
+                        >
+                          {getUserName(p.name)}
+                        </div>
+                      )}
+
+                      {/* Staff Info */}
+                      <div className="aaravpos-pro-info">
+                        <p className="aaravpos-pro-name">{p.name}</p>
+
+                        <p className="aaravpos-pro-type">{p.staff_type}</p>
+                      </div>
+                    </div>
+
+                    {/* Available From */}
+                    {isOnLeave && availableFrom && (
+                      <div className="aaravpos-available-badge">
+                        <span className="aaravpos-available-dot" />
+
+                        <p className="aaravpos-available-text">
+                          Available from {availableFrom}
+                        </p>
                       </div>
                     )}
-                    <div className="aaravpos-pro-info">
-                      <p className="aaravpos-pro-name">{p.name}</p>
-                      <p className="aaravpos-pro-type">{p.staff_type}</p>
-                    </div>
                   </motion.div>
                 );
               })}
