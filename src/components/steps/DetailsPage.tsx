@@ -270,8 +270,8 @@ export default function DetailsPage(): JSX.Element {
                 <Breadcrumb />
 
 
-                <div className="arravpos-details-section">
-                    <h1 className="aaravpos-page-title aaravpos-margin-bottom-20 ">
+                <div className="arravpos-details-section aaravpos-margin-top-20">
+                    <h1 className="aaravpos-page-title aaravpos-margin-bottom-20">
                         Your Details
                     </h1>
 

@@ -417,9 +417,11 @@ export default function TimePage(): JSX.Element {
       }
     >
       <Breadcrumb />
-      <h1 className="aaravpos-page-title aaravpos-margin-bottom-20">
-        Choose a Time
-      </h1>
+      <div className="aaravpos-margin-top-20">
+        <h1 className="aaravpos-page-title aaravpos-margin-bottom-20">
+          Choose a Time
+        </h1>
+      </div>
       <div className="arravpos-date-wrapper">
         <div className="arravpos-date-strip">
           <DateNavBtn onClick={() => handleShift(-1)}>
