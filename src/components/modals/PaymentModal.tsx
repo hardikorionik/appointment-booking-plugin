@@ -79,14 +79,14 @@ export default function PaymentModal({
 
     return (
         <div className="arravpos-payment-overlay">
-            <form onSubmit={handleSubmit(onSubmit)} className="arravpos-payment-form">
-                <div className="arravpos-payment-modal">
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="aaravpos-modal">
                     <div className="arravpos-payment-header">
                         <h2 className="arravpos-payment-title">Make a payment</h2>
                         <span className="arravpos-payment-amount"><CurrencyIcon size={14} />{amount?.toFixed(2)}</span>
                     </div>
                     <div className="arravpos-payment-fields">
-                        <div>
+                        <div className="aaravpos-form-control">
                             <label htmlFor="name" className="arravpos-payment-label">
                                 Card Holder Name <span className="arravpos-payment-required">*</span>
                             </label>
@@ -123,7 +123,7 @@ export default function PaymentModal({
                                 <p className="arravpos-payment-error">{errors.name.message}</p>
                             )}
                         </div>
-                        <div>
+                        <div className="aaravpos-form-control">
                             <label htmlFor="number" className="arravpos-payment-label">
                                 Card Number <span className="arravpos-payment-required">*</span>
                             </label>

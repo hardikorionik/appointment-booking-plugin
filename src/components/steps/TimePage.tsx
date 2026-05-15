@@ -417,11 +417,9 @@ export default function TimePage(): JSX.Element {
       }
     >
       <Breadcrumb />
-
-        <h1 className="aaravpos-page-title aaravpos-margin-bottom-20 ">
-          Choose a Time
-        </h1>
-
+      <h1 className="aaravpos-page-title aaravpos-margin-bottom-20">
+        Choose a Time
+      </h1>
       <div className="arravpos-date-wrapper">
         <div className="arravpos-date-strip">
           <DateNavBtn onClick={() => handleShift(-1)}>
@@ -447,8 +445,8 @@ export default function TimePage(): JSX.Element {
                 key={`${d.day}-${d.month}-${d.year}`}
                 onClick={() => handlePickDate(d)}
                 className={`arravpos-date-card ${isSelected
-                    ? "arravpos-date-card-active"
-                    : "arravpos-date-card-default"
+                  ? "arravpos-date-card-active"
+                  : "arravpos-date-card-default"
                   }`}
               >
                 <span className="arravpos-date-week">{WEEK_DAYS[dow]}</span>
@@ -575,7 +573,7 @@ function DateNavBtn({ onClick, children }: DateNavBtnProps): JSX.Element {
   return (
     <button
       onClick={onClick}
-     className="arravpos-date-nav-btn"
+      className="arravpos-date-nav-btn"
     >
       {children}
     </button>
@@ -623,8 +621,8 @@ function SlotSection({
 
         <span
           className={`arravpos-slot-section-arrow ${isOpen
-              ? "arravpos-slot-section-arrow-open"
-              : ""
+            ? "arravpos-slot-section-arrow-open"
+            : ""
             }`}
         >
           <ChevronDown />
@@ -667,10 +665,10 @@ function SlotSection({
                     }
                   }}
                   className={`arravpos-slot-card ${isDisabled
-                      ? "arravpos-slot-card-disabled"
-                      : isSelected
-                        ? "arravpos-slot-card-selected"
-                        : "arravpos-slot-card-default"
+                    ? "arravpos-slot-card-disabled"
+                    : isSelected
+                      ? "arravpos-slot-card-selected"
+                      : "arravpos-slot-card-default"
                     }`}
                 >
 

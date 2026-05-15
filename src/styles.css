@@ -77,7 +77,7 @@
 }
 
 .aaravpos-margin-bottom-20 {
-    margin-bottom: 20px;
+    margin-bottom: 20px !important;
 }
 
 .aaravpos-mt-auto {
@@ -2115,22 +2115,15 @@
     padding: 16px;
 }
 
-.arravpos-payment-form {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.arravpos-payment-modal {
+.aaravpos-modal {
+    background: #fff;
+    border-radius: 16px;
     width: 100%;
-    max-width: 24rem;
-    background: #ffffff;
-    border-radius: 12px;
+    max-width: 100%;
     padding: 24px;
-    box-shadow:
-        0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
 }
 
 .arravpos-payment-header {
@@ -2143,6 +2136,7 @@
     font-size: 18px;
     font-weight: 600;
     color: #111827;
+    margin: 0px;
 }
 
 .arravpos-payment-amount {
@@ -2207,7 +2201,7 @@
 }
 
 .arravpos-payment-cancel-btn {
-    padding: 8px 16px;
+    padding: 12px 16px;
     cursor: pointer;
     border-radius: 6px;
     border: none;
@@ -2268,6 +2262,7 @@
     font-size: 16px;
     font-weight: 600;
     color: #111827;
+    margin: 0px;
 }
 
 
@@ -2488,18 +2483,11 @@
 .arravpos-date-strip {
     display: flex;
     align-items: stretch;
-
     gap: 6px;
-
     overflow-x: auto;
     overflow-y: hidden;
-
-    width: 100%;
-
     scrollbar-width: none;
-
     -webkit-overflow-scrolling: touch;
-
     scroll-behavior: smooth;
 }
 
@@ -2513,25 +2501,17 @@
 
 .arravpos-date-card {
     flex-shrink: 0;
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-
-    min-width: 58px;
-    min-height: 72px;
-
+    /* justify-content: center; */
+    min-width: 26px;
+    min-height: 50px;
     padding: 8px 10px;
-
     border-radius: 2px;
-
     cursor: pointer;
-
     transition: all 150ms ease;
-
     user-select: none;
-
     border: 1px solid transparent;
 }
 
@@ -2659,6 +2639,7 @@
 .arravpos-selected-professional-name {
     font-size: 14px;
     font-weight: 600;
+    margin: 0px 0px 4px;
 }
 
 .arravpos-selected-professional-services {
@@ -2667,6 +2648,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin: 0px;
 }
 
 .arravpos-scroll-area {
@@ -2721,7 +2703,7 @@
 }
 
 .arravpos-slot-section-header:hover {
-    background-color: rgba(215, 38, 61, 0.08);
+    background-color: rgba(var(--btn-bg), 0.08);
 }
 
 
@@ -2893,7 +2875,6 @@
 
 .arravpos-select-card-default {
     border-color: var(--border);
-
     background-color: transparent;
 }
 
@@ -2913,31 +2894,21 @@
 
     flex-shrink: 0;
 }
+
 .arravpos-date-nav-btn {
     flex-shrink: 0;
-
     width: 34px;
-
-    background-color: var(--surface);
-
-    border: 1px solid var(--border);
-
+    background-color: rgb(242, 240, 236);
+    border: 1px solid rgb(222, 218, 212);
     padding: 8px;
-
     border-radius: 2px;
-
     cursor: pointer;
-
     font-size: 14px;
-
     color: var(--muted);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     align-self: stretch;
-
     transition: all 150ms ease;
 }
 
@@ -2949,168 +2920,72 @@
     background-color: rgba(215, 38, 61, 0.12);
 }
 
+
+.aaravpos-loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.aaravpos-loading-text {
+    font-size: 14px;
+    color: #222;
+}
+
+.aaravpos-error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.aaravpos-error-text {
+    color: #dc2626;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.aaravpos-book-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 1px solid var(--btn-bg);
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+}
+
+.aaravpos-book-btn:hover {
+    background: var(--btn-bg-hover);
+    border-color: var(--btn-bg-hover);
+    color: var(--btn-text-hover);
+}
+
+.aaravpos-form-control {
+    display: flex;
+    flex-direction: column;
+}
+
 /* =========================
    RESPONSIVE MEDIA QUERIES
 ========================= */
-@media (min-width: 640px) {
-    .custom-container {
-        padding-left: 32px;
-        padding-right: 32px;
-    }
 
-    .aaravpos-title {
-        font-size: 34px;
-    }
-
-    .aaravpos-outlet-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .arravpos-payment-modal {
-        max-width: 512px;
-    }
-}
-
-@media (min-width: 768px) {
-
-    .arravpos-section-label {
-        margin-top: 18px;
-
-        font-size: 9px;
-
-        letter-spacing: 1.3px;
-    }
-
-    .arravpos-profile-avatar {
-        width: 36px;
-        height: 36px;
-
-        font-size: 14px;
-    }
-
-    .arravpos-profile-image {
-        width: 36px;
-        height: 36px;
-    }
-
-    .aaravpos-outlet-list-wrapper {
-        max-height: 80vh;
-    }
-
-    .arravpos-payment-modal {
-        max-width: 576px;
-    }
-
-    .aaravpos-desktop-stepper {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        width: 100%;
-    }
-
-    .arravpos-book-btn {
-        font-size: 16px;
-    }
-
-    .arravpos-success-title {
-        font-size: 24px;
-    }
-
-    .aaravpos-services-wrapper.standalone {
-        height: calc(100dvh - 300px);
-    }
-
-    .aaravpos-services-wrapper.standalone {
-        height: calc(100dvh - 300px);
-    }
-
-    .aaravpos-layout-wrapper {
-        grid-template-columns: minmax(0, 1fr) 350px;
-    }
-
-    .aaravpos-sidebar {
-        display: flex;
-    }
-
-    .aaravpos-mobile-button {
-        display: none;
-    }
-
-    .aaravpos-sidebar-mobile-content {
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-
-    .aaravpos-order-list {
-        height: calc(100dvh - 280px);
-    }
-
-    .aaravpos-pro-order-list {
-        height: calc(100dvh - 420px);
-    }
-
-    /* .aaravpos-staff-wrapper {
-        height: calc(100dvh - 200px);
-    }*/
-
-
-    .aaravpos-sidebar-close-btn {
-        display: none;
-    }
-
-    .arravpos-details-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-}
-
-@media (max-width: 767px) {
-    .arravpos-select-card {
-        gap: 10px;
-
-        padding: 10px;
-    }
-
-    .aaravpos-common-btn {
-        padding: 14px 8px;
-        font-size: 12px;
-    }
-
-    .aaravpos-date-modal {
-        height: fit-content;
-        border-top-left-radius: 18px;
-        border-top-right-radius: 18px;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .aaravpos-date-modal-header {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .aaravpos-date-modal-title {
-        font-size: 18px;
-    }
-
-    .aaravpos-date-modal-body {
-        padding: 20px 16px;
-    }
-
-    .aaravpos-calendar-grid {
-        gap: 8px;
-    }
-
-    .aaravpos-calendar-day {
-        min-height: 40px;
-    }
-}
-
-    @media (min-width: 1024px) {
-          .arravpos-date-strip {
+@media (min-width: 1024px) {
+    .arravpos-date-strip {
         gap: 6px;
     }
+
     .custom-container {
         padding-left: 64px;
         padding-right: 64px;
@@ -3126,10 +3001,6 @@
 
     .arravpos-consent-title {
         font-size: 20px;
-    }
-
-    .arravpos-payment-modal {
-        max-width: 672px;
     }
 
     .arravpos-success-title {
@@ -3196,46 +3067,168 @@
     .arravpos-details-scroll {
         padding-bottom: 16px;
     }
+}
 
+@media (max-width: 1024px) {
+    .arravpos-booking-grid {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
 
-    .arravpos-custom-input,
-    .arravpos-custom-input input {
-        font-size: 15px;
+@media (min-width: 1280px) {
+    .aaravpos-title {
+        font-size: 36px;
+    }
+
+    .aaravpos-outlet-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1536px) {
+    .aaravpos-outlet-grid {
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 
 
-@media (max-width: 640px) {
-    .arravpos-payment-form {
-        padding: 16px;
+@media (min-width: 768px) {
+    .arravpos-section-label {
+        margin-top: 18px;
+        font-size: 9px;
+        letter-spacing: 1.3px;
     }
 
-    .arravpos-payment-modal {
-        padding: 20px;
+    .arravpos-profile-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
     }
 
+    .arravpos-profile-image {
+        width: 36px;
+        height: 36px;
+    }
+
+    .aaravpos-outlet-list-wrapper {
+        max-height: 80vh;
+    }
+
+    .aaravpos-desktop-stepper {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+    }
+
+    .arravpos-book-btn {
+        font-size: 16px;
+    }
+
+    .arravpos-success-title {
+        font-size: 24px;
+    }
+
+    .aaravpos-services-wrapper.standalone {
+        height: calc(100dvh - 300px);
+    }
+
+    .aaravpos-services-wrapper.standalone {
+        height: calc(100dvh - 300px);
+    }
+
+    .aaravpos-layout-wrapper {
+        grid-template-columns: minmax(0, 1fr) 350px;
+    }
+
+    .aaravpos-sidebar {
+        display: flex;
+    }
+
+    .aaravpos-mobile-button {
+        display: none;
+    }
+
+    .aaravpos-sidebar-mobile-content {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .aaravpos-order-list {
+        height: calc(100dvh - 280px);
+    }
+
+    .aaravpos-pro-order-list {
+        height: calc(100dvh - 420px);
+    }
+
+    /* .aaravpos-staff-wrapper {
+        height: calc(100dvh - 200px);
+    }*/
+
+
+    .aaravpos-sidebar-close-btn {
+        display: none;
+    }
+
+    .arravpos-details-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .aaravpos-modal {
+        max-width: 36rem;
+    }
 }
-
 
 @media (max-width: 768px) {
-      .arravpos-date-nav-btn {
-        width: 32px;
+    .arravpos-select-card {
+        gap: 10px;
+        padding: 10px;
+    }
 
-        padding: 7px;
+    .aaravpos-common-btn {
+        padding: 14px 8px;
+        font-size: 12px;
+    }
+
+    .aaravpos-date-modal {
+        height: fit-content;
+        border-top-left-radius: 18px;
+        border-top-right-radius: 18px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .aaravpos-date-modal-header {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .aaravpos-date-modal-title {
+        font-size: 18px;
+    }
+
+    .aaravpos-date-modal-body {
+        padding: 20px 16px;
+    }
+
+    .aaravpos-calendar-grid {
+        gap: 8px;
+    }
+
+    .aaravpos-calendar-day {
+        min-height: 40px;
     }
 
     .arravpos-date-nav-btn svg {
         width: 18px;
         height: 18px;
     }
-     .arravpos-date-strip {
-        gap: 5px;
-    }
 
-    .arravpos-date-card {
-       min-width: 50px;
-    min-height: 20px;
-    padding: 1px;
+    .arravpos-date-strip {
+        gap: 5px;
     }
 
     .arravpos-date-week {
@@ -3250,7 +3243,7 @@
         font-size: 7px;
     }
 
-     .arravpos-select-check svg {
+    .arravpos-select-check svg {
         width: 18px;
         height: 18px;
     }
@@ -3296,35 +3289,28 @@
 
 }
 
-
-@media (max-width: 1024px) {
-    .arravpos-booking-grid {
-        flex-direction: column;
-        gap: 20px;
+@media (min-width: 640px) {
+    .custom-container {
+        padding-left: 32px;
+        padding-right: 32px;
     }
-}
 
-@media (min-width: 1280px) {
     .aaravpos-title {
-        font-size: 36px;
+        font-size: 34px;
     }
 
     .aaravpos-outlet-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .aaravpos-modal {
+        max-width: 32rem;
     }
 }
-
-@media (min-width: 1536px) {
-    .aaravpos-outlet-grid {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
 
 @media (max-width: 480px) {
-      .arravpos-date-nav-btn {
+    .arravpos-date-nav-btn {
         width: 30px;
-
         padding: 6px;
     }
 
@@ -3332,20 +3318,19 @@
         width: 16px;
         height: 16px;
     }
-     .arravpos-date-strip {
+
+    .arravpos-date-strip {
         gap: 4px;
     }
 
     .arravpos-date-card {
-        min-width: 48px;
-        min-height: 62px;
-
-        padding: 6px;
+        min-width: 26px;
+        min-height: 40px;
+        padding: 8px 4px;
     }
 
     .arravpos-date-week {
         font-size: 8px;
-
         margin-bottom: 3px;
     }
 
@@ -3355,32 +3340,27 @@
 
     .arravpos-date-today {
         margin-top: 4px;
-
         font-size: 6px;
     }
 
-     .arravpos-select-check svg {
+    .arravpos-select-check svg {
         width: 16px;
         height: 16px;
     }
 
     .arravpos-select-card {
         gap: 8px;
-
         padding: 8px;
     }
 
     .arravpos-section-label {
         margin-top: 16px;
-
         font-size: 8px;
-
         letter-spacing: 1.1px;
     }
 
     .arravpos-card-box {
         padding: 12px;
-
         font-size: 12px;
     }
 
@@ -3392,7 +3372,6 @@
     .arravpos-profile-avatar {
         width: 32px;
         height: 32px;
-
         font-size: 12px;
     }
 
@@ -3411,7 +3390,6 @@
     .arravpos-appointment-date-text {
         font-size: 13px;
     }
-
 }
 
 /* =========================

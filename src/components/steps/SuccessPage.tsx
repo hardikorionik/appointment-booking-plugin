@@ -64,23 +64,21 @@ export default function SuccessPage(): JSX.Element {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center min-h-[calc(100dvh-56px)]">
-                <p>Loading appointment details...</p>
+            <div className="aaravpos-loading-container">
+                <p className="aaravpos-loading-text">Loading appointment details...</p>
             </div>
         );
     }
 
     if (error || !appointment) {
         return (
-            <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-56px)]">
-                <p className="text-red-600 mb-4">
+            <div className="aaravpos-error-container">
+                <p className="aaravpos-error-text">
                     {error || "Appointment not found"}
                 </p>
-
                 <button
                     onClick={handleBookAnother}
-                    className="px-7 py-3 bg-btn-bg text-btn-text border-btn-bg hover:text-btn-bg-hover hover:border-btn-bg-hover hover:bg-btn-bg-hover text-base cursor-pointer uppercase tracking-wide rounded-sm flex flex-row items-center gap-2"
-                >
+                    className="aaravpos-book-btn"  >
                     <MoveLeft />
                     Book Another Appointment
                 </button>
