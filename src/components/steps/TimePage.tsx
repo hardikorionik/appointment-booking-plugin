@@ -26,6 +26,7 @@ import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import type { AppDispatch } from "@/store";
+import { isDateDisabled } from "@/utils/isDateDisabled";
 
 const MONTH_NAMES = [
   "Jan",
@@ -189,6 +190,17 @@ export default function TimePage(): JSX.Element {
   }, [selectedDate, dates, visibleCount]);
 
   const handlePickDate = (d: DateItem): void => {
+    const isDisabled = isDateDisabled({
+      dateObj: d,
+      selectedProfessional,
+      outletTimeZone: timeZone || "UTC",
+    });
+
+    if (isDisabled) {
+      toast.warning("Staff is unavailable on this date");
+      return;
+    }
+
     const selected = {
       day: d.day,
       month: d.month,
@@ -196,6 +208,7 @@ export default function TimePage(): JSX.Element {
     };
 
     dispatch(setSelectedDate(selected));
+
     dispatch(setSelectedTime(null));
   };
 
@@ -339,17 +352,39 @@ export default function TimePage(): JSX.Element {
   );
 
   const setNextSlotDate = (): void => {
-    const tomorrow = DateTime.now().setZone(timeZone).plus({ days: 1 });
+    let nextAvailableDate: DateTime | null = null;
+
+    for (let i = 1; i < dates.length; i++) {
+      const nextDate = startDate.plus({ days: i });
+
+      const dateObj = {
+        day: nextDate.day,
+        month: nextDate.month,
+        year: nextDate.year,
+        fullDate: nextDate.toISODate(),
+      };
+
+      if (
+        !isDateDisabled({
+          dateObj,
+          selectedProfessional,
+          outletTimeZone: timeZone || "UTC",
+        })
+      ) {
+        nextAvailableDate = nextDate;
+        break;
+      }
+    }
+
+    if (!nextAvailableDate) return;
 
     dispatch(
       setSelectedDate({
-        day: tomorrow.day,
-        month: tomorrow.month,
-        year: tomorrow.year,
+        day: nextAvailableDate.day,
+        month: nextAvailableDate.month,
+        year: nextAvailableDate.year,
       }),
     );
-
-    return;
   };
 
   useEffect(() => {
@@ -442,21 +477,45 @@ export default function TimePage(): JSX.Element {
               selectedDate?.month === d.month &&
               selectedDate?.year === d.year;
 
+            const isDisabled = isDateDisabled({
+              dateObj: d,
+              selectedProfessional,
+              outletTimeZone: timeZone || "UTC",
+            });
+
             return (
               <div
                 key={`${d.day}-${d.month}-${d.year}`}
-                onClick={() => handlePickDate(d)}
-                className={`arravpos-date-card ${isSelected
-                  ? "arravpos-date-card-active"
-                  : "arravpos-date-card-default"
-                  }`}
+                onClick={() => {
+                  if (!isDisabled) {
+                    handlePickDate(d);
+                  }
+                }}
+                className={[
+                  "arravpos-date-card",
+
+                  isDisabled
+                    ? "arravpos-date-card-disabled"
+                    : isSelected
+                      ? "arravpos-date-card-active"
+                      : "arravpos-date-card-default",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
               >
+                {/* Slash Line */}
+                {isDisabled && <div className="arravpos-date-disabled-slash" />}
+
                 <span className="arravpos-date-week">{WEEK_DAYS[dow]}</span>
 
                 <span className="arravpos-date-day">{d.day}</span>
 
-                {isToday && !isSelected && (
+                {isToday && !isSelected && !isDisabled && (
                   <span className="arravpos-date-today">TODAY</span>
+                )}
+
+                {isDisabled && (
+                  <span className="arravpos-date-unavailable">UNAVAILABLE</span>
                 )}
               </div>
             );
@@ -573,10 +632,7 @@ interface DateNavBtnProps {
 
 function DateNavBtn({ onClick, children }: DateNavBtnProps): JSX.Element {
   return (
-    <button
-      onClick={onClick}
-      className="arravpos-date-nav-btn"
-    >
+    <button onClick={onClick} className="arravpos-date-nav-btn">
       {children}
     </button>
   );
@@ -605,96 +661,62 @@ function SlotSection({
 }: SlotSectionProps): JSX.Element | null {
   if (!slots || slots?.length === 0) return null;
   return (
-
     <div className="arravpos-slot-section">
-
-      <div
-        onClick={onToggle}
-        className="arravpos-slot-section-header"
-      >
-
+      <div onClick={onToggle} className="arravpos-slot-section-header">
         <div className="arravpos-slot-section-title">
-
           <span>{icon}</span>
 
           {label}
-
         </div>
 
         <span
-          className={`arravpos-slot-section-arrow ${isOpen
-            ? "arravpos-slot-section-arrow-open"
-            : ""
-            }`}
+          className={`arravpos-slot-section-arrow ${
+            isOpen ? "arravpos-slot-section-arrow-open" : ""
+          }`}
         >
           <ChevronDown />
         </span>
-
       </div>
 
       {isOpen && (
         <div className="arravpos-slot-section-content">
-
           <div className="arravpos-slot-grid">
-
             {slots.map((slot: SlotItem) => {
-              const globalIndex =
-                allSlots.findIndex(
-                  (s: SlotItem) =>
-                    s.id === slot.id
-                );
+              const globalIndex = allSlots.findIndex(
+                (s: SlotItem) => s.id === slot.id,
+              );
 
-              const isSelected =
-                selectedSlotIndexes.includes(
-                  globalIndex
-                );
+              const isSelected = selectedSlotIndexes.includes(globalIndex);
 
-              const isDisabled =
-                slot.isBooked ||
-                slot.status !==
-                "AVAILABLE";
+              const isDisabled = slot.isBooked || slot.status !== "AVAILABLE";
 
               return (
                 <div
                   key={slot.id}
                   onClick={() => {
-                    if (
-                      !isDisabled
-                    ) {
-                      handleSlotSelect(
-                        globalIndex
-                      );
+                    if (!isDisabled) {
+                      handleSlotSelect(globalIndex);
                     }
                   }}
-                  className={`arravpos-slot-card ${isDisabled
-                    ? "arravpos-slot-card-disabled"
-                    : isSelected
-                      ? "arravpos-slot-card-selected"
-                      : "arravpos-slot-card-default"
-                    }`}
+                  className={`arravpos-slot-card ${
+                    isDisabled
+                      ? "arravpos-slot-card-disabled"
+                      : isSelected
+                        ? "arravpos-slot-card-selected"
+                        : "arravpos-slot-card-default"
+                  }`}
                 >
-
-                  <span className="arravpos-slot-time">
-                    {
-                      slot.start_time
-                    }
-                  </span>
+                  <span className="arravpos-slot-time">{slot.start_time}</span>
 
                   <span className="arravpos-slot-status">
-                    {isDisabled
-                      ? "Booked"
-                      : "Available"}
+                    {isDisabled ? "Booked" : "Available"}
                   </span>
-
                 </div>
               );
             })}
-
           </div>
-
         </div>
       )}
-
     </div>
   );
 }

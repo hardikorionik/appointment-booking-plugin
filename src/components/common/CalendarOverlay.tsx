@@ -197,7 +197,7 @@ export default function CalendarOverlay({
               const isPastDate = dt.startOf("day") < startDate.startOf("day");
 
               const disabled =
-                isPastDate ||
+                // isPastDate ||
                 isDateDisabled({
                   dateObj,
                   selectedProfessional,
@@ -222,6 +222,8 @@ export default function CalendarOverlay({
                     sel && "aaravpos-calendar-day-selected",
 
                     disabled && "aaravpos-calendar-day-disabled",
+
+                    isPastDate && "aaravpos-calendar-day-disabled",
                   ]
                     .filter(Boolean)
                     .join(" ")}
