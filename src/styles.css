@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap");
-/* @import "tailwindcss"; */
 @import "react-toastify/dist/ReactToastify.css";
 @import "react-phone-number-input/style.css";
 
@@ -1059,6 +1058,7 @@
     text-transform: uppercase;
     letter-spacing: -0.5px;
     margin-bottom: 10px;
+    margin-top: 0px;
 }
 
 .aaravpos-order-subtitle {
@@ -1095,7 +1095,7 @@
 }
 
 .aaravpos-pro-order-list {
-    height: calc(100dvh - 415px);
+    height: calc(100dvh - 270px);
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -2821,18 +2821,18 @@
         padding-right: 24px;
     }
 
-    .aaravpos-staff-wrapper {
+    /* .aaravpos-staff-wrapper {
         height: calc(100dvh - 200px);
     }
 
     .aaravpos-order-list {
-        height: calc(100dvh - 300px);
+        height: calc(100dvh - 380px);
     }
 
 
     .aaravpos-pro-order-list {
-        height: calc(100dvh - 400px);
-    }
+        height: calc(100dvh - 440px);
+    } */
 
 
     .aaravpos-sidebar-close-btn {

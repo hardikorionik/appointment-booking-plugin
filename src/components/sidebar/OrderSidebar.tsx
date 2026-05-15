@@ -381,10 +381,7 @@ export default function OrderSidebar({
           )}
         </div>
       </div>
-      <ul
-        className="aaravpos-order-list"
-        style={{ height: `${secondHeight}px` }}
-      >
+      <ul className="aaravpos-order-list">
         {selectedStaffServices?.length > 0 &&
           selectedStaffServices.map((svc) => (
             <li
@@ -593,6 +590,7 @@ export default function OrderSidebar({
             onClick={onButtonClick}
             disabled={isButtonDisabled}
             className="aaravpos-common-btn aaravpos-padding-btn"
+            style={{ height: 42 }}
           >
             <span className="aaravpos-common-btn-content">
               {finalButtonText}

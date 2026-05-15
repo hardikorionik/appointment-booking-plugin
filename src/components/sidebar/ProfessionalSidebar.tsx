@@ -45,10 +45,9 @@ const ProfessionalSidebar = ({
       </div>
       <div className="aaravpos-order-sidebar">
         <div className="aaravpos-order-body">
-          {/* Professional */}
           {pro?.id && (
             <>
-              <p className="text-sm font-semibold my-1.5 text-black/40 uppercase">
+              <p className="aaravpos-order-section-title">
                 Selected Professional
               </p>
               <div className="aaravpos-pro-card aaravpos-mb-10">
@@ -79,41 +78,38 @@ const ProfessionalSidebar = ({
               </div>
             </>
           )}
-          {/* Services */}
-          {hasServices && (
-            <div className="aaravpos-margin-top-20">
-              <p className="aaravpos-order-section-title">
-                Selected Services
-              </p>
-              <ul className="aaravpos-pro-order-list">
-                {selectedStaffServices?.length > 0 && selectedStaffServices.map((svc) => (
-                  <li
-                    key={svc.id}
-                    className="aaravpos-order-item"
-                  >
-                    <p className="aaravpos-order-service-name">
-                      {svc.name}
-                    </p>
-                    <div className="aaravpos-order-details">
-                      <div className="aaravpos-order-detail">
-                        <Package2 size={13} />
-                        <span>{svc.qty}</span>
-                      </div>
-                      {/* Duration */}
-                      <div className="aaravpos-order-detail center">
-                        <Clock3 size={13} />
-                        <span>{svc.min_time || svc.estimated_time} min</span>
-                      </div>
-                      <p className="aaravpos-order-detail right">
-                        <CurrencyIcon size={12} />
-                        {svc.price || svc.min_price}
-                      </p>
+          <div className="aaravpos-margin-top-20">
+            <p className="aaravpos-order-section-title">
+              Selected Services
+            </p>
+            <ul className="aaravpos-pro-order-list">
+              {hasServices && selectedStaffServices?.length > 0 && selectedStaffServices.map((svc) => (
+                <li
+                  key={svc.id}
+                  className="aaravpos-order-item"
+                >
+                  <p className="aaravpos-order-service-name">
+                    {svc.name}
+                  </p>
+                  <div className="aaravpos-order-details">
+                    <div className="aaravpos-order-detail">
+                      <Package2 size={13} />
+                      <span>{svc.qty}</span>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+                    {/* Duration */}
+                    <div className="aaravpos-order-detail center">
+                      <Clock3 size={13} />
+                      <span>{svc.min_time || svc.estimated_time} min</span>
+                    </div>
+                    <p className="aaravpos-order-detail right">
+                      <CurrencyIcon size={12} />
+                      {svc.price || svc.min_price}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         {/* Footer */}
         <div className="aaravpos-order-footer">
