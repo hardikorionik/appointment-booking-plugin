@@ -385,18 +385,20 @@ export default function TimePage(): JSX.Element {
   return (
     <MainLayout
       sidebar={
-        <OrderSidebar
-          buttonText="Fill Details"
-          onButtonClick={() => {
-            if (!selectedTime || !selectedSlotIndexes.length) {
-              toast.warning("Please select a time slot");
-              return;
-            }
+        <div className="aaravpos-aside">
+          <OrderSidebar
+            buttonText="Fill Details"
+            onButtonClick={() => {
+              if (!selectedTime || !selectedSlotIndexes.length) {
+                toast.warning("Please select a time slot");
+                return;
+              }
 
-            dispatch(nextStep());
-          }}
-          showTaxesOnlyIfTime={true}
-        />
+              dispatch(nextStep());
+            }}
+            showTaxesOnlyIfTime={true}
+          />
+        </div>
       }
       renderButton={
         <button
@@ -446,11 +448,10 @@ export default function TimePage(): JSX.Element {
               <div
                 key={`${d.day}-${d.month}-${d.year}`}
                 onClick={() => handlePickDate(d)}
-                className={`arravpos-date-card ${
-                  isSelected
+                className={`arravpos-date-card ${isSelected
                     ? "arravpos-date-card-active"
                     : "arravpos-date-card-default"
-                }`}
+                  }`}
               >
                 <span className="arravpos-date-week">{WEEK_DAYS[dow]}</span>
 
@@ -522,7 +523,7 @@ export default function TimePage(): JSX.Element {
           <>
             <SlotSection
               label="Morning"
-              icon={<Sunrise size={18}className="arravpos-slot-icon" />}
+              icon={<Sunrise size={18} className="arravpos-slot-icon" />}
               slots={amSlots}
               allSlots={allSlots}
               selectedSlotIndexes={selectedSlotIndexes}
@@ -548,7 +549,7 @@ export default function TimePage(): JSX.Element {
 
             <SlotSection
               label="Evening"
-              icon={<Moon size={18} className="arravpos-slot-icon"/>}
+              icon={<Moon size={18} className="arravpos-slot-icon" />}
               slots={evSlots}
               allSlots={allSlots}
               selectedSlotIndexes={selectedSlotIndexes}
@@ -609,95 +610,93 @@ function SlotSection({
 
     <div className="arravpos-slot-section">
 
-    <div
+      <div
         onClick={onToggle}
         className="arravpos-slot-section-header"
-    >
+      >
 
         <div className="arravpos-slot-section-title">
 
-            <span>{icon}</span>
+          <span>{icon}</span>
 
-            {label}
+          {label}
 
         </div>
 
         <span
-            className={`arravpos-slot-section-arrow ${
-                isOpen
-                    ? "arravpos-slot-section-arrow-open"
-                    : ""
+          className={`arravpos-slot-section-arrow ${isOpen
+              ? "arravpos-slot-section-arrow-open"
+              : ""
             }`}
         >
-            <ChevronDown />
+          <ChevronDown />
         </span>
 
-    </div>
+      </div>
 
-    {isOpen && (
+      {isOpen && (
         <div className="arravpos-slot-section-content">
 
-            <div className="arravpos-slot-grid">
+          <div className="arravpos-slot-grid">
 
-                {slots.map((slot: SlotItem) => {
-                    const globalIndex =
-                        allSlots.findIndex(
-                            (s: SlotItem) =>
-                                s.id === slot.id
-                        );
+            {slots.map((slot: SlotItem) => {
+              const globalIndex =
+                allSlots.findIndex(
+                  (s: SlotItem) =>
+                    s.id === slot.id
+                );
 
-                    const isSelected =
-                        selectedSlotIndexes.includes(
-                            globalIndex
-                        );
+              const isSelected =
+                selectedSlotIndexes.includes(
+                  globalIndex
+                );
 
-                    const isDisabled =
-                        slot.isBooked ||
-                        slot.status !==
-                            "AVAILABLE";
+              const isDisabled =
+                slot.isBooked ||
+                slot.status !==
+                "AVAILABLE";
 
-                    return (
-                        <div
-                            key={slot.id}
-                            onClick={() => {
-                                if (
-                                    !isDisabled
-                                ) {
-                                    handleSlotSelect(
-                                        globalIndex
-                                    );
-                                }
-                            }}
-                            className={`arravpos-slot-card ${
-                                isDisabled
-                                    ? "arravpos-slot-card-disabled"
-                                    : isSelected
-                                    ? "arravpos-slot-card-selected"
-                                    : "arravpos-slot-card-default"
-                            }`}
-                        >
+              return (
+                <div
+                  key={slot.id}
+                  onClick={() => {
+                    if (
+                      !isDisabled
+                    ) {
+                      handleSlotSelect(
+                        globalIndex
+                      );
+                    }
+                  }}
+                  className={`arravpos-slot-card ${isDisabled
+                      ? "arravpos-slot-card-disabled"
+                      : isSelected
+                        ? "arravpos-slot-card-selected"
+                        : "arravpos-slot-card-default"
+                    }`}
+                >
 
-                            <span className="arravpos-slot-time">
-                                {
-                                    slot.start_time
-                                }
-                            </span>
+                  <span className="arravpos-slot-time">
+                    {
+                      slot.start_time
+                    }
+                  </span>
 
-                            <span className="arravpos-slot-status">
-                                {isDisabled
-                                    ? "Booked"
-                                    : "Available"}
-                            </span>
+                  <span className="arravpos-slot-status">
+                    {isDisabled
+                      ? "Booked"
+                      : "Available"}
+                  </span>
 
-                        </div>
-                    );
-                })}
+                </div>
+              );
+            })}
 
-            </div>
+          </div>
 
         </div>
-    )}
+      )}
 
-</div>
+    </div>
   );
 }

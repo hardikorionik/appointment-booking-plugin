@@ -1420,7 +1420,9 @@
     background: rgba(0, 0, 0, 0.05);
 }
 
-
+.aaravpos-aside .aaravpos-order-sidebar {
+    height: calc(100dvh - 30px);
+}
 
 /* =========================
    DATE PICKER MODAL

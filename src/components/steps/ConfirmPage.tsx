@@ -626,20 +626,22 @@ export default function ConfirmPage(): JSX.Element {
             isSidebarOpen={isSidebarOpen}
             handleSidebarOpen={() => setIsSidebarOpen((prev) => !prev)}
             sidebar={
-                <OrderSidebar
-                    buttonText="Book Appointment"
-                    onButtonClick={handleBooking}
-                    showTip={payType === "card"}
-                    tipPct={tipPct}
-                    onTipChange={(data: unknown) => dispatch(setTips((data as number) ?? 0))}
-                    consentRequired={servicesNeedingConsent?.length > 0}
-                    consentCompleted={doneConsentCount}
-                    totalConsents={totalConsentCount}
-                    checkingConsent={checkingConsent}
-                    loading={loading}
-                    isBookingDisabled={isBookingDisabled()}
-                    handleSidebarOpen={() => setIsSidebarOpen((prev) => !prev)}
-                />
+                <div className="aaravpos-aside">
+                    <OrderSidebar
+                        buttonText="Book Appointment"
+                        onButtonClick={handleBooking}
+                        showTip={payType === "card"}
+                        tipPct={tipPct}
+                        onTipChange={(data: unknown) => dispatch(setTips((data as number) ?? 0))}
+                        consentRequired={servicesNeedingConsent?.length > 0}
+                        consentCompleted={doneConsentCount}
+                        totalConsents={totalConsentCount}
+                        checkingConsent={checkingConsent}
+                        loading={loading}
+                        isBookingDisabled={isBookingDisabled()}
+                        handleSidebarOpen={() => setIsSidebarOpen((prev) => !prev)}
+                    />
+                </div>
             }
             isConfirm={true}
         >
@@ -652,12 +654,8 @@ export default function ConfirmPage(): JSX.Element {
                     <p className="aaravpos-sub-title">
                         Review your appointment details before booking
                     </p>
-
                     <div className="arravpos-booking-wrapper">
-
-                        {/* Outlet Info */}
                         <div className="arravpos-outlet-info">
-
                             {image && (
                                 <div className="arravpos-outlet-logo">
                                     <img
@@ -667,99 +665,62 @@ export default function ConfirmPage(): JSX.Element {
                                     />
                                 </div>
                             )}
-
                             <div className="arravpos-outlet-content">
                                 <p className="arravpos-outlet-name">
                                     {outletName ?? "-"}
                                 </p>
-
                                 <p className="arravpos-outlet-address">
                                     {address ?? "-"}
                                     <br />
                                 </p>
                             </div>
-
                         </div>
-
-                        {/* Main Scroll */}
                         <div className="arravpos-booking-scroll">
-
                             <div className="arravpos-booking-grid">
-
-                                {/* Appointment Section */}
                                 <div className="arravpos-booking-column">
-
-                                    <SectionLabel>
-                                        Appointment
-                                    </SectionLabel>
-
+                                    <SectionLabel>Appointment</SectionLabel>
                                     <Card>
-
                                         <div className="arravpos-appointment-header">
-
                                             <Avatar pro={selectedProfessional} />
-
                                             <div className="arravpos-appointment-content">
-
                                                 <p className="arravpos-appointment-name">
                                                     {selectedProfessional?.name}
                                                 </p>
-
                                                 <p className="arravpos-appointment-services">
                                                     {services
                                                         .map((s) => s.name)
                                                         .join(", ")}
                                                 </p>
-
                                             </div>
-
                                             <span className="arravpos-appointment-price">
                                                 ${totalBasePrice}
                                             </span>
-
                                         </div>
-
                                         <div className="arravpos-appointment-date">
-
                                             <CalendarDays />
-
                                             <span className="arravpos-appointment-date-text">
                                                 {dateStr ?? "No time selected"}
                                             </span>
-
                                         </div>
-
                                     </Card>
-
                                 </div>
-
-                                {/* Payment Section */}
                                 <div className="arravpos-booking-column">
-
-                                    <SectionLabel>
-                                        Payment Method
-                                    </SectionLabel>
-
+                                    <SectionLabel>Payment Method</SectionLabel>
                                     <PayOption
                                         icon={<Store />}
                                         label="Pay in person"
                                         selected={payType === "person"}
                                         onClick={() => setPayType("person")}
                                     />
-
                                     <PayOption
                                         icon={<CreditCard />}
                                         label="Pay with card"
                                         selected={payType === "card"}
                                         onClick={() => setPayType("card")}
                                     />
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </>
@@ -785,7 +746,6 @@ export default function ConfirmPage(): JSX.Element {
 }
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
-
 interface CardProps {
     children: React.ReactNode;
 }
@@ -805,11 +765,11 @@ function Avatar({ pro }: any): JSX.Element {
                 <img
                     src={pro.imageUrl}
                     alt={pro.name}
-                   className="arravpos-profile-image"
+                    className="arravpos-profile-image"
                 />
             ) : (
                 <div
-className="arravpos-profile-avatar"
+                    className="arravpos-profile-avatar"
                     style={{ background: pro.color ?? "#111" }}
                 >
                     {getUserName(pro.name)}
@@ -842,17 +802,16 @@ function PayOption({ icon, label, selected, onClick }: PayOptionProps): JSX.Elem
     return (
         <div
             onClick={onClick}
-          className={`arravpos-select-card ${
-    selected
-        ? "arravpos-select-card-active"
-        : "arravpos-select-card-default"
-}`}
+            className={`arravpos-select-card ${selected
+                ? "arravpos-select-card-active"
+                : "arravpos-select-card-default"
+                }`}
         >
             <div>{icon}</div>
             {label}
             <span className="arravpos-select-check">
-    {selected && <Check />}
-</span>
+                {selected && <Check />}
+            </span>
         </div>
     );
 }

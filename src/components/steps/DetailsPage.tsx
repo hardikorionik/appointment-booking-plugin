@@ -245,10 +245,12 @@ export default function DetailsPage(): JSX.Element {
     return (
         <MainLayout
             sidebar={
-                <OrderSidebar
-                    buttonText="Confirm Details"
-                    onButtonClick={handleSubmit(onSubmit)}
-                />
+                <div className="aaravpos-aside">
+                    <OrderSidebar
+                        buttonText="Confirm Details"
+                        onButtonClick={handleSubmit(onSubmit)}
+                    />
+                </div>
             }
             renderButton={
                 <button
