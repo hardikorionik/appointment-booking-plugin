@@ -114,27 +114,23 @@ const ProfessionalSidebar = ({
         {/* Footer */}
         <div className="aaravpos-order-footer">
           {/* Totals */}
-          {hasServices && (
-            <>
-              <div className="aaravpos-order-subtotal">
-                <span className="aaravpos-order-subtotal-label">
-                  Subtotal
-                </span>
-                <span className="aaravpos-order-subtotal-price">
-                  <CurrencyIcon size={18} />
-                  {totalPrice}
-                </span>
-              </div>
-              <div className="aaravpos-order-subtotal">
-                <span className="aaravpos-order-subtotal-label">
-                  Duration
-                </span>
-                <span className="aaravpos-order-subtotal-price">
-                  {totalDuration} mins
-                </span>
-              </div>
-            </>
-          )}
+          <div className="aaravpos-order-subtotal">
+            <span className="aaravpos-order-subtotal-label">
+              Subtotal
+            </span>
+            <span className="aaravpos-order-subtotal-price">
+              <CurrencyIcon size={18} />
+              {totalPrice}
+            </span>
+          </div>
+          <div className="aaravpos-order-subtotal">
+            <span className="aaravpos-order-subtotal-label">
+              Duration
+            </span>
+            <span className="aaravpos-order-subtotal-price">
+              {totalDuration} mins
+            </span>
+          </div>
           {/* Button */}
           <button
             disabled={isService ? !selectedStaffServices.length : !pro}

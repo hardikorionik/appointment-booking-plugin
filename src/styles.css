@@ -1158,6 +1158,9 @@
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 4px;
+}
+
+.aaravpos-order-subtotal-time {
     border-top: 1px solid #d1d5db;
     padding-top: 10px;
     margin-top: 15px;
