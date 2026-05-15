@@ -76,12 +76,20 @@ export default function ProfessionalServicePage() {
       };
     }
 
-    const approvedLeave = professional.futureLeaveDates.find(
-      (leave: any) =>
-        leave.status === "APPROVED" && leave.leaveType === "FULL_DAY",
-    );
+    const today = new Date();
 
-    if (!approvedLeave?.returnDate?.date) {
+    const activeLeave = professional.futureLeaveDates.find((leave: any) => {
+      if (leave.status !== "APPROVED" || leave.leaveType !== "FULL_DAY")
+        return false;
+
+      const startDate = new Date(leave.startDate);
+
+      const endDate = new Date(leave.endDate);
+
+      return today >= startDate && today <= endDate;
+    });
+
+    if (!activeLeave?.returnDate?.date) {
       return {
         isOnLeave: false,
         availableFrom: null,
@@ -89,7 +97,7 @@ export default function ProfessionalServicePage() {
     }
 
     const formattedAvailableDate = new Date(
-      approvedLeave.returnDate.date,
+      activeLeave.returnDate.date,
     ).toLocaleDateString("en-GB", {
       day: "2-digit",
       month: "short",
