@@ -741,6 +741,7 @@
     margin-top: 4px;
     font-size: 14px;
     font-weight: 500;
+    margin-bottom: 4px;
 }
 
 .aaravpos-supercategory-count {
@@ -749,6 +750,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     color: rgba(0, 0, 0, 0.6);
+    margin-bottom: 4px;
 }
 
 /* SERVICES CONTAINER */
@@ -826,7 +828,7 @@
 .aaravpos-service-title {
     font-size: 14px;
     font-weight: 700;
-    margin-top: 12px;
+    margin-top: 0px;
     margin-bottom: 4px;
     text-transform: uppercase;
     overflow: hidden;
@@ -847,6 +849,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin: 5px 0px;
 }
 
 .aaravpos-service-tooltip {
@@ -1865,6 +1868,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    margin-bottom: 0px;
 }
 
 .arravpos-appointment-price {
@@ -2115,6 +2119,13 @@
     padding: 16px;
 }
 
+.arravpos-payment-form {
+    width: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .aaravpos-modal {
     background: #fff;
@@ -2189,13 +2200,14 @@
 
 .arravpos-payment-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
 }
 
+
 .arravpos-payment-btn-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
     margin-top: 20px;
 }

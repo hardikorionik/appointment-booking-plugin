@@ -79,7 +79,7 @@ export default function PaymentModal({
 
     return (
         <div className="arravpos-payment-overlay">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="arravpos-payment-form">
                 <div className="aaravpos-modal">
                     <div className="arravpos-payment-header">
                         <h2 className="arravpos-payment-title">Make a payment</h2>
@@ -160,7 +160,7 @@ export default function PaymentModal({
                             )}
                         </div>
                         <div className="arravpos-payment-grid">
-                            <div>
+                            <div className="aaravpos-form-control">
                                 <label htmlFor="expiry" className="arravpos-payment-label">
                                     Expiry Date <span className="arravpos-payment-required">*</span>
                                 </label>
@@ -208,7 +208,7 @@ export default function PaymentModal({
                                     </p>
                                 )}
                             </div>
-                            <div>
+                            <div className="aaravpos-form-control">
                                 <label htmlFor="cvv" className="arravpos-payment-label">
                                     CVV <span className="arravpos-payment-required">*</span>
                                 </label>
