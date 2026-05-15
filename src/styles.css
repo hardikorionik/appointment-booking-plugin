@@ -2488,58 +2488,115 @@
 .arravpos-date-strip {
     display: flex;
     align-items: stretch;
+
     gap: 6px;
+
     overflow-x: auto;
+    overflow-y: hidden;
+
+    width: 100%;
+
     scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+
+    scroll-behavior: smooth;
 }
 
 .arravpos-date-strip::-webkit-scrollbar {
     display: none;
 }
 
+/* ========================================
+   DATE CARD
+======================================== */
+
 .arravpos-date-card {
     flex-shrink: 0;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px 12px;
+    justify-content: center;
+
+    min-width: 58px;
+    min-height: 72px;
+
+    padding: 8px 10px;
+
     border-radius: 2px;
+
     cursor: pointer;
+
     transition: all 150ms ease;
-    min-width: 50px;
+
     user-select: none;
+
     border: 1px solid transparent;
 }
 
 .arravpos-date-card-active {
     background-color: var(--btn-bg);
+
     color: var(--btn-text);
+
     border-color: var(--btn-bg);
 }
 
 .arravpos-date-card-default:hover {
     color: var(--btn-text-hover);
+
     border-color: var(--btn-bg-hover);
+
     background-color: var(--btn-bg-hover);
 }
 
+/* ========================================
+   WEEK TEXT
+======================================== */
+
 .arravpos-date-week {
     font-size: 10px;
+
     text-transform: uppercase;
+
     margin-bottom: 4px;
+
+    line-height: 1;
+
+    font-weight: 500;
 }
+
+/* ========================================
+   DAY TEXT
+======================================== */
 
 .arravpos-date-day {
     font-family: monospace;
-    font-size: 18px;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    font-weight: 500;
 }
 
+/* ========================================
+   TODAY TEXT
+======================================== */
+
 .arravpos-date-today {
-    margin-top: 4px;
+    margin-top: 6px;
+
     font-size: 8px;
+
     color: var(--red);
+
     font-weight: 700;
+
+    line-height: 1;
 }
+
 
 .arravpos-calendar-btn {
     margin-left: 16px;
@@ -2856,6 +2913,41 @@
 
     flex-shrink: 0;
 }
+.arravpos-date-nav-btn {
+    flex-shrink: 0;
+
+    width: 34px;
+
+    background-color: var(--surface);
+
+    border: 1px solid var(--border);
+
+    padding: 8px;
+
+    border-radius: 2px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    color: var(--muted);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    align-self: stretch;
+
+    transition: all 150ms ease;
+}
+
+.arravpos-date-nav-btn:hover {
+    border-color: var(--red);
+
+    color: var(--red);
+
+    background-color: rgba(215, 38, 61, 0.12);
+}
 
 /* =========================
    RESPONSIVE MEDIA QUERIES
@@ -3015,7 +3107,10 @@
     }
 }
 
-@media (min-width: 1024px) {
+    @media (min-width: 1024px) {
+          .arravpos-date-strip {
+        gap: 6px;
+    }
     .custom-container {
         padding-left: 64px;
         padding-right: 64px;
@@ -3123,7 +3218,39 @@
 
 
 @media (max-width: 768px) {
-    .arravpos-select-check svg {
+      .arravpos-date-nav-btn {
+        width: 32px;
+
+        padding: 7px;
+    }
+
+    .arravpos-date-nav-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+     .arravpos-date-strip {
+        gap: 5px;
+    }
+
+    .arravpos-date-card {
+       min-width: 50px;
+    min-height: 20px;
+    padding: 1px;
+    }
+
+    .arravpos-date-week {
+        font-size: 9px;
+    }
+
+    .arravpos-date-day {
+        font-size: 20px;
+    }
+
+    .arravpos-date-today {
+        font-size: 7px;
+    }
+
+     .arravpos-select-check svg {
         width: 18px;
         height: 18px;
     }
@@ -3195,7 +3322,44 @@
 
 
 @media (max-width: 480px) {
-    .arravpos-select-check svg {
+      .arravpos-date-nav-btn {
+        width: 30px;
+
+        padding: 6px;
+    }
+
+    .arravpos-date-nav-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+     .arravpos-date-strip {
+        gap: 4px;
+    }
+
+    .arravpos-date-card {
+        min-width: 48px;
+        min-height: 62px;
+
+        padding: 6px;
+    }
+
+    .arravpos-date-week {
+        font-size: 8px;
+
+        margin-bottom: 3px;
+    }
+
+    .arravpos-date-day {
+        font-size: 18px;
+    }
+
+    .arravpos-date-today {
+        margin-top: 4px;
+
+        font-size: 6px;
+    }
+
+     .arravpos-select-check svg {
         width: 16px;
         height: 16px;
     }
