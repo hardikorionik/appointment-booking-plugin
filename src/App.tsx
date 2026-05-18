@@ -1,4 +1,4 @@
-import { BookingPlugin } from "@/components/BookingPlugin";
+import { BookingPlugin } from "@/components/AppointmentBookingPlugin";
 
 export default function App() {
   return (

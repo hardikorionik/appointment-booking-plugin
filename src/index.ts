@@ -1,2 +1,2 @@
-export { BookingPlugin } from "@/components/BookingPlugin";
+export { AppointmentBookingPlugin } from "@/components/AppointmentBookingPlugin";
 export type { BookingPluginProps } from "@/types";
