@@ -1,6 +1,6 @@
 {
   "name": "@aaravpos/appointment-booking-plugin",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A React component library built with Tailwind CSS v4 and TypeScript",
   "type": "module",
   "packageManager": "pnpm@10.33.0",
@@ -30,13 +30,17 @@
   },
   "keywords": [
     "react",
-    "components",
+    "appointment",
     "tailwindcss",
     "typescript",
-    "ui-kit"
+    "plugin",
+    "booking"
   ],
   "author": "Aaravpos",
-  "license": "ISC",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "@types/lodash": "4.17.24",

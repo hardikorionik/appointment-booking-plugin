@@ -1,7 +1,7 @@
-import { BookingPlugin } from "@/components/AppointmentBookingPlugin";
+import { AppointmentBookingPlugin } from "@/components/AppointmentBookingPlugin";
 
 export default function App() {
   return (
-    <BookingPlugin bookingCode="QK9E2A" />
+    <AppointmentBookingPlugin bookingCode="QK9E2A" />
   );
 }
