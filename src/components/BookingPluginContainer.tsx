@@ -18,6 +18,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
     const outlets = useSelector(
         (state: any) => state.outletList.outlets
     );
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { id: outletId } = useSelector(
         (state: OutletRootState) => state.outletDetails
@@ -25,6 +26,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
 
     const fetchInitialData = useCallback(async () => {
         try {
+            setLoading(true);
             setError(null);
             const response = await fetchAllCategoriesAndStaffService(bookingCode);
             if (response?.success) {
@@ -42,7 +44,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            // setIsInitialized(true);
+            setLoading(false);
         }
     }, [bookingCode, dispatch]);
 
@@ -68,7 +70,6 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            // setIsInitialized(false);
         }
     };
 
@@ -109,7 +110,13 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
     if (error) {
         return (<div className="arravpos-error-box">{error}</div>);
     }
-
+    if (loading) {
+        return (
+            <div className="aaravpos-loader-wrapper">
+                <div className="aaravpos-loader" />
+            </div>
+        );
+    }
     return (
         <div>
             {outlets.length > 1 && !outletId ? (
