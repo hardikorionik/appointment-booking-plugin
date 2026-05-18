@@ -44,7 +44,7 @@ const rootReducer = (
             {
                 breadcrumbs: undefined as never,
                 outletDetails: undefined as never,
-                service: state?.service as never,
+                service: undefined as never,
                 slots: undefined as never,
                 appointment: undefined as never,
                 // preserve outletList
