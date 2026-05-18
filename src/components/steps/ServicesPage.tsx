@@ -135,19 +135,59 @@ export default function ServicesPage() {
     return sum + price * s.qty;
   }, 0);
 
+  const hasSuperCategoryServices = useMemo(() => {
+    return superCategories?.some((superCat: any) =>
+      superCat?.categories?.some((cat: any) => cat?.services?.length > 0),
+    );
+  }, [superCategories]);
+
+  const hasStandaloneServices = useMemo(() => {
+    return standaloneCategories?.some((cat: any) => cat?.services?.length > 0);
+  }, [standaloneCategories]);
+
   useEffect(() => {
+    // AUTO SWITCH VIEW TYPE
     if (
       viewType === "supercategory" &&
+      !hasSuperCategoryServices &&
+      hasStandaloneServices
+    ) {
+      setViewType("standalone");
+      return;
+    }
+
+    if (
+      viewType === "standalone" &&
+      !hasStandaloneServices &&
+      hasSuperCategoryServices
+    ) {
+      setViewType("supercategory");
+      return;
+    }
+
+    // AUTO SELECT FIRST SUPER CATEGORY
+    if (
+      viewType === "supercategory" &&
+      hasSuperCategoryServices &&
       superCategories?.length > 0 &&
       !selectedSuperCategory
     ) {
-      const firstSuperCategory = superCategories[0];
+      const firstSuperCategory = superCategories.find((superCat: any) =>
+        superCat?.categories?.some((cat: any) => cat?.services?.length > 0),
+      );
 
-      setSelectedSuperCategory(firstSuperCategory);
-
-      setSelectedSubCategory(null);
+      if (firstSuperCategory) {
+        setSelectedSuperCategory(firstSuperCategory);
+        setSelectedSubCategory(null);
+      }
     }
-  }, [viewType, superCategories, selectedSuperCategory]);
+  }, [
+    viewType,
+    superCategories,
+    selectedSuperCategory,
+    hasSuperCategoryServices,
+    hasStandaloneServices,
+  ]);
 
   return (
     <MainLayout
@@ -172,39 +212,42 @@ export default function ServicesPage() {
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">
-        <h1 className="aaravpos-page-title">
-          Book A Service
-        </h1>
+        <h1 className="aaravpos-page-title">Book A Service</h1>
         <p className="aaravpos-sub-title">
           Select from {outletName} Outlet's available services
         </p>
         <div className="aaravpos-topbar">
+          {/* {(hasSuperCategoryServices || hasStandaloneServices) && ( */}
           <div className="aaravpos-tab-group">
-            <button
-              onClick={() => {
-                setViewType("supercategory");
-                setSelectedSubCategory(null);
-                setSelectedSuperCategory(null);
-              }}
-              className={`aaravpos-tab-btn ${viewType === "supercategory"
-                ? "active"
-                : "inactive"
+            {hasSuperCategoryServices && (
+              <button
+                onClick={() => {
+                  setViewType("supercategory");
+                  setSelectedSubCategory(null);
+                  setSelectedSuperCategory(null);
+                }}
+                className={`aaravpos-tab-btn ${
+                  viewType === "supercategory" ? "active" : "inactive"
                 }`}
-            >
-              Super Category
-            </button>
-            <button
-              onClick={() => {
-                setViewType("standalone");
-              }}
-              className={`aaravpos-tab-btn ${viewType === "standalone"
-                ? "active"
-                : "inactive"
+              >
+                Super Category
+              </button>
+            )}
+
+            {hasStandaloneServices && (
+              <button
+                onClick={() => {
+                  setViewType("standalone");
+                }}
+                className={`aaravpos-tab-btn ${
+                  viewType === "standalone" ? "active" : "inactive"
                 }`}
-            >
-              Standalone
-            </button>
+              >
+                Standalone
+              </button>
+            )}
           </div>
+          {/* )} */}
           <div className="aaravpos-search-wrapper aaravpos-mb-10">
             <span className="aaravpos-search-icon">
               <Search size={14} />
@@ -231,39 +274,7 @@ export default function ServicesPage() {
         {/* SUPER CATEGORY UI */}
         {viewType === "supercategory" && (
           <>
-            {superCategories?.length > 0 && <div
-              ref={scrollRef}
-              onWheel={(e) => {
-                if (scrollRef.current) {
-                  scrollRef.current.scrollLeft += e.deltaY;
-                }
-              }}
-              className="aaravpos-supercategory-wrapper"
-            >
-              {superCategories.map((superCat: any) => (
-                <button
-                  key={superCat.id}
-                  onClick={() => {
-                    setSelectedSuperCategory(superCat);
-                    setSelectedSubCategory(null);
-                  }}
-                  className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id
-                    ? "active"
-                    : ""
-                    }`}
-                >
-                  <h3 className="aaravpos-supercategory-title">
-                    {superCat.name}
-                  </h3>
-
-                  <p className="aaravpos-supercategory-count">
-                    {superCat?.categories?.length || 0} Sub Categories
-                  </p>
-                </button>
-              ))}
-            </div>}
-            {/* SUB CATEGORIES */}
-            {selectedSuperCategory?.categories?.length > 0 && selectedSuperCategory && (
+            {hasSuperCategoryServices && (
               <div
                 ref={scrollRef}
                 onWheel={(e) => {
@@ -273,32 +284,78 @@ export default function ServicesPage() {
                 }}
                 className="aaravpos-supercategory-wrapper"
               >
-                <button
-                  onClick={() => setSelectedSubCategory(null)}
-                  className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
-                    }`}
-                >
-                  All Services (
-                  {selectedSuperCategory?.categories?.reduce(
-                    (sum: number, c: any) => sum + c.services.length,
-                    0,
-                  )}
+                {superCategories
+                  .filter((superCat: any) =>
+                    superCat?.categories?.some(
+                      (cat: any) => cat?.services?.length > 0,
+                    ),
                   )
-                </button>
-                {selectedSuperCategory?.categories?.map((subCat: any) => (
-                  <button
-                    key={subCat.id}
-                    onClick={() => setSelectedSubCategory(subCat)}
-                    className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === subCat.id
-                      ? "active"
-                      : ""
+                  .map((superCat: any) => (
+                    <button
+                      key={superCat.id}
+                      onClick={() => {
+                        setSelectedSuperCategory(superCat);
+                        setSelectedSubCategory(null);
+                      }}
+                      className={`aaravpos-supercategory-btn ${
+                        selectedSuperCategory?.id === superCat.id
+                          ? "active"
+                          : ""
                       }`}
-                  >
-                    {subCat.name} ({subCat.services.length})
-                  </button>
-                ))}
+                    >
+                      <h3 className="aaravpos-supercategory-title">
+                        {superCat.name}
+                      </h3>
+
+                      <p className="aaravpos-supercategory-count">
+                        {superCat?.categories?.length || 0} Sub Categories
+                      </p>
+                    </button>
+                  ))}
               </div>
             )}
+            {/* SUB CATEGORIES */}
+            {selectedSuperCategory?.categories?.some(
+              (cat: any) => cat?.services?.length > 0,
+            ) &&
+              selectedSuperCategory && (
+                <div
+                  ref={scrollRef}
+                  onWheel={(e) => {
+                    if (scrollRef.current) {
+                      scrollRef.current.scrollLeft += e.deltaY;
+                    }
+                  }}
+                  className="aaravpos-supercategory-wrapper"
+                >
+                  <button
+                    onClick={() => setSelectedSubCategory(null)}
+                    className={`aaravpos-supercategory-btn ${
+                      !selectedSubCategory ? "active" : ""
+                    }`}
+                  >
+                    All Services (
+                    {selectedSuperCategory?.categories?.reduce(
+                      (sum: number, c: any) => sum + c.services.length,
+                      0,
+                    )}
+                    )
+                  </button>
+                  {selectedSuperCategory?.categories
+                    ?.filter((subCat: any) => subCat?.services?.length > 0)
+                    .map((subCat: any) => (
+                      <button
+                        key={subCat.id}
+                        onClick={() => setSelectedSubCategory(subCat)}
+                        className={`aaravpos-supercategory-btn ${
+                          selectedSubCategory?.id === subCat.id ? "active" : ""
+                        }`}
+                      >
+                        {subCat.name} ({subCat.services.length})
+                      </button>
+                    ))}
+                </div>
+              )}
           </>
         )}
         {/* STANDALONE CATEGORY UI */}
@@ -323,18 +380,19 @@ export default function ServicesPage() {
               )}
               )
             </button>
-            {standaloneCategories.map((cat: any) => (
-              <button
-                key={cat.id}
-                onClick={() => dispatch(setCategory(cat))}
-                className={`aaravpos-supercategory-btn ${selectedCategory?.id === cat.id
-                  ? "active"
-                  : ""
+            {standaloneCategories
+              .filter((cat: any) => cat?.services?.length > 0)
+              .map((cat: any) => (
+                <button
+                  key={cat.id}
+                  onClick={() => dispatch(setCategory(cat))}
+                  className={`aaravpos-supercategory-btn ${
+                    selectedCategory?.id === cat.id ? "active" : ""
                   }`}
-              >
-                {cat.name} ({cat.services.length})
-              </button>
-            ))}
+                >
+                  {cat.name} ({cat.services.length})
+                </button>
+              ))}
           </div>
         )}
 
@@ -363,122 +421,120 @@ export default function ServicesPage() {
                         : "No services are available for selected category."}
                     </p>
                   </motion.div>
-                ) : servicesToShow?.map((svc: any, index: number) => {
-                  const isSelected = selectedServices.some(
-                    (s: any) => s.id === svc.id,
-                  );
-                  return (
-                    <motion.div
-                      key={svc.id}
-                      variants={cardVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      custom={index}
-                      layout
-                      onClick={() => {
-                        const exists = selectedServices.find(
-                          (s: any) => s.id === svc.id,
-                        );
+                ) : (
+                  servicesToShow?.map((svc: any, index: number) => {
+                    const isSelected = selectedServices.some(
+                      (s: any) => s.id === svc.id,
+                    );
+                    return (
+                      <motion.div
+                        key={svc.id}
+                        variants={cardVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        custom={index}
+                        layout
+                        onClick={() => {
+                          const exists = selectedServices.find(
+                            (s: any) => s.id === svc.id,
+                          );
 
-                        if (exists && exists.qty === 1) {
-                          dispatch(decrementService(String(svc.id)));
-                        } else {
-                          dispatch(toggleService(svc));
-                        }
-                      }}
-                      className={`aaravpos-service-card ${isSelected ? "active" : ""}`}
-                    >
-                      {/* TAX */}
-                      {hasActiveTax(svc) && (
-                        <span className="aaravpos-tax-badge">
-                          TAX
-                        </span>
-                      )}
-                      {/* CONSENT */}
-                      {isConsentRequiredService(svc) && (
-                        <span className="aaravpos-consent-badge">
-                          CONSENT
-                        </span>
-                      )}
-                      {/* NAME */}
-                      <p className="aaravpos-service-title">
-                        {svc.name}
-                      </p>
-                      {/* DESCRIPTION */}
-                      <div className="aaravpos-service-description-wrapper">
-                        <p className="aaravpos-service-description">
-                          {svc.description}
-                        </p>
-                        {svc.description?.length > 30 && (
-                          <div className="aaravpos-service-tooltip">
-                            {svc.description}
-                          </div>
-                        )}
-                      </div>
-                      {/* PRICE */}
-                      <p className="aaravpos-service-price">
-                        <span>
-                          {svc.estimated_time
-                            ? `${svc.estimated_time} min`
-                            : `${svc.min_time}-${svc.max_time} min`}
-                        </span>
-                        <span className="aaravpos-service-price-right">
-                          {svc.price ? (
-                            <>
-                              <CurrencyIcon size={14} />
-                              {svc.price}
-                            </>
-                          ) : (
-                            <>
-                              <CurrencyIcon size={14} />
-                              {svc.min_price} - <CurrencyIcon size={14} />
-                              {svc.max_price}
-                            </>
-                          )}
-                        </span>
-                      </p>
-                      {/* ACTIONS */}
-                      <div className="aaravpos-service-actions">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-
+                          if (exists && exists.qty === 1) {
                             dispatch(decrementService(String(svc.id)));
-                          }}
-                          className="aaravpos-service-action-btn"
-                        >
-                          <Minus size={14} />
-                        </button>
-                        <span className="aaravpos-service-qty">
-                          {selectedServices.find((s: any) => s.id === svc.id)
-                            ?.qty || 0}
-                        </span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const exists = selectedServices.find(
-                              (s: any) => s.id === svc.id,
-                            );
-                            if (!exists) {
-                              dispatch(toggleService(svc));
-                            } else {
-                              dispatch(incrementService(String(svc.id)));
-                            }
-                          }}
-                          className="aaravpos-service-action-btn plus"
-                        >
-                          <Plus size={14} />
-                        </button>
-                      </div>
-                    </motion.div>
-                  );
-                })}
+                          } else {
+                            dispatch(toggleService(svc));
+                          }
+                        }}
+                        className={`aaravpos-service-card ${isSelected ? "active" : ""}`}
+                      >
+                        {/* TAX */}
+                        {hasActiveTax(svc) && (
+                          <span className="aaravpos-tax-badge">TAX</span>
+                        )}
+                        {/* CONSENT */}
+                        {isConsentRequiredService(svc) && (
+                          <span className="aaravpos-consent-badge">
+                            CONSENT
+                          </span>
+                        )}
+                        {/* NAME */}
+                        <p className="aaravpos-service-title">{svc.name}</p>
+                        {/* DESCRIPTION */}
+                        <div className="aaravpos-service-description-wrapper">
+                          <p className="aaravpos-service-description">
+                            {svc.description}
+                          </p>
+                          {svc.description?.length > 30 && (
+                            <div className="aaravpos-service-tooltip">
+                              {svc.description}
+                            </div>
+                          )}
+                        </div>
+                        {/* PRICE */}
+                        <p className="aaravpos-service-price">
+                          <span>
+                            {svc.estimated_time
+                              ? `${svc.estimated_time} min`
+                              : `${svc.min_time}-${svc.max_time} min`}
+                          </span>
+                          <span className="aaravpos-service-price-right">
+                            {svc.price ? (
+                              <>
+                                <CurrencyIcon size={14} />
+                                {svc.price}
+                              </>
+                            ) : (
+                              <>
+                                <CurrencyIcon size={14} />
+                                {svc.min_price} - <CurrencyIcon size={14} />
+                                {svc.max_price}
+                              </>
+                            )}
+                          </span>
+                        </p>
+                        {/* ACTIONS */}
+                        <div className="aaravpos-service-actions">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+
+                              dispatch(decrementService(String(svc.id)));
+                            }}
+                            className="aaravpos-service-action-btn"
+                          >
+                            <Minus size={14} />
+                          </button>
+                          <span className="aaravpos-service-qty">
+                            {selectedServices.find((s: any) => s.id === svc.id)
+                              ?.qty || 0}
+                          </span>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const exists = selectedServices.find(
+                                (s: any) => s.id === svc.id,
+                              );
+                              if (!exists) {
+                                dispatch(toggleService(svc));
+                              } else {
+                                dispatch(incrementService(String(svc.id)));
+                              }
+                            }}
+                            className="aaravpos-service-action-btn plus"
+                          >
+                            <Plus size={14} />
+                          </button>
+                        </div>
+                      </motion.div>
+                    );
+                  })
+                )}
               </AnimatePresence>
             )}
           </div>
         </div>
       </div>
-    </MainLayout >
+    </MainLayout>
   );
 }
