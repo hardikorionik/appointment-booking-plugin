@@ -279,9 +279,7 @@ export default function OrderSidebar({
               : 115)) ||
           0) + thirdHeight;
 
-      setSecondHeight(
-        window.innerHeight - totalOffset,
-      );
+      setSecondHeight(window.innerHeight - totalOffset);
     };
 
     calculateHeight();
