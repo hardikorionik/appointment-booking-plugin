@@ -1,4 +1,5 @@
-import { MainLayoutProps } from "@/types";
+import { useSelector } from "react-redux";
+import { MainLayoutProps, OutletRootState } from "@/types";
 
 export default function MainLayout({
     children,
@@ -8,6 +9,10 @@ export default function MainLayout({
     handleSidebarOpen,
     isSidebarOpen = false,
 }: MainLayoutProps) {
+    const { selectedServices } = useSelector(
+        (state: OutletRootState) => state.service,
+    );
+
     return (
         <div className="aaravpos-main-layout">
             <div className="aaravpos-layout-wrapper">
@@ -28,10 +33,9 @@ export default function MainLayout({
                         )}
                     </div>
                 </main>
-                <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""
-                    }`}>
+                {selectedServices?.length > 0 && <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""}`}>
                     {sidebar}
-                </aside>
+                </aside>}
             </div>
             {isSidebarOpen && (
                 <div className="aaravpos-sidebar-mobile">
