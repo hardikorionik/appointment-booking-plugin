@@ -2703,7 +2703,7 @@
   margin-bottom: 10px;
   padding: 12px;
   background-color: var(--surface);
-  border: 1px solid var(--btn-bg);
+  border: 1px solid rgb(0 0 0 / 10%);
   border-radius: 2px;
   flex-wrap: wrap;
 }
@@ -2782,7 +2782,7 @@
 
 .arravpos-slot-section {
   margin-bottom: 16px;
-  border: 1px solid var(--btn-bg);
+  border: 1px solid rgb(0 0 0 / 10%);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -2822,7 +2822,7 @@
 
 .arravpos-slot-section-content {
   padding: 12px;
-  border-top: 1px solid var(--btn-bg);
+  border-top: 1px solid rgb(0 0 0 / 10%);
   background-color: #ffffff;
 }
 
@@ -2839,7 +2839,7 @@
   justify-content: center;
   padding: 12px;
   gap: 4px;
-  border: 1px solid var(--btn-bg);
+  border: 1px solid rgb(0 0 0 / 10%);
   border-radius: 2px;
   transition: all 0.2s ease;
 }
@@ -2857,7 +2857,7 @@
 .arravpos-slot-card-selected {
   background-color: #fff8f8;
   color: var(--btn-bg);
-  border-color: var(--btn-bg);
+  border-color: rgb(0 0 0 / 10%);
   cursor: pointer;
 }
 
