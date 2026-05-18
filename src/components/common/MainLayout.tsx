@@ -15,7 +15,7 @@ export default function MainLayout({
 
     return (
         <div className="aaravpos-main-layout">
-            <div className="aaravpos-layout-wrapper">
+            <div className={`aaravpos-layout-wrapper ${selectedServices?.length > 0 ? "with-sidebar" : ""}`}>
                 <main className="aaravpos-main-content">
                     {children}
                     <div className="aaravpos-mobile-button">
@@ -33,9 +33,9 @@ export default function MainLayout({
                         )}
                     </div>
                 </main>
-                {selectedServices?.length > 0 && <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""}`}>
+                <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""}`}>
                     {sidebar}
-                </aside>}
+                </aside>
             </div>
             {isSidebarOpen && (
                 <div className="aaravpos-sidebar-mobile">
