@@ -67,7 +67,6 @@ export default App;
 
 # Requirements
 
-- React 17+
 - React 18+
 - Node.js 16+
 
