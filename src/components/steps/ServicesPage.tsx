@@ -396,6 +396,7 @@ export default function ServicesPage() {
                     );
                     return (
                       <div
+                        key={index}
                         onClick={() => {
                           const exists = selectedServices.find(
                             (s: any) => s.id === svc.id,
