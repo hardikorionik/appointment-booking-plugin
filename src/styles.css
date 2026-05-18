@@ -192,7 +192,7 @@
 
 .aaravpos-mobile-button {
   position: absolute;
-  bottom: -20px;
+  bottom: 10px;
   left: 0;
   right: 0;
   z-index: 50;

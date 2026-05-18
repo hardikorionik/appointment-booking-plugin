@@ -46,7 +46,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
         } finally {
             // setLoading(false);
         }
-    }, [bookingCode]);
+    }, [bookingCode, dispatch]);
 
     const fetchOutletData = async (
         tenantId?: string,
