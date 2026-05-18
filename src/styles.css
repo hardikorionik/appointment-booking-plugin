@@ -225,23 +225,25 @@
 }
 
 .aaravpos-sidebar {
-  display: none;
   flex-direction: column;
   background: var(--surface-bg, #ffffff);
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  padding-bottom: 14px;
-  height: 440px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px 16px 14px;
   overflow: hidden;
 
   position: fixed;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
+  bottom: 10px;
+
   width: 300px;
-  height: 100%;
-  transition: right 0.3s ease;
+
+  transition: transform 0.3s ease;
   background: #fff;
   z-index: 1024;
+  border-radius: 8px;
+
+  display: flex;
 }
 
 .aaravpos-sidebar-mobile {
@@ -1200,9 +1202,9 @@
   gap: 0px;
 }
 
-/* .aaravpos-order-footer {
-  padding: 12px 0px;
-} */
+.aaravpos-order-footer {
+  padding-top: 5px;
+}
 
 .aaravpos-order-subtotal {
   display: flex;
@@ -3254,11 +3256,11 @@
   }
 
   .aaravpos-order-list {
-    height: calc(100dvh - 195px);
+    height: calc(100dvh - 215px);
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 220px);
+    height: calc(100dvh - 245px);
   }
 
   .aaravpos-staff-wrapper {

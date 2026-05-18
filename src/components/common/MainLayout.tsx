@@ -28,7 +28,8 @@ export default function MainLayout({
                         )}
                     </div>
                 </main>
-                <aside className="aaravpos-sidebar">
+                <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""
+                    }`}>
                     {sidebar}
                 </aside>
             </div>
