@@ -192,7 +192,7 @@
 
 .aaravpos-mobile-button {
   position: absolute;
-  bottom: 20px;
+  bottom: -20px;
   left: 0;
   right: 0;
   z-index: 50;
@@ -3259,11 +3259,11 @@
   }
 
   .aaravpos-order-list {
-    height: calc(100dvh - 215px);
+    height: calc(100dvh - 235px);
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 245px);
+    height: calc(100dvh - 265px);
   }
 
   /* .aaravpos-staff-wrapper {
