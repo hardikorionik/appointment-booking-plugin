@@ -14,12 +14,10 @@ import DefaultAppointment from "@/components/steps";
 import type { AppDispatch } from "@/store";
 
 export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCode }) => {
-    const [isInitialized, setIsInitialized] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const outlets = useSelector(
         (state: any) => state.outletList.outlets
     );
-    // const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { id: outletId } = useSelector(
         (state: OutletRootState) => state.outletDetails
@@ -27,7 +25,6 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
 
     const fetchInitialData = useCallback(async () => {
         try {
-            setIsInitialized(false);
             setError(null);
             const response = await fetchAllCategoriesAndStaffService(bookingCode);
             if (response?.success) {
@@ -45,7 +42,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            setIsInitialized(true);
+            // setIsInitialized(true);
         }
     }, [bookingCode, dispatch]);
 
@@ -54,7 +51,6 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
         outletId?: string
     ) => {
         try {
-            // setLoading(true);
             const response = await fetchAllCategoriesAndStaffService(bookingCode, tenantId, outletId);
             if (!response?.success) {
                 setError(response?.message || "Failed to fetch outlet data");
@@ -72,7 +68,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            // setLoading(false);
+            // setIsInitialized(false);
         }
     };
 
@@ -102,12 +98,13 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
     };
 
     useEffect(() => {
-        fetchInitialData();
-    }, [fetchInitialData]);
-
-    if (!isInitialized) {
-        return null;
-    }
+        if (
+            Array.isArray(outlets) &&
+            outlets.length === 0
+        ) {
+            fetchInitialData();
+        }
+    }, [outlets?.length, fetchInitialData]);
 
     if (error) {
         return (<div className="arravpos-error-box">{error}</div>);
