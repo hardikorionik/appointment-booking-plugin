@@ -9,13 +9,13 @@ export default function MainLayout({
     handleSidebarOpen,
     isSidebarOpen = false,
 }: MainLayoutProps) {
-    const { selectedServices } = useSelector(
+    const { selectedServices, selectedProfessional } = useSelector(
         (state: OutletRootState) => state.service,
     );
 
     return (
         <div className="aaravpos-main-layout">
-            <div className={`aaravpos-layout-wrapper ${selectedServices?.length > 0 ? "with-sidebar" : ""}`}>
+            <div className={`aaravpos-layout-wrapper ${selectedServices?.length > 0 || selectedProfessional?.id ? "with-sidebar" : ""}`}>
                 <main className="aaravpos-main-content">
                     {children}
                     <div className="aaravpos-mobile-button">
