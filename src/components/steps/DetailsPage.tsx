@@ -12,12 +12,9 @@ import {
     setUserDetails,
     clearUserDetails,
 } from "@/slices/appointmentSlice";
-
-import { useWindowSize } from "@/hooks/useWindowSize";
+// import { useWindowSize } from "@/hooks/useWindowSize";
 import { fetchCustomer } from "@/services";
-
 import type { RootState } from "@/store";
-
 import { FormValues, FetchCustomerResponse, OutletRootState } from "@/types";
 
 // -------------------- Constants --------------------
@@ -35,7 +32,7 @@ const allowedCountries: CountryCode[] = [
 export default function DetailsPage(): JSX.Element {
     const dispatch = useDispatch();
     const { tenantId } = useSelector((state: OutletRootState) => state?.outletDetails);
-    const { height } = useWindowSize();
+    // const { height } = useWindowSize();
 
     const { userDetails } = useSelector(
         (state: RootState) => state.appointment,
