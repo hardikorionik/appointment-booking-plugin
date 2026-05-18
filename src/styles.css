@@ -354,7 +354,7 @@
 .aaravpos-outlet-list-wrapper {
   padding-top: 8px;
   padding-bottom: 8px;
-  max-height: 485px;
+  max-height: 465px;
   overflow: auto;
   scrollbar-width: none;
 }
@@ -367,6 +367,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
+  padding-bottom: 50px;
 }
 
 .aaravpos-empty-state {
@@ -1743,10 +1744,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 64px 24px;
+  padding: 24px;
   text-align: center;
   border: 1px dashed rgba(0, 0, 0, 0.2);
   border-radius: 8px;
+  height: 160px;
 }
 
 .aaravpos-empty-services-title {
