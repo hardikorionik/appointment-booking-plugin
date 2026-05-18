@@ -48,7 +48,7 @@ const rootReducer = (
                 slots: undefined as never,
                 appointment: undefined as never,
                 // preserve outletList
-                outletList: state?.outletList as never,
+                outletList: undefined as never,
             },
             action
         );

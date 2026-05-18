@@ -14,6 +14,7 @@ import DefaultAppointment from "@/components/steps";
 import type { AppDispatch } from "@/store";
 
 export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCode }) => {
+    const [isInitialized, setIsInitialized] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const outlets = useSelector(
         (state: any) => state.outletList.outlets
@@ -26,7 +27,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
 
     const fetchInitialData = useCallback(async () => {
         try {
-            // setLoading(true);
+            setIsInitialized(false);
             setError(null);
             const response = await fetchAllCategoriesAndStaffService(bookingCode);
             if (response?.success) {
@@ -44,7 +45,7 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
             console.error(err);
             setError(err?.message || "Something went wrong");
         } finally {
-            // setLoading(false);
+            setIsInitialized(true);
         }
     }, [bookingCode, dispatch]);
 
@@ -104,7 +105,9 @@ export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCo
         fetchInitialData();
     }, [fetchInitialData]);
 
-    // if (loading) { return <div className="p-4 flex items-center justify-center"><Spinner /></div> }
+    if (!isInitialized) {
+        return null;
+    }
 
     if (error) {
         return (<div className="arravpos-error-box">{error}</div>);
