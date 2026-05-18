@@ -745,7 +745,7 @@ export interface FetchServiceResponse {
  * COMPONENT PROPS
  * ───────────────────────────────────────────────────────────── */
 
-export interface BookingPluginProps {
+export interface AppointmentBookingPluginProps {
   bookingCode: string;
 }
 

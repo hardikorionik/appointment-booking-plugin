@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { DateTime } from "luxon";
-import { BookingPluginProps, Outlet, OutletRootState, } from "@/types";
+import { AppointmentBookingPluginProps, Outlet, OutletRootState, } from "@/types";
 import { fetchAllCategoriesAndStaffService } from "@/services";
 import { setOutletData, setOutletToken } from "@/slices/outletSlice";
 import { setOutletList } from "@/slices/outletListSlice";
@@ -13,7 +13,7 @@ import DefaultAppointment from "@/components/steps";
 // import Spinner from "@/components/common/Spinner";
 import type { AppDispatch } from "@/store";
 
-export const BookingPluginContainer: React.FC<BookingPluginProps> = ({ bookingCode }) => {
+export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = ({ bookingCode }) => {
     const dispatch = useDispatch<AppDispatch>();
     const outlets = useSelector(
         (state: any) => state.outletList.outlets
