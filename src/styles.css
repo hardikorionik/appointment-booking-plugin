@@ -152,7 +152,7 @@
 
 .aaravpos-layout-page {
   height: 440px;
-  animation: aaravposFadeIn 0.3s ease;
+  /* animation: aaravposFadeIn 0.3s ease; */
 }
 
 .aaravpos-title {
