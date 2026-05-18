@@ -275,10 +275,7 @@ export default function DetailsPage(): JSX.Element {
                         Your Details
                     </h1>
 
-                    <div
-                        className="arravpos-details-scroll"
-                        style={{ height: `${height - 200}px` }}
-                    >
+                    <div className="arravpos-details-scroll">
                         <div className="arravpos-details-grid">
 
                             {/* Phone */}
