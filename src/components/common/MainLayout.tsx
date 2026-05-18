@@ -18,20 +18,19 @@ export default function MainLayout({
             <div className={`aaravpos-layout-wrapper ${selectedServices?.length > 0 || selectedProfessional?.id ? "with-sidebar" : ""}`}>
                 <main className="aaravpos-main-content">
                     {children}
-                    <div className="aaravpos-mobile-button">
-                        {isConfirm ? (
-                            <button
-                                onClick={handleSidebarOpen}
-                                className="aaravpos-view-order-btn"
-                            >
-                                <span>
-                                    View Order
-                                </span>
-                            </button>
-                        ) : (
-                            renderButton
-                        )}
-                    </div>
+                    {isConfirm ? (
+                        <button
+                            onClick={handleSidebarOpen}
+                            className="aaravpos-btn"
+                        >
+                            <span>
+                                View Order
+                            </span>
+                        </button>
+                    ) : (
+                        renderButton
+                    )}
+
                 </main>
                 <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""}`}>
                     {sidebar}

@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { Outlet } from "@/types";
-import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Search, X } from "lucide-react";
 
 interface OutletProps {
@@ -14,26 +13,6 @@ interface OutletCardProps {
   selected: boolean;
 }
 
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    transform: "translateY(14px)",
-  },
-  visible: (index: number) => ({
-    opacity: 1,
-    transform: "translateY(0px)",
-    transition: {
-      delay: index * 0.05,
-      duration: 0.32,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-  exit: {
-    opacity: 0,
-    transform: "translateY(8px)",
-    transition: { duration: 0.2 },
-  },
-};
 
 const StatusBadge = ({ status }: { status: boolean }) => (
   <span className={`aaravpos-status-badge ${status
@@ -137,26 +116,16 @@ export default function ChooseYourOutlet({
       <div className="aaravpos-outlet-list-wrapper">
         {filteredOutlets.length > 0 ? (
           <div className="aaravpos-outlet-grid">
-            <AnimatePresence mode="popLayout">
-              {filteredOutlets.map((outlet: Outlet, index: number) => (
-                <motion.div
-                  key={outlet.id}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  custom={index}
-                  layout="position"
-                  style={{ willChange: "transform, opacity" }}
-                >
-                  <OutletCard
-                    item={outlet}
-                    onSelect={handleSelectOutlet}
-                    selected={selected === outlet.id}
-                  />
-                </motion.div>
-              ))}
-            </AnimatePresence>
+
+            {filteredOutlets.map((outlet: Outlet, index: number) => (
+              <div key={index}>
+                <OutletCard
+                  item={outlet}
+                  onSelect={handleSelectOutlet}
+                  selected={selected === outlet.id}
+                />
+              </div>
+            ))}
           </div>
         ) : (
           <div className="aaravpos-empty-state">

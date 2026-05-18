@@ -1,56 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
-
 import {
   setCategory,
   toggleService,
   incrementService,
   decrementService,
 } from "@/slices/serviceSlice";
-
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
 import ServiceProfessionalSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
-
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { isConsentRequiredService } from "@/services";
 import { CurrencyIcon } from "@/utils";
-
 import type { AppDispatch } from "@/store";
-
 import type { Service, ServiceItem, TaxRow, StaffAssignment } from "@/types";
 
 /* ANIMATION */
-
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 14,
-  },
-
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-
-    transition: {
-      delay: index * 0.05,
-      duration: 0.15,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-
-  exit: {
-    opacity: 0,
-    y: 8,
-
-    transition: {
-      duration: 0.2,
-    },
-  },
-};
 
 type ViewType = "supercategory" | "standalone";
 
@@ -89,8 +56,8 @@ export default function ServiceProfessionalPage() {
   const assignedCategoryIds = new Set(
     selectedProfessional
       ? selectedProfessional?.assignments?.map(
-          (a: StaffAssignment) => a.categoryId,
-        )
+        (a: StaffAssignment) => a.categoryId,
+      )
       : [],
   );
 
@@ -288,9 +255,8 @@ export default function ServiceProfessionalPage() {
                   setSelectedSubCategory(null);
                   setSelectedSuperCategory(null);
                 }}
-                className={`aaravpos-tab-btn ${
-                  viewType === "supercategory" ? "active" : "inactive"
-                }`}
+                className={`aaravpos-tab-btn ${viewType === "supercategory" ? "active" : "inactive"
+                  }`}
               >
                 Super Category
               </button>
@@ -301,9 +267,8 @@ export default function ServiceProfessionalPage() {
                 onClick={() => {
                   setViewType("standalone");
                 }}
-                className={`aaravpos-tab-btn ${
-                  viewType === "standalone" ? "active" : "inactive"
-                }`}
+                className={`aaravpos-tab-btn ${viewType === "standalone" ? "active" : "inactive"
+                  }`}
               >
                 Standalone
               </button>
@@ -357,9 +322,8 @@ export default function ServiceProfessionalPage() {
 
                       setSelectedSubCategory(null);
                     }}
-                    className={`aaravpos-supercategory-btn ${
-                      selectedSuperCategory?.id === superCat.id ? "active" : ""
-                    }`}
+                    className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id ? "active" : ""
+                      }`}
                   >
                     <h3 className="aaravpos-supercategory-title">
                       {superCat.name}
@@ -387,9 +351,8 @@ export default function ServiceProfessionalPage() {
                 >
                   <button
                     onClick={() => setSelectedSubCategory(null)}
-                    className={`aaravpos-supercategory-btn ${
-                      !selectedSubCategory ? "active" : ""
-                    }`}
+                    className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
+                      }`}
                   >
                     All Services (
                     {selectedSuperCategory?.categories?.reduce(
@@ -402,9 +365,8 @@ export default function ServiceProfessionalPage() {
                     <button
                       key={subCat.id}
                       onClick={() => setSelectedSubCategory(subCat)}
-                      className={`aaravpos-supercategory-btn ${
-                        selectedSubCategory?.id === subCat.id ? "active" : ""
-                      }`}
+                      className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === subCat.id ? "active" : ""
+                        }`}
                     >
                       {subCat.name} ({subCat.services.length})
                     </button>
@@ -439,9 +401,8 @@ export default function ServiceProfessionalPage() {
               <button
                 key={cat.id}
                 onClick={() => dispatch(setCategory(cat))}
-                className={`aaravpos-supercategory-btn ${
-                  selectedCategory?.id === cat.id ? "active" : ""
-                }`}
+                className={`aaravpos-supercategory-btn ${selectedCategory?.id === cat.id ? "active" : ""
+                  }`}
               >
                 {cat.name} ({cat.services.length})
               </button>
@@ -456,14 +417,9 @@ export default function ServiceProfessionalPage() {
                 <ServiceSkeletonCard key={i} />
               ))
             ) : (
-              <AnimatePresence mode="popLayout">
+              <>
                 {!servicesToShow?.length ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="aaravpos-empty-services"
-                  >
+                  <div className="aaravpos-empty-services">
                     <h3 className="aaravpos-empty-services-title">
                       No Services Found
                     </h3>
@@ -472,26 +428,19 @@ export default function ServiceProfessionalPage() {
                         ? "No services found for your search."
                         : "No services are available for this professional."}
                     </p>
-                  </motion.div>
+                  </div>
                 ) : (
                   servicesToShow?.map((svc: any, index: number) => {
                     const isSelected = selectedServices.some(
                       (s: any) => s.id === svc.id,
                     );
                     return (
-                      <motion.div
-                        key={svc.id}
-                        variants={cardVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        custom={index}
-                        layout
+                      <div
+                        key={index}
                         onClick={() => {
                           const exists = selectedServices.find(
                             (s: any) => s.id === svc.id,
                           );
-
                           if (exists && exists.qty === 1) {
                             dispatch(decrementService(String(svc.id)));
                           } else {
@@ -592,11 +541,11 @@ export default function ServiceProfessionalPage() {
                             <Plus size={14} />
                           </button>
                         </div>
-                      </motion.div>
+                      </div>
                     );
                   })
                 )}
-              </AnimatePresence>
+              </>
             )}
           </div>
         </div>

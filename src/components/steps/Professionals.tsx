@@ -1,51 +1,22 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-
 import { getUserName } from "@/utils";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { toggleProfessional } from "@/slices/serviceSlice";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { calculateServiceTax } from "@/utils/taxHelper";
-
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
-
 import type { RootState, AppDispatch } from "@/store";
-
 import type {
   ServiceItem,
   Staff,
   StaffAssignment,
   StaffServiceAssignment,
 } from "@/types";
-
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    transform: "translateY(14px)",
-  },
-
-  visible: (index: number) => ({
-    opacity: 1,
-    transform: "translateY(0px)",
-
-    transition: {
-      delay: index * 0.05,
-      duration: 0.32,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-
-  exit: {
-    opacity: 0,
-    transform: "translateY(8px)",
-    transition: { duration: 0.2 },
-  },
-};
 
 export default function Professionals() {
   const dispatch = useDispatch<AppDispatch>();
@@ -208,96 +179,74 @@ export default function Professionals() {
           Available based on selected services
         </p>
 
-        <AnimatePresence mode="wait">
-          {showEmpty && (
-            <motion.p
-              key="no-staff"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 6 }}
-              transition={{ duration: 0.25 }}
-              className="aaravpos-no-staff"
-            >
-              No staff available for selected services
-            </motion.p>
-          )}
-        </AnimatePresence>
+        {showEmpty && (
+          <p className="aaravpos-no-staff">
+            No staff available for selected services
+          </p>
+        )}
 
         <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">
-            <AnimatePresence mode="popLayout">
-              {filteredStaff.map((p: Staff, index: number) => {
-                const { isOnLeave, availableFrom } = getLeaveInfo(p);
+            {filteredStaff.map((p: Staff, index: number) => {
+              const { isOnLeave, availableFrom } = getLeaveInfo(p);
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    dispatch(toggleProfessional(p));
 
-                return (
-                  <motion.div
-                    key={p.id}
-                    variants={cardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    custom={index}
-                    layout="position"
-                    style={{
-                      willChange: "transform, opacity",
-                    }}
-                    onClick={() => {
-                      dispatch(toggleProfessional(p));
+                    dispatch(setSelectedDate(null));
 
-                      dispatch(setSelectedDate(null));
-
-                      if (isMobile) {
-                        dispatch(nextStep());
-                      }
-                    }}
-                    className={`aaravpos-pro-card  ${
-                      selectedProfessional?.id === p.id ? "active" : ""
+                    if (isMobile) {
+                      dispatch(nextStep());
+                    }
+                  }}
+                  className={`aaravpos-pro-card  ${selectedProfessional?.id === p.id ? "active" : ""
                     }`}
-                  >
-                    <div className="aaravpos-display-flex">
-                      {/* Avatar */}
-                      {p.imageUrl ? (
-                        <img
-                          src={p.imageUrl}
-                          alt={p.name}
-                          className="aaravpos-pro-image"
-                        />
-                      ) : (
-                        <div
-                          className="aaravpos-pro-avatar"
-                          style={{
-                            background: p.color || "#111",
-                          }}
-                        >
-                          {getUserName(p.name)}
-                        </div>
-                      )}
-
-                      {/* Staff Info */}
-                      <div className="aaravpos-pro-info">
-                        <p className="aaravpos-pro-name">{p.name}</p>
-
-                        <p className="aaravpos-pro-type">{p.staff_type}</p>
-                      </div>
-                    </div>
-
-                    {/* Available From Badge */}
-                    {isOnLeave && availableFrom && (
-                      <div className="aaravpos-available-badge">
-                        <span className="aaravpos-available-dot" />
-
-                        <p className="aaravpos-available-text">
-                          Available from {availableFrom}
-                        </p>
+                >
+                  <div className="aaravpos-display-flex">
+                    {/* Avatar */}
+                    {p.imageUrl ? (
+                      <img
+                        src={p.imageUrl}
+                        alt={p.name}
+                        className="aaravpos-pro-image"
+                      />
+                    ) : (
+                      <div
+                        className="aaravpos-pro-avatar"
+                        style={{
+                          background: p.color || "#111",
+                        }}
+                      >
+                        {getUserName(p.name)}
                       </div>
                     )}
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+
+                    {/* Staff Info */}
+                    <div className="aaravpos-pro-info">
+                      <p className="aaravpos-pro-name">{p.name}</p>
+
+                      <p className="aaravpos-pro-type">{p.staff_type}</p>
+                    </div>
+                  </div>
+
+                  {/* Available From Badge */}
+                  {isOnLeave && availableFrom && (
+                    <div className="aaravpos-available-badge">
+                      <span className="aaravpos-available-dot" />
+
+                      <p className="aaravpos-available-text">
+                        Available from {availableFrom}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
-    </MainLayout>
+    </MainLayout >
   );
 }

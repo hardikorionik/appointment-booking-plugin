@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X, ChevronRight } from "lucide-react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
 import {
   setCategory,
   toggleService,
@@ -17,26 +16,6 @@ import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
 
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 14,
-  },
-  visible: (index: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: index * 0.05,
-      duration: 0.15,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  }),
-  exit: {
-    opacity: 0,
-    y: 8,
-    transition: { duration: 0.2 },
-  },
-};
 
 type ViewType = "supercategory" | "standalone";
 
@@ -214,7 +193,7 @@ export default function ServicesPage() {
       <div className="aaravpos-margin-top-20">
         <h1 className="aaravpos-page-title">Book A Service</h1>
         <p className="aaravpos-sub-title">
-          Select from {outletName} Outlet's available services
+          Select from <span className="aaravpos-text-bold">{outletName}</span> Outlet's available services
         </p>
         <div className="aaravpos-topbar">
           {/* {(hasSuperCategoryServices || hasStandaloneServices) && ( */}
@@ -226,9 +205,8 @@ export default function ServicesPage() {
                   setSelectedSubCategory(null);
                   setSelectedSuperCategory(null);
                 }}
-                className={`aaravpos-tab-btn ${
-                  viewType === "supercategory" ? "active" : "inactive"
-                }`}
+                className={`aaravpos-tab-btn ${viewType === "supercategory" ? "active" : "inactive"
+                  }`}
               >
                 Super Category
               </button>
@@ -239,9 +217,8 @@ export default function ServicesPage() {
                 onClick={() => {
                   setViewType("standalone");
                 }}
-                className={`aaravpos-tab-btn ${
-                  viewType === "standalone" ? "active" : "inactive"
-                }`}
+                className={`aaravpos-tab-btn ${viewType === "standalone" ? "active" : "inactive"
+                  }`}
               >
                 Standalone
               </button>
@@ -297,11 +274,10 @@ export default function ServicesPage() {
                         setSelectedSuperCategory(superCat);
                         setSelectedSubCategory(null);
                       }}
-                      className={`aaravpos-supercategory-btn ${
-                        selectedSuperCategory?.id === superCat.id
-                          ? "active"
-                          : ""
-                      }`}
+                      className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id
+                        ? "active"
+                        : ""
+                        }`}
                     >
                       <h3 className="aaravpos-supercategory-title">
                         {superCat.name}
@@ -330,9 +306,8 @@ export default function ServicesPage() {
                 >
                   <button
                     onClick={() => setSelectedSubCategory(null)}
-                    className={`aaravpos-supercategory-btn ${
-                      !selectedSubCategory ? "active" : ""
-                    }`}
+                    className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
+                      }`}
                   >
                     All Services (
                     {selectedSuperCategory?.categories?.reduce(
@@ -347,9 +322,8 @@ export default function ServicesPage() {
                       <button
                         key={subCat.id}
                         onClick={() => setSelectedSubCategory(subCat)}
-                        className={`aaravpos-supercategory-btn ${
-                          selectedSubCategory?.id === subCat.id ? "active" : ""
-                        }`}
+                        className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === subCat.id ? "active" : ""
+                          }`}
                       >
                         {subCat.name} ({subCat.services.length})
                       </button>
@@ -386,9 +360,8 @@ export default function ServicesPage() {
                 <button
                   key={cat.id}
                   onClick={() => dispatch(setCategory(cat))}
-                  className={`aaravpos-supercategory-btn ${
-                    selectedCategory?.id === cat.id ? "active" : ""
-                  }`}
+                  className={`aaravpos-supercategory-btn ${selectedCategory?.id === cat.id ? "active" : ""
+                    }`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>
@@ -404,14 +377,9 @@ export default function ServicesPage() {
                 <ServiceSkeletonCard key={i} />
               ))
             ) : (
-              <AnimatePresence mode="popLayout">
+              <>
                 {!servicesToShow?.length ? (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="aaravpos-empty-services"
-                  >
+                  <div className="aaravpos-empty-services">
                     <h3 className="aaravpos-empty-services-title">
                       No Services Found
                     </h3>
@@ -420,21 +388,14 @@ export default function ServicesPage() {
                         ? "No services found for your search."
                         : "No services are available for selected category."}
                     </p>
-                  </motion.div>
+                  </div>
                 ) : (
                   servicesToShow?.map((svc: any, index: number) => {
                     const isSelected = selectedServices.some(
                       (s: any) => s.id === svc.id,
                     );
                     return (
-                      <motion.div
-                        key={svc.id}
-                        variants={cardVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        custom={index}
-                        layout
+                      <div
                         onClick={() => {
                           const exists = selectedServices.find(
                             (s: any) => s.id === svc.id,
@@ -526,11 +487,11 @@ export default function ServicesPage() {
                             <Plus size={14} />
                           </button>
                         </div>
-                      </motion.div>
+                      </div>
                     );
                   })
                 )}
-              </AnimatePresence>
+              </>
             )}
           </div>
         </div>

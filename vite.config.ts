@@ -45,7 +45,6 @@ export default defineConfig({
         'tailwindcss',
 
         // add these
-        "motion",
         "lodash",
         "luxon",
         "react-toastify",

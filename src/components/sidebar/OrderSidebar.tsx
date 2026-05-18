@@ -7,7 +7,6 @@ import {
   JSX,
 } from "react";
 import { useSelector } from "react-redux";
-import { motion, AnimatePresence } from "framer-motion";
 import { DateTime } from "luxon";
 import { X, MoveRight, Clock3, Package2 } from "lucide-react";
 import { CurrencyIcon } from "@/utils";
@@ -273,10 +272,10 @@ export default function OrderSidebar({
       const totalOffset =
         ((firstHeight +
           (isCustomTip
-            ? 125
+            ? 115
             : showTip
-              ? 125
-              : 125)) ||
+              ? 115
+              : 115)) ||
           0) + thirdHeight;
 
       setSecondHeight(window.innerHeight - totalOffset);
@@ -470,55 +469,35 @@ export default function OrderSidebar({
                 },
               )}
             </div>
-            <AnimatePresence initial={false}>
-              {isCustomTip && (
-                <motion.div
-                  initial={{
-                    height: 0,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    height: "auto",
-                    opacity: 1,
-                  }}
-                  exit={{
-                    height: 0,
-                    opacity: 0,
-                  }}
-                  transition={{
-                    duration: 0.25,
-                    ease: "easeInOut",
-                  }}
-                  className="aaravpos-tip-input-wrapper"
-                >
-                  <input
-                    id="number"
-                    name="number"
-                    type="number"
-                    placeholder="Enter %"
-                    value={customTip}
-                    onChange={(e) => {
-                      const value =
-                        e.target.value;
+            {isCustomTip && (
+              <div className="aaravpos-tip-input-wrapper">
+                <input
+                  id="number"
+                  name="number"
+                  type="number"
+                  placeholder="Enter %"
+                  value={customTip}
+                  onChange={(e) => {
+                    const value =
+                      e.target.value;
 
-                      if (
-                        value === "" ||
-                        (Number(value) >= 0 &&
-                          Number(value) <=
-                          100)
-                      ) {
-                        setCustomTip(value);
+                    if (
+                      value === "" ||
+                      (Number(value) >= 0 &&
+                        Number(value) <=
+                        100)
+                    ) {
+                      setCustomTip(value);
 
-                        onTipChange?.(
-                          Number(value) || 0,
-                        );
-                      }
-                    }}
-                    className="aaravpos-tip-input"
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
+                      onTipChange?.(
+                        Number(value) || 0,
+                      );
+                    }
+                  }}
+                  className="aaravpos-tip-input"
+                />
+              </div>
+            )}
           </>
         )}
         {consentRequired &&

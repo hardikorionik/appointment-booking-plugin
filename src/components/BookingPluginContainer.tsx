@@ -118,7 +118,7 @@ export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = (
         );
     }
     return (
-        <div>
+        <div className="aaravpos-overflow-hidden">
             {outlets.length > 1 && !outletId ? (
                 <ChooseYourOutlet
                     outlets={outlets}

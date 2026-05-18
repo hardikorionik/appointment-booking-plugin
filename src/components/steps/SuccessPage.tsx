@@ -1,6 +1,5 @@
 import { JSX, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { motion } from "framer-motion";
 import { MoveLeft, Check, ChevronDown, Plus } from "lucide-react";
 import { getAppointmentDetail } from "@/services";
 import { persistor } from "@/store";
@@ -8,14 +7,6 @@ import { CurrencyIcon } from "@/utils";
 import type { RootState } from "@/store";
 import { AppointmentDetails } from "@/types";
 
-// -------------------- Animations --------------------
-const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { duration: 0.5, delay: 0.3 },
-    },
-};
 // -------------------- Component --------------------
 export default function SuccessPage(): JSX.Element {
     const dispatch = useDispatch();
@@ -110,56 +101,42 @@ export default function SuccessPage(): JSX.Element {
 
     return (
         <div className="arravpos-success-wrapper">
-            <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={fadeIn}
-                className="arravpos-success-motion"
-            >
+            <div className="arravpos-success-motion">
                 <div className="arravpos-success-icon success-pulse">
                     <Check />
                 </div>
-
                 <h1 className="arravpos-success-title">
                     You're Booked!
                 </h1>
-
                 <p className="arravpos-success-description">
                     Your appointment has been confirmed.
                     <br />
                     A confirmation has been sent to your email.
                 </p>
-
                 <div className="arravpos-success-content">
                     <div className="arravpos-success-card">
-
                         <div className="arravpos-success-row arravpos-success-row-first">
                             <span className="arravpos-label">
                                 Outlet Name
                             </span>
-
                             <span className="arravpos-value">
                                 {outlet?.outletName || "-"}
                             </span>
                         </div>
-
                         <div className="arravpos-success-row">
                             <span className="arravpos-label">
                                 Professional
                             </span>
-
                             <span className="arravpos-value">
                                 {staff
                                     ? `${staff?.firstName} ${staff?.lastName}`
                                     : "-"}
                             </span>
                         </div>
-
                         <div className="arravpos-success-row arravpos-services-header">
                             <span className="arravpos-services-label">
                                 Services ({services.length})
                             </span>
-
                             {services.length > 5 && (
                                 <button
                                     onClick={() =>
@@ -178,7 +155,6 @@ export default function SuccessPage(): JSX.Element {
                                 </button>
                             )}
                         </div>
-
                         <div className="arravpos-services-list">
                             {visibleServices?.map((s) => (
                                 <div
@@ -195,7 +171,6 @@ export default function SuccessPage(): JSX.Element {
                                     </span>
                                 </div>
                             ))}
-
                             {!showAllServices && remainingCount > 0 && (
                                 <div className="arravpos-more-services">
                                     <Plus size={14} />
@@ -203,7 +178,6 @@ export default function SuccessPage(): JSX.Element {
                                 </div>
                             )}
                         </div>
-
                         <div className="arravpos-success-row">
                             <span className="arravpos-label">
                                 Date & Time
@@ -214,7 +188,6 @@ export default function SuccessPage(): JSX.Element {
                                 {appointment.startTime}
                             </span>
                         </div>
-
                         <div className="arravpos-success-row">
                             <span className="arravpos-label">
                                 Tip
@@ -225,7 +198,6 @@ export default function SuccessPage(): JSX.Element {
                                 {tipAmt.toFixed(2)}
                             </span>
                         </div>
-
                         <div className="arravpos-success-row">
                             <span className="arravpos-label">
                                 Tax
@@ -236,7 +208,6 @@ export default function SuccessPage(): JSX.Element {
                                 {taxAmt.toFixed(2)}
                             </span>
                         </div>
-
                         <div className="arravpos-total-row">
                             <span className="arravpos-label">
                                 Total Amount
@@ -247,9 +218,7 @@ export default function SuccessPage(): JSX.Element {
                                 {totalWithTax}
                             </span>
                         </div>
-
                     </div>
-
                     <button
                         onClick={handleBookAnother}
                         className="arravpos-book-btn"
@@ -258,7 +227,7 @@ export default function SuccessPage(): JSX.Element {
                         Book Another Appointment
                     </button>
                 </div>
-            </motion.div>
+            </div>
         </div>
     );
 }
