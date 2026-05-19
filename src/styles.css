@@ -3282,9 +3282,6 @@
     height: calc(100dvh - 200px);
   } */
 
-  .aaravpos-sidebar-close-btn {
-    display: none;
-  }
 
   .arravpos-details-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3398,6 +3395,10 @@
 @media (min-width: 991px) {
   .aaravpos-sidebar {
     display: block;
+  }
+
+  .aaravpos-sidebar-close-btn {
+    display: none;
   }
 
   .aaravpos-layout-wrapper.with-sidebar {
