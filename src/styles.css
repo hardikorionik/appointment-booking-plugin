@@ -2021,7 +2021,7 @@
 .arravpos-success-motion {
   display: flex;
   flex-direction: column;
-  height: 580px;
+  max-height: 580px;
   align-items: center;
   justify-content: center;
   background: var(--canvas);
