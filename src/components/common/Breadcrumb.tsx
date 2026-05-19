@@ -133,7 +133,6 @@ export default function Breadcrumb() {
               const isActive = currentStep === step.page;
               const isCompleted = completedSteps?.includes(step.page);
               const isClickable = isCompleted || i <= currentIndex;
-
               return (
                 <button
                   key={step.page}

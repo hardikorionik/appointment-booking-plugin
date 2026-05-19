@@ -554,7 +554,8 @@
 
 .aaravpos-step-btn.disabled {
   cursor: not-allowed;
-  opacity: 0.4;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .aaravpos-step-btn.active {
