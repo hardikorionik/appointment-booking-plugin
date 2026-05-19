@@ -727,6 +727,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 14px;
+  border-radius: 4px;
 }
 
 .aaravpos-supercategory-btn:hover {

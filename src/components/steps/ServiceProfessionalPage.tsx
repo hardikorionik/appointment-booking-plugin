@@ -328,9 +328,9 @@ export default function ServiceProfessionalPage() {
                     <h3 className="aaravpos-supercategory-title">
                       {superCat.name}
                     </h3>
-                    <p className="aaravpos-supercategory-count">
+                    {/* <p className="aaravpos-supercategory-count">
                       {superCat?.categories?.length || 0} Sub Categories
-                    </p>
+                    </p> */}
                   </button>
                 ))}
               </div>
