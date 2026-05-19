@@ -3281,11 +3281,11 @@
   }
 
   .aaravpos-order-list {
-    height: calc(100dvh - 225px);
+    height: calc(100dvh - 235px);
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 250px);
+    height: calc(100dvh - 265px);
   }
 
   /* .aaravpos-staff-wrapper {
