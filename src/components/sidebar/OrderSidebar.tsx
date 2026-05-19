@@ -385,9 +385,11 @@ export default function OrderSidebar({
               key={svc.id}
               className="aaravpos-order-item"
             >
-              <p className="aaravpos-order-service-name">
-                {svc.name}
-              </p>
+              <div className="aaravpos-main-text">
+                <p className="aaravpos-order-service-name">
+                  {svc.name}
+                </p>
+              </div>
               <div className="aaravpos-order-details">
                 <div className="aaravpos-order-detail">
                   <Package2 size={13} />
