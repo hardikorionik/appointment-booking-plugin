@@ -3066,7 +3066,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 580px;
+  min-height: 580px;
 }
 
 .aaravpos-loader {
@@ -3311,7 +3311,7 @@
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 265px);
+    height: calc(100dvh - 250px);
   }
 
   /* .aaravpos-staff-wrapper {
