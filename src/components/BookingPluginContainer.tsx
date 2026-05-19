@@ -61,7 +61,7 @@ export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = (
             dispatch(setIsOrder(response?.data?.data?.outlets[0]?.isService))
             dispatch(
                 setServicePayload({
-                    standaloneCategories: response?.data?.data?.standaloneCategories,
+                    // standaloneCategories: response?.data?.data?.standaloneCategories,
                     superCategories: response?.data?.data?.superCategories,
                     staff: response?.data?.data?.staff,
                 })

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ServiceState, Category, Staff } from "@/types";
 
 const initialState: ServiceState = {
-  standaloneCategories: [],
+  // standaloneCategories: [],
   superCategories: [],
   staff: [],
   selectedCategory: null,
@@ -17,12 +17,12 @@ const serviceSlice = createSlice({
     setServicePayload: (
       state,
       action: PayloadAction<{
-        standaloneCategories: Category[];
+        // standaloneCategories: Category[];
         superCategories: Category[];
         staff: Staff[];
       }>
     ) => {
-      state.standaloneCategories = action.payload.standaloneCategories;
+      // state.standaloneCategories = action.payload.standaloneCategories;
       state.superCategories = action.payload.superCategories;
       state.staff = action.payload.staff;
     },

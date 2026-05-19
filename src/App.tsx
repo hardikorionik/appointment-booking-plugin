@@ -2,6 +2,6 @@ import { AppointmentBookingPlugin } from "@/components/AppointmentBookingPlugin"
 
 export default function App() {
   return (
-    <AppointmentBookingPlugin bookingCode="X4M8Q1" />
+    <AppointmentBookingPlugin bookingCode="MM9E2C" />
   );
 }

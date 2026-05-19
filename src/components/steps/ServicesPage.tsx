@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Search, Minus, Plus, X, ChevronRight } from "lucide-react";
 import {
-  setCategory,
   toggleService,
   incrementService,
   decrementService,
@@ -16,25 +15,17 @@ import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
 
-
-type ViewType = "supercategory" | "standalone";
-
 export default function ServicesPage() {
   const dispatch = useDispatch();
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const superCategoryScrollRef = useRef<HTMLDivElement | null>(null);
+  const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
 
-  const {
-    superCategories,
-    standaloneCategories,
-    selectedCategory,
-    selectedServices,
-    loading,
-  } = useSelector((state: any) => state.service);
+  const { superCategories, selectedServices, loading } = useSelector(
+    (state: any) => state.service,
+  );
   const { outletName } = useSelector(
     (state: OutletRootState) => state?.outletDetails,
   );
-
-  const [viewType, setViewType] = useState<ViewType>("supercategory");
 
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
 
@@ -42,50 +33,35 @@ export default function ServicesPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const allStandaloneServices = standaloneCategories?.flatMap(
-    (cat: any) => cat.services,
-  );
-
-  const standaloneServices = selectedCategory
-    ? selectedCategory.services
-    : allStandaloneServices;
-
   // SUPER CATEGORY SERVICES
 
-  const superCategoryServices = useMemo(() => {
+  const servicesToDisplay = useMemo(() => {
     if (!selectedSuperCategory) return [];
 
     // ALL SERVICES OF SELECTED SUPER CATEGORY
     if (!selectedSubCategory) {
-      return selectedSuperCategory?.categories?.flatMap(
-        (cat: any) => cat.services || [],
+      return (
+        selectedSuperCategory?.categories?.flatMap(
+          (cat: any) => cat.services || [],
+        ) || []
       );
     }
 
-    // SINGLE SUB CATEGORY SERVICES
-    return selectedSubCategory.services || [];
+    // SUB CATEGORY SERVICES
+    return selectedSubCategory?.services || [];
   }, [selectedSuperCategory, selectedSubCategory]);
 
-  // FINAL SERVICES
-  const baseServices =
-    viewType === "standalone" ? standaloneServices : superCategoryServices;
-
   const allServices = useMemo(() => {
-    const standalone = standaloneCategories?.flatMap(
-      (cat: any) => cat.services || [],
+    return (
+      superCategories?.flatMap((superCat: any) =>
+        superCat?.categories?.flatMap((cat: any) => cat.services || []),
+      ) || []
     );
-
-    const superCategory = superCategories?.flatMap((superCat: any) =>
-      superCat?.categories?.flatMap((cat: any) => cat.services || []),
-    );
-
-    return [...standalone, ...superCategory];
-  }, [standaloneCategories, superCategories]);
+  }, [superCategories]);
 
   const servicesToShow = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
 
-    // GLOBAL SEARCH
     if (term) {
       return allServices.filter((svc: any) => {
         return (
@@ -95,9 +71,8 @@ export default function ServicesPage() {
       });
     }
 
-    // DEFAULT CATEGORY/SUBCATEGORY SERVICES
-    return baseServices;
-  }, [searchTerm, allServices, baseServices]);
+    return servicesToDisplay;
+  }, [searchTerm, allServices, servicesToDisplay]);
 
   const hasActiveTax = (svc: Service): boolean => {
     return svc.taxRows?.some((tax: TaxRow) => tax.isActive) || false;
@@ -114,59 +89,18 @@ export default function ServicesPage() {
     return sum + price * s.qty;
   }, 0);
 
-  const hasSuperCategoryServices = useMemo(() => {
-    return superCategories?.some((superCat: any) =>
+  useEffect(() => {
+    if (!superCategories?.length) return;
+
+    const firstSuperCategory = superCategories.find((superCat: any) =>
       superCat?.categories?.some((cat: any) => cat?.services?.length > 0),
     );
-  }, [superCategories]);
 
-  const hasStandaloneServices = useMemo(() => {
-    return standaloneCategories?.some((cat: any) => cat?.services?.length > 0);
-  }, [standaloneCategories]);
-
-  useEffect(() => {
-    // AUTO SWITCH VIEW TYPE
-    if (
-      viewType === "supercategory" &&
-      !hasSuperCategoryServices &&
-      hasStandaloneServices
-    ) {
-      setViewType("standalone");
-      return;
+    if (firstSuperCategory && !selectedSuperCategory) {
+      setSelectedSuperCategory(firstSuperCategory);
+      setSelectedSubCategory(null);
     }
-
-    if (
-      viewType === "standalone" &&
-      !hasStandaloneServices &&
-      hasSuperCategoryServices
-    ) {
-      setViewType("supercategory");
-      return;
-    }
-
-    // AUTO SELECT FIRST SUPER CATEGORY
-    if (
-      viewType === "supercategory" &&
-      hasSuperCategoryServices &&
-      superCategories?.length > 0 &&
-      !selectedSuperCategory
-    ) {
-      const firstSuperCategory = superCategories.find((superCat: any) =>
-        superCat?.categories?.some((cat: any) => cat?.services?.length > 0),
-      );
-
-      if (firstSuperCategory) {
-        setSelectedSuperCategory(firstSuperCategory);
-        setSelectedSubCategory(null);
-      }
-    }
-  }, [
-    viewType,
-    superCategories,
-    selectedSuperCategory,
-    hasSuperCategoryServices,
-    hasStandaloneServices,
-  ]);
+  }, [superCategories, selectedSuperCategory]);
 
   return (
     <MainLayout
@@ -195,7 +129,9 @@ export default function ServicesPage() {
           <div>
             <h1 className="aaravpos-page-title">Book A Service</h1>
             <p className="aaravpos-sub-title">
-              Select from <span className="aaravpos-text-bold">{outletName}</span> Outlet's available services
+              Select from{" "}
+              <span className="aaravpos-text-bold">{outletName}</span> Outlet's
+              available services
             </p>
           </div>
           <div className="aaravpos-search-wrapper">
@@ -221,150 +157,79 @@ export default function ServicesPage() {
             </div>
           </div>
         </div>
-        <div className="aaravpos-topbar">
-          {/* {(hasSuperCategoryServices || hasStandaloneServices) && ( */}
-          <div className="aaravpos-tab-group">
-            {hasSuperCategoryServices && (
-              <button
-                onClick={() => {
-                  setViewType("supercategory");
-                  setSelectedSubCategory(null);
-                  setSelectedSuperCategory(null);
-                }}
-                className={`aaravpos-tab-btn ${viewType === "supercategory" ? "active" : "inactive"
-                  }`}
-              >
-                Super Category
-              </button>
-            )}
-            {hasStandaloneServices && (
-              <button
-                onClick={() => {
-                  setViewType("standalone");
-                }}
-                className={`aaravpos-tab-btn ${viewType === "standalone" ? "active" : "inactive"
-                  }`}
-              >
-                Standalone
-              </button>
-            )}
-          </div>
-          {/* )} */}
 
-        </div>
-        {/* SUPER CATEGORY UI */}
-        {viewType === "supercategory" && (
-          <>
-            {hasSuperCategoryServices && (
-              <div
-                ref={scrollRef}
-                onWheel={(e) => {
-                  if (scrollRef.current) {
-                    scrollRef.current.scrollLeft += e.deltaY;
-                  }
+        {/* SUPER CATEGORIES */}
+        <div
+          ref={superCategoryScrollRef}
+          onWheel={(e) => {
+            if (superCategoryScrollRef.current) {
+              superCategoryScrollRef.current.scrollLeft += e.deltaY;
+            }
+          }}
+          className="aaravpos-supercategory-wrapper"
+        >
+          {superCategories
+            ?.filter((superCat: any) =>
+              superCat?.categories?.some(
+                (cat: any) => cat?.services?.length > 0,
+              ),
+            )
+            ?.map((superCat: any) => (
+              <button
+                key={superCat.id}
+                onClick={() => {
+                  setSelectedSuperCategory(superCat);
+                  setSelectedSubCategory(null);
                 }}
-                className="aaravpos-supercategory-wrapper"
+                className={`aaravpos-supercategory-btn ${
+                  selectedSuperCategory?.id === superCat.id ? "active" : ""
+                }`}
               >
-                {superCategories
-                  .filter((superCat: any) =>
-                    superCat?.categories?.some(
-                      (cat: any) => cat?.services?.length > 0,
-                    ),
-                  )
-                  .map((superCat: any) => (
-                    <button
-                      key={superCat.id}
-                      onClick={() => {
-                        setSelectedSuperCategory(superCat);
-                        setSelectedSubCategory(null);
-                      }}
-                      className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id
-                        ? "active"
-                        : ""
-                        }`}
-                    >
-                      <h3 className="aaravpos-supercategory-title">
-                        {superCat.name}
-                      </h3>
-                      {/* <p className="aaravpos-supercategory-count">
-                        {superCat?.categories?.length || 0} Sub Categories
-                      </p> */}
-                    </button>
-                  ))}
-              </div>
-            )}
-            {/* SUB CATEGORIES */}
-            {selectedSuperCategory?.categories?.some(
-              (cat: any) => cat?.services?.length > 0,
-            ) &&
-              selectedSuperCategory && (
-                <div
-                  ref={scrollRef}
-                  onWheel={(e) => {
-                    if (scrollRef.current) {
-                      scrollRef.current.scrollLeft += e.deltaY;
-                    }
-                  }}
-                  className="aaravpos-supercategory-wrapper"
-                >
-                  <button
-                    onClick={() => setSelectedSubCategory(null)}
-                    className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
-                      }`}
-                  >
-                    All Services (
-                    {selectedSuperCategory?.categories?.reduce(
-                      (sum: number, c: any) => sum + c.services.length,
-                      0,
-                    )}
-                    )
-                  </button>
-                  {selectedSuperCategory?.categories
-                    ?.filter((subCat: any) => subCat?.services?.length > 0)
-                    .map((subCat: any) => (
-                      <button
-                        key={subCat.id}
-                        onClick={() => setSelectedSubCategory(subCat)}
-                        className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === subCat.id ? "active" : ""
-                          }`}
-                      >
-                        {subCat.name} ({subCat.services.length})
-                      </button>
-                    ))}
-                </div>
-              )}
-          </>
-        )}
-        {/* STANDALONE CATEGORY UI */}
-        {viewType === "standalone" && (
+                <h3 className="aaravpos-supercategory-title">
+                  {superCat?.isStandAloneCategory
+                    ? "Standalone"
+                    : superCat.name}
+                </h3>
+              </button>
+            ))}
+        </div>
+
+        {/* SUB CATEGORIES */}
+        {selectedSuperCategory?.categories?.some(
+          (cat: any) => cat?.services?.length > 0,
+        ) && (
           <div
-            ref={scrollRef}
+            ref={subCategoryScrollRef}
             onWheel={(e) => {
-              if (scrollRef.current) {
-                scrollRef.current.scrollLeft += e.deltaY;
+              if (subCategoryScrollRef.current) {
+                subCategoryScrollRef.current.scrollLeft += e.deltaY;
               }
             }}
             className="aaravpos-supercategory-wrapper"
           >
             <button
-              onClick={() => dispatch(setCategory(null))}
-              className={`aaravpos-supercategory-btn ${!selectedCategory ? "active" : ""}`}
+              onClick={() => setSelectedSubCategory(null)}
+              className={`aaravpos-supercategory-btn ${
+                !selectedSubCategory ? "active" : ""
+              }`}
             >
               All Services (
-              {standaloneCategories.reduce(
-                (sum: number, c: any) => sum + c.services.length,
+              {selectedSuperCategory?.categories?.reduce(
+                (sum: number, c: any) => sum + (c?.services?.length || 0),
                 0,
               )}
               )
             </button>
-            {standaloneCategories
-              .filter((cat: any) => cat?.services?.length > 0)
-              .map((cat: any) => (
+
+            {selectedSuperCategory?.categories
+              ?.filter((cat: any) => cat?.services?.length > 0)
+              ?.map((cat: any) => (
                 <button
                   key={cat.id}
-                  onClick={() => dispatch(setCategory(cat))}
-                  className={`aaravpos-supercategory-btn ${selectedCategory?.id === cat.id ? "active" : ""
-                    }`}
+                  onClick={() => setSelectedSubCategory(cat)}
+                  className={`aaravpos-supercategory-btn ${
+                    selectedSubCategory?.id === cat.id ? "active" : ""
+                  }`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>
@@ -373,7 +238,7 @@ export default function ServicesPage() {
         )}
 
         {/* SERVICES */}
-        <div className={`aaravpos-services-wrapper ${viewType}`}>
+        <div className="aaravpos-services-wrapper">
           <div className="aaravpos-services-grid">
             {loading ? (
               Array.from({ length: 10 }).map((_, i) => (
@@ -430,7 +295,7 @@ export default function ServicesPage() {
                           <p className="aaravpos-service-description">
                             {svc.description}
                           </p>
-                          {svc.description?.length > 30 && (
+                          {svc.description && svc.description.length > 30 && (
                             <div className="aaravpos-service-tooltip">
                               {svc.description}
                             </div>
