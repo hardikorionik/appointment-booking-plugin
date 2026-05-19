@@ -77,7 +77,7 @@
   width: 100%;
   box-sizing: border-box;
   margin: 0 auto;
-  max-height: 700px;
+  height: 700px;
 }
 
 .aaravpos-margin-top-20 {
@@ -107,7 +107,7 @@
   transition: all 0.2s ease;
   border-radius: 6px;
   position: absolute;
-  bottom: 12px;
+  bottom: 15px;
   z-index: 50;
   display: flex;
   align-items: center;
@@ -326,7 +326,7 @@
 .aaravpos-outlet-list-wrapper {
   padding-top: 8px;
   padding-bottom: 8px;
-  max-height: 570px;
+  height: 610px;
   overflow: auto;
   scrollbar-width: none;
 }
@@ -515,7 +515,7 @@
   cursor: pointer;
   /* transition: all 0.3s ease; */
   outline: none;
-  /* flex-shrink: 0; */
+  flex-shrink: 0;
   border-radius: 100%;
   overflow: hidden;
 }
@@ -752,10 +752,10 @@
 /* SERVICES CONTAINER */
 .aaravpos-services-wrapper {
   overflow-y: auto;
-  padding-bottom: 75px;
+  padding-bottom: 30px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  max-height: 318px;
+  height: 418px;
 }
 
 .aaravpos-services-wrapper::-webkit-scrollbar {
@@ -1755,9 +1755,9 @@
 /* Scroll Area */
 .arravpos-details-scroll {
   overflow-y: auto;
-  padding-bottom: 80px;
+  padding-bottom: 30px;
   scrollbar-width: none;
-  max-height: 515px;
+  height: 565px;
 }
 
 .arravpos-details-scroll::-webkit-scrollbar {
@@ -1916,8 +1916,8 @@
   /* height: calc(100dvh - 285px); */
   overflow-y: auto;
   scrollbar-width: none;
-  max-height: 470px;
-  padding-bottom: 25px;
+  height: 495px;
+  padding-bottom: 15px;
 }
 
 .arravpos-booking-scroll::-webkit-scrollbar {
@@ -1993,7 +1993,7 @@
   /* height: calc(100dvh - 5px); */
   overflow-y: auto;
   scrollbar-width: none;
-  height: 580px;
+  height: 700px;
 }
 
 .arravpos-success-wrapper::-webkit-scrollbar {
@@ -2003,7 +2003,7 @@
 .arravpos-success-motion {
   display: flex;
   flex-direction: column;
-  max-height: 580px;
+  height: 668px;
   align-items: center;
   justify-content: center;
   background: var(--canvas);
@@ -2052,7 +2052,7 @@
   margin-bottom: 10px;
   padding: 10px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  height: 320px;
+  height: 400px;
   overflow-x: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -2866,10 +2866,10 @@
 /* --------------------------------- */
 .aaravpos-staff-wrapper {
   overflow-y: auto;
-  padding-bottom: 80px;
+  padding-bottom: 40px;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  max-height: 504px;
+  height: 540px;
 }
 
 .aaravpos-staff-wrapper::-webkit-scrollbar {
@@ -2997,7 +2997,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 600px;
+  height: 700px;
 }
 
 .aaravpos-loading-text {
@@ -3010,7 +3010,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 600px;
+  height: 700px;
   padding: 20px;
   text-align: center;
 }
@@ -3053,7 +3053,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 580px;
+  height: 610px;
 }
 
 .aaravpos-loader {
@@ -3177,10 +3177,6 @@
     -webkit-box-orient: vertical;
   }
 
-  .aaravpos-sidebar {
-    display: none;
-  }
-
   .aaravpos-page-title {
     font-size: 16px;
   }
@@ -3201,10 +3197,6 @@
     font-size: 14px;
   }
 
-  .aaravpos-btn {
-    display: block;
-  }
-
   .aaravpos-outlet-card-title {
     font-size: 16px;
   }
@@ -3216,6 +3208,7 @@
   .aaravpos-outlet-grid {
     gap: 10px;
   }
+
 }
 
 @media (min-width: 768px) {
@@ -3267,9 +3260,6 @@
     grid-template-columns: minmax(0, 1fr) 350px;
   } */
 
-  .aaravpos-sidebar {
-    display: flex;
-  }
 
   .aaravpos-mobile-button {
     display: none;
@@ -3404,6 +3394,28 @@
   }
 }
 
+
+@media (min-width: 991px) {
+  .aaravpos-sidebar {
+    display: block;
+  }
+
+  .aaravpos-layout-wrapper.with-sidebar {
+    grid-template-columns: minmax(0, 1fr) 360px;
+  }
+}
+
+@media (max-width: 991px) {
+  .aaravpos-sidebar {
+    display: none;
+  }
+
+  .aaravpos-btn {
+    display: block;
+  }
+
+}
+
 @media (min-width: 1024px) {
   .arravpos-date-strip {
     gap: 6px;
@@ -3489,9 +3501,6 @@
     padding-bottom: 16px;
   }
 
-  .aaravpos-layout-wrapper.with-sidebar {
-    grid-template-columns: minmax(0, 1fr) 360px;
-  }
 }
 
 @media (max-width: 1024px) {
