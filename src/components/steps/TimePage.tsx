@@ -568,7 +568,7 @@ export default function TimePage(): JSX.Element {
         </div>
       </div>
 
-      <div className="arravpos-scroll-area">
+      <div className="arravpos-scroll-area" style={loading ? { height: 362 } : {}}>
         {loading ? (
           <div className="arravpos-loader-wrapper">
             <div className="arravpos-loader" />
@@ -615,7 +615,6 @@ export default function TimePage(): JSX.Element {
             />
           </>
         )}
-
         <CalendarOverlay isOpen={calOpen} onClose={() => setCalOpen(false)} />
       </div>
     </MainLayout>
