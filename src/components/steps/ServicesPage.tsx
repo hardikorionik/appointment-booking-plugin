@@ -191,41 +191,14 @@ export default function ServicesPage() {
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">
-        <h1 className="aaravpos-page-title">Book A Service</h1>
-        <p className="aaravpos-sub-title">
-          Select from <span className="aaravpos-text-bold">{outletName}</span> Outlet's available services
-        </p>
-        <div className="aaravpos-topbar">
-          {/* {(hasSuperCategoryServices || hasStandaloneServices) && ( */}
-          <div className="aaravpos-tab-group">
-            {hasSuperCategoryServices && (
-              <button
-                onClick={() => {
-                  setViewType("supercategory");
-                  setSelectedSubCategory(null);
-                  setSelectedSuperCategory(null);
-                }}
-                className={`aaravpos-tab-btn ${viewType === "supercategory" ? "active" : "inactive"
-                  }`}
-              >
-                Super Category
-              </button>
-            )}
-
-            {hasStandaloneServices && (
-              <button
-                onClick={() => {
-                  setViewType("standalone");
-                }}
-                className={`aaravpos-tab-btn ${viewType === "standalone" ? "active" : "inactive"
-                  }`}
-              >
-                Standalone
-              </button>
-            )}
+        <div className="aaravpos-navbar-form">
+          <div>
+            <h1 className="aaravpos-page-title">Book A Service</h1>
+            <p className="aaravpos-sub-title">
+              Select from <span className="aaravpos-text-bold">{outletName}</span> Outlet's available services
+            </p>
           </div>
-          {/* )} */}
-          <div className="aaravpos-search-wrapper aaravpos-mb-10">
+          <div className="aaravpos-search-wrapper">
             <span className="aaravpos-search-icon">
               <Search size={14} />
             </span>
@@ -247,6 +220,37 @@ export default function ServicesPage() {
               )}
             </div>
           </div>
+        </div>
+        <div className="aaravpos-topbar">
+          {/* {(hasSuperCategoryServices || hasStandaloneServices) && ( */}
+          <div className="aaravpos-tab-group">
+            {hasSuperCategoryServices && (
+              <button
+                onClick={() => {
+                  setViewType("supercategory");
+                  setSelectedSubCategory(null);
+                  setSelectedSuperCategory(null);
+                }}
+                className={`aaravpos-tab-btn ${viewType === "supercategory" ? "active" : "inactive"
+                  }`}
+              >
+                Super Category
+              </button>
+            )}
+            {hasStandaloneServices && (
+              <button
+                onClick={() => {
+                  setViewType("standalone");
+                }}
+                className={`aaravpos-tab-btn ${viewType === "standalone" ? "active" : "inactive"
+                  }`}
+              >
+                Standalone
+              </button>
+            )}
+          </div>
+          {/* )} */}
+
         </div>
         {/* SUPER CATEGORY UI */}
         {viewType === "supercategory" && (
