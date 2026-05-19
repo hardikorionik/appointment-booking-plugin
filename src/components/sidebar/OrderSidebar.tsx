@@ -272,10 +272,10 @@ export default function OrderSidebar({
       const totalOffset =
         ((firstHeight +
           (isCustomTip
-            ? 115
+            ? 120
             : showTip
-              ? 115
-              : 115)) ||
+              ? 120
+              : 120)) ||
           0) + thirdHeight;
 
       setSecondHeight(window.innerHeight - totalOffset);
