@@ -3373,6 +3373,7 @@
 
   .arravpos-date-card {
     min-height: 38px;
+    min-width: 20px;
   }
 
   .arravpos-calendar-btn {
