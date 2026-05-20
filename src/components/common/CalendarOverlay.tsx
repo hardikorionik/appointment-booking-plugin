@@ -73,11 +73,16 @@ export default function CalendarOverlay({
   const startDate = DateTime.now().setZone(timeZone ?? "UTC");
 
   const handlePick = (monthIdx: number, day: number): void => {
-    const selectedDt = DateTime.fromObject({
-      year: currentMonth.year,
-      month: monthIdx,
-      day,
-    });
+    const selectedDt = DateTime.fromObject(
+      {
+        year: currentMonth.year,
+        month: monthIdx,
+        day,
+      },
+      {
+        zone: timeZone || "UTC",
+      },
+    );
 
     const dateObj = {
       day,
@@ -181,11 +186,16 @@ export default function CalendarOverlay({
                 currentMonth?.monthIdx === startDate.month &&
                 day === startDate.day;
 
-              const dt = DateTime.fromObject({
-                year: currentMonth.year,
-                month: currentMonth.monthIdx,
-                day,
-              });
+              const dt = DateTime.fromObject(
+                {
+                  year: currentMonth.year,
+                  month: currentMonth.monthIdx,
+                  day,
+                },
+                {
+                  zone: timeZone || "UTC",
+                },
+              );
 
               const dateObj = {
                 day,

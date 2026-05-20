@@ -3352,16 +3352,16 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    width: 100%;
+    /* width: 100%; */
+  }
+
+  .arravpos-date-wrapper {
+    justify-content: space-between;
+    flex: 1
   }
 }
 
 @media (max-width: 480px) {
-  .arravpos-date-nav-btn {
-    width: 23px;
-    padding: 6px;
-  }
-
   .arravpos-date-nav-btn svg {
     width: 16px;
     height: 16px;
@@ -3372,13 +3372,11 @@
   }
 
   .arravpos-date-card {
-    min-width: 24px;
     min-height: 38px;
-    padding: 8px 4px;
   }
 
   .arravpos-calendar-btn {
-    margin-left: 2px;
+    margin-left: 0px;
     padding: 6px;
 
   }
@@ -3454,10 +3452,6 @@
     width: 24px;
   }
 
-  .arravpos-date-wrapper {
-    justify-content: space-between;
-    flex: 1
-  }
 
   .aaravpos-service-title {
     font-size: 12px;
@@ -3469,6 +3463,16 @@
 
 }
 
+@media (max-width: 418px) {
+  .arravpos-date-nav-btn {
+    width: 26px;
+  }
+
+  .arravpos-date-card {
+    min-width: 22px;
+    padding: 6px 4px;
+  }
+}
 
 @media (min-width: 991px) {
   .aaravpos-sidebar {

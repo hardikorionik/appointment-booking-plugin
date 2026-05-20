@@ -410,7 +410,6 @@ export default function ConfirmPage(): JSX.Element {
     if (selectedDate) {
         formattedDate = `${selectedDate?.year}-${String(selectedDate?.month).padStart(2, "0")}-${String(selectedDate?.day).padStart(2, "0")}`;
     }
-    console.log("------413", selectedDate)
     const payload: AppointmentPayload = {
         tenantId,
         outletId,

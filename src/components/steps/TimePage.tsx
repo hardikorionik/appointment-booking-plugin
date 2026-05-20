@@ -316,7 +316,11 @@ export default function TimePage(): JSX.Element {
     const updateCount = (): void => {
       const width = window.innerWidth;
 
-      if (width < 1024) {
+      if (width < 411) {
+        setVisibleCount(5);
+      } else if (width < 480) {
+        setVisibleCount(6);
+      } else if (width < 1024) {
         setVisibleCount(5);
       } else if (width < 1280) {
         setVisibleCount(7);
