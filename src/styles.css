@@ -1414,7 +1414,7 @@
 }
 
 .aaravpos-tip-btn {
-  padding: 6px 8px;
+  padding: 6px;
   border: 1px solid var(--btn-bg-hover);
   border-radius: 4px;
   background: #fff;
@@ -3306,7 +3306,7 @@
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 370px);
+    height: calc(100dvh - 380px);
   }
 
   .aaravpos-pro-order-list-pro {

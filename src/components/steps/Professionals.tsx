@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { ChevronRight } from "lucide-react";
 import { getUserName } from "@/utils";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { nextStep } from "@/slices/breadcrumbSlice";
@@ -157,7 +158,15 @@ export default function Professionals() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={null}
+      renderButton={selectedProfessional ? <button
+        onClick={() => dispatch(nextStep())}
+        disabled={!selectedServices.length}
+        className="aaravpos-btn"
+      >
+        <span className="aaravpos-btn-content">
+          Choose Time <ChevronRight size={16} />
+        </span>
+      </button> : null}
     >
       <Breadcrumb />
 
