@@ -194,13 +194,10 @@ export default function OrderSidebar({
       ? formatTimeRange(selectedStartIndex)
       : null;
 
-  // const dateStr = timeRange
-  //   ? `${MONTH_NAMES[safeDate.month]} ${safeDate.day} at ${timeRange}`
-  //   : null;
   const monthIndex = safeDate.month ?? 0;
 
   const dateStr = timeRange
-    ? `${MONTH_NAMES[monthIndex]} ${safeDate.day} at ${timeRange}`
+    ? `${MONTH_NAMES[monthIndex - 1]} ${safeDate.day} at ${timeRange}`
     : null;
 
   const taxAmt = selectedStaffServices.reduce(
