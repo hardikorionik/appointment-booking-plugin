@@ -1005,13 +1005,13 @@
 .aaravpos-display-flex {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .aaravpos-pro-card {
   border: 2px solid rgba(0, 0, 0, 0.15);
   border-radius: 6px;
-  padding: 12px;
+  padding: 10px;
   background: #ffffff;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -1302,16 +1302,18 @@
 
 .aaravpos-pro-info {
   overflow: hidden;
+  flex: 1;
+  min-width: 0;
 }
 
 .aaravpos-pro-name {
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
-  white-space: nowrap;
+  margin: 0px 0px 5px 0px;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0px 0px 5px 0px;
+  white-space: nowrap;
 }
 
 .aaravpos-pro-type {
@@ -3319,6 +3321,12 @@
 
   .aaravpos-modal {
     max-width: 36rem;
+  }
+}
+
+@media (max-width:543px) {
+  .aaravpos-services-grid {
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   }
 }
 
