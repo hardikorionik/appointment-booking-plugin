@@ -1,6 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ChevronRight } from "lucide-react";
 import { getUserName } from "@/utils";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { nextStep } from "@/slices/breadcrumbSlice";
