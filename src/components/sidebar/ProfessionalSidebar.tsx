@@ -28,10 +28,12 @@ const ProfessionalSidebar = ({
   const { outletName } = useSelector(
     (state: OutletRootState) => state.outletDetails,
   );
+  const { selectedServices } = useSelector(
+    (state: OutletRootState) => state.service,
+  );
 
   const { isService } = useSelector((state: RootState) => state.outletDetails);
 
-  const hasServices = selectedStaffServices.length > 0;
 
   return (
     <div className="aaravpos-order-sidebar">
@@ -78,37 +80,68 @@ const ProfessionalSidebar = ({
               </div>
             </>
           )}
-          {isService && pro?.id && <p className="aaravpos-order-section-title">
+          <p className="aaravpos-order-section-title">
             Selected Services
-          </p>}
+          </p>
           <ul className={!isService ? "aaravpos-pro-order-list-pro" : isService && pro?.id ? "aaravpos-pro-order-list" : "aaravpos-pro-order-list-single"}>
-            {hasServices && selectedStaffServices?.length > 0 && selectedStaffServices.map((svc) => (
-              <li
-                key={svc.id}
-                className="aaravpos-order-item"
-              >
-                <div className="aaravpos-main-text">
-                  <p className="aaravpos-order-service-name">
-                    {svc.name}
-                  </p>
-                </div>
-                <div className="aaravpos-order-details">
-                  <div className="aaravpos-order-detail">
-                    <Package2 size={13} />
-                    <span>{svc.qty}</span>
-                  </div>
-                  {/* Duration */}
-                  <div className="aaravpos-order-detail center">
-                    <Clock3 size={13} />
-                    <span>{svc.min_time || svc.estimated_time} min</span>
-                  </div>
-                  <p className="aaravpos-order-detail right">
-                    <CurrencyIcon size={12} />
-                    {svc.price || svc.min_price}
-                  </p>
-                </div>
-              </li>
-            ))}
+            {selectedStaffServices?.length > 0 ?
+              <>
+                {selectedStaffServices.map((svc) => (
+                  <li
+                    key={svc.id}
+                    className="aaravpos-order-item"
+                  >
+                    <div className="aaravpos-main-text">
+                      <p className="aaravpos-order-service-name">
+                        {svc.name}
+                      </p>
+                    </div>
+                    <div className="aaravpos-order-details">
+                      <div className="aaravpos-order-detail">
+                        <Package2 size={13} />
+                        <span>{svc.qty}</span>
+                      </div>
+                      {/* Duration */}
+                      <div className="aaravpos-order-detail center">
+                        <Clock3 size={13} />
+                        <span>{svc.min_time || svc.estimated_time} min</span>
+                      </div>
+                      <p className="aaravpos-order-detail right">
+                        <CurrencyIcon size={12} />
+                        {svc.price || svc.min_price}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </> :
+              <>
+                {selectedServices?.length > 0 && selectedServices?.map((svc) => (
+                  <li
+                    key={svc.id}
+                    className="aaravpos-order-item"
+                  >
+                    <div className="aaravpos-main-text">
+                      <p className="aaravpos-order-service-name">
+                        {svc.name}
+                      </p>
+                    </div>
+                    <div className="aaravpos-order-details">
+                      <div className="aaravpos-order-detail">
+                        <Package2 size={13} />
+                        <span>{svc.qty}</span>
+                      </div>
+                      <div className="aaravpos-order-detail center">
+                        <Clock3 size={13} />
+                        <span>{svc.min_time || svc.estimated_time} min</span>
+                      </div>
+                      <p className="aaravpos-order-detail right">
+                        <CurrencyIcon size={12} />
+                        {svc.price || svc.min_price}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </>}
           </ul>
         </div>
         {<>

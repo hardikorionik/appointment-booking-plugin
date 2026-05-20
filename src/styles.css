@@ -1154,7 +1154,7 @@
 }
 
 .aaravpos-pro-order-list-single {
-  height: calc(100dvh - 185px);
+  height: calc(100dvh - 215px);
 }
 
 .aaravpos-order-item {
@@ -3306,7 +3306,7 @@
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 380px);
+    height: calc(100dvh - 370px);
   }
 
   .aaravpos-pro-order-list-pro {
