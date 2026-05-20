@@ -792,6 +792,7 @@
   cursor: pointer;
   background: #ffffff;
   transition: all 0.25s ease;
+  overflow: hidden;
 }
 
 .aaravpos-service-card:hover {
@@ -897,6 +898,7 @@
   margin-top: 6px;
   border: 1px solid #d1d5db;
   width: fit-content;
+  border-radius: 4px;
 }
 
 .aaravpos-service-action-btn {
@@ -909,6 +911,7 @@
   justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease;
+  overflow: hidden;
 }
 
 .aaravpos-service-action-btn:hover {
@@ -918,6 +921,8 @@
 .aaravpos-service-action-btn.plus {
   background: rgba(0, 0, 0, 0.8);
   color: white;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .aaravpos-service-action-btn.plus:hover {
@@ -3327,6 +3332,20 @@
   .aaravpos-services-grid {
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   }
+
+  .aaravpos-service-actions {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .aaravpos-service-action-btn,
+  .aaravpos-service-action-btn.plus {
+    flex-shrink: 0;
+  }
+
+  .aaravpos-service-qty {
+    flex: 1;
+  }
 }
 
 @media (max-width: 480px) {
@@ -3353,6 +3372,7 @@
   .arravpos-calendar-btn {
     margin-left: 2px;
     padding: 6px;
+
   }
 
   .arravpos-date-week {
@@ -3425,6 +3445,20 @@
     height: 24px;
     width: 24px;
   }
+
+  .arravpos-date-wrapper {
+    justify-content: space-between;
+    flex: 1
+  }
+
+  .aaravpos-service-title {
+    font-size: 12px;
+  }
+
+  .aaravpos-service-description {
+    font-size: 10px;
+  }
+
 }
 
 

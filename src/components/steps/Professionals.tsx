@@ -158,17 +158,7 @@ export default function Professionals() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={
-        <button
-          onClick={() => dispatch(nextStep())}
-          disabled={!selectedServices.length}
-          className="aaravpos-btn"
-        >
-          <span className="aaravpos-btn-content">
-            Choose Time <ChevronRight size={16} />
-          </span>
-        </button>
-      }
+      renderButton={null}
     >
       <Breadcrumb />
 

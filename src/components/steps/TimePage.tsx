@@ -436,7 +436,7 @@ export default function TimePage(): JSX.Element {
         </div>
       }
       renderButton={
-        <button
+        allSlots?.length > 0 ? <button
           onClick={() => {
             if (!selectedTime || !selectedSlotIndexes.length) {
               toast.warning("Please select a time slot");
@@ -448,7 +448,7 @@ export default function TimePage(): JSX.Element {
           className="aaravpos-btn"
         >
           <span className="aaravpos-btn-content">Fill Details</span>
-        </button>
+        </button> : null
       }
     >
       <Breadcrumb />

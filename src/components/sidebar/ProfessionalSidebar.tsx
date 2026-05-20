@@ -33,7 +33,6 @@ const ProfessionalSidebar = ({
 
   const hasServices = selectedStaffServices.length > 0;
 
-  console.log("--isService---36", isService)
   return (
     <div className="aaravpos-order-sidebar">
       <div className="aaravpos-order-header">

@@ -112,15 +112,17 @@ export default function ServicesPage() {
         />
       }
       renderButton={
-        <button
-          onClick={() => dispatch(nextStep())}
-          disabled={!selectedServices.length}
-          className="aaravpos-btn"
-        >
-          <span className="aaravpos-btn-content">
-            Choose Professional <ChevronRight size={16} />
-          </span>
-        </button>
+        servicesToShow?.length > 0 ? (
+          <button
+            onClick={() => dispatch(nextStep())}
+            disabled={!selectedServices.length}
+            className="aaravpos-btn"
+          >
+            <span className="aaravpos-btn-content">
+              Choose Professional <ChevronRight size={16} />
+            </span>
+          </button>
+        ) : null
       }
     >
       <Breadcrumb />
@@ -362,6 +364,6 @@ export default function ServicesPage() {
           </div>
         </div>
       </div>
-    </MainLayout>
+    </MainLayout >
   );
 }

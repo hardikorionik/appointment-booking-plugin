@@ -146,7 +146,7 @@ export default function ServiceProfessionalPage() {
         />
       }
       renderButton={
-        <button
+        selectedServices.length > 0 ? <button
           onClick={() => dispatch(nextStep())}
           disabled={!selectedServices.length}
           className="aaravpos-btn"
@@ -154,7 +154,7 @@ export default function ServiceProfessionalPage() {
           <span className="aaravpos-btn-content">
             Choose Time <ChevronRight size={16} />
           </span>
-        </button>
+        </button> : null
       }
     >
       <Breadcrumb />
