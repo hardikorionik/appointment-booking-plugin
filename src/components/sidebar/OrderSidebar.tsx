@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import { X, MoveRight, Clock3, Package2 } from "lucide-react";
-import { CurrencyIcon } from "@/utils";
+import { CurrencyIcon, getUserName } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import type {
   OutletRootState,
@@ -272,10 +272,10 @@ export default function OrderSidebar({
       const totalOffset =
         ((firstHeight +
           (isCustomTip
-            ? window.innerWidth <= 991 ? 116 : 120
+            ? window.innerWidth <= 991 ? 116 : 205
             : showTip
-              ? window.innerWidth <= 991 ? 116 : 120
-              : window.innerWidth <= 991 ? 116 : 120)) ||
+              ? window.innerWidth <= 991 ? 116 : 205
+              : window.innerWidth <= 991 ? 116 : 205)) ||
           0) + thirdHeight;
 
       setSecondHeight(window.innerHeight - totalOffset);
@@ -332,8 +332,8 @@ export default function OrderSidebar({
             </button>
           )}
         </p>
-        {/* {selectedProfessional?.id && (
-          <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10">
+        {selectedProfessional?.id && (
+          <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10 aaravpos-tp-10">
             {selectedProfessional.imageUrl ? (
               <img
                 src={selectedProfessional.imageUrl}
@@ -363,7 +363,7 @@ export default function OrderSidebar({
               </p>
             </div>
           </div>
-        )} */}
+        )}
         <div className="aaravpos-date-time">
           <span className="aaravpos-date-time-label">Date & Time:</span>
 

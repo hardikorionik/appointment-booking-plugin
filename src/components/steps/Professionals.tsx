@@ -62,7 +62,7 @@ export default function Professionals() {
 
   const totalPrice = selectedStaffServices.reduce(
     (sum: number, s: StaffServiceAssignment) =>
-      sum + Number(s.price || 0) * s.qty,
+      sum + Number(s.price || s.min_price || 0) * s.qty,
     0,
   );
 

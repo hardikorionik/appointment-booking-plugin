@@ -42,8 +42,8 @@ export default function ServiceProfessionalPage() {
   const assignedCategoryIds = new Set(
     selectedProfessional
       ? selectedProfessional?.assignments?.map(
-          (a: StaffAssignment) => a.categoryId,
-        )
+        (a: StaffAssignment) => a.categoryId,
+      )
       : [],
   );
 
@@ -118,7 +118,7 @@ export default function ServiceProfessionalPage() {
   /* TOTAL */
 
   const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
-    const price = Number(s.price || 0);
+    const price = Number(s.price || s.min_price || 0);
 
     return sum + price * s.qty;
   }, 0);
@@ -213,9 +213,8 @@ export default function ServiceProfessionalPage() {
                 setSelectedSuperCategory(superCat);
                 setSelectedSubCategory(null);
               }}
-              className={`aaravpos-supercategory-btn ${
-                selectedSuperCategory?.id === superCat.id ? "active" : ""
-              }`}
+              className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id ? "active" : ""
+                }`}
             >
               <h3 className="aaravpos-supercategory-title">
                 {superCat?.isStandAloneCategory ? "Standalone" : superCat.name}
@@ -228,42 +227,40 @@ export default function ServiceProfessionalPage() {
         {selectedSuperCategory?.categories?.some(
           (cat: any) => cat?.services?.length > 0,
         ) && (
-          <div
-            ref={subCategoryScrollRef}
-            onWheel={(e) => {
-              if (subCategoryScrollRef.current) {
-                subCategoryScrollRef.current.scrollLeft += e.deltaY;
-              }
-            }}
-            className="aaravpos-supercategory-wrapper"
-          >
-            <button
-              onClick={() => setSelectedSubCategory(null)}
-              className={`aaravpos-supercategory-btn ${
-                !selectedSubCategory ? "active" : ""
-              }`}
+            <div
+              ref={subCategoryScrollRef}
+              onWheel={(e) => {
+                if (subCategoryScrollRef.current) {
+                  subCategoryScrollRef.current.scrollLeft += e.deltaY;
+                }
+              }}
+              className="aaravpos-supercategory-wrapper"
             >
-              All Services (
-              {selectedSuperCategory?.categories?.reduce(
-                (sum: number, c: any) => sum + (c?.services?.length || 0),
-                0,
-              )}
-              )
-            </button>
-
-            {selectedSuperCategory?.categories?.map((cat: any) => (
               <button
-                key={cat.id}
-                onClick={() => setSelectedSubCategory(cat)}
-                className={`aaravpos-supercategory-btn ${
-                  selectedSubCategory?.id === cat.id ? "active" : ""
-                }`}
+                onClick={() => setSelectedSubCategory(null)}
+                className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
+                  }`}
               >
-                {cat.name} ({cat.services.length})
+                All Services (
+                {selectedSuperCategory?.categories?.reduce(
+                  (sum: number, c: any) => sum + (c?.services?.length || 0),
+                  0,
+                )}
+                )
               </button>
-            ))}
-          </div>
-        )}
+
+              {selectedSuperCategory?.categories?.map((cat: any) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedSubCategory(cat)}
+                  className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""
+                    }`}
+                >
+                  {cat.name} ({cat.services.length})
+                </button>
+              ))}
+            </div>
+          )}
         {/* SERVICES */}
         <div className="aaravpos-services-wrapper">
           <div className="aaravpos-services-grid">

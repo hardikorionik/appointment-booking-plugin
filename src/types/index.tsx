@@ -240,6 +240,7 @@ export interface StaffServiceAssignment {
   name: string;
   categoryId: string;
   price: number;
+  min_price: number;
   qty: number;
   duration: number; // duration in minutes
   assigned_at: string; // ISO date string

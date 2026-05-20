@@ -1,6 +1,6 @@
 import { ChevronRight, Clock3, Package2 } from "lucide-react";
-import { useSelector } from "react-redux";
-import { CurrencyIcon } from "@/utils";
+import { useSelector, } from "react-redux";
+import { CurrencyIcon, getUserName } from "@/utils";
 import { Staff, Step, Service, OutletRootState } from "@/types";
 import { RootState } from "@/store";
 
@@ -33,6 +33,7 @@ const ProfessionalSidebar = ({
 
   const hasServices = selectedStaffServices.length > 0;
 
+  console.log("--isService---36", isService)
   return (
     <div className="aaravpos-order-sidebar">
       <div className="aaravpos-order-header">
@@ -45,12 +46,12 @@ const ProfessionalSidebar = ({
       </div>
       <div className="aaravpos-order-sidebar">
         <div className="aaravpos-order-body">
-          {/* {pro?.id && (
+          {pro?.id && (
             <>
-              <p className="aaravpos-order-section-title">
+              <p className="aaravpos-order-section-title" style={{ marginBottom: 8 }}>
                 Selected Professional
               </p>
-              <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10">
+              <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10 aaravpos-tp-10">
                 {pro.imageUrl ? (
                   <img
                     src={pro.imageUrl}
@@ -77,11 +78,11 @@ const ProfessionalSidebar = ({
                 </div>
               </div>
             </>
-          )} */}
-          <p className="aaravpos-order-section-title">
+          )}
+          {isService && pro?.id && <p className="aaravpos-order-section-title">
             Selected Services
-          </p>
-          <ul className="aaravpos-pro-order-list">
+          </p>}
+          <ul className={!isService ? "aaravpos-pro-order-list-pro" : isService && pro?.id ? "aaravpos-pro-order-list" : "aaravpos-pro-order-list-single"}>
             {hasServices && selectedStaffServices?.length > 0 && selectedStaffServices.map((svc) => (
               <li
                 key={svc.id}
@@ -111,41 +112,42 @@ const ProfessionalSidebar = ({
             ))}
           </ul>
         </div>
-        <div className="aaravpos-divider" />
-        {/* Footer */}
-        <div className="aaravpos-order-footer">
-          {/* Totals */}
-          <div className="aaravpos-order-subtotal">
-            <span className="aaravpos-order-subtotal-label">
-              Subtotal
-            </span>
-            <span className="aaravpos-order-subtotal-price">
-              <CurrencyIcon size={16} />
-              {totalPrice}
-            </span>
+        {<>
+          <div className="aaravpos-divider" />
+          <div className="aaravpos-order-footer">
+            {isService && pro?.id && <>
+              <div className="aaravpos-order-subtotal">
+                <span className="aaravpos-order-subtotal-label">
+                  Subtotal
+                </span>
+                <span className="aaravpos-order-subtotal-price">
+                  <CurrencyIcon size={16} />
+                  {totalPrice}
+                </span>
+              </div>
+              <div className="aaravpos-order-subtotal">
+                <span className="aaravpos-order-subtotal-label">
+                  Duration
+                </span>
+                <span className="aaravpos-order-subtotal-price">
+                  {totalDuration} min
+                </span>
+              </div>
+            </>}
+            <button
+              disabled={isService ? !selectedStaffServices.length : !pro}
+              onClick={() => goToStep("time")}
+              className="aaravpos-common-btn"
+            >
+              <span className="aaravpos-common-btn-content">
+                {isService ? "Choose Time" : "Choose Services"}
+                <ChevronRight size={16} />
+              </span>
+            </button>
           </div>
-          <div className="aaravpos-order-subtotal">
-            <span className="aaravpos-order-subtotal-label">
-              Duration
-            </span>
-            <span className="aaravpos-order-subtotal-price">
-              {totalDuration} min
-            </span>
-          </div>
-          {/* Button */}
-          <button
-            disabled={isService ? !selectedStaffServices.length : !pro}
-            onClick={() => goToStep("time")}
-            className="aaravpos-common-btn"
-          >
-            <span className="aaravpos-common-btn-content">
-              {isService ? "Choose Time" : "Choose Services"}
-              <ChevronRight size={16} />
-            </span>
-          </button>
-        </div>
+        </>}
       </div>
-    </div>
+    </div >
   );
 };
 

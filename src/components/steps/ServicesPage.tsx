@@ -84,7 +84,7 @@ export default function ServicesPage() {
   // });
 
   const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
-    const price = Number(s.price || 0);
+    const price = Number(s.price || s.min_price || 0);
 
     return sum + price * s.qty;
   }, 0);

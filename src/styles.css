@@ -88,6 +88,10 @@
   margin-bottom: 20px !important;
 }
 
+.aaravpos-tp-10 {
+  margin-top: 10px;
+}
+
 .aaravpos-mt-auto {
   margin-top: auto;
 }
@@ -1120,7 +1124,9 @@
   margin: 4px 0px;
 }
 
-.aaravpos-pro-order-list {
+.aaravpos-pro-order-list,
+.aaravpos-pro-order-list-pro,
+.aaravpos-pro-order-list-single {
   height: calc(100dvh - 270px);
   overflow-y: auto;
   scrollbar-width: none;
@@ -1130,8 +1136,20 @@
 }
 
 .aaravpos-order-list::-webkit-scrollbar,
-.aaravpos-pro-order-list::-webkit-scrollbar {
+.aaravpos-pro-order-list::-webkit-scrollbar,
+.aaravpos-pro-order-list-pro::-webkit-scrollbar,
+.aaravpos-pro-order-list-pro::-webkit-scrollbar,
+.aaravpos-pro-order-list-single::-webkit-scrollbar,
+.aaravpos-pro-order-list-single::-webkit-scrollbar {
   display: none;
+}
+
+.aaravpos-pro-order-list-pro {
+  height: calc(100dvh - 250px);
+}
+
+.aaravpos-pro-order-list-single {
+  height: calc(100dvh - 185px);
 }
 
 .aaravpos-order-item {
@@ -1148,9 +1166,9 @@
 }
 
 .aaravpos-order-service-name {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 4px; */
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
@@ -3280,7 +3298,11 @@
   }
 
   .aaravpos-pro-order-list {
-    height: calc(100dvh - 265px);
+    height: calc(100dvh - 365px);
+  }
+
+  .aaravpos-pro-order-list-pro {
+    height: calc(100dvh - 295px);
   }
 
   /* .aaravpos-staff-wrapper {
