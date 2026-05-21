@@ -240,9 +240,14 @@
   display: flex;
 }
 
-.aaravpos-layout-wrapper.with-sidebar .aaravpos-sidebar {
+.aaravpos-sidebar.show {
   transform: translateX(0);
 }
+
+.aaravpos-sidebar.hide {
+  transform: translateX(100%);
+}
+
 
 .aaravpos-sidebar-mobile {
   position: fixed;
