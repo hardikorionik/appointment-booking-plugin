@@ -2766,9 +2766,9 @@
 
 .arravpos-scroll-area {
   overflow-y: auto;
-  padding-bottom: 80px;
+  padding-bottom: 30px;
   scrollbar-width: none;
-  max-height: 362px;
+  max-height: 440px;
   position: relative;
 }
 
