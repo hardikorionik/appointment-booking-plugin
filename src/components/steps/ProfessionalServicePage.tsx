@@ -7,7 +7,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "../sidebar/ProfessionalSidebar";
-
+import { setSidebarOpen } from "@/slices/themeSlice";
 import { ServiceState, Staff } from "@/types";
 
 /* =========================
@@ -26,20 +26,13 @@ interface RootState {
 
 export default function ProfessionalServicePage() {
   const { width } = useWindowSize();
-
   const dispatch = useDispatch<any>();
-
   const { staff, selectedProfessional } = useSelector(
     (state: RootState) => state.booking.service,
   );
-
   const isMobile = width < 768;
-
   const showEmpty = !staff || staff.length === 0;
 
-  /* =========================
-     STAFF LEAVE HANDLER
-  ========================= */
 
   const getLeaveInfo = (professional: any) => {
     if (!professional?.futureLeaveDates?.length) {
@@ -115,12 +108,8 @@ export default function ProfessionalServicePage() {
                   key={index}
                   onClick={() => {
                     dispatch(toggleProfessional(p));
-
                     dispatch(setSelectedDate(null));
-
-                    if (isMobile) {
-                      dispatch(nextStep());
-                    }
+                    if (isMobile) { dispatch(nextStep()) }
                   }}
                   className={`aaravpos-pro-card ${selectedProfessional?.id === p.id ? "active" : ""
                     }`}

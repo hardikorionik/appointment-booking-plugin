@@ -14,6 +14,7 @@ import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 export default function ServicesPage() {
   const dispatch = useDispatch();
@@ -220,7 +221,6 @@ export default function ServicesPage() {
                 )}
                 )
               </button>
-
               {selectedSuperCategory?.categories
                 ?.filter((cat: any) => cat?.services?.length > 0)
                 ?.map((cat: any) => (
@@ -268,7 +268,6 @@ export default function ServicesPage() {
                           const exists = selectedServices.find(
                             (s: any) => s.id === svc.id,
                           );
-
                           if (exists && exists.qty === 1) {
                             dispatch(decrementService(String(svc.id)));
                           } else {
@@ -327,7 +326,6 @@ export default function ServicesPage() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-
                               dispatch(decrementService(String(svc.id)));
                             }}
                             className="aaravpos-service-action-btn"

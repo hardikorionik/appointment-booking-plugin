@@ -78,6 +78,7 @@ export interface ThemeSettings {
     bgHover: string;
     textHover: string;
   };
+  isOpenSidebar: boolean
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -89,8 +90,6 @@ export interface MainLayoutProps {
   sidebar?: ReactNode;
   renderButton?: ReactNode;
   isConfirm?: boolean;
-  handleSidebarOpen?: () => void;
-  isSidebarOpen?: boolean;
 }
 
 /* ─────────────────────────────────────────────────────────────

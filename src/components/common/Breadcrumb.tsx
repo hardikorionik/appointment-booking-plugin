@@ -86,8 +86,8 @@ export default function Breadcrumb() {
   const currentIndex = steps.findIndex((s) => s.page === currentStep);
 
   const clearAllData = () => {
-    dispatch({ type: "RESET_ALL" });
     persistor.purge();
+    dispatch({ type: "RESET_ALL" });
   };
 
   const goToPrev = () => {

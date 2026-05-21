@@ -11,13 +11,14 @@ import {
     PersistConfig,
 } from "redux-persist";
 // import storage from "redux-persist/lib/storage";
+import createWebStorage from "redux-persist/es/storage/createWebStorage";
 import breadcrumbs from "@/slices/breadcrumbSlice";
 import outletDetails from "@/slices/outletSlice";
 import service from "@/slices/serviceSlice";
 import slots from "@/slices/slotSlice";
+import theme from "@/slices/themeSlice";
 import appointment from "@/slices/appointmentSlice";
 import outletList from "@/slices/outletListSlice";
-import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
 const appReducer = combineReducers({
     booking: combineReducers({
@@ -26,7 +27,8 @@ const appReducer = combineReducers({
         service,
         slots,
         appointment,
-        outletList
+        outletList,
+        theme
     })
 });
 
@@ -47,11 +49,9 @@ const createNoopStorage = () => {
         getItem() {
             return Promise.resolve(null);
         },
-
         setItem(_key: string, value: string) {
             return Promise.resolve(value);
         },
-
         removeItem() {
             return Promise.resolve();
         },
@@ -60,7 +60,7 @@ const createNoopStorage = () => {
 
 const storage =
     typeof window !== "undefined"
-        ? createWebStorage("local")
+        ? createWebStorage("session")
         : createNoopStorage();
 
 const persistConfig: PersistConfig<RootState> = {

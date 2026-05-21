@@ -1,7 +1,9 @@
-import { ChevronRight, Clock3, Package2 } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ChevronRight, Clock3, X, Package2 } from "lucide-react";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, ServiceItem, Step } from "@/types";
+import type { AppDispatch } from "@/store";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 interface ServiceSidebarProps {
   selectedServices: ServiceItem[];
@@ -14,6 +16,8 @@ export default function ServiceSidebar({
   totalPrice,
   goToStep,
 }: ServiceSidebarProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
   const { outletName, isService } = useSelector(
     (state: OutletRootState) => state.booking?.outletDetails,
   );
@@ -27,6 +31,9 @@ export default function ServiceSidebar({
         <p className="aaravpos-order-subtitle">
           {outletName || "-"} Outlet
         </p>
+        <button className="aaravpos-sidebar-close-btn" onClick={() => dispatch(setSidebarOpen(false))}>
+          <X size={18} />
+        </button>
       </div>
       <div className="aaravpos-order-sidebar">
         <div className="aaravpos-order-body">

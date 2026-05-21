@@ -11,6 +11,7 @@ import MainLayout from "@/components/common/MainLayout";
 import ServiceProfessionalSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 import { nextStep } from "@/slices/breadcrumbSlice";
+import { setSidebarOpen } from "@/slices/themeSlice";
 import { isConsentRequiredService } from "@/services";
 import { CurrencyIcon } from "@/utils";
 import type { AppDispatch } from "@/store";
@@ -167,12 +168,10 @@ export default function ServiceProfessionalPage() {
               Select from {selectedProfessional?.name}'s available services
             </p>
           </div>
-
           <div className="aaravpos-search-wrapper">
             <span className="aaravpos-search-icon">
               <Search size={14} />
             </span>
-
             <input
               id="search"
               name="search"
@@ -182,7 +181,6 @@ export default function ServiceProfessionalPage() {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="aaravpos-search-input"
             />
-
             <div className="aaravpos-search-actions">
               {searchTerm && (
                 <button
@@ -195,7 +193,6 @@ export default function ServiceProfessionalPage() {
             </div>
           </div>
         </div>
-
         {/* SUPER CATEGORIES */}
         <div
           ref={superCategoryScrollRef}
@@ -222,7 +219,6 @@ export default function ServiceProfessionalPage() {
             </button>
           ))}
         </div>
-
         {/* SUB CATEGORIES */}
         {selectedSuperCategory?.categories?.some(
           (cat: any) => cat?.services?.length > 0,
@@ -358,7 +354,6 @@ export default function ServiceProfessionalPage() {
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-
                               dispatch(decrementService(String(svc.id)));
                             }}
                             className="aaravpos-service-action-btn"

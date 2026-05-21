@@ -1,28 +1,23 @@
 import { useSelector } from "react-redux";
-import { MainLayoutProps, OutletRootState } from "@/types";
+import { MainLayoutProps } from "@/types";
 
 export default function MainLayout({
     children,
     sidebar,
     renderButton,
     isConfirm = false,
-    isSidebarOpen = false,
-    handleSidebarOpen,
 }: MainLayoutProps) {
-    const { selectedServices, selectedProfessional } = useSelector(
-        (state: OutletRootState) => state.booking.service,
-    );
-    const isDesktopSidebarOpen = selectedServices?.length > 0 || !!selectedProfessional?.id;
+    const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
     return (
         <div className="aaravpos-main-layout">
-            <div className={isDesktopSidebarOpen ? "aaravpos-layout-wrapper" : ""}>
+            <div className={isOpenSidebar ? "aaravpos-layout-wrapper" : ""}>
                 <main className="aaravpos-main-content">
                     {children}
-                    {isConfirm ? <button className="aaravpos-btn" onClick={handleSidebarOpen}><span>View Order</span></button> : renderButton}
+                    {isConfirm ? <button className="aaravpos-btn"><span>View Order</span></button> : renderButton}
                 </main>
-                <aside className={`aaravpos-sidebar ${isDesktopSidebarOpen ? "open" : ""}`}>{sidebar}</aside>
+                <aside className={`aaravpos-sidebar ${isOpenSidebar ? "open" : ""}`}>{sidebar}</aside>
             </div>
-            {isSidebarOpen && (
+            {isOpenSidebar && (
                 <div className="aaravpos-sidebar-mobile">
                     <div className="aaravpos-sidebar-mobile-content">{sidebar}</div>
                 </div>

@@ -77,7 +77,6 @@ export default function ConfirmPage(): JSX.Element {
     const [consentAcceptedMap, setConsentAcceptedMap] = useState<Record<string, boolean>>({});
     const [consentCheckMap, setConsentCheckMap] = useState<Record<string, ConsentCheckStatus>>({});
     const [checkingConsent, setCheckingConsent] = useState<boolean>(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
     const consentFlowLockRef = useRef<boolean>(false);
     const lastOpenedConsentServiceRef = useRef<string>("");
@@ -616,8 +615,6 @@ export default function ConfirmPage(): JSX.Element {
 
     return (
         <MainLayout
-            isSidebarOpen={isSidebarOpen}
-            handleSidebarOpen={() => setIsSidebarOpen((prev) => !prev)}
             sidebar={
                 <div className="aaravpos-aside">
                     <OrderSidebar
@@ -632,7 +629,6 @@ export default function ConfirmPage(): JSX.Element {
                         checkingConsent={checkingConsent}
                         loading={loading}
                         isBookingDisabled={isBookingDisabled()}
-                        handleSidebarOpen={() => setIsSidebarOpen((prev) => !prev)}
                     />
                 </div>
             }

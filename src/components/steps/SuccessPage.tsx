@@ -49,8 +49,8 @@ export default function SuccessPage(): JSX.Element {
     }, [appointmentId]);
 
     const handleBookAnother = (): void => {
-        dispatch({ type: "RESET_ALL" });
         persistor.purge();
+        dispatch({ type: "RESET_ALL" });
     };
 
     if (loading) {

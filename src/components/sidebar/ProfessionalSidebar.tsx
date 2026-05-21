@@ -1,7 +1,10 @@
-import { ChevronRight, Clock3, Package2 } from "lucide-react";
-import { useSelector, } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { ChevronRight, Clock3, X, Package2 } from "lucide-react";
 import { CurrencyIcon, getUserName } from "@/utils";
 import { Staff, Step, Service, OutletRootState } from "@/types";
+import type { AppDispatch } from "@/store";
+import { setSidebarOpen } from "@/slices/themeSlice";
+
 
 interface SelectedStaffService extends Service {
   qty: number;
@@ -24,6 +27,8 @@ const ProfessionalSidebar = ({
   totalDuration = 0,
   goToStep,
 }: ProfessionalSidebarProps) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const { outletName, isService } = useSelector(
     (state: OutletRootState) => state.booking.outletDetails,
   );
@@ -40,6 +45,9 @@ const ProfessionalSidebar = ({
         <p className="aaravpos-order-subtitle">
           {outletName || "-"} Outlet
         </p>
+        <button className="aaravpos-sidebar-close-btn" onClick={() => dispatch(setSidebarOpen(false))}>
+          <X size={18} />
+        </button>
       </div>
       <div className="aaravpos-order-sidebar">
         <div className="aaravpos-order-body">

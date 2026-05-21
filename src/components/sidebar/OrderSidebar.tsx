@@ -6,7 +6,7 @@ import {
   ReactNode,
   JSX,
 } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import { X, MoveRight, Clock3, Package2 } from "lucide-react";
 import { CurrencyIcon, getUserName } from "@/utils";
@@ -17,21 +17,10 @@ import type {
   StaffMember,
   Slot,
 } from "@/types";
+import { setSidebarOpen } from "@/slices/themeSlice";
+import type { AppDispatch } from "@/store";
 
-const MONTH_NAMES = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 interface ExtendedServiceItem extends ServiceItem {
   tax: number;
@@ -51,7 +40,6 @@ interface OrderSidebarProps {
   checkingConsent?: boolean;
   loading?: boolean;
   isBookingDisabled?: boolean;
-  handleSidebarOpen?: () => void;
 }
 
 export default function OrderSidebar({
@@ -67,8 +55,9 @@ export default function OrderSidebar({
   checkingConsent = false,
   loading = false,
   isBookingDisabled = false,
-  handleSidebarOpen,
 }: OrderSidebarProps): JSX.Element {
+  const dispatch = useDispatch<AppDispatch>();
+
   const { selectedSlotIndexes, slots, selectedDate } = useSelector(
     (state: OutletRootState) => state.booking.slots,
   );
@@ -76,27 +65,18 @@ export default function OrderSidebar({
   const { staff, selectedServices, selectedProfessional } = useSelector(
     (state: OutletRootState) => state.booking.service,
   );
-
   const { timeZone } = useSelector(
     (state: OutletRootState) => state.booking.outletDetails,
   );
-
   const startDate = DateTime.now().setZone(timeZone ?? "UTC");
-
   const [customTip, setCustomTip] = useState<string>("");
-
   const [isCustomTip, setIsCustomTip] =
     useState<boolean>(false);
-
   const firstRef = useRef<HTMLDivElement | null>(null);
-
   const thirdRef = useRef<HTMLDivElement | null>(null);
-
   const [secondHeight, setSecondHeight] =
     useState<number>(0);
-
   const TIP_OPTIONS: number[] = [0, 5, 10, 15, 20];
-
   const allSlots = useMemo<Slot[]>(() => {
     return [
       ...(slots?.morning || []),
@@ -104,25 +84,20 @@ export default function OrderSidebar({
       ...(slots?.evening || []),
     ];
   }, [slots]);
-
   const SLOT_INTERVAL = 15;
 
   const selectedStaffServices = useMemo<
     ExtendedServiceItem[]
   >(() => {
     if (!selectedProfessional?.id) return [];
-
     const staffMember = staff?.find(
       (s: StaffMember) => s.id === selectedProfessional.id,
     );
-
     if (!staffMember) return [];
-
     return selectedServices.map((svc: any) => {
       const assignment = staffMember.assignments?.find(
         (a) => a.id === svc.id,
       );
-
       const updatedSvc = {
         ...svc,
         price:
@@ -137,7 +112,6 @@ export default function OrderSidebar({
           svc.min_time ||
           0,
       };
-
       return {
         ...updatedSvc,
         tax: calculateServiceTax(updatedSvc),
@@ -166,17 +140,12 @@ export default function OrderSidebar({
     startIndex: number,
   ): string => {
     if (!allSlots.length) return "";
-
     const start = allSlots[startIndex]?.start_time;
-
     const endSlot =
       allSlots[startIndex + requiredSlots - 1];
-
     if (!start || !endSlot) return "";
-
     const end =
       endSlot.end_time || endSlot.start_time;
-
     return `${start} - ${end}`;
   };
 
@@ -207,17 +176,12 @@ export default function OrderSidebar({
 
   const safeTipPct = Number(tipPct) || 0;
 
-  const tipAmt = showTip
-    ? (totalBasePrice * safeTipPct) / 100
-    : 0;
+  const tipAmt = showTip ? (totalBasePrice * safeTipPct) / 100 : 0;
 
   const total = totalBasePrice + taxAmt + tipAmt;
 
   useEffect(() => {
-    if (
-      showTip &&
-      (tipPct === null || tipPct === undefined)
-    ) {
+    if (showTip && (tipPct === null || tipPct === undefined)) {
       onTipChange?.(0);
     }
   }, [showTip, tipPct, onTipChange]);
@@ -252,20 +216,14 @@ export default function OrderSidebar({
     buttonText,
   ]);
 
-  const isButtonDisabled =
-    isBookingDisabled ||
-    loading ||
-    checkingConsent ||
-    !timeRange;
+  const isButtonDisabled = isBookingDisabled || loading || checkingConsent || !timeRange;
 
   useEffect(() => {
     const calculateHeight = (): void => {
       const firstHeight =
         firstRef.current?.offsetHeight || 0;
-
       const thirdHeight =
         thirdRef.current?.offsetHeight || 0;
-
       const totalOffset =
         ((firstHeight +
           (isCustomTip
@@ -277,35 +235,18 @@ export default function OrderSidebar({
 
       setSecondHeight(window.innerHeight - totalOffset);
     };
-
     calculateHeight();
-
-    const resizeObserver = new ResizeObserver(
-      () => {
-        calculateHeight();
-      },
-    );
-
+    const resizeObserver = new ResizeObserver(() => { calculateHeight() });
     if (thirdRef.current) {
       resizeObserver.observe(thirdRef.current);
     }
-
     if (firstRef.current) {
       resizeObserver.observe(firstRef.current);
     }
-
-    window.addEventListener(
-      "resize",
-      calculateHeight,
-    );
-
+    window.addEventListener("resize", calculateHeight);
     return () => {
       resizeObserver.disconnect();
-
-      window.removeEventListener(
-        "resize",
-        calculateHeight,
-      );
+      window.removeEventListener("resize", calculateHeight);
     };
   }, [
     selectedStaffServices,
@@ -320,14 +261,9 @@ export default function OrderSidebar({
       <div className="aaravpos-order-header">
         <p className="aaravpos-order-title">
           Your Order
-          {handleSidebarOpen && (
-            <button
-              onClick={handleSidebarOpen}
-              className="aaravpos-sidebar-close-btn"
-            >
-              <X />
-            </button>
-          )}
+          <button className="aaravpos-sidebar-close-btn" onClick={() => dispatch(setSidebarOpen(false))}>
+            <X size={18} />
+          </button>
         </p>
         {selectedProfessional?.id && (
           <div className="aaravpos-pro-card aaravpos-display-flex aaravpos-mb-10 aaravpos-tp-10">
@@ -575,7 +511,7 @@ export default function OrderSidebar({
           </button>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

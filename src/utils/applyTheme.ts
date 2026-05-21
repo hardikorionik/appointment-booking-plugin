@@ -10,15 +10,12 @@ export const hexToRgb = (hex: string) => {
 };
 
 
-export const applyTheme = (theme?: Partial<ThemeSettings>) => {
+export const applyTheme = (theme?: ThemeSettings) => {
     if (!theme) return;
     const root = document.documentElement;
-
-    /* Button */
-    if (theme.button?.bg) {
+    if (theme?.button?.bg) {
         root.style.setProperty("--btn-bg", theme.button.bg);
     }
-
     if (theme.button?.text) {
         root.style.setProperty("--btn-text", theme.button.text);
     }
@@ -37,7 +34,6 @@ export const applyTheme = (theme?: Partial<ThemeSettings>) => {
         );
     }
 
-    /* App */
     if (theme.colors?.bg) {
         root.style.setProperty("--app-bg", theme.colors.bg);
     }

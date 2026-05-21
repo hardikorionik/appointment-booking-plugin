@@ -17,20 +17,16 @@ import type {
   StaffAssignment,
   StaffServiceAssignment,
 } from "@/types";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 export default function Professionals() {
   const dispatch = useDispatch<AppDispatch>();
-
   const { width } = useWindowSize();
-
   const { staff, selectedServices, selectedProfessional } = useSelector(
     (state: RootState) => state.booking.service,
   );
-
   const [showEmpty, setShowEmpty] = useState<boolean>(false);
-
   const selectedServiceIds = selectedServices.map((s: ServiceItem) => s.id);
-
   const selectedStaffServices: any[] = useMemo(() => {
     if (!selectedProfessional?.id) return [];
 
@@ -118,11 +114,8 @@ export default function Professionals() {
     const activeLeave = professional.futureLeaveDates.find((leave: any) => {
       if (leave.status !== "APPROVED" || leave.leaveType !== "FULL_DAY")
         return false;
-
       const startDate = new Date(leave.startDate);
-
       const endDate = new Date(leave.endDate);
-
       return today >= startDate && today <= endDate;
     });
 
@@ -169,20 +162,16 @@ export default function Professionals() {
       </button> : null}
     >
       <Breadcrumb />
-
       <div className="aaravpos-margin-top-20">
         <h1 className="aaravpos-page-title">Choose a Professional</h1>
-
         <p className="aaravpos-sub-title">
           Available based on selected services
         </p>
-
         {showEmpty && (
           <p className="aaravpos-no-staff">
             No staff available for selected services
           </p>
         )}
-
         <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">
             {filteredStaff.map((p: Staff, index: number) => {
@@ -192,15 +181,10 @@ export default function Professionals() {
                   key={index}
                   onClick={() => {
                     dispatch(toggleProfessional(p));
-
                     dispatch(setSelectedDate(null));
-
-                    if (isMobile) {
-                      dispatch(nextStep());
-                    }
+                    if (isMobile) { dispatch(nextStep()) }
                   }}
-                  className={`aaravpos-pro-card  ${selectedProfessional?.id === p.id ? "active" : ""
-                    }`}
+                  className={`aaravpos-pro-card  ${selectedProfessional?.id === p.id ? "active" : ""}`}
                 >
                   <div className="aaravpos-display-flex">
                     {/* Avatar */}

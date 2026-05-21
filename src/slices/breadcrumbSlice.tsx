@@ -11,7 +11,7 @@ const getStepsOrder = (isOrder: boolean): Step[] => {
 export const initialState: BreadcrumbState = {
     currentStep: "services",
     completedSteps: ["services"],
-    isOrder: true
+    isOrder: true,
 };
 
 const breadcrumbsSlice = createSlice({
