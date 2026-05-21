@@ -12,9 +12,9 @@ export default function SuccessPage(): JSX.Element {
     const dispatch = useDispatch();
 
     const appointmentId = useSelector(
-        (state: RootState) => state.appointment.appointmentId,
+        (state: RootState) => state.booking.appointment.appointmentId,
     );
-    const { tenantId } = useSelector((state: RootState) => state.outletDetails)
+    const { tenantId } = useSelector((state: RootState) => state.booking.outletDetails)
 
     const [appointment, setAppointment] = useState<AppointmentDetails | null>(null);
     const [loading, setLoading] = useState<boolean>(true);

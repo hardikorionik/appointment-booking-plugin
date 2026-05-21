@@ -70,15 +70,15 @@ export default function OrderSidebar({
   handleSidebarOpen,
 }: OrderSidebarProps): JSX.Element {
   const { selectedSlotIndexes, slots, selectedDate } = useSelector(
-    (state: OutletRootState) => state.slots,
+    (state: OutletRootState) => state.booking.slots,
   );
 
   const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: OutletRootState) => state.service,
+    (state: OutletRootState) => state.booking.service,
   );
 
   const { timeZone } = useSelector(
-    (state: OutletRootState) => state.outletDetails,
+    (state: OutletRootState) => state.booking.outletDetails,
   );
 
   const startDate = DateTime.now().setZone(timeZone ?? "UTC");

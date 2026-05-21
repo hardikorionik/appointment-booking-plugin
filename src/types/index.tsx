@@ -713,10 +713,12 @@ export interface AppointmentSliceState {
 }
 
 export interface OutletRootState {
-  outletDetails: OutletSliceState;
-  service: ServiceSliceState;
-  slots: SlotsSliceState;
-  appointment: AppointmentSliceState;
+  booking: {
+    outletDetails: OutletSliceState;
+    service: ServiceSliceState;
+    slots: SlotsSliceState;
+    appointment: AppointmentSliceState;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────

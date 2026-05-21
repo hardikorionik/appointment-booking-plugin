@@ -24,7 +24,7 @@ export default function Professionals() {
   const { width } = useWindowSize();
 
   const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: RootState) => state.service,
+    (state: RootState) => state.booking.service,
   );
 
   const [showEmpty, setShowEmpty] = useState<boolean>(false);

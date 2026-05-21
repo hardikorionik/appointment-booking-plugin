@@ -52,14 +52,14 @@ export default function CalendarOverlay({
 }: CalendarOverlayProps): JSX.Element | null {
   const dispatch = useDispatch();
 
-  const { selectedDate } = useSelector((state: OutletRootState) => state.slots);
+  const { selectedDate } = useSelector((state: OutletRootState) => state.booking.slots);
 
   const { selectedProfessional } = useSelector(
-    (state: OutletRootState) => state.service,
+    (state: OutletRootState) => state.booking.service,
   );
 
   const { timeZone } = useSelector(
-    (state: OutletRootState) => state.outletDetails,
+    (state: OutletRootState) => state.booking.outletDetails,
   );
 
   const [months] = useState<CalendarMonth[]>(generateMonths(timeZone || ""));

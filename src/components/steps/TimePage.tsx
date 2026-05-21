@@ -52,15 +52,15 @@ export default function TimePage(): JSX.Element {
   const [visibleCount, setVisibleCount] = useState<number>(11);
 
   const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: OutletRootState) => state.service,
+    (state: OutletRootState) => state.booking.service,
   );
 
   const { tenantId, timeZone } = useSelector(
-    (state: OutletRootState) => state?.outletDetails,
+    (state: OutletRootState) => state.booking?.outletDetails,
   );
 
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } =
-    useSelector((state: OutletRootState) => state.slots);
+    useSelector((state: OutletRootState) => state.booking.slots);
 
   const [calOpen, setCalOpen] = useState<boolean>(false);
   const [stripStart, setStripStart] = useState<number>(0);

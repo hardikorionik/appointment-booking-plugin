@@ -46,30 +46,24 @@ const expiryToNumber = (exp: string): number => {
 
 export default function ConfirmPage(): JSX.Element {
     const dispatch = useDispatch<AppDispatch>();
-    const { tenantId, id: outletId } = useSelector(
-        (state: OutletRootState) => state.outletDetails
+    const { tenantId, id: outletId, timeZone, image, outletName, address } = useSelector(
+        (state: OutletRootState) => state.booking.outletDetails
     );
 
-    const { timeZone, image, outletName, address } = useSelector(
-        (state: RootState) => state.outletDetails,
-    );
     const { staff, selectedServices, selectedProfessional } = useSelector(
-        (state: RootState) => state.service,
+        (state: RootState) => state.booking.service,
     );
-    const { selectedSlotIds, selectedDate, selectedTime } = useSelector(
-        (state: RootState) => state.slots,
+    const { selectedSlotIds, selectedDate, selectedTime, selectedSlotIndexes, slots } = useSelector(
+        (state: RootState) => state.booking.slots,
     );
     const { userDetails, bookingMode, tipPct } = useSelector(
-        (state: RootState) => state.appointment,
+        (state: RootState) => state.booking.appointment,
     );
 
     const services: any[] = Array.isArray(selectedServices)
         ? selectedServices
         : [selectedServices];
 
-    const { selectedSlotIndexes, slots } = useSelector(
-        (state: RootState) => state.slots,
-    );
 
     const [loading, setLoading] = useState<boolean>(false);
     const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);

@@ -15,7 +15,9 @@ import { ServiceState, Staff } from "@/types";
 ========================= */
 
 interface RootState {
-  service: ServiceState;
+  booking: {
+    service: ServiceState;
+  }
 }
 
 /* =========================
@@ -28,7 +30,7 @@ export default function ProfessionalServicePage() {
   const dispatch = useDispatch<any>();
 
   const { staff, selectedProfessional } = useSelector(
-    (state: RootState) => state.service,
+    (state: RootState) => state.booking.service,
   );
 
   const isMobile = width < 768;

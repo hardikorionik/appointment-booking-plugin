@@ -240,14 +240,9 @@
   display: flex;
 }
 
-.aaravpos-sidebar.show {
+.aaravpos-sidebar.open {
   transform: translateX(0);
 }
-
-.aaravpos-sidebar.hide {
-  transform: translateX(100%);
-}
-
 
 .aaravpos-sidebar-mobile {
   position: fixed;
@@ -488,7 +483,7 @@
   display: flex;
   align-items: center;
   font-size: 20px;
-  margin-right: 8px;
+  margin-right: 4px;
   cursor: pointer;
   border: none;
   background: transparent;
@@ -3229,7 +3224,7 @@
   }
 
   .aaravpos-mobile-step-label {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .aaravpos-outlet-card-title {

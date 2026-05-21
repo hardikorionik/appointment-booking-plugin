@@ -1,8 +1,4 @@
-import {
-    configureStore,
-    combineReducers,
-    UnknownAction,
-} from "@reduxjs/toolkit";
+import { configureStore, combineReducers, UnknownAction } from "@reduxjs/toolkit";
 import {
     persistStore,
     persistReducer,
@@ -24,14 +20,15 @@ import outletList from "@/slices/outletListSlice";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
 const appReducer = combineReducers({
-    breadcrumbs,
-    outletDetails,
-    service,
-    slots,
-    appointment,
-    outletList
+    booking: combineReducers({
+        breadcrumbs,
+        outletDetails,
+        service,
+        slots,
+        appointment,
+        outletList
+    })
 });
-
 
 export type RootState = ReturnType<typeof appReducer>;
 
@@ -40,18 +37,7 @@ const rootReducer = (
     action: UnknownAction
 ): RootState => {
     if (action.type === "RESET_ALL") {
-        return appReducer(
-            {
-                breadcrumbs: undefined as never,
-                outletDetails: undefined as never,
-                service: undefined as never,
-                slots: undefined as never,
-                appointment: undefined as never,
-                // preserve outletList
-                outletList: undefined as never,
-            },
-            action
-        );
+        state = undefined;
     }
     return appReducer(state, action);
 };
@@ -78,7 +64,7 @@ const storage =
         : createNoopStorage();
 
 const persistConfig: PersistConfig<RootState> = {
-    key: "root",
+    key: "booking",
     storage,
 };
 

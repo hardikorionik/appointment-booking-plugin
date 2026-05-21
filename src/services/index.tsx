@@ -4,8 +4,7 @@ import { ConsentCheckStatus, ConsentFormResponse, PaymentPayload, Service, Signa
 const BASE_URL = "https://prod.aaravpos.com/api/v1";
 
 export const getHeaders = () => {
-    const token =
-        store.getState()?.outletDetails?.token;
+    const token = store.getState()?.booking.outletDetails?.token;
 
     return {
         "Content-Type": "application/json",

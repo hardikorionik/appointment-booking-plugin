@@ -31,11 +31,11 @@ const allowedCountries: CountryCode[] = [
 // -------------------- Component --------------------
 export default function DetailsPage(): JSX.Element {
     const dispatch = useDispatch();
-    const { tenantId } = useSelector((state: OutletRootState) => state?.outletDetails);
+    const { tenantId } = useSelector((state: OutletRootState) => state.booking?.outletDetails);
     // const { height } = useWindowSize();
 
     const { userDetails } = useSelector(
-        (state: RootState) => state.appointment,
+        (state: RootState) => state.booking.appointment,
     );
 
     const [loading, setLoading] = useState<boolean>(false);

@@ -77,10 +77,10 @@ const STEPS: StepItem[] = [
 export default function Breadcrumb() {
   const dispatch = useDispatch<AppDispatch>();
   const { width } = useWindowSize();
-  const { isService } = useSelector((state: RootState) => state.outletDetails);
-  const outlets = useSelector((state: RootState) => state.outletList.outlets);
+  const { isService } = useSelector((state: RootState) => state.booking.outletDetails);
+  const outlets = useSelector((state: RootState) => state.booking.outletList.outlets);
   const { currentStep, completedSteps } = useSelector(
-    (state: RootState) => state.breadcrumbs,
+    (state: RootState) => state.booking.breadcrumbs,
   );
   const steps = isService ? SERVICE_STEPS : STEPS;
   const currentIndex = steps.findIndex((s) => s.page === currentStep);
@@ -114,7 +114,7 @@ export default function Breadcrumb() {
             disabled={false}
             className="aaravpos-mobile-back-btn"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={22} />
           </button>
           <span className="aaravpos-mobile-step-label">
             {currentStepData?.label}

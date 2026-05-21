@@ -14,10 +14,10 @@ import { StepKey, PageMap } from "@/types";
 
 function AppContent(): JSX.Element {
   const { currentStep } = useSelector(
-    (state: RootState) => state.breadcrumbs
+    (state: RootState) => state.booking.breadcrumbs
   );
   const { isService } = useSelector(
-    (state: RootState) => state.outletDetails
+    (state: RootState) => state.booking.outletDetails
   );
 
   const PAGE_MAP: PageMap = {

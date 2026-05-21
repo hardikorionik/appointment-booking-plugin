@@ -36,7 +36,7 @@ type CalculateServiceTaxOptions = {
 
 export const CurrencyIcon = ({ size = 20 }: Props) => {
   const currency = useSelector(
-    (state: RootState) => state.outletDetails?.currency
+    (state: RootState) => state.booking.outletDetails?.currency
   ) as Currency | undefined;
 
   const Icon = currency

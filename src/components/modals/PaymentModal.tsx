@@ -47,7 +47,7 @@ export default function PaymentModal({
     amount,
 }: PaymentModalProps) {
     const { timeZone } = useSelector(
-        (state: OutletRootState) => state?.outletDetails
+        (state: OutletRootState) => state.booking?.outletDetails
     );
 
     const {

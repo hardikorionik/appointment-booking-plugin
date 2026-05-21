@@ -23,7 +23,7 @@ export default function ServiceProfessionalPage() {
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
 
   const { superCategories, selectedServices, selectedProfessional, loading } =
-    useSelector((state: any) => state.service);
+    useSelector((state: any) => state.booking.service);
 
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
 

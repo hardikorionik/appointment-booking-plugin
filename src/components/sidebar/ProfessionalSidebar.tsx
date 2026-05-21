@@ -2,7 +2,6 @@ import { ChevronRight, Clock3, Package2 } from "lucide-react";
 import { useSelector, } from "react-redux";
 import { CurrencyIcon, getUserName } from "@/utils";
 import { Staff, Step, Service, OutletRootState } from "@/types";
-import { RootState } from "@/store";
 
 interface SelectedStaffService extends Service {
   qty: number;
@@ -25,15 +24,12 @@ const ProfessionalSidebar = ({
   totalDuration = 0,
   goToStep,
 }: ProfessionalSidebarProps) => {
-  const { outletName } = useSelector(
-    (state: OutletRootState) => state.outletDetails,
+  const { outletName, isService } = useSelector(
+    (state: OutletRootState) => state.booking.outletDetails,
   );
   const { selectedServices } = useSelector(
-    (state: OutletRootState) => state.service,
+    (state: OutletRootState) => state.booking.service,
   );
-
-  const { isService } = useSelector((state: RootState) => state.outletDetails);
-
 
   return (
     <div className="aaravpos-order-sidebar">

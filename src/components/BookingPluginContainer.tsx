@@ -16,12 +16,12 @@ import type { AppDispatch } from "@/store";
 export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = ({ bookingCode }) => {
     const dispatch = useDispatch<AppDispatch>();
     const outlets = useSelector(
-        (state: any) => state.outletList.outlets
+        (state: any) => state.booking.outletList.outlets
     );
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { id: outletId } = useSelector(
-        (state: OutletRootState) => state.outletDetails
+        (state: OutletRootState) => state.booking.outletDetails
     );
 
     const fetchInitialData = useCallback(async () => {

@@ -6,39 +6,38 @@ export default function MainLayout({
     sidebar,
     renderButton,
     isConfirm = false,
-    handleSidebarOpen,
-    isSidebarOpen = false,
+    isSidebarOpen = false
 }: MainLayoutProps) {
     const { selectedServices, selectedProfessional } = useSelector(
-        (state: OutletRootState) => state.service,
+        (state: OutletRootState) => state.booking.service,
     );
+
+    const isOpen = selectedServices?.length > 0 || !!selectedProfessional?.id;
 
     return (
         <div className="aaravpos-main-layout">
-            <div className={`aaravpos-layout-wrapper ${selectedServices?.length > 0 || selectedProfessional?.id ? "with-sidebar" : ""}`}>
+            <div className="aaravpos-layout-wrapper ">
                 <main className="aaravpos-main-content">
                     {children}
+
                     {isConfirm ? (
-                        <button
-                            onClick={handleSidebarOpen}
-                            className="aaravpos-btn"
-                        >
-                            <span>
-                                View Order
-                            </span>
+                        <button className="aaravpos-btn">
+                            <span>View Order</span>
                         </button>
                     ) : (
                         renderButton
                     )}
-
                 </main>
-                <aside className={`aaravpos-sidebar ${isSidebarOpen ? "open" : ""}`}>
+
+                <aside
+                    className={`aaravpos-barber-sidebar ${isOpen ? "open" : ""}`}
+                >
                     {sidebar}
                 </aside>
             </div>
             {isSidebarOpen && (
-                <div className="aaravpos-sidebar-mobile">
-                    <div className="aaravpos-sidebar-mobile-content">
+                <div className="aaravpos-barber-sidebar-mobile">
+                    <div className="aaravpos-barber-sidebar-mobile-content">
                         {sidebar}
                     </div>
                 </div>

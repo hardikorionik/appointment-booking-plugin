@@ -2,7 +2,6 @@ import { ChevronRight, Clock3, Package2 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, ServiceItem, Step } from "@/types";
-import { RootState } from "@/store";
 
 interface ServiceSidebarProps {
   selectedServices: ServiceItem[];
@@ -15,10 +14,10 @@ export default function ServiceSidebar({
   totalPrice,
   goToStep,
 }: ServiceSidebarProps) {
-  const { outletName } = useSelector(
-    (state: OutletRootState) => state?.outletDetails,
+  const { outletName, isService } = useSelector(
+    (state: OutletRootState) => state.booking?.outletDetails,
   );
-  const { isService } = useSelector((state: RootState) => state.outletDetails);
+
   return (
     <div className="aaravpos-order-sidebar">
       <div className="aaravpos-order-header">
