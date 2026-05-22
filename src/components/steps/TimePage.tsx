@@ -27,7 +27,6 @@ import CalendarOverlay from "@/components/common/CalendarOverlay";
 // import { useWindowSize } from "@/hooks/useWindowSize";
 import type { AppDispatch } from "@/store";
 import { isDateDisabled } from "@/utils/isDateDisabled";
-import { setSidebarOpen } from "@/slices/themeSlice";
 
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -36,7 +35,6 @@ const SLOT_INTERVAL = 15;
 export default function TimePage(): JSX.Element {
 
   const dispatch = useDispatch<AppDispatch>();
-  // const { height } = useWindowSize();
   const [visibleCount, setVisibleCount] = useState<number>(11);
   const { staff, selectedServices, selectedProfessional } = useSelector(
     (state: OutletRootState) => state.booking.service,
@@ -170,33 +168,23 @@ export default function TimePage(): JSX.Element {
 
   const handleSlotSelect = (selectedIndex: number): void => {
     if (!allSlots.length) return;
-    const selectedGroup = allSlots.slice(
-      selectedIndex,
-      selectedIndex + requiredSlots,
-    );
+    const selectedGroup = allSlots.slice(selectedIndex, selectedIndex + requiredSlots);
     if (selectedGroup.length < requiredSlots) {
       toast.warning("You don't have sufficient time for selected service");
       return;
     }
-    const hasBlocked = selectedGroup.some(
-      (s) => s.isBooked || s.status !== "AVAILABLE",
-    );
+    const hasBlocked = selectedGroup.some((s) => s.isBooked || s.status !== "AVAILABLE");
     if (hasBlocked) {
       toast.warning("Selected time range is not fully available");
       return;
     }
     dispatch(setSelectedTime(allSlots[selectedIndex].start_time));
-    const indexes = Array.from(
-      { length: requiredSlots },
-      (_, i) => selectedIndex + i,
-    );
+    const indexes = Array.from({ length: requiredSlots }, (_, i) => selectedIndex + i);
     const ids = indexes.map((i) => allSlots[i]?.id);
-    dispatch(
-      setSelectedSlots({
-        indexes,
-        ids,
-      }),
-    );
+    dispatch(setSelectedSlots({ indexes, ids }));
+    setTimeout(() => {
+      dispatch(nextStep());
+    }, 200);
   };
 
   useEffect(() => {
@@ -216,28 +204,6 @@ export default function TimePage(): JSX.Element {
     }
   }, [selectedTime, allSlots, requiredSlots, selectedSlotIndexes]);
 
-  useEffect(() => {
-    if (!allSlots.length || requiredSlots === 0) return;
-    let found = false;
-    for (let i = 0; i <= allSlots.length - requiredSlots; i++) {
-      const group = allSlots.slice(i, i + requiredSlots);
-      const isValid = group.every((slot) => !slot.isBooked && slot.status === "AVAILABLE");
-      if (isValid) {
-        handleSlotSelect(i);
-        found = true;
-        break;
-      }
-    }
-    if (!found) {
-      dispatch(setSelectedTime(null));
-      dispatch(
-        setSelectedSlots({
-          indexes: [],
-          ids: [],
-        }),
-      );
-    }
-  }, [allSlots, requiredSlots]);
 
   useEffect(() => {
     const updateCount = (): void => {
@@ -346,20 +312,20 @@ export default function TimePage(): JSX.Element {
           />
         </div>
       }
-      renderButton={
-        allSlots?.length > 0 ? <button
-          onClick={() => {
-            if (!selectedTime || !selectedSlotIndexes.length) {
-              toast.warning("Please select a time slot");
-              return;
-            }
-            dispatch(nextStep());
-          }}
-          disabled={!selectedTime || !selectedSlotIndexes.length}
-          className="aaravpos-btn"
-        >
-          <span className="aaravpos-btn-content">Fill Details</span>
-        </button> : null
+      renderButton={null
+        // allSlots?.length > 0 ? <button
+        //   onClick={() => {
+        //     if (!selectedTime || !selectedSlotIndexes.length) {
+        //       toast.warning("Please select a time slot");
+        //       return;
+        //     }
+        //     dispatch(nextStep());
+        //   }}
+        //   disabled={!selectedTime || !selectedSlotIndexes.length}
+        //   className="aaravpos-btn"
+        // >
+        //   <span className="aaravpos-btn-content">Fill Details</span>
+        // </button> : null
       }
     >
       <Breadcrumb />
@@ -534,7 +500,7 @@ function SlotSection({
   onToggle,
 }: SlotSectionProps): JSX.Element | null {
   if (!slots || slots?.length === 0) return null;
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   return (
     <div className="arravpos-slot-section">
       <div onClick={onToggle} className="arravpos-slot-section-header">

@@ -122,9 +122,30 @@
   display: none;
 }
 
-.aaravpos-btn:hover {
+.aaravpos-btn:hover,
+.aaravpos-form-btn:hover {
   background: var(--btn-bg-hover, #222);
   color: var(--btn-text-hover, #fff);
+}
+
+.aaravpos-form-btn {
+  gap: 8px;
+  padding: 8px 16px;
+  border: none;
+  background: var(--btn-bg, #000);
+  color: var(--btn-text, #fff);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  margin-top: 22px;
 }
 
 .aaravpos-divider {
@@ -151,6 +172,20 @@
 
 .aaravpos-padding-btn {
   padding: 9px 8px !important;
+}
+
+.aaravpos-cart-btn {
+  position: absolute;
+  left: -33px;
+  padding: 6px;
+  top: 0px;
+  background: var(--btn-bg);
+  color: var(--btn-text, #ffffff);
+  border: 0px;
+  outline: none;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  cursor: pointer;
 }
 
 /* =========================
@@ -226,7 +261,7 @@
   background: var(--surface-bg, #FFFFFF);
   border: 1px solid rgba(0, 0, 0, 0.1);
   padding: 16px 16px 14px;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: fixed;
   top: 10px;
   right: 10px;
@@ -1283,7 +1318,8 @@
   border-radius: 6px;
 }
 
-.aaravpos-common-btn:hover {
+.aaravpos-common-btn:hover,
+.aaravpos-cart-btn:hover {
   background: var(--btn-bg-hover);
   color: var(--btn-text-hover, #ffffff);
 }
@@ -3515,6 +3551,10 @@
   }
 
   .aaravpos-sidebar-mobile {
+    display: none;
+  }
+
+  .aaravpos-form-btn {
     display: none;
   }
 

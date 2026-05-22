@@ -1,11 +1,9 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { ChevronRight } from "lucide-react";
 import { getUserName } from "@/utils";
 import { setSelectedDate } from "@/slices/slotSlice";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { toggleProfessional } from "@/slices/serviceSlice";
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
@@ -17,11 +15,9 @@ import type {
   StaffAssignment,
   StaffServiceAssignment,
 } from "@/types";
-import { setSidebarOpen } from "@/slices/themeSlice";
 
 export default function Professionals() {
   const dispatch = useDispatch<AppDispatch>();
-  const { width } = useWindowSize();
   const { staff, selectedServices, selectedProfessional } = useSelector(
     (state: RootState) => state.booking.service,
   );
@@ -30,25 +26,19 @@ export default function Professionals() {
   const selectedStaffServices: any[] = useMemo(() => {
     if (!selectedProfessional?.id) return [];
 
-    const staffMember = staff.find(
-      (s: Staff) => s.id === selectedProfessional.id,
-    );
-
+    const staffMember = staff.find((s: Staff) => s.id === selectedProfessional.id);
     if (!staffMember) return [];
 
     return selectedServices.map((svc: ServiceItem) => {
       const assignment = staffMember?.assignments?.find(
         (a: StaffAssignment) => a.id === svc?.id,
       );
-
       const updatedSvc = {
         ...svc,
         price: assignment?.price || svc.price || svc.min_price || 0,
-
         duration:
           assignment?.duration || svc.estimated_time || svc.min_time || 0,
       };
-
       return {
         ...updatedSvc,
         tax: calculateServiceTax(updatedSvc),
@@ -70,10 +60,8 @@ export default function Professionals() {
 
   const filteredStaff = useMemo(() => {
     if (!selectedServiceIds.length) return [];
-
     return staff.filter((member: Staff) => {
       const assignments = member.assignments ?? [];
-
       return selectedServiceIds?.every((serviceId: string | number) =>
         assignments.some(
           (a: StaffAssignment) =>
@@ -83,23 +71,16 @@ export default function Professionals() {
     });
   }, [staff, selectedServiceIds]);
 
-  const isMobile = width < 768;
-
   const hasServicesSelected = selectedServiceIds.length > 0;
 
   useEffect(() => {
     if (hasServicesSelected && filteredStaff.length === 0) {
       const t = setTimeout(() => setShowEmpty(true), 300);
-
       return () => clearTimeout(t);
     } else {
       setShowEmpty(false);
     }
   }, [hasServicesSelected, filteredStaff]);
-
-  // =========================================
-  // STAFF LEAVE HANDLER
-  // =========================================
 
   const getLeaveInfo = (professional: any) => {
     if (!professional?.futureLeaveDates?.length) {
@@ -108,9 +89,7 @@ export default function Professionals() {
         availableFrom: null,
       };
     }
-
     const today = new Date();
-
     const activeLeave = professional.futureLeaveDates.find((leave: any) => {
       if (leave.status !== "APPROVED" || leave.leaveType !== "FULL_DAY")
         return false;
@@ -118,14 +97,12 @@ export default function Professionals() {
       const endDate = new Date(leave.endDate);
       return today >= startDate && today <= endDate;
     });
-
     if (!activeLeave?.returnDate?.date) {
       return {
         isOnLeave: false,
         availableFrom: null,
       };
     }
-
     const formattedAvailableDate = new Date(
       activeLeave.returnDate.date,
     ).toLocaleDateString("en-GB", {
@@ -133,7 +110,6 @@ export default function Professionals() {
       month: "short",
       year: "numeric",
     });
-
     return {
       isOnLeave: true,
       availableFrom: formattedAvailableDate,
@@ -151,15 +127,17 @@ export default function Professionals() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={selectedProfessional ? <button
-        onClick={() => dispatch(nextStep())}
-        disabled={!selectedServices.length}
-        className="aaravpos-btn"
-      >
-        <span className="aaravpos-btn-content">
-          Choose Time <ChevronRight size={16} />
-        </span>
-      </button> : null}
+      renderButton={null
+        //   selectedProfessional ? <button
+        //   onClick={() => dispatch(nextStep())}
+        //   disabled={!selectedServices.length}
+        //   className="aaravpos-btn"
+        // >
+        //   <span className="aaravpos-btn-content">
+        //     Choose Time <ChevronRight size={16} />
+        //   </span>
+        // </button> : null
+      }
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">
@@ -182,42 +160,26 @@ export default function Professionals() {
                   onClick={() => {
                     dispatch(toggleProfessional(p));
                     dispatch(setSelectedDate(null));
-                    if (isMobile) { dispatch(nextStep()) }
+                    dispatch(nextStep())
                   }}
                   className={`aaravpos-pro-card  ${selectedProfessional?.id === p.id ? "active" : ""}`}
                 >
                   <div className="aaravpos-display-flex">
-                    {/* Avatar */}
                     {p.imageUrl ? (
-                      <img
-                        src={p.imageUrl}
-                        alt={p.name}
-                        className="aaravpos-pro-image"
-                      />
+                      <img src={p.imageUrl} alt={p.name} className="aaravpos-pro-image" />
                     ) : (
-                      <div
-                        className="aaravpos-pro-avatar"
-                        style={{
-                          background: p.color || "#111",
-                        }}
-                      >
+                      <div className="aaravpos-pro-avatar" style={{ background: p.color || "#111", }}>
                         {getUserName(p.name)}
                       </div>
                     )}
-
-                    {/* Staff Info */}
                     <div className="aaravpos-pro-info">
                       <p className="aaravpos-pro-name">{p.name}</p>
-
                       <p className="aaravpos-pro-type">{p.staff_type}</p>
                     </div>
                   </div>
-
-                  {/* Available From Badge */}
                   {isOnLeave && availableFrom && (
                     <div className="aaravpos-available-badge">
                       <span className="aaravpos-available-dot" />
-
                       <p className="aaravpos-available-text">
                         Available from {availableFrom}
                       </p>

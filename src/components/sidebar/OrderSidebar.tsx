@@ -70,12 +70,10 @@ export default function OrderSidebar({
   );
   const startDate = DateTime.now().setZone(timeZone ?? "UTC");
   const [customTip, setCustomTip] = useState<string>("");
-  const [isCustomTip, setIsCustomTip] =
-    useState<boolean>(false);
+  const [isCustomTip, setIsCustomTip] = useState<boolean>(false);
   const firstRef = useRef<HTMLDivElement | null>(null);
   const thirdRef = useRef<HTMLDivElement | null>(null);
-  const [secondHeight, setSecondHeight] =
-    useState<number>(0);
+  const [secondHeight, setSecondHeight] = useState<number>(0);
   const TIP_OPTIONS: number[] = [0, 5, 10, 15, 20];
   const allSlots = useMemo<Slot[]>(() => {
     return [
@@ -86,9 +84,7 @@ export default function OrderSidebar({
   }, [slots]);
   const SLOT_INTERVAL = 15;
 
-  const selectedStaffServices = useMemo<
-    ExtendedServiceItem[]
-  >(() => {
+  const selectedStaffServices = useMemo<ExtendedServiceItem[]>(() => {
     if (!selectedProfessional?.id) return [];
     const staffMember = staff?.find(
       (s: StaffMember) => s.id === selectedProfessional.id,
@@ -105,7 +101,6 @@ export default function OrderSidebar({
           svc.price ||
           svc.min_price ||
           0,
-
         duration:
           assignment?.duration ||
           svc.estimated_time ||
@@ -121,24 +116,10 @@ export default function OrderSidebar({
       };
     });
   }, [selectedProfessional, staff, selectedServices]);
-
-  const totalBasePrice = selectedStaffServices.reduce(
-    (sum, s) => sum + Number(s.price) * (s.qty || 1),
-    0,
-  );
-
-  const totalDuration = selectedStaffServices.reduce(
-    (sum, s) => sum + Number(s.duration) * (s.qty || 1),
-    0,
-  );
-
-  const requiredSlots = Math.ceil(
-    totalDuration / SLOT_INTERVAL,
-  );
-
-  const formatTimeRange = (
-    startIndex: number,
-  ): string => {
+  const totalBasePrice = selectedStaffServices.reduce((sum, s) => sum + Number(s.price) * (s.qty || 1), 0);
+  const totalDuration = selectedStaffServices.reduce((sum, s) => sum + Number(s.duration) * (s.qty || 1), 0);
+  const requiredSlots = Math.ceil(totalDuration / SLOT_INTERVAL);
+  const formatTimeRange = (startIndex: number): string => {
     if (!allSlots.length) return "";
     const start = allSlots[startIndex]?.start_time;
     const endSlot =
@@ -154,30 +135,16 @@ export default function OrderSidebar({
     month: startDate.month,
     year: startDate.year,
   };
-
-  const selectedStartIndex =
-    selectedSlotIndexes?.[0];
-
-  const timeRange =
-    selectedStartIndex !== undefined
-      ? formatTimeRange(selectedStartIndex)
-      : null;
-
-  const monthIndex = safeDate.month ?? 0;
-
-  const dateStr = timeRange
-    ? `${MONTH_NAMES[monthIndex - 1]} ${safeDate.day} at ${timeRange}`
+  const selectedStartIndex = selectedSlotIndexes?.[0];
+  const timeRange = selectedStartIndex !== undefined
+    ? formatTimeRange(selectedStartIndex)
     : null;
-
-  const taxAmt = selectedStaffServices.reduce(
-    (sum, s) => sum + s.tax,
-    0,
-  );
-
+  const monthIndex = safeDate.month ?? 0;
+  const dateStr = timeRange ? `${MONTH_NAMES[monthIndex - 1]} ${safeDate.day} at ${timeRange}`
+    : null;
+  const taxAmt = selectedStaffServices.reduce((sum, s) => sum + s.tax, 0);
   const safeTipPct = Number(tipPct) || 0;
-
   const tipAmt = showTip ? (totalBasePrice * safeTipPct) / 100 : 0;
-
   const total = totalBasePrice + taxAmt + tipAmt;
 
   useEffect(() => {
@@ -191,16 +158,11 @@ export default function OrderSidebar({
   >(() => {
     if (loading) return "Processing...";
 
-    if (checkingConsent)
-      return "Checking consents...";
+    if (checkingConsent) return "Checking consents...";
 
-    if (
-      consentRequired &&
-      consentCompleted < totalConsents
-    ) {
+    if (consentRequired && consentCompleted < totalConsents) {
       return `Sign Consents (${consentCompleted}/${totalConsents})`;
     }
-
     return (
       <>
         {buttonText || "Book Appointment"}
@@ -220,18 +182,15 @@ export default function OrderSidebar({
 
   useEffect(() => {
     const calculateHeight = (): void => {
-      const firstHeight =
-        firstRef.current?.offsetHeight || 0;
-      const thirdHeight =
-        thirdRef.current?.offsetHeight || 0;
-      const totalOffset =
-        ((firstHeight +
-          (isCustomTip
+      const firstHeight = firstRef.current?.offsetHeight || 0;
+      const thirdHeight = thirdRef.current?.offsetHeight || 0;
+      const totalOffset = ((firstHeight +
+        (isCustomTip
+          ? window.innerWidth <= 991 ? 190 : 205
+          : showTip
             ? window.innerWidth <= 991 ? 190 : 205
-            : showTip
-              ? window.innerWidth <= 991 ? 190 : 205
-              : window.innerWidth <= 991 ? 190 : 205)) ||
-          0) + thirdHeight;
+            : window.innerWidth <= 991 ? 190 : 205)) ||
+        0) + thirdHeight;
 
       setSecondHeight(window.innerHeight - totalOffset);
     };
@@ -276,15 +235,9 @@ export default function OrderSidebar({
             ) : (
               <div
                 className="aaravpos-pro-avatar"
-                style={{
-                  background:
-                    selectedProfessional.color ||
-                    "#111",
-                }}
+                style={{ background: selectedProfessional.color || "#111" }}
               >
-                {getUserName(
-                  selectedProfessional.name,
-                )}
+                {getUserName(selectedProfessional.name)}
               </div>
             )}
             <div className="aaravpos-pro-info">
@@ -299,7 +252,6 @@ export default function OrderSidebar({
         )}
         <div className="aaravpos-date-time">
           <span className="aaravpos-date-time-label">Date & Time:</span>
-
           {dateStr ? (
             <span className="aaravpos-date-time-value">
               {dateStr}
@@ -413,20 +365,14 @@ export default function OrderSidebar({
                   placeholder="Enter %"
                   value={customTip}
                   onChange={(e) => {
-                    const value =
-                      e.target.value;
-
+                    const value = e.target.value;
                     if (
-                      value === "" ||
-                      (Number(value) >= 0 &&
+                      value === "" || (Number(value) >= 0 &&
                         Number(value) <=
                         100)
                     ) {
                       setCustomTip(value);
-
-                      onTipChange?.(
-                        Number(value) || 0,
-                      );
+                      onTipChange?.(Number(value) || 0);
                     }
                   }}
                   className="aaravpos-tip-input"
@@ -446,12 +392,7 @@ export default function OrderSidebar({
               <div className="aaravpos-consent-progress">
                 <div
                   className="aaravpos-consent-progress-bar"
-                  style={{
-                    width: `${(consentCompleted /
-                      totalConsents) *
-                      100
-                      }%`,
-                  }}
+                  style={{ width: `${(consentCompleted / totalConsents) * 100}%` }}
                 />
               </div>
             </div>

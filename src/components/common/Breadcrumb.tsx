@@ -1,9 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { goToStep } from "@/slices/breadcrumbSlice";
-import { persistor } from "@/store";
-import { useWindowSize } from "@/hooks/useWindowSize";
-import { StepItem } from "@/types";
-import type { RootState, AppDispatch } from "@/store";
 import {
   CircleCheck,
   ChevronLeft,
@@ -13,7 +8,13 @@ import {
   Info,
   CheckCircle2,
 } from "lucide-react";
+import { goToStep } from "@/slices/breadcrumbSlice";
+import { persistor } from "@/store";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { StepItem } from "@/types";
+import type { RootState, AppDispatch } from "@/store";
 import { clearBooking } from "@/slices/outletSlice";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 const SERVICE_STEPS: StepItem[] = [
   {
@@ -82,6 +83,7 @@ export default function Breadcrumb() {
   const { currentStep, completedSteps } = useSelector(
     (state: RootState) => state.booking.breadcrumbs,
   );
+  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
   const steps = isService ? SERVICE_STEPS : STEPS;
   const currentIndex = steps.findIndex((s) => s.page === currentStep);
 
@@ -121,7 +123,14 @@ export default function Breadcrumb() {
           </span>
         </div>
       ) : (
-        <div className="aaravpos-desktop-stepper">
+        <div
+          className="aaravpos-desktop-stepper"
+          onClick={() => {
+            if (!isOpenSidebar) {
+              dispatch(setSidebarOpen(true));
+            }
+          }}
+        >
           {outlets.length > 1 && <button
             onClick={goToPrev}
             className="aaravpos-desktop-back-btn"
@@ -140,15 +149,9 @@ export default function Breadcrumb() {
                     if (!isClickable) return;
                     dispatch(goToStep(step.page));
                   }}
-                  className={`aaravpos-step-btn
-                    ${isClickable ? "clickable" : "disabled"}
-                    ${isActive ? "active" : "inactive"}
-                  `}
+                  className={`aaravpos-step-btn ${isClickable ? "clickable" : "disabled"} ${isActive ? "active" : "inactive"}`}
                 >
-                  <span
-                    className={`aaravpos-step-icon ${isActive ? "active" : "inactive"
-                      }`}
-                  >
+                  <span className={`aaravpos-step-icon ${isActive ? "active" : "inactive"}`}>
                     {step.icon}
                   </span>
                   <span>{step.label}</span>

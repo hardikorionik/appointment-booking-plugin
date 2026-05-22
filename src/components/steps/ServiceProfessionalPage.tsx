@@ -146,21 +146,20 @@ export default function ServiceProfessionalPage() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={
-        selectedServices.length > 0 ? <button
-          onClick={() => dispatch(nextStep())}
-          disabled={!selectedServices.length}
-          className="aaravpos-btn"
-        >
-          <span className="aaravpos-btn-content">
-            Choose Time <ChevronRight size={16} />
-          </span>
-        </button> : null
+      renderButton={null
+        // selectedServices.length > 0 ? <button
+        //   onClick={() => dispatch(nextStep())}
+        //   disabled={!selectedServices.length}
+        //   className="aaravpos-btn"
+        // >
+        //   <span className="aaravpos-btn-content">
+        //     Choose Time <ChevronRight size={16} />
+        //   </span>
+        // </button> : null
       }
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">
-        {/* HEADER */}
         <div className="aaravpos-navbar-form">
           <div>
             <h1 className="aaravpos-page-title">Choose a Service</h1>
@@ -210,8 +209,7 @@ export default function ServiceProfessionalPage() {
                 setSelectedSuperCategory(superCat);
                 setSelectedSubCategory(null);
               }}
-              className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id ? "active" : ""
-                }`}
+              className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id ? "active" : ""}`}
             >
               <h3 className="aaravpos-supercategory-title">
                 {superCat?.isStandAloneCategory ? "Standalone" : superCat.name}
@@ -234,30 +232,21 @@ export default function ServiceProfessionalPage() {
             >
               <button
                 onClick={() => setSelectedSubCategory(null)}
-                className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
-                  }`}
+                className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""}`}
               >
-                All Services (
-                {selectedSuperCategory?.categories?.reduce(
-                  (sum: number, c: any) => sum + (c?.services?.length || 0),
-                  0,
-                )}
-                )
+                All Services ({selectedSuperCategory?.categories?.reduce((sum: number, c: any) => sum + (c?.services?.length || 0), 0,)})
               </button>
-
               {selectedSuperCategory?.categories?.map((cat: any) => (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedSubCategory(cat)}
-                  className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""
-                    }`}
+                  className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""}`}
                 >
                   {cat.name} ({cat.services.length})
                 </button>
               ))}
             </div>
           )}
-        {/* SERVICES */}
         <div className="aaravpos-services-wrapper">
           <div className="aaravpos-services-grid">
             {loading ? (
@@ -272,16 +261,12 @@ export default function ServiceProfessionalPage() {
                       No Services Found
                     </h3>
                     <p className="aaravpos-empty-services-text">
-                      {searchTerm
-                        ? "No services found for your search."
-                        : "No services are available for this professional."}
+                      {searchTerm ? "No services found for your search." : "No services are available for this professional."}
                     </p>
                   </div>
                 ) : (
                   servicesToShow?.map((svc: any, index: number) => {
-                    const isSelected = selectedServices.some(
-                      (s: any) => s.id === svc.id,
-                    );
+                    const isSelected = selectedServices.some((s: any) => s.id === svc.id,);
                     return (
                       <div
                         key={index}
@@ -304,19 +289,15 @@ export default function ServiceProfessionalPage() {
                         }}
                         className={`aaravpos-service-card ${isSelected ? "active" : ""}`}
                       >
-                        {/* TAX */}
                         {hasActiveTax(svc) && (
                           <span className="aaravpos-tax-badge">TAX</span>
                         )}
-                        {/* CONSENT */}
                         {isConsentRequiredService(svc) && (
                           <span className="aaravpos-consent-badge">
                             CONSENT
                           </span>
                         )}
-                        {/* NAME */}
                         <p className="aaravpos-service-title">{svc.name}</p>
-                        {/* DESCRIPTION */}
                         <div className="aaravpos-service-description-wrapper">
                           <p className="aaravpos-service-description">
                             {svc.description}
@@ -327,29 +308,22 @@ export default function ServiceProfessionalPage() {
                             </div>
                           )}
                         </div>
-                        {/* PRICE */}
                         <p className="aaravpos-service-price">
                           <span>
-                            {svc.estimated_time
-                              ? `${svc.estimated_time} min`
-                              : `${svc.min_time}-${svc.max_time} min`}
+                            {svc.estimated_time ? `${svc.estimated_time} min` : `${svc.min_time}-${svc.max_time} min`}
                           </span>
                           <span className="aaravpos-service-price-right">
                             {svc.price ? (
                               <>
-                                <CurrencyIcon size={14} />
-                                {svc.price}
+                                <CurrencyIcon size={14} /> {svc.price}
                               </>
                             ) : (
                               <>
-                                <CurrencyIcon size={14} />
-                                {svc.min_price} - <CurrencyIcon size={14} />
-                                {svc.max_price}
+                                <CurrencyIcon size={14} /> {svc.min_price} - <CurrencyIcon size={14} /> {svc.max_price}
                               </>
                             )}
                           </span>
                         </p>
-                        {/* ACTIONS */}
                         <div className="aaravpos-service-actions">
                           <button
                             onClick={(e) => {
@@ -361,8 +335,7 @@ export default function ServiceProfessionalPage() {
                             <Minus size={14} />
                           </button>
                           <span className="aaravpos-service-qty">
-                            {selectedServices.find((s: any) => s.id === svc.id)
-                              ?.qty || 0}
+                            {selectedServices.find((s: any) => s.id === svc.id)?.qty || 0}
                           </span>
                           <button
                             onClick={(e) => {

@@ -27,29 +27,20 @@ import { PaymentMeta, PayType, Service, OutletRootState, EnforcementType, Consen
 // ─── Domain Types ───────────────────────────────────────────────────────────
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const MONTH_NAMES: string[] = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-];
-
+const MONTH_NAMES: string[] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const CONSENT_DRAFT_KEY = "consentDraftByService";
 const SLOT_INTERVAL = 15;
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 const expiryToNumber = (exp: string): number => {
     const [mm, yy] = exp.split("/");
     return Number(`${mm}${yy}`);
 };
 
-// ─── Component ───────────────────────────────────────────────────────────────
-
 export default function ConfirmPage(): JSX.Element {
     const dispatch = useDispatch<AppDispatch>();
     const { tenantId, id: outletId, timeZone, image, outletName, address } = useSelector(
         (state: OutletRootState) => state.booking.outletDetails
     );
-
     const { staff, selectedServices, selectedProfessional } = useSelector(
         (state: RootState) => state.booking.service,
     );
@@ -59,16 +50,11 @@ export default function ConfirmPage(): JSX.Element {
     const { userDetails, bookingMode, tipPct } = useSelector(
         (state: RootState) => state.booking.appointment,
     );
-
-    const services: any[] = Array.isArray(selectedServices)
-        ? selectedServices
-        : [selectedServices];
-
-
+    const services: any[] = Array.isArray(selectedServices) ? selectedServices : [selectedServices];
     const [loading, setLoading] = useState<boolean>(false);
     const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
     const [paymentMeta, setPaymentMeta] = useState<PaymentMeta | null>(null);
-    const [payType, setPayType] = useState<PayType>("person");
+    const [payType, setPayType] = useState<PayType>();
     const [consentOpen, setConsentOpen] = useState<boolean>(false);
     const [consentHeading, setConsentHeading] = useState<string>("");
     const [consentText, setConsentText] = useState<string>("");
@@ -77,18 +63,13 @@ export default function ConfirmPage(): JSX.Element {
     const [consentAcceptedMap, setConsentAcceptedMap] = useState<Record<string, boolean>>({});
     const [consentCheckMap, setConsentCheckMap] = useState<Record<string, ConsentCheckStatus>>({});
     const [checkingConsent, setCheckingConsent] = useState<boolean>(false);
-
     const consentFlowLockRef = useRef<boolean>(false);
     const lastOpenedConsentServiceRef = useRef<string>("");
-
     const todayDate = DateTime.now().setZone(timeZone ?? "UTC");
-
-    // ─── Enriched services ──────────────────────────────────────────────────────
 
     const selectedStaffServices: EnrichedService[] = services.map((svc) => {
         const staffMember = staff?.find((s) => s.id === selectedProfessional?.id);
         const assignment = staffMember?.assignments?.find((a) => a.id === svc.id);
-
         const updatedSvc: Service = {
             ...svc,
             price: assignment?.price ?? svc.price ?? svc.min_price ?? 0,
@@ -102,21 +83,14 @@ export default function ConfirmPage(): JSX.Element {
         };
     });
 
-    // ─── Slot / time helpers ────────────────────────────────────────────────────
-
     const allSlots: Slot[] = [
         ...(slots?.morning ?? []),
         ...(slots?.afternoon ?? []),
         ...(slots?.evening ?? []),
     ];
 
-    const totalDuration: number = selectedStaffServices.reduce(
-        (sum, s) => sum + Number(s.duration ?? 0),
-        0,
-    );
-
+    const totalDuration: number = selectedStaffServices.reduce((sum, s) => sum + Number(s.duration ?? 0), 0);
     const requiredSlots: number = Math.ceil(totalDuration / SLOT_INTERVAL);
-
     const formatTimeRange = (startIndex: number): string => {
         if (!allSlots.length) return "";
         const start = allSlots[startIndex]?.start_time;
@@ -134,8 +108,7 @@ export default function ConfirmPage(): JSX.Element {
 
     const selectedStartIndex: number | undefined = selectedSlotIndexes?.[0];
 
-    const timeRange: string | null =
-        selectedStartIndex !== undefined ? formatTimeRange(selectedStartIndex) : null;
+    const timeRange: string | null = selectedStartIndex !== undefined ? formatTimeRange(selectedStartIndex) : null;
 
     const dateStr: string | null = timeRange
         ? `${MONTH_NAMES[safeDate.month]} ${safeDate.day} at ${timeRange}`
@@ -143,18 +116,13 @@ export default function ConfirmPage(): JSX.Element {
 
     // ─── Price calculations ─────────────────────────────────────────────────────
 
-    const totalBasePrice: number = selectedStaffServices.reduce(
-        (sum, s) => sum + Number(s.price) * (s.qty ?? 1),
-        0,
-    );
+    const totalBasePrice: number = selectedStaffServices.reduce((sum, s) => sum + Number(s.price) * (s.qty ?? 1), 0);
 
     const taxAmt: number = selectedStaffServices.reduce((sum, s) => sum + s.tax, 0);
     const taxCents: number = Math.round(taxAmt * 100);
     const tipAmt: number = (totalBasePrice * tipPct) / 100;
     const tipCents: number = Math.round(tipAmt * 100);
     const totalWithTax: number = totalBasePrice + tipAmt + taxAmt;
-
-    // ─── Consent logic ──────────────────────────────────────────────────────────
 
     const servicesNeedingConsent: Service[] = useMemo(() => {
         return services.filter((s) => {
@@ -332,7 +300,6 @@ export default function ConfirmPage(): JSX.Element {
         let signatureType: SignatureType = "CHECKBOX_ONLY";
         if (enforcement === "TYPED_NAME") signatureType = "TYPED_NAME";
         else if (enforcement === "DRAW_SIGNATURE") signatureType = "SIGNATURE_IMAGE";
-
         saveConsentDraft(sid, {
             serviceId: sid,
             concentFormId: formId,
@@ -397,8 +364,6 @@ export default function ConfirmPage(): JSX.Element {
         localStorage.removeItem(CONSENT_DRAFT_KEY);
     };
 
-    // ─── Booking payloads ───────────────────────────────────────────────────────
-
     let formattedDate = "";
     if (selectedDate) {
         formattedDate = `${selectedDate?.year}-${String(selectedDate?.month).padStart(2, "0")}-${String(selectedDate?.day).padStart(2, "0")}`;
@@ -421,24 +386,6 @@ export default function ConfirmPage(): JSX.Element {
         },
     };
 
-    // const checkinPayload: CheckinPayload = {
-    //     tenantId,
-    //     outletId,
-    //     date: outletTimeZoneDate,
-    //     staffId: selectedProfessional?.id,
-    //     serviceIds: services.map((s) => s.id),
-    //     slotIds: selectedSlotIds,
-    //     startTime: selectedTime,
-    //     customer: {
-    //         first_name: userDetails?.firstName,
-    //         last_name: userDetails?.lastName,
-    //         email: userDetails?.email,
-    //         phone: userDetails?.phone,
-    //     },
-    // };
-
-    // ─── Booking actions ────────────────────────────────────────────────────────
-
     const proceedWithBooking = async (): Promise<void> => {
         if (servicesNeedingConsent.length && !allConsentsDone) {
             toast.warn("Please complete all consent forms first");
@@ -449,28 +396,12 @@ export default function ConfirmPage(): JSX.Element {
             const result = await dispatch(
                 createAppointment(payload)
             ).unwrap();
-
-
             const data: any = result?.data ?? result;
-
-            const appointmentId =
-                data.id || "";
-
-            const customerId =
-                data.customerId ||
-                data.customer?.id ||
-                "";
-
-            const staffId =
-                data.staffId ||
-                selectedProfessional?.id ||
-                "";
+            const appointmentId = data.id || "";
+            const customerId = data.customerId || data.customer?.id || "";
+            const staffId = data.staffId || selectedProfessional?.id || "";
             if (bookingMode === "booking" && doneConsentCount > 0) {
-                await submitAllConsents(
-                    appointmentId,
-                    customerId,
-                    staffId,
-                );
+                await submitAllConsents(appointmentId, customerId, staffId);
             }
             if (payType === "card") {
                 setPaymentMeta({ appointmentId, customerId });
@@ -480,12 +411,8 @@ export default function ConfirmPage(): JSX.Element {
                 dispatch(nextStep());
             }
         } catch (err: any) {
-            const errorMessage =
-                err?.payload?.message ||
-                err?.data?.message ||
-                err?.message || "Staff not working on this day" || "Something went wrong";
+            const errorMessage = err?.payload?.message || err?.data?.message || err?.message || "Staff not working on this day" || "Something went wrong";
             toast.error(errorMessage);
-
         } finally {
             setLoading(false);
         }
@@ -495,7 +422,6 @@ export default function ConfirmPage(): JSX.Element {
         if (!selectedTime && bookingMode === "booking") return void toast.error("Select time");
         if (!userDetails?.firstName) return void toast.error("Enter first name");
         if (!userDetails?.email && !userDetails?.phone) return void toast.error("Email or phone required");
-
         if (servicesNeedingConsent.length > 0) {
             if (allConsentsDone) {
                 await proceedWithBooking();
@@ -506,8 +432,6 @@ export default function ConfirmPage(): JSX.Element {
             await proceedWithBooking();
         }
     };
-
-    // ─── Payment helpers ────────────────────────────────────────────────────────
 
     const getCardType = (number: string): CardType => {
         const num = number.replace(/\s/g, "");
@@ -559,14 +483,10 @@ export default function ConfirmPage(): JSX.Element {
                     },
                 },
             };
-
             const resp = await payCustomerDirect(paymentPayload);
             const data = resp?.data?.data ?? resp?.data ?? resp ?? {};
             const orderId = data?.orderId;
-            const isSuccess =
-                String(data?.mappedStatus).toLowerCase() === "succeeded" ||
-                String(data?.reasonMessage).toLowerCase() === "success";
-
+            const isSuccess = String(data?.mappedStatus).toLowerCase() === "succeeded" || String(data?.reasonMessage).toLowerCase() === "success";
             if (isSuccess) {
                 toast.success("Payment successful!");
                 if (orderId) {
@@ -588,11 +508,7 @@ export default function ConfirmPage(): JSX.Element {
             dispatch(nextStep());
             return true;
         } catch (err) {
-            toast.warning(
-                err instanceof Error
-                    ? err.message
-                    : "Payment failed, but appointment is booked"
-            );
+            toast.warning(err instanceof Error ? err.message : "Payment failed, but appointment is booked");
             setShowPaymentModal(false);
             dispatch(setAppointmentId(String(paymentMeta?.appointmentId)));
             dispatch(nextStep());
@@ -610,9 +526,6 @@ export default function ConfirmPage(): JSX.Element {
         if (!userDetails?.email && !userDetails?.phone) return true;
         return false;
     };
-
-    // ─── Render ─────────────────────────────────────────────────────────────────
-
     return (
         <MainLayout
             sidebar={
@@ -632,7 +545,6 @@ export default function ConfirmPage(): JSX.Element {
                     />
                 </div>
             }
-            isConfirm={true}
         >
             <>
                 <Breadcrumb />
@@ -647,21 +559,12 @@ export default function ConfirmPage(): JSX.Element {
                         <div className="arravpos-outlet-info">
                             {image && (
                                 <div className="arravpos-outlet-logo">
-                                    <img
-                                        src={image ?? "/logo.svg"}
-                                        alt="Logo"
-                                        className="arravpos-outlet-logo-img"
-                                    />
+                                    <img src={image ?? "/logo.svg"} alt="Logo" className="arravpos-outlet-logo-img" />
                                 </div>
                             )}
                             <div className="arravpos-outlet-content">
-                                <p className="arravpos-outlet-name">
-                                    {outletName ?? "-"}
-                                </p>
-                                <p className="arravpos-outlet-address">
-                                    {address ?? "-"}
-                                    <br />
-                                </p>
+                                <p className="arravpos-outlet-name">{outletName ?? "-"}</p>
+                                <p className="arravpos-outlet-address">{address ?? "-"}<br /></p>
                             </div>
                         </div>
                         <div className="arravpos-booking-scroll">
@@ -676,9 +579,7 @@ export default function ConfirmPage(): JSX.Element {
                                                     {selectedProfessional?.name}
                                                 </p>
                                                 <p className="arravpos-appointment-services">
-                                                    {services
-                                                        .map((s) => s.name)
-                                                        .join(", ")}
+                                                    {services.map((s) => s.name).join(", ")}
                                                 </p>
                                             </div>
                                             <span className="arravpos-appointment-price">
@@ -699,13 +600,17 @@ export default function ConfirmPage(): JSX.Element {
                                         icon={<Store />}
                                         label="Pay in person"
                                         selected={payType === "person"}
-                                        onClick={() => setPayType("person")}
+                                        onClick={() => {
+                                            setPayType("person")
+                                        }}
                                     />
                                     <PayOption
                                         icon={<CreditCard />}
                                         label="Pay with card"
                                         selected={payType === "card"}
-                                        onClick={() => setPayType("card")}
+                                        onClick={() => {
+                                            setPayType("card")
+                                        }}
                                     />
                                 </div>
                             </div>
