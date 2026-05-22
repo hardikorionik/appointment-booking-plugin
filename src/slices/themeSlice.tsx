@@ -27,7 +27,6 @@ const themeSlice = createSlice({
             state.colors = action.payload?.colors;
         },
         setSidebarOpen: (state, action) => {
-            console.log("-------30", action.payload)
             state.isOpenSidebar = action.payload
         },
     },
