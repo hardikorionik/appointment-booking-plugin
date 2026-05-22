@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Search, Minus, Plus, X, ChevronRight } from "lucide-react";
+import { Search, Minus, Plus, X } from "lucide-react";
 import {
   toggleService,
   incrementService,
@@ -11,7 +11,6 @@ import MainLayout from "@/components/common/MainLayout";
 import ServiceProfessionalSidebar from "@/components/sidebar/ServiceSidebar";
 import ServiceSkeletonCard from "@/components/common/ServiceSkeleton";
 import { nextStep } from "@/slices/breadcrumbSlice";
-import { setSidebarOpen } from "@/slices/themeSlice";
 import { isConsentRequiredService } from "@/services";
 import { CurrencyIcon } from "@/utils";
 import type { AppDispatch } from "@/store";
@@ -146,17 +145,7 @@ export default function ServiceProfessionalPage() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={null
-        // selectedServices.length > 0 ? <button
-        //   onClick={() => dispatch(nextStep())}
-        //   disabled={!selectedServices.length}
-        //   className="aaravpos-btn"
-        // >
-        //   <span className="aaravpos-btn-content">
-        //     Choose Time <ChevronRight size={16} />
-        //   </span>
-        // </button> : null
-      }
+      renderButton={null}
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">

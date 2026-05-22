@@ -195,20 +195,34 @@
 }
 
 .aaravpos-cart-btn {
-  position: absolute;
-  left: -36px;
-  padding: 9px;
-  top: 0px;
-  background: var(--btn-bg);
-  color: var(--btn-text, #ffffff);
-  border: 0px;
-  outline: none;
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  cursor: pointer;
+  /* transition: all 0.3s ease; */
+  outline: none;
+  flex-shrink: 0;
+  border-radius: 100%;
+  position: relative;
+}
+
+.aaravpos-count {
+  position: absolute;
+  top: -5px;
+  left: -14px;
+  background: color-mix(in srgb, var(--btn-bg) 80%, transparent);
+  color: var(--btn-text);
+  border-radius: 50%;
+  height: 22px;
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
 }
 
 /* =========================

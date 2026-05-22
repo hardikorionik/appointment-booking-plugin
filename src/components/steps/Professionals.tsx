@@ -127,17 +127,7 @@ export default function Professionals() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={null
-        //   selectedProfessional ? <button
-        //   onClick={() => dispatch(nextStep())}
-        //   disabled={!selectedServices.length}
-        //   className="aaravpos-btn"
-        // >
-        //   <span className="aaravpos-btn-content">
-        //     Choose Time <ChevronRight size={16} />
-        //   </span>
-        // </button> : null
-      }
+      renderButton={null}
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">
@@ -146,9 +136,14 @@ export default function Professionals() {
           Available based on selected services
         </p>
         {showEmpty && (
-          <p className="aaravpos-no-staff">
-            No staff available for selected services
-          </p>
+          <div className="aaravpos-empty-services">
+            <h3 className="aaravpos-empty-services-title">
+              No staff Found
+            </h3>
+            <p className="aaravpos-empty-services-text">
+              No staff available for selected services
+            </p>
+          </div>
         )}
         <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">

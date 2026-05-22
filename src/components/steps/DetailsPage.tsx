@@ -178,19 +178,7 @@ export default function DetailsPage(): JSX.Element {
                     <OrderSidebar buttonText="Confirm Details" onButtonClick={handleSubmit(onSubmit)} />
                 </div>
             }
-            renderButton={null
-                // <button
-                //     onClick={handleSubmit(onSubmit)}
-                //     disabled={isSubmitting}
-                //     className="aaravpos-btn"
-                // >
-                //     <span className="aaravpos-btn-content">
-                //         {isSubmitting
-                //             ? "Submitting..."
-                //             : "Confirm Details"}
-                //     </span>
-                // </button>
-            }
+            renderButton={null}
         >
             <form>
                 <Breadcrumb />

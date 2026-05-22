@@ -519,7 +519,12 @@ export default function ConfirmPage(): JSX.Element {
         }
     };
 
-    const handlePaymentCancel = (): void => setShowPaymentModal(false);
+    const handlePaymentCancel = (): void => {
+        setShowPaymentModal(false);
+        toast.warning("Appointment booked. Payment was cancelled.");
+        dispatch(setAppointmentId(String(paymentMeta?.appointmentId)));
+        dispatch(nextStep());
+    };
 
     const isBookingDisabled = (): boolean => {
         if (!selectedTime) return true;

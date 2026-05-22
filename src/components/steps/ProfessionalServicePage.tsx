@@ -67,9 +67,14 @@ export default function ProfessionalServicePage() {
           Available based on selected services
         </p>
         {showEmpty && (
-          <p className="aaravpos-no-staff">
-            No staff available for selected services
-          </p>
+          <div className="aaravpos-empty-services">
+            <h3 className="aaravpos-empty-services-title">
+              No staff Found
+            </h3>
+            <p className="aaravpos-empty-services-text">
+              No staff available for selected services
+            </p>
+          </div>
         )}
         <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">

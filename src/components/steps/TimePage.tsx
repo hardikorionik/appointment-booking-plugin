@@ -312,21 +312,7 @@ export default function TimePage(): JSX.Element {
           />
         </div>
       }
-      renderButton={null
-        // allSlots?.length > 0 ? <button
-        //   onClick={() => {
-        //     if (!selectedTime || !selectedSlotIndexes.length) {
-        //       toast.warning("Please select a time slot");
-        //       return;
-        //     }
-        //     dispatch(nextStep());
-        //   }}
-        //   disabled={!selectedTime || !selectedSlotIndexes.length}
-        //   className="aaravpos-btn"
-        // >
-        //   <span className="aaravpos-btn-content">Fill Details</span>
-        // </button> : null
-      }
+      renderButton={null}
     >
       <Breadcrumb />
       <div style={{ marginTop: 15 }}>

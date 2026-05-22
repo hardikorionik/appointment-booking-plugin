@@ -7,6 +7,7 @@ import {
   Clock3,
   Info,
   CheckCircle2,
+  ShoppingCart
 } from "lucide-react";
 import { goToStep, resetCompletedStepsFrom } from "@/slices/breadcrumbSlice";
 import { persistor } from "@/store";
@@ -17,6 +18,7 @@ import { clearBooking } from "@/slices/outletSlice";
 import { clearSlots } from "@/slices/slotSlice";
 import { clearSelectedServices, clearSelectedProfessional } from "@/slices/serviceSlice";
 import { resetAppointment } from "@/slices/appointmentSlice";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 type StepPage =
   | "services"
@@ -103,7 +105,9 @@ const STEPS: StepItem[] = [
 export default function Breadcrumb() {
   const dispatch = useDispatch<AppDispatch>();
   const { width } = useWindowSize();
+  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
   const { isService } = useSelector((state: RootState) => state.booking.outletDetails);
+  const { selectedServices } = useSelector((state: any) => state.booking.service);
   const outlets = useSelector((state: RootState) => state.booking.outletList.outlets);
   const { currentStep, completedSteps } = useSelector(
     (state: RootState) => state.booking.breadcrumbs,
@@ -125,8 +129,20 @@ export default function Breadcrumb() {
     }
     if (currentIndex <= 0) return;
     const prevStep = steps[currentIndex - 1];
-    dispatch(goToStep(prevStep.page));
+    const targetStep = prevStep.page as StepPage;
+    resetMap[targetStep]?.forEach((action) => { dispatch(action()) });
+    dispatch(resetCompletedStepsFrom(targetStep));
+    dispatch(goToStep(targetStep));
   };
+
+  const goToOutletsPrev = () => {
+    if (currentIndex === 0 && outlets.length > 1) {
+      clearAllData();
+      dispatch(clearBooking());
+      return;
+    }
+    if (currentIndex <= 0) return;
+  }
 
   const currentStepData = steps[currentIndex];
 
@@ -138,7 +154,6 @@ export default function Breadcrumb() {
         <div className="aaravpos-mobile-stepper">
           <button
             onClick={goToPrev}
-            disabled={false}
             className="aaravpos-mobile-back-btn"
           >
             <ChevronLeft size={22} />
@@ -148,11 +163,8 @@ export default function Breadcrumb() {
           </span>
         </div>
       ) : (
-        <div className="aaravpos-desktop-stepper" >
-          {outlets.length > 1 && <button
-            onClick={goToPrev}
-            className="aaravpos-desktop-back-btn"
-          >
+        <div className="aaravpos-desktop-stepper">
+          {outlets.length > 1 && <button onClick={goToOutletsPrev} className="aaravpos-desktop-back-btn">
             <ChevronLeft size={20} />
           </button>}
           <nav className="aaravpos-step-nav">
@@ -185,6 +197,17 @@ export default function Breadcrumb() {
               );
             })}
           </nav>
+          {!isOpenSidebar && (
+            <button
+              className="aaravpos-barber-cart-btn"
+              onClick={() => dispatch(setSidebarOpen(true))}
+            >
+              <span className="aaravpos-barber-count">
+                {selectedServices.length}
+              </span>
+              <ShoppingCart size={18} />
+            </button>
+          )}
         </div>
       )}
     </>

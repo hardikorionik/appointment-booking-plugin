@@ -14,7 +14,6 @@ import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
-import { setSidebarOpen } from "@/slices/themeSlice";
 
 export default function ServicesPage() {
   const dispatch = useDispatch();
