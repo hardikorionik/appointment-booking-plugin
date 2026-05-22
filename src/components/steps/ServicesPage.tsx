@@ -14,31 +14,24 @@ import { isConsentRequiredService } from "@/services";
 import { nextStep } from "@/slices/breadcrumbSlice";
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, Service, ServiceItem, TaxRow } from "@/types";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 export default function ServicesPage() {
   const dispatch = useDispatch();
   const superCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
-
   const { superCategories, selectedServices, loading } = useSelector(
     (state: any) => state.booking.service,
   );
   const { outletName } = useSelector(
     (state: OutletRootState) => state.booking?.outletDetails,
   );
-
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
-
   const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null);
-
   const [searchTerm, setSearchTerm] = useState("");
-
-  // SUPER CATEGORY SERVICES
 
   const servicesToDisplay = useMemo(() => {
     if (!selectedSuperCategory) return [];
-
-    // ALL SERVICES OF SELECTED SUPER CATEGORY
     if (!selectedSubCategory) {
       return (
         selectedSuperCategory?.categories?.flatMap(
@@ -46,8 +39,6 @@ export default function ServicesPage() {
         ) || []
       );
     }
-
-    // SUB CATEGORY SERVICES
     return selectedSubCategory?.services || [];
   }, [selectedSuperCategory, selectedSubCategory]);
 
@@ -61,7 +52,6 @@ export default function ServicesPage() {
 
   const servicesToShow = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
-
     if (term) {
       return allServices.filter((svc: any) => {
         return (
@@ -78,24 +68,16 @@ export default function ServicesPage() {
     return svc.taxRows?.some((tax: TaxRow) => tax.isActive) || false;
   };
 
-  // const mapServiceToItem = (svc: any): Omit<ServiceItem, "qty"> => ({
-  //   ...svc,
-  //   price: svc.price !== null ? Number(svc.price) : undefined,
-  // });
-
   const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
     const price = Number(s.price || s.min_price || 0);
-
     return sum + price * s.qty;
   }, 0);
 
   useEffect(() => {
     if (!superCategories?.length) return;
-
     const firstSuperCategory = superCategories.find((superCat: any) =>
       superCat?.categories?.some((cat: any) => cat?.services?.length > 0),
     );
-
     if (firstSuperCategory && !selectedSuperCategory) {
       setSelectedSuperCategory(firstSuperCategory);
       setSelectedSubCategory(null);
@@ -159,8 +141,6 @@ export default function ServicesPage() {
             </div>
           </div>
         </div>
-
-        {/* SUPER CATEGORIES */}
         <div
           ref={superCategoryScrollRef}
           onWheel={(e) => {
@@ -194,8 +174,6 @@ export default function ServicesPage() {
               </button>
             ))}
         </div>
-
-        {/* SUB CATEGORIES */}
         {selectedSuperCategory?.categories?.some(
           (cat: any) => cat?.services?.length > 0,
         ) && (
@@ -234,8 +212,6 @@ export default function ServicesPage() {
                 ))}
             </div>
           )}
-
-        {/* SERVICES */}
         <div className="aaravpos-services-wrapper">
           <div className="aaravpos-services-grid">
             {loading ? (
@@ -271,6 +247,9 @@ export default function ServicesPage() {
                             dispatch(decrementService(String(svc.id)));
                           } else {
                             dispatch(toggleService(svc));
+                          }
+                          if (window.innerWidth > 991) {
+                            dispatch(setSidebarOpen(true))
                           }
                         }}
                         className={`aaravpos-service-card ${isSelected ? "active" : ""}`}

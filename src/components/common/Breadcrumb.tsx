@@ -148,6 +148,11 @@ export default function Breadcrumb() {
 
   const isMobile = width < 991;
 
+  const totalQty = selectedServices?.reduce(
+    (total: number, item: any) => { return (total + item.qty); },
+    0
+  );
+
   return (
     <>
       {isMobile ? (
@@ -199,11 +204,11 @@ export default function Breadcrumb() {
           </nav>
           {!isOpenSidebar && (
             <button
-              className="aaravpos-barber-cart-btn"
+              className="aaravpos-cart-btn"
               onClick={() => dispatch(setSidebarOpen(true))}
             >
-              <span className="aaravpos-barber-count">
-                {selectedServices.length}
+              <span className="aaravpos-count">
+                {totalQty}
               </span>
               <ShoppingCart size={18} />
             </button>

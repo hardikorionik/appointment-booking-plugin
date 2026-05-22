@@ -15,23 +15,17 @@ import { isConsentRequiredService } from "@/services";
 import { CurrencyIcon } from "@/utils";
 import type { AppDispatch } from "@/store";
 import type { Service, ServiceItem, TaxRow, StaffAssignment } from "@/types";
+import { setSidebarOpen } from "@/slices/themeSlice";
 
 export default function ServiceProfessionalPage() {
   const dispatch = useDispatch<AppDispatch>();
-
   const superCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
-
   const { superCategories, selectedServices, selectedProfessional, loading } =
     useSelector((state: any) => state.booking.service);
-
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
-
   const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null);
-
   const [searchTerm, setSearchTerm] = useState("");
-
-  /* ASSIGNED IDS */
 
   const assignedServiceIds = new Set(
     selectedProfessional
@@ -46,8 +40,6 @@ export default function ServiceProfessionalPage() {
       )
       : [],
   );
-
-  // FILTER SUPER CATEGORIES
   const filteredSuperCategories =
     superCategories
       ?.map((superCat: any) => ({
@@ -83,7 +75,6 @@ export default function ServiceProfessionalPage() {
     return selectedSubCategory?.services || [];
   }, [selectedSuperCategory, selectedSubCategory]);
 
-  /* ALL SERVICES */
   const allServices = useMemo(() => {
     return (
       filteredSuperCategories?.flatMap((superCat: any) =>
@@ -92,11 +83,8 @@ export default function ServiceProfessionalPage() {
     );
   }, [filteredSuperCategories]);
 
-  /* FILTERED SERVICES */
-
   const servicesToShow = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
-
     if (term) {
       return allServices.filter((svc: any) => {
         return (
@@ -105,31 +93,24 @@ export default function ServiceProfessionalPage() {
         );
       });
     }
-
     return servicesToDisplay;
   }, [searchTerm, allServices, servicesToDisplay]);
 
-  /* TAX */
 
   const hasActiveTax = (svc: Service): boolean => {
     return svc.taxRows?.some((tax: TaxRow) => tax.isActive) || false;
   };
 
-  /* TOTAL */
-
   const totalPrice = selectedServices.reduce((sum: number, s: ServiceItem) => {
     const price = Number(s.price || s.min_price || 0);
-
     return sum + price * s.qty;
   }, 0);
 
   useEffect(() => {
     if (!filteredSuperCategories?.length) return;
-
     const firstSuperCategory = filteredSuperCategories.find((superCat: any) =>
       superCat?.categories?.some((cat: any) => cat?.services?.length > 0),
     );
-
     if (firstSuperCategory && !selectedSuperCategory) {
       setSelectedSuperCategory(firstSuperCategory);
       setSelectedSubCategory(null);
@@ -181,7 +162,6 @@ export default function ServiceProfessionalPage() {
             </div>
           </div>
         </div>
-        {/* SUPER CATEGORIES */}
         <div
           ref={superCategoryScrollRef}
           onWheel={(e) => {
@@ -206,7 +186,6 @@ export default function ServiceProfessionalPage() {
             </button>
           ))}
         </div>
-        {/* SUB CATEGORIES */}
         {selectedSuperCategory?.categories?.some(
           (cat: any) => cat?.services?.length > 0,
         ) && (
@@ -274,6 +253,9 @@ export default function ServiceProfessionalPage() {
                                   : undefined,
                               }),
                             );
+                          }
+                          if (window.innerWidth > 991) {
+                            dispatch(setSidebarOpen(true))
                           }
                         }}
                         className={`aaravpos-service-card ${isSelected ? "active" : ""}`}

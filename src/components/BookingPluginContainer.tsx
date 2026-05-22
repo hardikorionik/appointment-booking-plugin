@@ -12,6 +12,7 @@ import { applyTheme } from "@/utils/applyTheme";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import DefaultAppointment from "@/components/steps";
 import type { AppDispatch } from "@/store";
+import { persistor } from "@/store";
 
 export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = ({ bookingCode }) => {
     const dispatch = useDispatch<AppDispatch>();
@@ -93,6 +94,7 @@ export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = (
             applyTheme(theme);
         }
     }, [theme]);
+
 
     if (error) {
         return (<div className="arravpos-error-box">{error}</div>);
