@@ -8,6 +8,7 @@ import { payCustomerDirect, finalizeInvoice } from "@/services";
 import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import PaymentModal from "@/components/modals/PaymentModal";
 import ConsentModal from "@/components/modals/ConsentModal";
+import { setSidebarOpen } from "@/slices/themeSlice";
 import {
     isConsentRequiredService,
     getOnlineBookingRuleMethod,
@@ -602,6 +603,7 @@ export default function ConfirmPage(): JSX.Element {
                                         selected={payType === "person"}
                                         onClick={() => {
                                             setPayType("person")
+                                            dispatch(setSidebarOpen(true));
                                         }}
                                     />
                                     <PayOption
@@ -610,6 +612,7 @@ export default function ConfirmPage(): JSX.Element {
                                         selected={payType === "card"}
                                         onClick={() => {
                                             setPayType("card")
+                                            dispatch(setSidebarOpen(true));
                                         }}
                                     />
                                 </div>
