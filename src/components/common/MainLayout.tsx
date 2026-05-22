@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ChevronLeft } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { setSidebarOpen } from "@/slices/themeSlice";
 import { MainLayoutProps } from "@/types";
 import type { AppDispatch } from "@/store";
@@ -11,6 +11,7 @@ export default function MainLayout({
 }: MainLayoutProps) {
     const dispatch = useDispatch<AppDispatch>();
     const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
+    const { selectedServices } = useSelector((state: any) => state.booking.service);
     return (
         <div className="aaravpos-main-layout">
             <div className={isOpenSidebar ? "aaravpos-layout-wrapper" : ""}>
@@ -19,9 +20,12 @@ export default function MainLayout({
                     {renderButton}
                 </main>
                 <aside className={`aaravpos-sidebar ${isOpenSidebar ? "open" : ""}`}>
-                    {!isOpenSidebar && <button className="aaravpos-cart-btn" onClick={() => dispatch(setSidebarOpen(true))}>
-                        <ChevronLeft size={20} />
-                    </button>}
+                    {!isOpenSidebar &&
+                        <button className="aaravpos-cart-btn" onClick={() => dispatch(setSidebarOpen(true))}>
+                            <span className="aaravpos-count">{selectedServices?.length}</span>
+                            <ShoppingCart size={18} />
+                        </button>
+                    }
                     {sidebar}
                 </aside>
             </div>

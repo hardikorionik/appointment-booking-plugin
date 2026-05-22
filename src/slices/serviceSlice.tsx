@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ServiceState, Category, Staff } from "@/types";
 
 const initialState: ServiceState = {
-  // standaloneCategories: [],
   superCategories: [],
   staff: [],
   selectedCategory: null,
@@ -17,12 +16,10 @@ const serviceSlice = createSlice({
     setServicePayload: (
       state,
       action: PayloadAction<{
-        // standaloneCategories: Category[];
         superCategories: Category[];
         staff: Staff[];
       }>
     ) => {
-      // state.standaloneCategories = action.payload.standaloneCategories;
       state.superCategories = action.payload.superCategories;
       state.staff = action.payload.staff;
     },
@@ -70,7 +67,12 @@ const serviceSlice = createSlice({
     toggleProfessional: (state, action) => {
       state.selectedProfessional = action.payload;
     },
-    clearServices: () => initialState,
+    clearSelectedServices: (state) => {
+      state.selectedServices = [];
+    },
+    clearSelectedProfessional: (state) => {
+      state.selectedProfessional = null;
+    },
   },
 });
 
@@ -78,7 +80,8 @@ export const {
   setServicePayload,
   setCategory,
   toggleService,
-  clearServices,
+  clearSelectedServices,
+  clearSelectedProfessional,
   incrementService,
   decrementService,
   toggleProfessional,

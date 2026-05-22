@@ -101,6 +101,21 @@
   margin-top: auto;
 }
 
+.aaravpos-count {
+  position: absolute;
+  top: -5px;
+  left: -14px;
+  background: var(--btn-bg, #000);
+  color: var(--btn-text, #fff);
+  border-radius: 50%;
+  height: 22px;
+  width: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
 /* COMMON BUTTON */
 .aaravpos-btn {
   gap: 8px;
@@ -181,8 +196,8 @@
 
 .aaravpos-cart-btn {
   position: absolute;
-  left: -33px;
-  padding: 6px;
+  left: -36px;
+  padding: 9px;
   top: 0px;
   background: var(--btn-bg);
   color: var(--btn-text, #ffffff);
@@ -191,6 +206,9 @@
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* =========================
@@ -293,7 +311,7 @@
   display: flex;
   flex-direction: column;
   animation: aaravposFadeIn 0.25s ease;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .aaravpos-sidebar-mobile-content {

@@ -64,6 +64,14 @@ const breadcrumbsSlice = createSlice({
             state.currentStep = "services";
             state.completedSteps = ["services"];
         },
+        resetCompletedStepsFrom: (state, action) => {
+            const targetStep = action.payload as Step;
+            const steps = getStepsOrder(state.isOrder);
+            const targetIndex = steps.indexOf(targetStep);
+            state.completedSteps = state.completedSteps.filter((step: any) => {
+                return (steps.indexOf(step) <= targetIndex);
+            });
+        },
     },
 });
 
@@ -74,6 +82,7 @@ export const {
     nextStep,
     prevStep,
     clearSteps,
+    resetCompletedStepsFrom
 } = breadcrumbsSlice.actions;
 
 

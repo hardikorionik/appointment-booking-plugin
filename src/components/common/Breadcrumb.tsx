@@ -8,13 +8,38 @@ import {
   Info,
   CheckCircle2,
 } from "lucide-react";
-import { goToStep } from "@/slices/breadcrumbSlice";
+import { goToStep, resetCompletedStepsFrom } from "@/slices/breadcrumbSlice";
 import { persistor } from "@/store";
 import { useWindowSize } from "@/hooks/useWindowSize";
 import { StepItem } from "@/types";
 import type { RootState, AppDispatch } from "@/store";
 import { clearBooking } from "@/slices/outletSlice";
-import { setSidebarOpen } from "@/slices/themeSlice";
+import { clearSlots } from "@/slices/slotSlice";
+import { clearSelectedServices, clearSelectedProfessional } from "@/slices/serviceSlice";
+import { resetAppointment } from "@/slices/appointmentSlice";
+
+type StepPage =
+  | "services"
+  | "professionals"
+  | "time"
+  | "details"
+  | "confirm";
+
+const SERVICE_RESET_MAP = {
+  services: [clearSelectedProfessional, clearSlots, resetAppointment],
+  professionals: [clearSelectedProfessional, clearSlots, resetAppointment],
+  time: [clearSlots, resetAppointment],
+  details: [resetAppointment],
+  confirm: [],
+};
+
+const NORMAL_RESET_MAP = {
+  professionals: [clearSlots, clearSelectedServices, resetAppointment],
+  services: [clearSelectedServices, clearSlots, resetAppointment],
+  time: [clearSlots, resetAppointment],
+  details: [resetAppointment],
+  confirm: [],
+};
 
 const SERVICE_STEPS: StepItem[] = [
   {
@@ -83,7 +108,7 @@ export default function Breadcrumb() {
   const { currentStep, completedSteps } = useSelector(
     (state: RootState) => state.booking.breadcrumbs,
   );
-  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
+  const resetMap = isService ? SERVICE_RESET_MAP : NORMAL_RESET_MAP;
   const steps = isService ? SERVICE_STEPS : STEPS;
   const currentIndex = steps.findIndex((s) => s.page === currentStep);
 
@@ -123,14 +148,7 @@ export default function Breadcrumb() {
           </span>
         </div>
       ) : (
-        <div
-          className="aaravpos-desktop-stepper"
-          onClick={() => {
-            if (!isOpenSidebar) {
-              dispatch(setSidebarOpen(true));
-            }
-          }}
-        >
+        <div className="aaravpos-desktop-stepper" >
           {outlets.length > 1 && <button
             onClick={goToPrev}
             className="aaravpos-desktop-back-btn"
@@ -147,7 +165,15 @@ export default function Breadcrumb() {
                   key={step.page}
                   onClick={() => {
                     if (!isClickable) return;
-                    dispatch(goToStep(step.page));
+                    const targetStep = step.page as StepPage;
+                    const targetIndex = steps.findIndex((s) => s.page === targetStep);
+                    if (targetIndex < currentIndex) {
+                      resetMap[targetStep]?.forEach((action) => { dispatch(action()) });
+                      dispatch(resetCompletedStepsFrom(targetStep));
+                    }
+                    dispatch(
+                      goToStep(targetStep)
+                    );
                   }}
                   className={`aaravpos-step-btn ${isClickable ? "clickable" : "disabled"} ${isActive ? "active" : "inactive"}`}
                 >

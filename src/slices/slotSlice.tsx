@@ -24,24 +24,22 @@ const slotSlice = createSlice({
     name: "slots",
     initialState,
     reducers: {
+        setSelectedSlots: (state, action) => {
+            state.selectedSlotIndexes = action.payload.indexes;
+            state.selectedSlotIds = action.payload.ids;
+        },
+        setSelectedDate: (state, action) => {
+            state.selectedDate = action.payload;
+        },
+        setSelectedTime: (state, action) => {
+            state.selectedTime = action.payload;
+        },
         clearSlots: (state) => {
             state.slots = { morning: [], afternoon: [], evening: [] };
             state.selectedSlotIndexes = [];
             state.selectedSlotIds = [];
             state.selectedDate = null;
             state.selectedTime = null;
-        },
-        setSelectedSlots: (state, action) => {
-            state.selectedSlotIndexes = action.payload.indexes;
-            state.selectedSlotIds = action.payload.ids;
-        },
-
-        setSelectedDate: (state, action) => {
-            state.selectedDate = action.payload;
-        },
-
-        setSelectedTime: (state, action) => {
-            state.selectedTime = action.payload;
         },
     },
     extraReducers: (builder) => {
