@@ -323,13 +323,15 @@ export default function DetailsPage(): JSX.Element {
                                 />
                             </div>
                         </div>
-                        <button onClick={handleSubmit(onSubmit)} disabled={isSubmitting} className="aaravpos-form-btn">
-                            <span className="aaravpos-btn-content">
-                                {isSubmitting
-                                    ? "Submitting..."
-                                    : "Confirm Details"}
-                            </span>
-                        </button>
+                        <div className="aaravpos-center-items">
+                            <button onClick={handleSubmit(onSubmit)} disabled={isSubmitting} className="aaravpos-form-btn">
+                                <span className="aaravpos-btn-content">
+                                    {isSubmitting
+                                        ? "Submitting..."
+                                        : "Confirm Details"}
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </form>
