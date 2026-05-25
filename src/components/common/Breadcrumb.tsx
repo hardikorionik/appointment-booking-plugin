@@ -152,6 +152,7 @@ export default function Breadcrumb() {
     (total: number, item: any) => { return (total + item.qty); },
     0
   );
+  const hasMultipleOutlets = Array.isArray(outlets) && outlets.length > 1;
 
   return (
     <>
@@ -169,9 +170,9 @@ export default function Breadcrumb() {
         </div>
       ) : (
         <div className="aaravpos-desktop-stepper">
-          {outlets.length > 1 && <button onClick={goToOutletsPrev} className="aaravpos-desktop-back-btn">
+          <button onClick={hasMultipleOutlets ? goToOutletsPrev : goToPrev} className="aaravpos-desktop-back-btn">
             <ChevronLeft size={20} />
-          </button>}
+          </button>
           <nav className="aaravpos-step-nav">
             {steps.map((step: any, i: number) => {
               const isActive = currentStep === step.page;

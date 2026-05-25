@@ -39,7 +39,7 @@ interface OrderSidebarProps {
   totalConsents?: number;
   checkingConsent?: boolean;
   loading?: boolean;
-  isBookingDisabled?: boolean;
+  // isBookingDisabled?: boolean;
 }
 
 export default function OrderSidebar({
@@ -54,7 +54,7 @@ export default function OrderSidebar({
   totalConsents = 0,
   checkingConsent = false,
   loading = false,
-  isBookingDisabled = false,
+  // isBookingDisabled = false,
 }: OrderSidebarProps): JSX.Element {
   const dispatch = useDispatch<AppDispatch>();
 
@@ -178,7 +178,7 @@ export default function OrderSidebar({
     buttonText,
   ]);
 
-  const isButtonDisabled = isBookingDisabled || loading || checkingConsent || !timeRange;
+  // const isButtonDisabled = isBookingDisabled || loading || checkingConsent || !timeRange;
 
   useEffect(() => {
     const calculateHeight = (): void => {
