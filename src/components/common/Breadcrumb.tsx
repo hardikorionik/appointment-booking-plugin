@@ -5,7 +5,7 @@ import {
   Scissors,
   User,
   Clock3,
-  Info,
+  // Info,
   CheckCircle2,
   ShoppingCart
 } from "lucide-react";
@@ -24,14 +24,14 @@ type StepPage =
   | "services"
   | "professionals"
   | "time"
-  | "details"
+  // | "details"
   | "confirm";
 
 const SERVICE_RESET_MAP = {
   services: [clearSelectedProfessional, clearSlots, resetAppointment],
   professionals: [clearSelectedProfessional, clearSlots, resetAppointment],
   time: [clearSlots, resetAppointment],
-  details: [resetAppointment],
+  // details: [resetAppointment],
   confirm: [],
 };
 
@@ -39,7 +39,7 @@ const NORMAL_RESET_MAP = {
   professionals: [clearSlots, clearSelectedServices, resetAppointment],
   services: [clearSelectedServices, clearSlots, resetAppointment],
   time: [clearSlots, resetAppointment],
-  details: [resetAppointment],
+  // details: [resetAppointment],
   confirm: [],
 };
 
@@ -59,11 +59,11 @@ const SERVICE_STEPS: StepItem[] = [
     page: "time",
     icon: <Clock3 size={16} />,
   },
-  {
-    label: "Details",
-    page: "details",
-    icon: <Info size={16} />,
-  },
+  // {
+  //   label: "Details",
+  //   page: "details",
+  //   icon: <Info size={16} />,
+  // },
   {
     label: "Confirmation",
     page: "confirm",
@@ -86,11 +86,11 @@ const STEPS: StepItem[] = [
     page: "time",
     icon: <Clock3 size={16} />,
   },
-  {
-    label: "Details",
-    page: "details",
-    icon: <Info size={16} />,
-  },
+  // {
+  //   label: "Details",
+  //   page: "details",
+  //   icon: <Info size={16} />,
+  // },
   {
     label: (
       <span className="flex items-center gap-1">
