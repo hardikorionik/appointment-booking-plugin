@@ -58,6 +58,7 @@ const initialState: AppointmentSliceState = {
   userDetails: null,
   tipPct: 0,
   bookingMode: "booking",
+  payType: "",
 };
 
 const appointmentSlice = createSlice({
@@ -70,6 +71,9 @@ const appointmentSlice = createSlice({
     },
     setUserDetails: (state, action: PayloadAction<UserDetails>) => {
       state.userDetails = action.payload;
+    },
+    setPayType: (state, action) => {
+      state.payType = action.payload;
     },
     setTips: (state, action: PayloadAction<number>) => {
       state.tipPct = action.payload;
@@ -125,6 +129,7 @@ export const {
   setTips,
   setAppointmentId,
   clearUserDetails,
+  setPayType
 } = appointmentSlice.actions;
 
 export default appointmentSlice.reducer;

@@ -695,19 +695,14 @@ export interface ConfirmDateType {
 export interface AppointmentSliceState {
   loading: boolean;
   success: boolean;
-
   error: string | null;
-
   data: AppointmentResponse | null;
-
   appointmentId: string | null;
   customerId: string | null;
-
   userDetails: UserDetails | null;
-
   tipPct: number;
-
   bookingMode: BookingMode;
+  payType: string;
 }
 
 export interface OutletRootState {

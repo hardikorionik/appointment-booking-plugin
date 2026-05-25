@@ -121,28 +121,28 @@ export default function Breadcrumb() {
     dispatch({ type: "RESET_ALL" });
   };
 
-  const goToPrev = () => {
+  const handlePrevNavigation = (): void => {
     if (currentIndex === 0 && outlets.length > 1) {
       clearAllData();
       dispatch(clearBooking());
       return;
     }
+
     if (currentIndex <= 0) return;
+
     const prevStep = steps[currentIndex - 1];
     const targetStep = prevStep.page as StepPage;
-    resetMap[targetStep]?.forEach((action) => { dispatch(action()) });
+
+    resetMap[targetStep]?.forEach((action) => {
+      dispatch(action());
+    });
+
     dispatch(resetCompletedStepsFrom(targetStep));
     dispatch(goToStep(targetStep));
   };
 
-  const goToOutletsPrev = () => {
-    if (currentIndex === 0 && outlets.length > 1) {
-      clearAllData();
-      dispatch(clearBooking());
-      return;
-    }
-    if (currentIndex <= 0) return;
-  }
+  const goToPrev = handlePrevNavigation;
+  const goToOutletsPrev = handlePrevNavigation;
 
   const currentStepData = steps[currentIndex];
 

@@ -80,7 +80,7 @@ export default function SuccessPage(): JSX.Element {
     const { staff, outlet, services } = appointment;
 
     const totalBasePrice: number = services?.reduce(
-        (acc: number, s: any) => acc + Number(s.price || 0),
+        (acc: number, s: any) => acc + Number(s.price || s.min_price || 0),
         0,
     );
 

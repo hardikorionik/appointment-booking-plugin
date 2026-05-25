@@ -163,8 +163,7 @@ export default function ServicesPage() {
                   setSelectedSuperCategory(superCat);
                   setSelectedSubCategory(null);
                 }}
-                className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id ? "active" : ""
-                  }`}
+                className={`aaravpos-supercategory-btn ${selectedSuperCategory?.id === superCat.id ? "active" : ""}`}
               >
                 <h3 className="aaravpos-supercategory-title">
                   {superCat?.isStandAloneCategory
@@ -188,8 +187,7 @@ export default function ServicesPage() {
             >
               <button
                 onClick={() => setSelectedSubCategory(null)}
-                className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""
-                  }`}
+                className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""}`}
               >
                 All Services (
                 {selectedSuperCategory?.categories?.reduce(
@@ -204,8 +202,7 @@ export default function ServicesPage() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedSubCategory(cat)}
-                    className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""
-                      }`}
+                    className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""}`}
                   >
                     {cat.name} ({cat.services.length})
                   </button>
@@ -311,15 +308,12 @@ export default function ServicesPage() {
                             <Minus size={14} />
                           </button>
                           <span className="aaravpos-service-qty">
-                            {selectedServices.find((s: any) => s.id === svc.id)
-                              ?.qty || 0}
+                            {selectedServices.find((s: any) => s.id === svc.id)?.qty || 0}
                           </span>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
-                              const exists = selectedServices.find(
-                                (s: any) => s.id === svc.id,
-                              );
+                              const exists = selectedServices.find((s: any) => s.id === svc.id);
                               if (!exists) {
                                 dispatch(toggleService(svc));
                               } else {

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Search, Minus, Plus, X } from "lucide-react";
+import { Search, Minus, Plus, X, ChevronRight } from "lucide-react";
 import {
   toggleService,
   incrementService,
@@ -126,7 +126,17 @@ export default function ServiceProfessionalPage() {
           goToStep={() => dispatch(nextStep())}
         />
       }
-      renderButton={null}
+      renderButton={servicesToShow?.length > 0 ? (
+        <button
+          onClick={() => dispatch(nextStep())}
+          disabled={!selectedServices.length}
+          className="aaravpos-btn"
+        >
+          <span className="aaravpos-btn-content">
+            Choose Professional <ChevronRight size={16} />
+          </span>
+        </button>
+      ) : null}
     >
       <Breadcrumb />
       <div className="aaravpos-margin-top-20">

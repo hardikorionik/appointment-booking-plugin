@@ -116,7 +116,7 @@ export default function OrderSidebar({
       };
     });
   }, [selectedProfessional, staff, selectedServices]);
-  const totalBasePrice = selectedStaffServices.reduce((sum, s) => sum + Number(s.price) * (s.qty || 1), 0);
+  const totalBasePrice = selectedStaffServices.reduce((sum, s) => sum + Number(s.price || s.min_price) * (s.qty || 1), 0);
   const totalDuration = selectedStaffServices.reduce((sum, s) => sum + Number(s.duration) * (s.qty || 1), 0);
   const requiredSlots = Math.ceil(totalDuration / SLOT_INTERVAL);
   const formatTimeRange = (startIndex: number): string => {
@@ -442,7 +442,7 @@ export default function OrderSidebar({
           </div>
           <button
             onClick={onButtonClick}
-            disabled={isButtonDisabled}
+            // disabled={isButtonDisabled}
             className="aaravpos-common-btn aaravpos-padding-btn"
             style={{ height: 42 }}
           >
