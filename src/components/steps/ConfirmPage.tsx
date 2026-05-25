@@ -463,6 +463,7 @@ export default function ConfirmPage(): JSX.Element {
         if (!payType) {
             return void toast.error("Select payment method");
         }
+        dispatch(setSidebarOpen(true))
     };
 
     const getCardType = (number: string): CardType => {
@@ -751,7 +752,7 @@ export default function ConfirmPage(): JSX.Element {
                                 </div>
                             </div>
                             {payType &&
-                                <form className="aaravpos-tp-10">
+                                <form className="aaravpos-tp-10" onSubmit={handleSubmit(onFormSubmit)}>
                                     <div className="arravpos-details-grid">
                                         <div className="arravpos-form-group">
                                             <label className="arravpos-form-label" htmlFor="phone">
@@ -878,10 +879,7 @@ export default function ConfirmPage(): JSX.Element {
                                     </div>
                                     <div className="aaravpos-center-items">
                                         <button
-                                            onClick={() => {
-                                                handleSubmit(onFormSubmit)
-                                                dispatch(setSidebarOpen(true))
-                                            }}
+                                            type="submit"
                                             disabled={isSubmitting}
                                             className="aaravpos-form-btn"
                                         >
