@@ -145,7 +145,7 @@ export default function Professionals() {
             </p>
           </div>
         )}
-        <div className="aaravpos-staff-wrapper">
+        {filteredStaff?.length > 0 && <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">
             {filteredStaff.map((p: Staff, index: number) => {
               const { isOnLeave, availableFrom } = getLeaveInfo(p);
@@ -184,7 +184,7 @@ export default function Professionals() {
               );
             })}
           </div>
-        </div>
+        </div>}
       </div>
     </MainLayout >
   );
