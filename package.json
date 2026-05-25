@@ -1,7 +1,7 @@
 {
   "name": "@aaravpos/appointment-booking-plugin",
   "version": "3.0.6",
-  "description": "A React component library built with Tailwind CSS v4 and TypeScript",
+  "description": "A React component library built with CSS v4 and TypeScript",
   "type": "module",
   "packageManager": "pnpm@10.33.0",
   "main": "./dist/index.cjs",
@@ -21,7 +21,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json --noEmit && vite build",
-    "build:css": "pnpm dlx @tailwindcss/cli -i src/styles.css -o dist/styles.css",
     "build:all": "pnpm run build && pnpm run build:css",
     "preview": "vite preview",
     "lint": "tsc -p tsconfig.json --noEmit",
@@ -31,7 +30,6 @@
   "keywords": [
     "react",
     "appointment",
-    "tailwindcss",
     "typescript",
     "plugin",
     "booking"
@@ -42,7 +40,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.2.4",
     "@types/lodash": "4.17.24",
     "@types/luxon": "3.7.1",
     "@types/node": "25.6.0",
@@ -53,7 +50,6 @@
     "esbuild": "0.28.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "tailwindcss": "^4.2.4",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
     "vite-plugin-dts": "^5.0.0"
@@ -64,7 +60,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.11.2",
-    "@tailwindcss/postcss": "4.2.4",
     "libphonenumber-js": "1.13.1",
     "lodash": "4.18.1",
     "lucide-react": "1.14.0",

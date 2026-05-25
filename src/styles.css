@@ -1527,7 +1527,7 @@
 
 .aaravpos-tip-btn-fixed {
   flex: none;
-  width: 64px;
+  width: 62px;
 }
 
 .aaravpos-tip-btn-active {
@@ -3339,10 +3339,6 @@
     height: 36px;
   }
 
-  /* .aaravpos-outlet-list-wrapper {
-        max-height: 85vh;
-    } */
-
   .aaravpos-desktop-stepper {
     display: flex;
     align-items: center;
@@ -3350,14 +3346,6 @@
     width: 100%;
   }
 
-  /* .arravpos-book-btn {
-    font-size: 16px;
-  } */
-
-  /* .arravpos-success-title {
-    font-size: 24px;
-  } */
-
   .aaravpos-services-wrapper.standalone {
     height: calc(100dvh - 300px);
   }
@@ -3365,11 +3353,6 @@
   .aaravpos-services-wrapper.standalone {
     height: calc(100dvh - 300px);
   }
-
-  /* .aaravpos-layout-wrapper {
-    grid-template-columns: minmax(0, 1fr) 350px;
-  } */
-
 
   .aaravpos-mobile-button {
     display: none;
@@ -3560,7 +3543,7 @@
   }
 
   .aaravpos-layout-wrapper {
-    grid-template-columns: minmax(0, 1fr) 360px;
+    grid-template-columns: minmax(0, 1fr) 290px;
   }
 
   .aaravpos-sidebar-mobile {
@@ -3581,7 +3564,6 @@
   .aaravpos-btn {
     display: block;
   }
-
 }
 
 @media (min-width: 1024px) {
@@ -3606,19 +3588,10 @@
     font-size: 20px;
   }
 
-  /* .arravpos-success-title {
-    font-size: 36px;
-  } */
-
   .aaravpos-header {
     flex-direction: row;
     align-items: center;
   }
-
-  /* 
-  .arravpos-success-motion {
-    padding: 48px;
-  } */
 
   .aaravpos-search-wrapper {
     max-width: 240px;
@@ -3638,32 +3611,11 @@
     gap: 32px;
   }
 
-  /* .aaravpos-services-wrapper.supercategory {
-    height: calc(100dvh - 390px);
-  } */
-
   .aaravpos-topbar {
     flex-direction: row;
     align-items: flex-end;
     gap: 32px;
   }
-
-  /* .aaravpos-services-wrapper {
-    padding-bottom: 16px;
-  } */
-
-  /* .aaravpos-services-wrapper.supercategory {
-    height: calc(100dvh - 390px);
-  } */
-
-  /* .aaravpos-layout-wrapper {
-    grid-template-columns: minmax(0, 1fr) 360px;
-  } */
-
-  /* 
-  .aaravpos-staff-wrapper {
-    padding-bottom: 16px;
-  } */
 
   .arravpos-details-scroll {
     padding-bottom: 16px;
@@ -3677,15 +3629,12 @@
     margin-bottom: 10px;
   }
 
-  .aaravpos-barber-sidebar {
-    display: none;
-  }
-
   .arravpos-booking-grid {
     flex-direction: column;
     gap: 20px;
   }
 }
+
 
 @media (min-width: 1280px) {
   .aaravpos-title {
@@ -3695,13 +3644,46 @@
   .aaravpos-outlet-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  .aaravpos-layout-wrapper {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+}
+
+@media (min-width: 1350px) {
+  .aaravpos-layout-wrapper {
+    grid-template-columns: minmax(0, 1fr) 250px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .aaravpos-layout-wrapper {
+    grid-template-columns: minmax(0, 1fr) 200px;
+  }
 }
 
 @media (min-width: 1536px) {
   .aaravpos-outlet-grid {
     grid-template-columns: repeat(5, 1fr);
   }
+
+  .aaravpos-layout-wrapper {
+    grid-template-columns: minmax(0, 1fr) 150px;
+  }
 }
+
+@media (min-width: 1710px) {
+  .aaravpos-layout-wrapper {
+    grid-template-columns: minmax(0, 1fr) 60px;
+  }
+}
+
+@media (min-width: 1840px) {
+  .aaravpos-layout-wrapper {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 
 /* =========================
    KEYFRAMES
