@@ -21,7 +21,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.json --noEmit && vite build",
-    "build:all": "pnpm run build && pnpm run build:css",
+    "build:all": "pnpm run build && pnpm run",
     "preview": "vite preview",
     "lint": "tsc -p tsconfig.json --noEmit",
     "prepublishOnly": "pnpm run build:all",
