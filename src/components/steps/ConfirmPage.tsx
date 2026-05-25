@@ -432,9 +432,7 @@ export default function ConfirmPage(): JSX.Element {
             phone: data?.phone ?? "",
         };
         dispatch(setUserDetails(payload));
-        if (!payType) {
-            return void toast.error("Select payment method");
-        }
+        if (!payType) { return void toast.error("Select payment method") }
         if (!selectedTime && bookingMode === "booking") {
             return void toast.error("Select time");
         }
