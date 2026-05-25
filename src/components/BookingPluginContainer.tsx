@@ -13,6 +13,19 @@ import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import DefaultAppointment from "@/components/steps";
 import type { AppDispatch } from "@/store";
 
+
+const OutletSkeleton = () => {
+    return (
+        <div className="aaravpos-skeleton-card">
+            <div className="aaravpos-skeleton-badge"></div>
+            <div className="aaravpos-skeleton-content">
+                <div className="aaravpos-skeleton-title"></div>
+                <div className="aaravpos-skeleton-text"></div>
+            </div>
+        </div>
+    );
+};
+
 export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = ({ bookingCode }) => {
     const dispatch = useDispatch<AppDispatch>();
     const outlets = useSelector((state: any) => state.booking.outletList.outlets);
@@ -98,16 +111,21 @@ export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = (
     if (error) {
         return (<div className="arravpos-error-box">{error}</div>);
     }
-    if (!outlets.length && loading) {
-        return (
-            <div className="aaravpos-loader-wrapper">
-                <div className="aaravpos-loader" />
-            </div>
-        );
-    }
+
     return (
         <div className="aaravpos-overflow-hidden">
-            {outlets.length > 1 && !outletId ? (
+            {loading ? (
+                <div className="arravpos-container">
+                    <div className="aaravpos-header">
+                        <div className="aaravpos-skeleton-outlet-title" />
+                    </div>
+                    <div className="aaravpos-outlet-grid">
+                        {Array.from({ length: 8 }).map((_, index) => (
+                            <OutletSkeleton key={index} />
+                        ))}
+                    </div>
+                </div>
+            ) : outlets.length > 1 && !outletId ? (
                 <ChooseYourOutlet
                     outlets={outlets}
                     onSelectOutlet={(data: Outlet) => {

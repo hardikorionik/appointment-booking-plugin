@@ -32,6 +32,20 @@ const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
 const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const SLOT_INTERVAL = 15;
 
+const SlotSkeleton = () => {
+  return (
+    <div className="aaravpos-timeslot-skeleton-wrapper">
+      {Array.from({ length: 3 }).map((_, sectionIndex) => (
+        <div key={sectionIndex} className="aaravpos-timeslot-skeleton-card">
+          <div className="aaravpos-timeslot-header">
+            <div className="aaravpos-timeslot-icon"></div>
+            <div className="aaravpos-timeslot-title"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 export default function TimePage(): JSX.Element {
 
   const dispatch = useDispatch<AppDispatch>();
@@ -402,9 +416,7 @@ export default function TimePage(): JSX.Element {
       </div>
       <div className="arravpos-scroll-area" style={loading ? { height: 300 } : {}}>
         {loading ? (
-          <div className="arravpos-loader-wrapper">
-            <div className="arravpos-loader" />
-          </div>
+          <SlotSkeleton />
         ) : (
           <>
             <SlotSection

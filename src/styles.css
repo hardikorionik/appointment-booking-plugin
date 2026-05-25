@@ -1038,30 +1038,6 @@
 }
 
 /* =========================
-   SKELETON CARD
-========================= */
-.aaravpos-skeleton-card {
-  position: relative;
-  height: 134px;
-  overflow: hidden;
-  border-radius: 4px;
-  background: #e0e0e0;
-}
-
-.aaravpos-skeleton-shimmer {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.5),
-      transparent);
-  animation: aaravpos-shimmer 1.2s infinite;
-}
-
-/* =========================
    PROFESSIONAL PAGE
 ========================= */
 .aaravpos-available-badge {
@@ -3685,9 +3661,153 @@
 }
 
 
+.aaravpos-timeslot-skeleton-wrapper {
+  width: 100%;
+  border-bottom: none;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.aaravpos-timeslot-skeleton-card {
+  padding: 16px 14px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  background: #fff;
+  margin-bottom: 12px;
+}
+
+.aaravpos-timeslot-skeleton-card:last-child {
+  margin-bottom: 0;
+}
+
+.aaravpos-timeslot-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.aaravpos-timeslot-icon,
+.aaravpos-timeslot-title,
+.aaravpos-timeslot-line {
+  position: relative;
+  overflow: hidden;
+  background: #ececec;
+}
+
+.aaravpos-timeslot-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.aaravpos-timeslot-title {
+  width: 110px;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.aaravpos-timeslot-line {
+  width: 100%;
+  height: 12px;
+  border-radius: 4px;
+  margin-top: 16px;
+}
+
+/* shimmer */
+.aaravpos-timeslot-icon::after,
+.aaravpos-timeslot-title::after,
+.aaravpos-timeslot-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent);
+  animation: aaravpos-skeleton-shimmer 1.2s infinite;
+}
+
+/* Skeleton Loading Card */
+.aaravpos-skeleton-card {
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.aaravpos-skeleton-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52px;
+  height: 16px;
+  border-radius: 4px;
+  background: #f1f1f1;
+}
+
+.aaravpos-skeleton-title {
+  width: 70%;
+  height: 24px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+  background: #f1f1f1;
+}
+
+.aaravpos-skeleton-outlet-title {
+  width: 30%;
+  height: 44px;
+  margin-bottom: 10px;
+  background: #f1f1f1;
+}
+
+.aaravpos-skeleton-text {
+  width: 100%;
+  height: 40px;
+  border-radius: 4px;
+  margin-bottom: 0px;
+  background: #f1f1f1;
+}
+
+
+/* Shimmer Effect */
+.aaravpos-skeleton-title,
+.aaravpos-skeleton-text {
+  position: relative;
+  overflow: hidden;
+}
+
+.aaravpos-skeleton-title::after,
+.aaravpos-skeleton-text::after,
+.aaravpos-skeleton-badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150px;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent);
+  animation: aaravpos-skeleton-shimmer 1.2s infinite;
+}
+
 /* =========================
    KEYFRAMES
 ========================= */
+
+@keyframes aaravpos-skeleton-shimmer {
+  100% {
+    left: 100%;
+  }
+}
 
 @keyframes aaravpos-shimmer {
   0% {
