@@ -758,10 +758,17 @@ export default function ConfirmPage(): JSX.Element {
                                                 name="phone"
                                                 rules={{
                                                     validate: (value) => {
-                                                        const hasPhone = !!normalizePhone(value);
+                                                        const phone = normalizePhone(value);
+                                                        const hasPhone = !!phone;
                                                         const hasEmail = !!emailValue?.trim();
                                                         if (!hasPhone && !hasEmail) {
                                                             return "Enter phone or email";
+                                                        }
+                                                        if (hasPhone && phone.length < 8) {
+                                                            return "Phone number must be minimum 8 digits";
+                                                        }
+                                                        if (hasPhone && phone.length > 16) {
+                                                            return "Phone number must be maximum 16 digits";
                                                         }
                                                         if (hasPhone && !isValidPhoneNumber(value)) {
                                                             return "Enter valid phone number";
