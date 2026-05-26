@@ -825,7 +825,7 @@ export default function ConfirmPage(): JSX.Element {
                                                         if (!hasEmail && !hasPhone) {
                                                             return "Enter phone or email";
                                                         }
-                                                        if (hasEmail && !/^\S+@\S+\.\S+$/.test(value)) {
+                                                        if (hasEmail && !/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(value)) {
                                                             return "Invalid email";
                                                         }
                                                         return true;
@@ -846,9 +846,9 @@ export default function ConfirmPage(): JSX.Element {
                                                 placeholder="Email address"
                                                 className="arravpos-custom-input"
                                             />
-                                            {errors.firstName && (
+                                            {errors.email && (
                                                 <p className="arravpos-error-text">
-                                                    {errors.firstName.message}
+                                                    {errors.email.message}
                                                 </p>
                                             )}
                                         </div>
@@ -911,6 +911,11 @@ export default function ConfirmPage(): JSX.Element {
                                                 placeholder="Last Name"
                                                 className="arravpos-custom-input"
                                             />
+                                            {errors.lastName && (
+                                                <p className="text-red-500 text-sm mt-1">
+                                                    {errors.lastName.message}
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="aaravpos-center-items">
