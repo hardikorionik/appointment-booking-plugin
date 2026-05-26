@@ -164,7 +164,8 @@ export default function ConfirmPage(): JSX.Element {
             phone: "",
             email: "",
         },
-        mode: "onSubmit",
+        mode: "onChange",
+        reValidateMode: "onChange",
     });
 
     useEffect(() => {
@@ -809,7 +810,17 @@ export default function ConfirmPage(): JSX.Element {
                                             </label>
                                             <input
                                                 id="email"
+                                                minLength={10}
+                                                maxLength={50}
                                                 {...register("email", {
+                                                    minLength: {
+                                                        value: 10,
+                                                        message: "Minimum 2 characters required",
+                                                    },
+                                                    maxLength: {
+                                                        value: 50,
+                                                        message: "Email must be maximum 50 characters",
+                                                    },
                                                     validate: (value) => {
                                                         const hasEmail = !!value?.trim();
                                                         const hasPhone = !!normalizePhone(phoneValue);
@@ -841,11 +852,21 @@ export default function ConfirmPage(): JSX.Element {
                                             </label>
                                             <input
                                                 id="first_name"
+                                                minLength={2}
+                                                maxLength={30}
                                                 {...register("firstName", {
                                                     required: "First name required",
                                                     pattern: {
                                                         value: /^[A-Za-z\s]+$/,
                                                         message: "Only letters are allowed",
+                                                    },
+                                                    minLength: {
+                                                        value: 2,
+                                                        message: "Minimum 2 characters required",
+                                                    },
+                                                    maxLength: {
+                                                        value: 30,
+                                                        message: "Maximum 30 characters allowed",
                                                     },
                                                 })}
                                                 autoComplete="given-name"
@@ -865,6 +886,8 @@ export default function ConfirmPage(): JSX.Element {
                                             <input
                                                 id="last_name"
                                                 autoComplete="family-name"
+                                                minLength={2}
+                                                maxLength={20}
                                                 {...register("lastName")}
                                                 placeholder="Last Name"
                                                 className="arravpos-custom-input"
