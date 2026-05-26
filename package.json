@@ -1,6 +1,6 @@
 {
   "name": "@aaravpos/appointment-booking-plugin",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A React component library built with CSS v4 and TypeScript",
   "type": "module",
   "packageManager": "pnpm@10.33.0",
