@@ -150,46 +150,47 @@ export default function Professionals() {
           <div className="aaravpos-staff-grid">
             <ProfessionalCardSkeleton />
           </div>
-        ) : <>{filteredStaff?.length > 0 && <div className="aaravpos-staff-wrapper">
-          <div className="aaravpos-staff-grid">
-            {filteredStaff.map((p: Staff, index: number) => {
-              const { isOnLeave, availableFrom } = getLeaveInfo(p);
-              return (
-                <div
-                  key={index}
-                  onClick={() => {
-                    dispatch(toggleProfessional(p));
-                    dispatch(setSelectedDate(null));
-                    dispatch(nextStep())
-                  }}
-                  className={`aaravpos-pro-card  ${selectedProfessional?.id === p.id ? "active" : ""}`}
-                >
-                  <div className="aaravpos-display-flex">
-                    {p.imageUrl ? (
-                      <img src={p.imageUrl} alt={p.name} className="aaravpos-pro-image" />
-                    ) : (
-                      <div className="aaravpos-pro-avatar" style={{ background: p.color || "#111", }}>
-                        {getUserName(p.name)}
+        ) : <>
+          {filteredStaff?.length > 0 && <div className="aaravpos-staff-wrapper">
+            <div className="aaravpos-staff-grid">
+              {filteredStaff.map((p: Staff, index: number) => {
+                const { isOnLeave, availableFrom } = getLeaveInfo(p);
+                return (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      dispatch(toggleProfessional(p));
+                      dispatch(setSelectedDate(null));
+                      dispatch(nextStep())
+                    }}
+                    className={`aaravpos-pro-card  ${selectedProfessional?.id === p.id ? "active" : ""}`}
+                  >
+                    <div className="aaravpos-display-flex">
+                      {p.imageUrl ? (
+                        <img src={p.imageUrl} alt={p.name} className="aaravpos-pro-image" />
+                      ) : (
+                        <div className="aaravpos-pro-avatar" style={{ background: p.color || "#111", }}>
+                          {getUserName(p.name)}
+                        </div>
+                      )}
+                      <div className="aaravpos-pro-info">
+                        <p className="aaravpos-pro-name">{p.name}</p>
+                        <p className="aaravpos-pro-type">{p.staff_type}</p>
+                      </div>
+                    </div>
+                    {isOnLeave && availableFrom && (
+                      <div className="aaravpos-available-badge">
+                        <span className="aaravpos-available-dot" />
+                        <p className="aaravpos-available-text">
+                          Available from {availableFrom}
+                        </p>
                       </div>
                     )}
-                    <div className="aaravpos-pro-info">
-                      <p className="aaravpos-pro-name">{p.name}</p>
-                      <p className="aaravpos-pro-type">{p.staff_type}</p>
-                    </div>
                   </div>
-                  {isOnLeave && availableFrom && (
-                    <div className="aaravpos-available-badge">
-                      <span className="aaravpos-available-dot" />
-                      <p className="aaravpos-available-text">
-                        Available from {availableFrom}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>}</>}
+                );
+              })}
+            </div>
+          </div>}</>}
       </div>
     </MainLayout >
   );

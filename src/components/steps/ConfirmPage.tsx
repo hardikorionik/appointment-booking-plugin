@@ -3,7 +3,7 @@ import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 import { DateTime } from "luxon";
 import { useSelector, useDispatch } from "react-redux";
-import { Check, CalendarDays, CreditCard, Store } from "lucide-react";
+import { Check, CalendarDays, Store } from "lucide-react";
 import { debounce } from "lodash";
 import PhoneInput, { isValidPhoneNumber, } from "react-phone-number-input";
 import type { CountryCode } from "libphonenumber-js";
@@ -112,9 +112,10 @@ export default function ConfirmPage(): JSX.Element {
         year: Number(selectedDate?.year ?? todayDate.year),
     };
 
+
     const selectedStartIndex: number | undefined = selectedSlotIndexes?.[0];
     const timeRange: string | null = selectedStartIndex !== undefined ? formatTimeRange(selectedStartIndex) : null;
-    const dateStr: string | null = timeRange ? `${MONTH_NAMES[safeDate.month]} ${safeDate.day} at ${timeRange}` : null;
+    const dateStr: string | null = timeRange ? `${MONTH_NAMES[safeDate.month - 1]} ${safeDate.day} at ${timeRange}` : null;
 
     const totalBasePrice: number = selectedStaffServices.reduce((sum, s) => sum + Number(s.price || s.min_price) * (s.qty ?? 1), 0);
     const taxAmt: number = selectedStaffServices.reduce((sum, s) => sum + s.tax, 0);

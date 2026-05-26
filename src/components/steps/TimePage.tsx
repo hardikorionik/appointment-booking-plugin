@@ -36,14 +36,8 @@ export default function TimePage(): JSX.Element {
 
   const dispatch = useDispatch<AppDispatch>();
   const [visibleCount, setVisibleCount] = useState<number>(11);
-  const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: OutletRootState) => state.booking.service,
-  );
-
-  const { tenantId, timeZone } = useSelector(
-    (state: OutletRootState) => state.booking?.outletDetails,
-  );
-
+  const { staff, selectedServices, selectedProfessional } = useSelector((state: OutletRootState) => state.booking.service);
+  const { tenantId, timeZone } = useSelector((state: OutletRootState) => state.booking?.outletDetails);
   const { selectedSlotIndexes, selectedDate, selectedTime, slots, loading } = useSelector((state: OutletRootState) => state.booking.slots);
   const [calOpen, setCalOpen] = useState<boolean>(false);
   const [stripStart, setStripStart] = useState<number>(0);
@@ -130,12 +124,7 @@ export default function TimePage(): JSX.Element {
 
   useEffect(() => {
     if (!selectedDate || !dates.length) return;
-    const selectedIndex = dates.findIndex(
-      (d) =>
-        d.day === selectedDate.day &&
-        d.month === selectedDate.month &&
-        d.year === selectedDate.year,
-    );
+    const selectedIndex = dates.findIndex((d) => d.day === selectedDate.day && d.month === selectedDate.month && d.year === selectedDate.year);
     if (selectedIndex === -1) return;
     const newStart = Math.max(
       0,
@@ -264,9 +253,9 @@ export default function TimePage(): JSX.Element {
     if (!nextAvailableDate) return;
     dispatch(
       setSelectedDate({
-        day: nextAvailableDate.day,
-        month: nextAvailableDate.month,
-        year: nextAvailableDate.year,
+        day: selectedDate?.day || nextAvailableDate.day,
+        month: selectedDate?.month || nextAvailableDate.month,
+        year: selectedDate?.year || nextAvailableDate.year,
       }),
     );
   };
@@ -283,6 +272,7 @@ export default function TimePage(): JSX.Element {
       setOpenSection("evening");
     }
   }, [selectedSlotIndexes, allSlots, amSlots, pmSlots, evSlots]);
+
 
   useEffect(() => {
     const hasAvailable = (slotsArr: Slot[]): boolean => slotsArr?.some((s) => !s.isBooked && s.status === "AVAILABLE");
@@ -372,7 +362,6 @@ export default function TimePage(): JSX.Element {
           className="arravpos-calendar-btn"
         >
           <Calendar1 size={16} />
-
           {selectedDate?.month != null
             ? `${MONTH_NAMES[selectedDate.month - 1]} ${selectedDate.year}`
             : `${MONTH_NAMES[startDate.month - 1]} ${startDate.year}`}
@@ -405,44 +394,57 @@ export default function TimePage(): JSX.Element {
           <SlotSkeleton />
         ) : (
           <>
-            <SlotSection
-              label="Morning"
-              icon={<Sunrise size={18} className="arravpos-slot-icon" />}
-              slots={amSlots}
-              allSlots={allSlots}
-              selectedSlotIndexes={selectedSlotIndexes}
-              handleSlotSelect={handleSlotSelect}
-              isOpen={openSection === "morning"}
-              onToggle={() =>
-                setOpenSection(openSection === "morning" ? null : "morning")
-              }
-            />
-            <SlotSection
-              label="Afternoon"
-              icon={<Sun size={18} className="arravpos-slot-icon" />}
-              slots={pmSlots}
-              allSlots={allSlots}
-              selectedSlotIndexes={selectedSlotIndexes}
-              handleSlotSelect={handleSlotSelect}
-              isOpen={openSection === "afternoon"}
-              onToggle={() =>
-                setOpenSection(openSection === "afternoon" ? null : "afternoon")
-              }
-            />
-            <SlotSection
-              label="Evening"
-              icon={<Moon size={18} className="arravpos-slot-icon" />}
-              slots={evSlots}
-              allSlots={allSlots}
-              selectedSlotIndexes={selectedSlotIndexes}
-              handleSlotSelect={handleSlotSelect}
-              isOpen={openSection === "evening"}
-              onToggle={() =>
-                setOpenSection(openSection === "evening" ? null : "evening")
-              }
-            />
-          </>
-        )}
+            {!allSlots?.length ? (
+              <>
+                <div className="aaravpos-supercategory-wrapper"></div>
+                <div className="aaravpos-empty-services">
+                  <h3 className="aaravpos-empty-services-title">
+                    No Slots Found
+                  </h3>
+                  <p className="aaravpos-empty-services-text">No slots available</p>
+                </div>
+              </>
+            ) :
+              <>
+                <SlotSection
+                  label="Morning"
+                  icon={<Sunrise size={18} className="arravpos-slot-icon" />}
+                  slots={amSlots}
+                  allSlots={allSlots}
+                  selectedSlotIndexes={selectedSlotIndexes}
+                  handleSlotSelect={handleSlotSelect}
+                  isOpen={openSection === "morning"}
+                  onToggle={() =>
+                    setOpenSection(openSection === "morning" ? null : "morning")
+                  }
+                />
+                <SlotSection
+                  label="Afternoon"
+                  icon={<Sun size={18} className="arravpos-slot-icon" />}
+                  slots={pmSlots}
+                  allSlots={allSlots}
+                  selectedSlotIndexes={selectedSlotIndexes}
+                  handleSlotSelect={handleSlotSelect}
+                  isOpen={openSection === "afternoon"}
+                  onToggle={() =>
+                    setOpenSection(openSection === "afternoon" ? null : "afternoon")
+                  }
+                />
+                <SlotSection
+                  label="Evening"
+                  icon={<Moon size={18} className="arravpos-slot-icon" />}
+                  slots={evSlots}
+                  allSlots={allSlots}
+                  selectedSlotIndexes={selectedSlotIndexes}
+                  handleSlotSelect={handleSlotSelect}
+                  isOpen={openSection === "evening"}
+                  onToggle={() =>
+                    setOpenSection(openSection === "evening" ? null : "evening")
+                  }
+                />
+              </>
+            }
+          </>)}
         <CalendarOverlay isOpen={calOpen} onClose={() => setCalOpen(false)} />
       </div>
     </MainLayout>
