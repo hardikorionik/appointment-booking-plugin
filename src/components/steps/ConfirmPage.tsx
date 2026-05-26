@@ -791,7 +791,6 @@ export default function ConfirmPage(): JSX.Element {
                                                             countryCallingCodeEditable={false}
                                                             className="arravpos-custom-input"
                                                         />
-
                                                         {formLoading && loadingField === "phone" && (
                                                             <div className="arravpos-loader-wrapper">
                                                                 <div className="arravpos-loader" />
@@ -820,14 +819,6 @@ export default function ConfirmPage(): JSX.Element {
                                                 minLength={10}
                                                 maxLength={50}
                                                 {...register("email", {
-                                                    minLength: {
-                                                        value: 10,
-                                                        message: "Minimum 2 characters required",
-                                                    },
-                                                    maxLength: {
-                                                        value: 50,
-                                                        message: "Email must be maximum 50 characters",
-                                                    },
                                                     validate: (value) => {
                                                         const hasEmail = !!value?.trim();
                                                         const hasPhone = !!normalizePhone(phoneValue);
@@ -842,6 +833,14 @@ export default function ConfirmPage(): JSX.Element {
                                                     onChange: (e) => {
                                                         handleInputChange(e.target.value, null, "email");
                                                     },
+                                                    minLength: {
+                                                        value: 10,
+                                                        message: "Minimum 2 characters required",
+                                                    },
+                                                    maxLength: {
+                                                        value: 50,
+                                                        message: "Email must be maximum 50 characters",
+                                                    },
                                                 })}
                                                 autoComplete="email"
                                                 placeholder="Email address"
@@ -854,19 +853,15 @@ export default function ConfirmPage(): JSX.Element {
                                             )}
                                         </div>
                                         <div className="arravpos-form-group">
-                                            <label htmlFor="first_name" className="arravpos-form-label">
+                                            <label htmlFor="firstName" className="arravpos-form-label">
                                                 First Name{" "} <span className="arravpos-required">*</span>
                                             </label>
                                             <input
-                                                id="first_name"
+                                                id="firstName"
                                                 minLength={2}
                                                 maxLength={30}
                                                 {...register("firstName", {
                                                     required: "First name required",
-                                                    pattern: {
-                                                        value: /^[A-Za-z\s]+$/,
-                                                        message: "Only letters are allowed",
-                                                    },
                                                     minLength: {
                                                         value: 2,
                                                         message: "Minimum 2 characters required",
@@ -874,6 +869,10 @@ export default function ConfirmPage(): JSX.Element {
                                                     maxLength: {
                                                         value: 30,
                                                         message: "Maximum 30 characters allowed",
+                                                    },
+                                                    pattern: {
+                                                        value: /^[A-Za-z\s]+$/,
+                                                        message: "Only letters are allowed",
                                                     },
                                                 })}
                                                 autoComplete="given-name"
@@ -887,15 +886,28 @@ export default function ConfirmPage(): JSX.Element {
                                             )}
                                         </div>
                                         <div className="arravpos-form-group">
-                                            <label htmlFor="last_name" className="arravpos-form-label">
+                                            <label htmlFor="lastName" className="arravpos-form-label">
                                                 Last Name
                                             </label>
                                             <input
-                                                id="last_name"
+                                                id="lastName"
                                                 autoComplete="family-name"
                                                 minLength={2}
                                                 maxLength={20}
-                                                {...register("lastName")}
+                                                {...register("lastName", {
+                                                    minLength: {
+                                                        value: 2,
+                                                        message: "Last name must be at least 2 characters",
+                                                    },
+                                                    maxLength: {
+                                                        value: 30,
+                                                        message: "Last name cannot exceed 30 characters",
+                                                    },
+                                                    pattern: {
+                                                        value: /^[A-Za-z\s]+$/,
+                                                        message: "Only letters are allowed",
+                                                    },
+                                                })}
                                                 placeholder="Last Name"
                                                 className="arravpos-custom-input"
                                             />
