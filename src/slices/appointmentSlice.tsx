@@ -58,7 +58,7 @@ const initialState: AppointmentSliceState = {
   userDetails: null,
   tipPct: 0,
   bookingMode: "booking",
-  payType: "",
+  payType: "person",
 };
 
 const appointmentSlice = createSlice({

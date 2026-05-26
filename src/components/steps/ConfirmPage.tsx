@@ -377,34 +377,34 @@ export default function ConfirmPage(): JSX.Element {
     if (selectedDate) {
         formattedDate = `${selectedDate?.year}-${String(selectedDate?.month).padStart(2, "0")}-${String(selectedDate?.day).padStart(2, "0")}`;
     }
-    const payload: AppointmentPayload = {
-        tenantId,
-        outletId,
-        staffId: selectedProfessional?.id,
-        date: formattedDate,
-        startTime: selectedTime,
-        serviceIds: services.map((s) => s.id),
-        slotIds: selectedSlotIds,
-        isWalkIn: false,
-        requiresConsent: servicesNeedingConsent.length > 0,
-        customer: {
-            first_name: userDetails?.firstName,
-            last_name: userDetails?.lastName,
-            email: userDetails?.email,
-            phone: userDetails?.phone,
-        },
-    };
 
-    const proceedWithBooking = async (): Promise<void> => {
+    const proceedWithBooking = async (formData?: FormValues): Promise<void> => {
+        const userData = formData || userDetails;
+
+        const payload: AppointmentPayload = {
+            tenantId,
+            outletId,
+            staffId: selectedProfessional?.id,
+            date: formattedDate,
+            startTime: selectedTime,
+            serviceIds: services.map((s) => s.id),
+            slotIds: selectedSlotIds,
+            isWalkIn: false,
+            requiresConsent: servicesNeedingConsent.length > 0,
+            customer: {
+                first_name: userData?.firstName,
+                last_name: userData?.lastName,
+                email: userData?.email,
+                phone: userData?.phone,
+            },
+        };
         if (servicesNeedingConsent.length && !allConsentsDone) {
             toast.warn("Please complete all consent forms first");
             return;
         }
         try {
             setLoading(true);
-            const result = await dispatch(
-                createAppointment(payload)
-            ).unwrap();
+            const result = await dispatch(createAppointment(payload)).unwrap();
             const data: any = result?.data ?? result;
             const appointmentId = data.id || "";
             const customerId = data.customerId || data.customer?.id || "";
@@ -432,25 +432,18 @@ export default function ConfirmPage(): JSX.Element {
             ...data,
             phone: data?.phone ?? "",
         };
-        await dispatch(setUserDetails(payload));
         if (!payType) { return void toast.error("Select payment method") }
-        if (!selectedTime && bookingMode === "booking") {
-            return void toast.error("Select time");
-        }
-        if (!payload?.firstName) {
-            return void toast.error("Enter first name");
-        }
-        if (!payload?.email && !payload?.phone) {
-            return void toast.error("Email or phone required");
-        }
+        if (!selectedTime && bookingMode === "booking") { return void toast.error("Select time") }
+        dispatch(setUserDetails(payload));
+
         if (servicesNeedingConsent.length > 0) {
             if (allConsentsDone) {
-                await proceedWithBooking();
+                await proceedWithBooking(payload);
             } else {
                 await startConsentSigning();
             }
         } else {
-            await proceedWithBooking();
+            await proceedWithBooking(payload);
         }
     };
 
@@ -459,8 +452,9 @@ export default function ConfirmPage(): JSX.Element {
             ...data,
             phone: data?.phone ?? "",
         };
-        if (!payType) {
-            return void toast.error("Select payment method");
+        if (!payType) { return void toast.error("Select payment method") }
+        if (!selectedTime && bookingMode === "booking") {
+            return void toast.error("Select time");
         }
         dispatch(setUserDetails(payload));
         dispatch(setSidebarOpen(true))
@@ -959,9 +953,30 @@ interface PayOptionProps {
 
 function PayOption({ icon, label, selected, onClick }: PayOptionProps): JSX.Element {
     return (
-        <div onClick={onClick} className={`arravpos-select-card ${selected ? "arravpos-select-card-active" : "arravpos-select-card-default"}`}>
-            <div className="aaravpos-center-items">{icon}</div>
-            {label} <span className="arravpos-select-check">{selected && <Check size={18} />}</span>
+        <div className="payment-wrapper" onClick={onClick}>
+            <div className="payment-container">
+                <div className={`${selected ? "payment-card active" : "payment-card"}`}>
+                    <div className="payment-content">
+                        <div className="payment-icon">{icon}</div>
+                        <div className="payment-info">
+                            <div className="payment-header">
+                                <div>
+                                    <h3 className="payment-title">
+                                        {label}
+                                    </h3>
+                                    <p className="payment-description">
+                                        Payment will be collected at the outlet during
+                                        your appointment.
+                                    </p>
+                                </div>
+                                {selected && <div className="payment-check">
+                                    <Check size={18} />
+                                </div>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
