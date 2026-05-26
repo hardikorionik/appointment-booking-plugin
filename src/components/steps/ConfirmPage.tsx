@@ -442,7 +442,6 @@ export default function ConfirmPage(): JSX.Element {
         if (!payload?.email && !payload?.phone) {
             return void toast.error("Email or phone required");
         }
-
         if (servicesNeedingConsent.length > 0) {
             if (allConsentsDone) {
                 await proceedWithBooking();
