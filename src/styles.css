@@ -3693,9 +3693,9 @@
   }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1212px) {
   .aarav-payment-card {
-    padding: 18px;
+    padding: 17px;
   }
 }
 
