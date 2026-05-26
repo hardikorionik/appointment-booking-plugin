@@ -3541,6 +3541,11 @@
   .aaravpos-btn {
     display: block;
   }
+
+  .arravpos-booking-grid {
+    flex-direction: column;
+    gap: 0px;
+  }
 }
 
 @media (min-width: 1024px) {
