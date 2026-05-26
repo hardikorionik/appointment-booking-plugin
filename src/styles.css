@@ -3154,30 +3154,30 @@
 }
 
 
-.payment-wrapper {
+.aarav-payment-wrapper {
   width: 100%;
   display: flex;
   cursor: pointer;
 }
 
-.payment-card.active {
+.aarav-payment-card.active {
   border-color: var(--btn-bg);
 }
 
-.payment-container {
+.aarav-payment-container {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.section-label {
+.aarav-section-label {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 10px;
   display: inline-block;
 }
 
-.payment-card {
+.aarav-payment-card {
   background: linear-gradient(to right,
       rgba(0, 0, 0, 0.05),
       rgba(0, 0, 0, 0.02));
@@ -3188,14 +3188,14 @@
   margin-bottom: 8px;
 }
 
-.payment-content {
+.aarav-payment-content {
   display: flex;
   align-items: flex-start;
   gap: 16px;
   height: 100%;
 }
 
-.payment-icon {
+.aarav-payment-icon {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -3208,14 +3208,14 @@
   font-size: 18px;
 }
 
-.payment-info {
+.aarav-payment-info {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.payment-header {
+.aarav-payment-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3223,14 +3223,14 @@
   height: 100%;
 }
 
-.payment-title {
+.aarav-payment-title {
   font-size: 16px;
   font-weight: 600;
   margin: 0;
   margin-bottom: 4px;
 }
 
-.payment-description {
+.aarav-payment-description {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.6);
   margin-top: 5px;
@@ -3238,7 +3238,7 @@
   margin-bottom: 0px;
 }
 
-.payment-check {
+.aarav-payment-check {
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -3257,11 +3257,6 @@
 ========================= */
 
 @media (min-width: 640px) {
-  .custom-container {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-
   .aaravpos-title {
     font-size: 28px;
   }
@@ -3330,10 +3325,6 @@
 
     font-size: 13px;
   }
-
-  /* .arravpos-booking-scroll {
-    height: calc(100dvh - 200px);
-  } */
 
   .arravpos-calendar-btn {
     font-size: 12px;
@@ -3451,11 +3442,6 @@
   .aaravpos-pro-order-list-pro {
     height: calc(100dvh - 295px);
   }
-
-  /* .aaravpos-staff-wrapper {
-    height: calc(100dvh - 200px);
-  } */
-
 
   .arravpos-details-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -3592,7 +3578,6 @@
     width: 24px;
   }
 
-
   .aaravpos-service-title {
     font-size: 12px;
   }
@@ -3646,11 +3631,6 @@
 @media (min-width: 1024px) {
   .arravpos-date-strip {
     gap: 6px;
-  }
-
-  .custom-container {
-    padding-left: 64px;
-    padding-right: 64px;
   }
 
   .arravpos-consent-modal {
@@ -3711,13 +3691,13 @@
     gap: 0px;
   }
 
-  .payment-card {
+  .aarav-payment-card {
     padding: 14px;
   }
 }
 
 @media (max-width: 1155px) {
-  .payment-card {
+  .aarav-payment-card {
     padding: 15px 18px;
   }
 }

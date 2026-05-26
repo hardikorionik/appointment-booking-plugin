@@ -953,23 +953,23 @@ interface PayOptionProps {
 
 function PayOption({ icon, label, selected, onClick }: PayOptionProps): JSX.Element {
     return (
-        <div className="payment-wrapper" onClick={onClick}>
-            <div className="payment-container">
-                <div className={`${selected ? "payment-card active" : "payment-card"}`}>
-                    <div className="payment-content">
-                        <div className="payment-icon">{icon}</div>
-                        <div className="payment-info">
-                            <div className="payment-header">
+        <div className="aarav-payment-wrapper" onClick={onClick}>
+            <div className="aarav-payment-container">
+                <div className={`${selected ? "aarav-payment-card active" : "aarav-payment-card"}`}>
+                    <div className="aarav-payment-content">
+                        <div className="aarav-payment-icon">{icon}</div>
+                        <div className="aarav-payment-info">
+                            <div className="aarav-payment-header">
                                 <div>
-                                    <h3 className="payment-title">
+                                    <h3 className="aarav-payment-title">
                                         {label}
                                     </h3>
-                                    <p className="payment-description">
+                                    <p className="aarav-payment-description">
                                         Payment will be collected at the outlet during
                                         your appointment.
                                     </p>
                                 </div>
-                                {selected && <div className="payment-check">
+                                {selected && <div className="aarav-payment-check">
                                     <Check size={18} />
                                 </div>}
                             </div>
