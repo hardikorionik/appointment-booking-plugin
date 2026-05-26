@@ -8,7 +8,8 @@ import { calculateServiceTax } from "@/utils/taxHelper";
 import MainLayout from "@/components/common/MainLayout";
 import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
 import Breadcrumb from "@/components/common/Breadcrumb";
-import type { RootState, AppDispatch } from "@/store";
+import ProfessionalCardSkeleton from "@/components/common/ProfessionalCardSkeleton";
+import type { AppDispatch } from "@/store";
 import type {
   ServiceItem,
   Staff,
@@ -18,8 +19,8 @@ import type {
 
 export default function Professionals() {
   const dispatch = useDispatch<AppDispatch>();
-  const { staff, selectedServices, selectedProfessional } = useSelector(
-    (state: RootState) => state.booking.service,
+  const { staff, selectedServices, selectedProfessional, loading } = useSelector(
+    (state: any) => state.booking.service,
   );
   const [showEmpty, setShowEmpty] = useState<boolean>(false);
   const selectedServiceIds = selectedServices.map((s: ServiceItem) => s.id);
@@ -145,7 +146,11 @@ export default function Professionals() {
             </p>
           </div>
         )}
-        {filteredStaff?.length > 0 && <div className="aaravpos-staff-wrapper">
+        {loading ? (
+          <div className="aaravpos-staff-grid">
+            <ProfessionalCardSkeleton />
+          </div>
+        ) : <>{filteredStaff?.length > 0 && <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">
             {filteredStaff.map((p: Staff, index: number) => {
               const { isOnLeave, availableFrom } = getLeaveInfo(p);
@@ -184,7 +189,7 @@ export default function Professionals() {
               );
             })}
           </div>
-        </div>}
+        </div>}</>}
       </div>
     </MainLayout >
   );

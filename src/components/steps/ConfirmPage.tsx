@@ -458,10 +458,10 @@ export default function ConfirmPage(): JSX.Element {
             ...data,
             phone: data?.phone ?? "",
         };
-        dispatch(setUserDetails(payload));
         if (!payType) {
             return void toast.error("Select payment method");
         }
+        dispatch(setUserDetails(payload));
         dispatch(setSidebarOpen(true))
     };
 
@@ -742,12 +742,12 @@ export default function ConfirmPage(): JSX.Element {
                                         selected={payType === "person"}
                                         onClick={() => dispatch(setPayType("person"))}
                                     />
-                                    <PayOption
+                                    {/* <PayOption
                                         icon={<CreditCard size={18} />}
                                         label="Pay with card"
                                         selected={payType === "card"}
                                         onClick={() => dispatch(setPayType("card"))}
-                                    />
+                                    /> */}
                                 </div>
                             </div>
                             {payType &&

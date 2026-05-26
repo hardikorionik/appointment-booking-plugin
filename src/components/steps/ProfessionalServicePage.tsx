@@ -5,18 +5,15 @@ import { setSelectedDate } from "@/slices/slotSlice";
 import { toggleProfessional } from "@/slices/serviceSlice";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import MainLayout from "@/components/common/MainLayout";
-import ProfessionalSidebar from "../sidebar/ProfessionalSidebar";
-import { ServiceState, Staff } from "@/types";
+import ProfessionalSidebar from "@/components/sidebar/ProfessionalSidebar";
+import ProfessionalCardSkeleton from "@/components/common/ProfessionalCardSkeleton";
+import { Staff } from "@/types";
 
-interface RootState {
-  booking: {
-    service: ServiceState;
-  }
-}
+
 export default function ProfessionalServicePage() {
   const dispatch = useDispatch<any>();
-  const { staff, selectedProfessional } = useSelector(
-    (state: RootState) => state.booking.service,
+  const { staff, selectedProfessional, loading } = useSelector(
+    (state: any) => state.booking.service,
   );
   const showEmpty = !staff || staff.length === 0;
   const getLeaveInfo = (professional: any) => {
@@ -76,7 +73,11 @@ export default function ProfessionalServicePage() {
             </p>
           </div>
         )}
-        {staff?.length > 0 && <div className="aaravpos-staff-wrapper">
+        {loading ? (
+          <div className="aaravpos-staff-grid">
+            <ProfessionalCardSkeleton />
+          </div>
+        ) : <>{staff?.length > 0 && <div className="aaravpos-staff-wrapper">
           <div className="aaravpos-staff-grid">
             {staff?.map((p: Staff, index: number) => {
               const { isOnLeave, availableFrom } = getLeaveInfo(p);
@@ -116,6 +117,7 @@ export default function ProfessionalServicePage() {
             })}
           </div>
         </div>}
+        </>}
       </div>
     </MainLayout >
   );

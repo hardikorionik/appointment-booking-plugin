@@ -11,20 +11,9 @@ import { setIsOrder, goToStep } from "@/slices/breadcrumbSlice";
 import { applyTheme } from "@/utils/applyTheme";
 import ChooseYourOutlet from "@/components/common/ChooseYourOutlet";
 import DefaultAppointment from "@/components/steps";
+import OutletSkeleton from "@/components/common/OutletSkeleton";
 import type { AppDispatch } from "@/store";
 
-
-const OutletSkeleton = () => {
-    return (
-        <div className="aaravpos-skeleton-card">
-            <div className="aaravpos-skeleton-badge"></div>
-            <div className="aaravpos-skeleton-content">
-                <div className="aaravpos-skeleton-title"></div>
-                <div className="aaravpos-skeleton-text"></div>
-            </div>
-        </div>
-    );
-};
 
 export const BookingPluginContainer: React.FC<AppointmentBookingPluginProps> = ({ bookingCode }) => {
     const dispatch = useDispatch<AppDispatch>();

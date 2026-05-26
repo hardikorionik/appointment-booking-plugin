@@ -24,7 +24,7 @@ import OrderSidebar from "@/components/sidebar/OrderSidebar";
 import MainLayout from "@/components/common/MainLayout";
 import Breadcrumb from "@/components/common/Breadcrumb";
 import CalendarOverlay from "@/components/common/CalendarOverlay";
-// import { useWindowSize } from "@/hooks/useWindowSize";
+import SlotSkeleton from "@/components/common/SlotSkeleton";
 import type { AppDispatch } from "@/store";
 import { isDateDisabled } from "@/utils/isDateDisabled";
 
@@ -32,20 +32,6 @@ const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Se
 const WEEK_DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const SLOT_INTERVAL = 15;
 
-const SlotSkeleton = () => {
-  return (
-    <div className="aaravpos-timeslot-skeleton-wrapper">
-      {Array.from({ length: 3 }).map((_, sectionIndex) => (
-        <div key={sectionIndex} className="aaravpos-timeslot-skeleton-card">
-          <div className="aaravpos-timeslot-header">
-            <div className="aaravpos-timeslot-icon"></div>
-            <div className="aaravpos-timeslot-title"></div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
 export default function TimePage(): JSX.Element {
 
   const dispatch = useDispatch<AppDispatch>();

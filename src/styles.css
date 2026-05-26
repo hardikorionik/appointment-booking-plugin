@@ -790,6 +790,7 @@
   transition: all 0.3s ease;
   font-size: 14px;
   border-radius: 4px;
+  height: 32px;
 }
 
 .aaravpos-supercategory-btn:hover {
@@ -3660,6 +3661,111 @@
   }
 }
 
+.aaravpos-service-skeleton-card {
+  position: relative;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.aaravpos-service-skeleton-card .aaravpos-service-tax-badge,
+.aaravpos-service-skeleton-card .aaravpos-service-title,
+.aaravpos-service-skeleton-card .aaravpos-service-subtitle,
+.aaravpos-service-skeleton-card .aaravpos-service-duration,
+.aaravpos-service-skeleton-card .aaravpos-service-price,
+.aaravpos-service-skeleton-card .aaravpos-service-btn,
+.aaravpos-service-skeleton-card .aaravpos-service-count {
+  background: #ececec;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* TAX badge */
+.aaravpos-service-skeleton-card .aaravpos-service-tax-badge {
+  width: 36px;
+  height: 18px;
+  margin-bottom: 0px;
+  border-radius: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Title */
+.aaravpos-service-skeleton-card .aaravpos-service-title {
+  width: 70%;
+  height: 20px;
+  margin-bottom: 5px;
+}
+
+/* Subtitle */
+.aaravpos-service-skeleton-card .aaravpos-service-subtitle {
+  width: 55%;
+  height: 18px;
+  margin-bottom: 0px;
+}
+
+/* Footer */
+.aaravpos-service-skeleton-card .aaravpos-service-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.aaravpos-service-skeleton-card .aaravpos-service-duration {
+  width: 80px;
+  height: 16px;
+}
+
+.aaravpos-service-skeleton-card .aaravpos-service-price {
+  width: 90px;
+  height: 16px;
+}
+
+/* Quantity */
+.aaravpos-service-skeleton-card .aaravpos-service-qty {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.aaravpos-service-skeleton-card .aaravpos-service-btn {
+  width: 42px;
+  height: 34px;
+}
+
+.aaravpos-service-skeleton-card .aaravpos-service-count {
+  width: 50px;
+  height: 34px;
+  margin: 0 2px;
+}
+
+/* shimmer */
+.aaravpos-service-skeleton-card .aaravpos-service-tax-badge::after,
+.aaravpos-service-skeleton-card .aaravpos-service-title::after,
+.aaravpos-service-skeleton-card .aaravpos-service-subtitle::after,
+.aaravpos-service-skeleton-card .aaravpos-service-duration::after,
+.aaravpos-service-skeleton-card .aaravpos-service-price::after,
+.aaravpos-service-skeleton-card .aaravpos-service-btn::after,
+.aaravpos-service-skeleton-card .aaravpos-service-count::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent);
+  animation: aaravposShimmer 1.2s infinite;
+}
 
 .aaravpos-timeslot-skeleton-wrapper {
   width: 100%;
@@ -3681,34 +3787,34 @@
   margin-bottom: 0;
 }
 
-.aaravpos-timeslot-header {
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-header {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.aaravpos-timeslot-icon,
-.aaravpos-timeslot-title,
-.aaravpos-timeslot-line {
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-icon,
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-title,
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-line {
   position: relative;
   overflow: hidden;
   background: #ececec;
 }
 
-.aaravpos-timeslot-icon {
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-icon {
   width: 18px;
   height: 18px;
   border-radius: 50%;
   flex-shrink: 0;
 }
 
-.aaravpos-timeslot-title {
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-title {
   width: 110px;
   height: 14px;
   border-radius: 4px;
 }
 
-.aaravpos-timeslot-line {
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-line {
   width: 100%;
   height: 12px;
   border-radius: 4px;
@@ -3716,9 +3822,9 @@
 }
 
 /* shimmer */
-.aaravpos-timeslot-icon::after,
-.aaravpos-timeslot-title::after,
-.aaravpos-timeslot-line::after {
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-icon::after,
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-title::after,
+.aaravpos-timeslot-skeleton-card .aaravpos-timeslot-line::after {
   content: "";
   position: absolute;
   top: 0;
@@ -3729,7 +3835,7 @@
       transparent,
       rgba(255, 255, 255, 0.7),
       transparent);
-  animation: aaravpos-skeleton-shimmer 1.2s infinite;
+  animation: aaravposShimmer 1.2s infinite;
 }
 
 /* Skeleton Loading Card */
@@ -3756,7 +3862,7 @@
   width: 70%;
   height: 24px;
   border-radius: 4px;
-  margin-bottom: 2px;
+  margin-bottom: 6px;
   background: #f1f1f1;
 }
 
@@ -3769,7 +3875,7 @@
 
 .aaravpos-skeleton-text {
   width: 100%;
-  height: 40px;
+  height: 36px;
   border-radius: 4px;
   margin-bottom: 0px;
   background: #f1f1f1;
@@ -3796,19 +3902,119 @@
       transparent,
       rgba(255, 255, 255, 0.7),
       transparent);
-  animation: aaravpos-skeleton-shimmer 1.2s infinite;
+  animation: aaravposShimmer 1.2s infinite;
+}
+
+.aaravpos-category-skeleton-wrapper {
+  width: 100%;
+}
+
+.aaravpos-category-skeleton-wrapper .aaravpos-category-top-tabs,
+.aaravpos-category-skeleton-wrapper .aaravpos-category-bottom-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.aaravpos-category-skeleton-wrapper .aaravpos-category-bottom-tabs {
+  margin-bottom: 0px;
+}
+
+.aaravpos-category-skeleton-wrapper .aaravpos-category-tab {
+  height: 32px;
+  width: 130px;
+  border-radius: 6px;
+  background: #ececec;
+  position: relative;
+  overflow: hidden;
+}
+
+.aaravpos-category-skeleton-wrapper .aaravpos-category-tab.small {
+  width: 70px;
+}
+
+/* shimmer */
+.aaravpos-category-skeleton-wrapper .aaravpos-category-tab::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent);
+  animation: aaravposShimmer 1.2s infinite;
+}
+
+.aaravpos-professional-skeleton-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* image */
+.aaravpos-professional-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #ececec;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* content */
+.aaravpos-professional-content {
+  flex: 1;
+}
+
+.aaravpos-professional-name,
+.aaravpos-professional-role {
+  background: #ececec;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.aaravpos-professional-name {
+  height: 20px;
+  margin-bottom: 12px;
+}
+
+.aaravpos-professional-role {
+  width: 90px;
+  height: 14px;
+}
+
+/* shimmer */
+.aaravpos-professional-image::after,
+.aaravpos-professional-name::after,
+.aaravpos-professional-role::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120px;
+  width: 100px;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.7),
+      transparent);
+  animation: aaravposShimmer 1.2s infinite;
 }
 
 /* =========================
    KEYFRAMES
 ========================= */
-
-@keyframes aaravpos-skeleton-shimmer {
-  100% {
-    left: 100%;
-  }
-}
-
 @keyframes aaravpos-shimmer {
   0% {
     left: -100%;
