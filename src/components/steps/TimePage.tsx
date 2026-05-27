@@ -236,7 +236,7 @@ export default function TimePage(): JSX.Element {
   const setNextSlotDate = (): void => {
     let nextAvailableDate: DateTime | null = null;
     for (let i = 1; i < dates.length; i++) {
-      const nextDate = startDate.plus({ days: i });
+      const nextDate = startDate;
       const dateObj = {
         day: nextDate.day,
         month: nextDate.month,
@@ -348,7 +348,7 @@ export default function TimePage(): JSX.Element {
                 {isDisabled && <div className="arravpos-date-disabled-slash" />}
                 <span className="arravpos-date-week">{WEEK_DAYS[dow]}</span>
                 <span className="arravpos-date-day">{d.day}</span>
-                {isToday && !isSelected && !isDisabled && (
+                {isToday && (
                   <span className="arravpos-date-today">TODAY</span>
                 )}
                 {isDisabled && (

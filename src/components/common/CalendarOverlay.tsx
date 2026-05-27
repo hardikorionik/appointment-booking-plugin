@@ -154,33 +154,13 @@ export default function CalendarOverlay({
                 const sel = selectedDate?.month === currentMonth?.monthIdx && selectedDate?.day === day;
                 const today = currentMonth?.monthIdx === startDate.month && day === startDate.day;
                 const dt = DateTime.fromObject(
-                  {
-                    year: currentMonth.year,
-                    month: currentMonth.monthIdx,
-                    day,
-                  },
-                  {
-                    zone: timeZone || "UTC",
-                  },
+                  { year: currentMonth.year, month: currentMonth.monthIdx, day }, { zone: timeZone || "UTC" },
                 );
-                const dateObj = {
-                  day,
-                  month: currentMonth.monthIdx,
-                  year: currentMonth.year,
-                  fullDate: dt.toISODate() || "",
-                };
+                const dateObj = { day, month: currentMonth.monthIdx, year: currentMonth.year, fullDate: dt.toISODate() || "" };
                 const normalizedDate = dt.startOf("day");
-
                 const isPastDate = normalizedDate < startDate;
-
                 const isAfterLimit = normalizedDate > endDate;
-
-                const disabled =
-                  isDateDisabled({
-                    dateObj,
-                    selectedProfessional,
-                    outletTimeZone: timeZone || "UTC",
-                  });
+                const disabled = isDateDisabled({ dateObj, selectedProfessional, outletTimeZone: timeZone || "UTC" });
                 return (
                   <div
                     key={day}
