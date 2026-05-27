@@ -252,7 +252,7 @@ export default function ServicesPage() {
                           } else {
                             dispatch(toggleService(svc));
                           }
-                          if (!isOpenSidebar && window.innerWidth > 991) {
+                          if (window.innerWidth > 991) {
                             dispatch(setSidebarOpen(true));
                           }
                         }}
@@ -309,7 +309,7 @@ export default function ServicesPage() {
                             onClick={(e) => {
                               e.stopPropagation();
                               dispatch(decrementService(String(svc.id)));
-                              if (!isOpenSidebar && window.innerWidth > 991) {
+                              if (window.innerWidth > 991) {
                                 dispatch(setSidebarOpen(true));
                               }
                             }}
@@ -330,7 +330,7 @@ export default function ServicesPage() {
                               } else {
                                 dispatch(incrementService(String(svc.id)));
                               }
-                              if (!isOpenSidebar && window.innerWidth > 991) {
+                              if (window.innerWidth > 991) {
                                 dispatch(setSidebarOpen(true));
                               }
                             }}

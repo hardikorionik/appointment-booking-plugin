@@ -275,7 +275,7 @@ export default function ServiceProfessionalPage() {
                               }),
                             );
                           }
-                          if (!isOpenSidebar && window.innerWidth > 991) {
+                          if (window.innerWidth > 991) {
                             dispatch(setSidebarOpen(true));
                           }
                         }}
@@ -321,7 +321,7 @@ export default function ServiceProfessionalPage() {
                             onClick={(e) => {
                               e.stopPropagation();
                               dispatch(decrementService(String(svc.id)));
-                              if (!isOpenSidebar && window.innerWidth > 991) {
+                              if (window.innerWidth > 991) {
                                 dispatch(setSidebarOpen(true));
                               }
                             }}
@@ -351,7 +351,7 @@ export default function ServiceProfessionalPage() {
                               } else {
                                 dispatch(incrementService(String(svc.id)));
                               }
-                              if (!isOpenSidebar && window.innerWidth > 991) {
+                              if (window.innerWidth > 991) {
                                 dispatch(setSidebarOpen(true));
                               }
                             }}
