@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DateTime } from "luxon";
-import { X, MoveRight, Clock3, Package2 } from "lucide-react";
+import { X, MoveRight, Clock3, Package2, Trash2 } from "lucide-react";
 import { CurrencyIcon, getUserName } from "@/utils";
 import { calculateServiceTax } from "@/utils/taxHelper";
 import type {
@@ -19,6 +19,7 @@ import type {
 } from "@/types";
 import { setSidebarOpen } from "@/slices/themeSlice";
 import type { AppDispatch } from "@/store";
+import { deleteService } from "@/slices/serviceSlice";
 
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -290,6 +291,12 @@ export default function OrderSidebar({
                   {svc.price || svc.min_price}
                 </p>
               </div>
+              <button
+                className="aaravpos-delete-btn"
+                onClick={() => dispatch(deleteService(svc.id))}
+              >
+                <Trash2 size={14} />
+              </button>
             </li>
           ),
           )}

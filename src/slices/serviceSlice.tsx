@@ -73,6 +73,11 @@ const serviceSlice = createSlice({
     clearSelectedProfessional: (state) => {
       state.selectedProfessional = null;
     },
+    deleteService: (state, action: PayloadAction<string>) => {
+      state.selectedServices = state.selectedServices.filter(
+        (s) => s.id !== action.payload,
+      );
+    },
   },
 });
 
@@ -85,6 +90,7 @@ export const {
   incrementService,
   decrementService,
   toggleProfessional,
+  deleteService
 } = serviceSlice.actions;
 
 export default serviceSlice.reducer;

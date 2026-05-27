@@ -51,6 +51,16 @@
 /* =========================
    COMMON CSS
 ========================= */
+.aaravpos-delete-btn {
+  background: transparent;
+  border: 0px;
+  outline: none;
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: red;
+}
+
 .aaravpos-center-items {
   display: flex;
   align-items: center;
