@@ -912,7 +912,7 @@ export default function ConfirmPage(): JSX.Element {
                                                 className="arravpos-custom-input"
                                             />
                                             {errors.lastName && (
-                                                <p className="text-red-500 text-sm mt-1">
+                                                <p className="arravpos-error-text">
                                                     {errors.lastName.message}
                                                 </p>
                                             )}
