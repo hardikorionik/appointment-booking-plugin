@@ -21,12 +21,10 @@ export default function ServicesPage() {
   const dispatch = useDispatch();
   const superCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
-  const { superCategories, selectedServices, loading } = useSelector(
-    (state: any) => state.booking.service,
-  );
-  const { outletName } = useSelector(
-    (state: OutletRootState) => state.booking?.outletDetails,
-  );
+  const { superCategories, selectedServices, loading } = useSelector((state: any) => state.booking.service);
+  const { outletName } = useSelector((state: OutletRootState) => state.booking?.outletDetails);
+  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
+
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -255,8 +253,8 @@ export default function ServicesPage() {
                           } else {
                             dispatch(toggleService(svc));
                           }
-                          if (window.innerWidth > 991) {
-                            dispatch(setSidebarOpen(true))
+                          if (!isOpenSidebar && window.innerWidth > 991) {
+                            dispatch(setSidebarOpen(true));
                           }
                         }}
                         className={`aaravpos-service-card ${isSelected ? "active" : ""}`}
@@ -312,8 +310,12 @@ export default function ServicesPage() {
                             onClick={(e) => {
                               e.stopPropagation();
                               dispatch(decrementService(String(svc.id)));
+                              if (!isOpenSidebar && window.innerWidth > 991) {
+                                dispatch(setSidebarOpen(true));
+                              }
                             }}
                             className="aaravpos-service-action-btn"
+                            disabled={(selectedServices.find((s: any) => s.id === svc.id)?.qty || 0) <= 0}
                           >
                             <Minus size={14} />
                           </button>
@@ -328,6 +330,9 @@ export default function ServicesPage() {
                                 dispatch(toggleService(svc));
                               } else {
                                 dispatch(incrementService(String(svc.id)));
+                              }
+                              if (!isOpenSidebar && window.innerWidth > 991) {
+                                dispatch(setSidebarOpen(true));
                               }
                             }}
                             className="aaravpos-service-action-btn plus"

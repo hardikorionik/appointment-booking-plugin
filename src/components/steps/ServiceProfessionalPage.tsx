@@ -22,8 +22,8 @@ export default function ServiceProfessionalPage() {
   const dispatch = useDispatch<AppDispatch>();
   const superCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
-  const { superCategories, selectedServices, selectedProfessional, loading } =
-    useSelector((state: any) => state.booking.service);
+  const { superCategories, selectedServices, selectedProfessional, loading } = useSelector((state: any) => state.booking.service);
+  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -273,8 +273,8 @@ export default function ServiceProfessionalPage() {
                               }),
                             );
                           }
-                          if (window.innerWidth > 991) {
-                            dispatch(setSidebarOpen(true))
+                          if (!isOpenSidebar && window.innerWidth > 991) {
+                            dispatch(setSidebarOpen(true));
                           }
                         }}
                         className={`aaravpos-service-card ${isSelected ? "active" : ""}`}
@@ -319,7 +319,11 @@ export default function ServiceProfessionalPage() {
                             onClick={(e) => {
                               e.stopPropagation();
                               dispatch(decrementService(String(svc.id)));
+                              if (!isOpenSidebar && window.innerWidth > 991) {
+                                dispatch(setSidebarOpen(true));
+                              }
                             }}
+                            disabled={(selectedServices.find((s: any) => s.id === svc.id)?.qty || 0) <= 0}
                             className="aaravpos-service-action-btn"
                           >
                             <Minus size={14} />
@@ -344,6 +348,9 @@ export default function ServiceProfessionalPage() {
                                 );
                               } else {
                                 dispatch(incrementService(String(svc.id)));
+                              }
+                              if (!isOpenSidebar && window.innerWidth > 991) {
+                                dispatch(setSidebarOpen(true));
                               }
                             }}
                             className="aaravpos-service-action-btn plus"

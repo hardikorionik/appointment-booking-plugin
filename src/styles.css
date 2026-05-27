@@ -117,6 +117,10 @@
 }
 
 /* COMMON BUTTON */
+button.aaravpos-service-action-btn:disabled {
+  cursor: not-allowed;
+}
+
 .aaravpos-btn {
   gap: 8px;
   padding: 8px 16px;

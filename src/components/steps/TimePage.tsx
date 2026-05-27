@@ -45,10 +45,13 @@ export default function TimePage(): JSX.Element {
     return [slots.morning, slots.afternoon, slots.evening].flat();
   }, [slots]);
   const startDate = useMemo(() => DateTime.now().setZone(timeZone), [timeZone]);
-
-  const generateDates = (sdate: DateTime): DateItem[] => {
+  const endDate = useMemo(
+    () => startDate.plus({ months: 3 }).minus({ days: 1 }),
+    [startDate],
+  );
+  const generateDates = (sdate: DateTime, edate: DateTime): DateItem[] => {
     try {
-      const totalDays = 180;
+      const totalDays = Math.floor(edate.diff(sdate, "days").days) + 1;
       if (!sdate.isValid) {
         throw new Error("Invalid timezone or start date");
       }
@@ -68,9 +71,10 @@ export default function TimePage(): JSX.Element {
     }
   };
 
+
   const dates = useMemo<DateItem[]>(() => {
-    return generateDates(startDate);
-  }, [startDate]);
+    return generateDates(startDate, endDate);
+  }, [startDate, endDate]);
 
   const selectedStaffServices = useMemo(() => {
     if (!selectedProfessional?.id) return [];

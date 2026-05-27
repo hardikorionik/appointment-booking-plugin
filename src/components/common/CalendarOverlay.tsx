@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DateTime } from "luxon";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -53,8 +53,9 @@ export default function CalendarOverlay({
   const [currentMonthIndex, setCurrentMonthIndex] = useState<number>(0);
   const currentMonth = months[currentMonthIndex];
   if (!isOpen) return null;
-  const startDate = DateTime.now().setZone(timeZone ?? "UTC");
-
+  const startDate = DateTime.now().setZone(timeZone ?? "UTC").startOf("day");
+  //allow only till next 3 months
+  const endDate = startDate.plus({ months: 3 }).minus({ days: 1 });
   const handlePick = (monthIdx: number, day: number): void => {
     const selectedDt = DateTime.fromObject(
       {
@@ -72,9 +73,22 @@ export default function CalendarOverlay({
       year: currentMonth.year,
       fullDate: selectedDt.toISODate() || "",
     };
-    const isPastDate = selectedDt.startOf("day") < startDate.startOf("day");
-    const disabled = isPastDate || isDateDisabled({ dateObj, selectedProfessional, outletTimeZone: timeZone || "UTC" });
+    const normalizedDate = selectedDt.startOf("day");
+
+    const isPastDate = normalizedDate < startDate;
+    const isAfterLimit = normalizedDate > endDate;
+
+    const disabled =
+      isPastDate ||
+      isAfterLimit ||
+      isDateDisabled({
+        dateObj,
+        selectedProfessional,
+        outletTimeZone: timeZone || "UTC",
+      });
+
     if (disabled) return;
+
     dispatch(setSelectedDate({
       month: monthIdx,
       day,
@@ -155,8 +169,18 @@ export default function CalendarOverlay({
                   year: currentMonth.year,
                   fullDate: dt.toISODate() || "",
                 };
-                const isPastDate = dt.startOf("day") < startDate.startOf("day");
-                const disabled = isDateDisabled({ dateObj, selectedProfessional, outletTimeZone: timeZone || "UTC" });
+                const normalizedDate = dt.startOf("day");
+
+                const isPastDate = normalizedDate < startDate;
+
+                const isAfterLimit = normalizedDate > endDate;
+
+                const disabled =
+                  isDateDisabled({
+                    dateObj,
+                    selectedProfessional,
+                    outletTimeZone: timeZone || "UTC",
+                  });
                 return (
                   <div
                     key={day}
@@ -165,7 +189,7 @@ export default function CalendarOverlay({
                         handlePick(currentMonth.monthIdx, day);
                       }
                     }}
-                    className={["aaravpos-calendar-day", !sel && !disabled && "aaravpos-calendar-day-active", today && !sel && "aaravpos-calendar-day-today", sel && "aaravpos-calendar-day-selected", disabled && "aaravpos-calendar-day-disabled", isPastDate && "aaravpos-calendar-day-disabled"].filter(Boolean).join(" ")}
+                    className={["aaravpos-calendar-day", !sel && !disabled && "aaravpos-calendar-day-active", today && !sel && "aaravpos-calendar-day-today", sel && "aaravpos-calendar-day-selected", disabled && "aaravpos-calendar-day-disabled", (isPastDate || isAfterLimit) && "aaravpos-calendar-day-disabled"].filter(Boolean).join(" ")}
                   >
                     {disabled && <div className="aaravpos-calendar-day-slash" />}
                     <span className="aaravpos-calendar-day-text">{day}</span>
