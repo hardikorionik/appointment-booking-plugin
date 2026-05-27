@@ -23,7 +23,6 @@ export default function ServiceProfessionalPage() {
   const superCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const { superCategories, selectedServices, selectedProfessional, loading } = useSelector((state: any) => state.booking.service);
-  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");

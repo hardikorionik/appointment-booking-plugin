@@ -23,7 +23,6 @@ export default function ServicesPage() {
   const subCategoryScrollRef = useRef<HTMLDivElement | null>(null);
   const { superCategories, selectedServices, loading } = useSelector((state: any) => state.booking.service);
   const { outletName } = useSelector((state: OutletRootState) => state.booking?.outletDetails);
-  const { isOpenSidebar } = useSelector((state: any) => state.booking.theme);
 
   const [selectedSuperCategory, setSelectedSuperCategory] = useState<any>(null);
   const [selectedSubCategory, setSelectedSubCategory] = useState<any>(null);
