@@ -147,13 +147,12 @@ export default function ServicesPage() {
               superCategoryScrollRef.current.scrollLeft += e.deltaY;
             }
           }}
-          className="aaravpos-supercategory-wrapper"
         >
           {loading ? (
             <CategoryTabsSkeleton />
           ) :
             <>
-              <>
+              <div className="aaravpos-supercategory-wrapper">
                 {superCategories
                   ?.filter((superCat: any) =>
                     superCat?.categories?.some(
@@ -176,7 +175,7 @@ export default function ServicesPage() {
                       </h3>
                     </button>
                   ))}
-              </>
+              </div>
               <>
                 {selectedSuperCategory?.categories?.some(
                   (cat: any) => cat?.services?.length > 0,
@@ -188,11 +187,11 @@ export default function ServicesPage() {
                           subCategoryScrollRef.current.scrollLeft += e.deltaY;
                         }
                       }}
-                      className="aaravpos-supercategory-wrapper"
+                      className="aaravpos-supercategory-wrapper aaravpos-tp-10"
                     >
                       <button
                         onClick={() => setSelectedSubCategory(null)}
-                        className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""}`}
+                        className={`aaravpos-subcategory-btn ${!selectedSubCategory ? "active" : ""}`}
                       >
                         All Services (
                         {selectedSuperCategory?.categories?.reduce(
@@ -207,7 +206,7 @@ export default function ServicesPage() {
                           <button
                             key={cat.id}
                             onClick={() => setSelectedSubCategory(cat)}
-                            className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""}`}
+                            className={`aaravpos-subcategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""}`}
                           >
                             {cat.name} ({cat.services.length})
                           </button>

@@ -213,23 +213,25 @@ export default function ServiceProfessionalPage() {
                       subCategoryScrollRef.current.scrollLeft += e.deltaY;
                     }
                   }}
-                  className="aaravpos-supercategory-wrapper"
+                  className="aaravpos-supercategory-wrapper aaravpos-tp-10"
                 >
                   <button
                     onClick={() => setSelectedSubCategory(null)}
-                    className={`aaravpos-supercategory-btn ${!selectedSubCategory ? "active" : ""}`}
+                    className={`aaravpos-subcategory-btn ${!selectedSubCategory ? "active" : ""}`}
                   >
                     All Services ({selectedSuperCategory?.categories?.reduce((sum: number, c: any) => sum + (c?.services?.length || 0), 0,)})
                   </button>
-                  {selectedSuperCategory?.categories?.map((cat: any) => (
-                    <button
-                      key={cat.id}
-                      onClick={() => setSelectedSubCategory(cat)}
-                      className={`aaravpos-supercategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""}`}
-                    >
-                      {cat.name} ({cat.services.length})
-                    </button>
-                  ))}
+                  {selectedSuperCategory?.categories
+                    ?.filter((cat: any) => cat?.services?.length > 0)
+                    ?.map((cat: any) => (
+                      <button
+                        key={cat.id}
+                        onClick={() => setSelectedSubCategory(cat)}
+                        className={`aaravpos-subcategory-btn ${selectedSubCategory?.id === cat.id ? "active" : ""}`}
+                      >
+                        {cat.name} ({cat.services.length})
+                      </button>
+                    ))}
                 </div>
               )}
           </>

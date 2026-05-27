@@ -786,7 +786,7 @@ button.aaravpos-service-action-btn:disabled {
 
 .aaravpos-supercategory-btn {
   min-width: fit-content;
-  padding: 6px;
+  padding: 4px 8px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   background: #ffffff;
   text-align: left;
@@ -811,9 +811,27 @@ button.aaravpos-service-action-btn:disabled {
   color: #fff;
 }
 
-.aaravpos-subcategory-btn {
+.aaravpos-barber-subcategory-btn {
   min-width: fit-content;
   padding: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.aaravpos-barber-subcategory-btn.active {
+  border-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+.aaravpos-subcategory-btn {
+  min-width: fit-content;
+  padding: 6px 8px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   background: #ffffff;
   text-align: left;
