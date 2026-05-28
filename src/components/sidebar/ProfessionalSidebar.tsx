@@ -116,12 +116,12 @@ const ProfessionalSidebar = ({
                         {svc.price || svc.min_price}
                       </p>
                     </div>
-                    <button
+                    {selectedStaffServices?.length > 1 && <button
                       className="aaravpos-delete-btn"
                       onClick={() => dispatch(deleteService(svc.id))}
                     >
                       <Trash2 size={14} />
-                    </button>
+                    </button>}
                   </li>
                 ))}
               </> :
