@@ -205,16 +205,16 @@ export default function TimePage(): JSX.Element {
         setVisibleCount(2)
       } else if (width < 420) {
         setVisibleCount(3)
-      } else if (width < 570) {
+      } else if (width < 575) {
         setVisibleCount(4)
-      } else if (width < 991) {
-        setVisibleCount(5)
-      } else if (width < 1024) {
+      } else if (width < 680) {
         setVisibleCount(6)
-      } else if (width < 1280) {
+      } else if (width < 991) {
         setVisibleCount(8)
+      } else if (width < 1280) {
+        setVisibleCount(10)
       } else {
-        setVisibleCount(11)
+        setVisibleCount(12)
       }
     }
 
