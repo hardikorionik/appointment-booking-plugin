@@ -319,6 +319,8 @@ export interface Slot {
   start_time: string;
   end_time: string;
   startUtc: string;
+  start_time_12h?: string,
+  end_time_12h?: string,
   endUtc: string;
   isBooked: boolean;
   source: "WEEKLY" | "CUSTOM" | string;
@@ -441,6 +443,8 @@ export interface AppointmentDetails {
   appointmentDate: string;
   startTime: string;
   endTime: string;
+  start_time_12h?: string;
+  end_time_12hL: string;
   startLocal: string;
   endLocal: string;
   currency: string;

@@ -123,12 +123,11 @@ export default function OrderSidebar({
   const requiredSlots = Math.ceil(totalDuration / SLOT_INTERVAL);
   const formatTimeRange = (startIndex: number): string => {
     if (!allSlots.length) return "";
-    const start = allSlots[startIndex]?.start_time;
+    const start = allSlots[startIndex]?.start_time_12h;
     const endSlot =
       allSlots[startIndex + requiredSlots - 1];
     if (!start || !endSlot) return "";
-    const end =
-      endSlot.end_time || endSlot.start_time;
+    const end = endSlot.end_time_12h || endSlot.start_time_12h;
     return `${start} - ${end}`;
   };
 
