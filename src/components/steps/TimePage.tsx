@@ -199,24 +199,36 @@ export default function TimePage(): JSX.Element {
 
 
   useEffect(() => {
-    const updateCount = (): void => {
-      const width = window.innerWidth;
-      if (width < 411) {
-        setVisibleCount(5);
-      } else if (width < 480) {
-        setVisibleCount(6);
+    const updateCount = () => {
+      const width = window.innerWidth
+      if (width < 350) {
+        setVisibleCount(2)
+      } else if (width < 420) {
+        setVisibleCount(3)
+      } else if (width < 570) {
+        setVisibleCount(4)
+      } else if (width < 991) {
+        setVisibleCount(5)
       } else if (width < 1024) {
-        setVisibleCount(5);
+        setVisibleCount(6)
       } else if (width < 1280) {
-        setVisibleCount(7);
+        setVisibleCount(8)
       } else {
-        setVisibleCount(11);
+        setVisibleCount(11)
       }
-    };
-    updateCount();
-    window.addEventListener("resize", updateCount);
-    return () => window.removeEventListener("resize", updateCount);
-  }, []);
+    }
+
+    updateCount()
+
+    window.addEventListener('resize', updateCount)
+
+    return () => {
+      window.removeEventListener(
+        'resize',
+        updateCount
+      )
+    }
+  }, [])
 
   const amSlots = slots?.morning || [];
   const pmSlots = slots?.afternoon || [];
