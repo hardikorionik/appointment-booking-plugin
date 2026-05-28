@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ChevronRight, Clock3, X, Package2, Trash2 } from "lucide-react";
+import { ChevronRight, Clock3, X, Package2 } from "lucide-react";
+// Trash2
 import { CurrencyIcon } from "@/utils";
 import { OutletRootState, ServiceItem, Step } from "@/types";
 import type { AppDispatch } from "@/store";
 import { setSidebarOpen } from "@/slices/themeSlice";
-import { deleteService } from "@/slices/serviceSlice";
+// import { deleteService } from "@/slices/serviceSlice";
 
 interface ServiceSidebarProps {
   selectedServices: ServiceItem[];

@@ -772,6 +772,8 @@ export interface SlotItem {
   day: string;
   start_time: string;
   end_time: string;
+  start_time_12h?: string;
+  end_time_12h?: string;
   startUtc: string;
   endUtc: string;
   isBooked: boolean;

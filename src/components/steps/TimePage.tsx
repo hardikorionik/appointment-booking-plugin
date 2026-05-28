@@ -519,7 +519,7 @@ function SlotSection({
                     : isSelected ? "arravpos-slot-card-selected" : "arravpos-slot-card-default"
                     }`}
                 >
-                  <span className="arravpos-slot-time">{slot.start_time}</span>
+                  <span className="arravpos-slot-time">{slot.start_time_12h}</span>
                   <span className="arravpos-slot-status">{isDisabled ? "Booked" : "Available"}</span>
                 </div>
               );
